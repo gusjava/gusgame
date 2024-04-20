@@ -85,6 +85,8 @@ public class AnimLandscape extends Game2 {
 		cloud(444,42);
 		
 		addDraw(new DrawGameBorder(this, BORDER));
+//		newDrawingText(p1(100,100), ()->"CYCLE: "+time().getCycleDuration()).setFont(20);
+//		newDrawingText(p1(100,150), ()->"PERFORM: "+time().getPerformDuration()).setFont(20);
 	}
 	
 	
@@ -198,7 +200,7 @@ public class AnimLandscape extends Game2 {
 			
 			setColor(color2);
 			//voiles
-			Angle angle = new Angle(getCount()*MILL_SPEED);
+			Angle angle = Angle.angleRad(getCount()*MILL_SPEED);
 			drawSail(angle);
 			drawSail(angle.add90());
 			drawSail(angle.add180());

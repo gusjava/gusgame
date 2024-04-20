@@ -26,6 +26,10 @@ public class Point2 extends Point1 implements Dyn {
 		super(p);
 	}
 	
+	public Point2(Angle angle) {
+		super(angle);
+	}
+	
 	public Point2(double dist, Angle angle) {
 		super(dist, angle);
 	}

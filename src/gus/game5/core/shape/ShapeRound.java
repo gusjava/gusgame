@@ -55,6 +55,10 @@ public class ShapeRound extends Shape0 {
 		setWidth2(radius);
 		setHeight2(radius);
 	}
+	
+	public void incrRadius(double incr) {
+		setRadius(getRadius()+incr);
+	}
 
 	
 	public boolean contains(Point0 p) {

@@ -671,7 +671,8 @@ public abstract class Drawing1 extends Drawing0 {
 	 */
 	
 	protected void drawStarC(Color color, Point0 pc, double radius, int number) {
-		Angle angle0 = Angle.ANGLE360.div(number);
+		Angle angle0 = Angle.anglePart(number);
+		if(angle0==null) return;
 		for(int i=0;i<number;i++) {
 			Point1 p = pc.pAdd(radius, angle0.mult(i));
 			drawLine(color, pc, p);

@@ -17,6 +17,10 @@ public class Point1 extends Point0 {
 		this(dist*angle.cos(), dist*angle.sin());
 	}
 	
+	public Point1(Angle angle) {
+		this(angle.cos(), angle.sin());
+	}
+	
 	public Point1(Point0 p) {
 		this(p.getX(), p.getY());
 	}

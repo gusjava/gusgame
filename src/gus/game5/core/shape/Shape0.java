@@ -256,4 +256,16 @@ public abstract class Shape0 extends Drawing1 implements Shape {
 	}
 	
 	protected abstract void drawShape();
+	
+	/*
+	 * FIND
+	 */
+	
+	public <E extends Shape> E findNearest(ShapeList<E> shapes) {
+		return shapes.findNearest(this);
+	}
+	
+	public <E extends Shape> E findFarest(ShapeList<E> shapes) {
+		return shapes.findFarest(this);
+	}
 }

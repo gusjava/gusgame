@@ -20,11 +20,8 @@ public abstract class Game {
 	private JPanel1 panel;
 	private Keyboard keyboard;
 	private Mouse mouse;
-
+	private Time time;
 	private Thread1 thread;
-	private long count = 0;
-	private long startTime = 0;
-	private boolean running = false;
 	
 	public Game() {
 		settings = new Settings();
@@ -36,16 +33,18 @@ public abstract class Game {
 		
 		keyboard = new Keyboard(panel);
 		mouse = new Mouse(panel);
+		time = new Time();
 	}
 	
 	private class Thread1 extends Thread {
+		public boolean running = false;
 		public void run() {
 			reset();
 			running = true;
 			while(running) {
+				time.startStep();
 				doPerform();
-				count++;
-				doSleep();
+				time.endStep();
 			}
 		}
 	}
@@ -55,14 +54,9 @@ public abstract class Game {
 		catch (Exception e) {e.printStackTrace();}
 	}
 	
-	private void doSleep() {
-		try { Thread.sleep(getSleep()); }
-		catch (InterruptedException e) {}
-	}
-	
 	private void reset() {
-		count = 0;
-		startTime = System.currentTimeMillis();
+		time.initSleep(getSleep());
+		time.reset();
 	}
 	
 
@@ -98,7 +92,10 @@ public abstract class Game {
 	public void stop() {
 		if(thread==null) throw new RuntimeException("Game not started yet");
 		
-		running = false;
+		thread.running = false;
+		try {thread.join(1000);} 
+		catch (InterruptedException e)
+		{throw new RuntimeException("Game stop take too long", e);}
 		thread = null;
 	}
 	
@@ -124,15 +121,12 @@ public abstract class Game {
 	}
 	
 	
-	
-
-	
 	public long getCount() {
-		return count;
+		return time.getCount();
 	}
 	
 	public long getStartTime() {
-		return startTime;
+		return time.getStartTime();
 	}
 	
 	public JPanel1 getPanel() {
@@ -145,6 +139,10 @@ public abstract class Game {
 	
 	public Mouse mouse() {
 		return mouse;
+	}
+	
+	public Time time() {
+		return time;
 	}
 	
 	public int gameWidth() {

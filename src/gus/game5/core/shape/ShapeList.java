@@ -12,6 +12,7 @@ import gus.game5.core.dyn.Dyn;
 import gus.game5.core.features.f.F;
 import gus.game5.core.features.t.T;
 import gus.game5.core.point.point0.Point0;
+import gus.game5.core.point.point1.Point1;
 import gus.game5.core.shape.control.ShapeControl;
 
 public class ShapeList<U extends Shape> extends ArrayList<U> implements Draw, Dyn, Clean {
@@ -223,12 +224,16 @@ public class ShapeList<U extends Shape> extends ArrayList<U> implements Draw, Dy
 		return null;
 	}
 	
+	/*
+	 * FIND NEAREST
+	 */
+	
 	public U findNearest(Point0 p) {
 		U found = null;
 		double dist0 = -1;
 		
 		for(U element : this) {
-			double dist = element.getAnchor().dist(p);
+			double dist = element.getAnchor().dist2(p);
 			if(dist0==-1 || dist < dist0) {
 				dist0 = dist;
 				found = element;
@@ -237,12 +242,46 @@ public class ShapeList<U extends Shape> extends ArrayList<U> implements Draw, Dy
 		return found;
 	}
 	
+	public U findNearest(Shape p) {
+		U found = null;
+		double dist0 = -1;
+		Point0 a = p.getAnchor();
+		
+		for(U element : this) if(element!=p) {
+			double dist = element.getAnchor().dist2(a);
+			if(dist0==-1 || dist < dist0) {
+				dist0 = dist;
+				found = element;
+			}
+		}
+		return found;
+	}
+	
+	/*
+	 * FIND FAREST
+	 */
+	
 	public U findFarest(Point0 p) {
 		U found = null;
 		double dist0 = -1;
 		
 		for(U element : this) {
-			double dist = element.getAnchor().dist(p);
+			double dist = element.getAnchor().dist2(p);
+			if(dist0==-1 || dist > dist0) {
+				dist0 = dist;
+				found = element;
+			}
+		}
+		return found;
+	}
+	
+	public U findFarest(Shape p) {
+		U found = null;
+		double dist0 = -1;
+		Point0 a = p.getAnchor();
+		
+		for(U element : this) if(element!=p) {
+			double dist = element.getAnchor().dist2(a);
 			if(dist0==-1 || dist > dist0) {
 				dist0 = dist;
 				found = element;
@@ -339,6 +378,29 @@ public class ShapeList<U extends Shape> extends ArrayList<U> implements Draw, Dy
 		double sum = 0;
 		for(U element : this) sum += t.t(element);
 		return sum;
+	}
+	
+	public Point0 sumPoint(T<U,Point0> t) {
+		Point1 p = new Point1();
+		for(U element : this) p.addXY(t.t(element));
+		return p;
+	}
+	
+	/*
+	 * AVG
+	 */
+	
+	public double avgDouble(T<U,Double> t) {
+		double sum = 0;
+		for(U element : this) sum += t.t(element);
+		return sum/size();
+	}
+	
+	public Point0 avgPoint(T<U,Point0> t) {
+		Point1 p = new Point1();
+		for(U element : this) p.addXY(t.t(element));
+		p.divXY(size());
+		return p;
 	}
 	
 	/*

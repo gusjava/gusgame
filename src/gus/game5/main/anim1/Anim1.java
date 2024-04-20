@@ -77,7 +77,7 @@ public class Anim1 extends Game1 {
 		private Point1 p4 = addStruct(150,100);
 		private Point1 pc = addStruct(avg(p1,p2,p3,p4));
 		
-		private Angle angle = new Angle(0.02);
+		private Angle angle = Angle.angleRad(0.02);
 		private Point0 translation = p(0.5,0);
 
 		protected void draw() {

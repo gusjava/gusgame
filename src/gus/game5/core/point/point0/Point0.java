@@ -26,7 +26,7 @@ public abstract class Point0 {
 	 */
 	
 	public Angle angle() {
-		return new Angle(getX(), getY());
+		return Angle.angleXY(getX(), getY());
 	}
 	
 	/*
@@ -43,6 +43,22 @@ public abstract class Point0 {
 	
 	public double dist(Point0 p) {
 		return UtilDistance.dist(this, p);
+	}
+	
+	/*
+	 * DIST 2
+	 */
+	
+	public double dist2() {
+		return UtilDistance.dist2(getX(), getY());
+	}
+	
+	public double dist2(double x1, double y1) {
+		return UtilDistance.dist2(getX(), getY(), x1, y1);
+	}
+	
+	public double dist2(Point0 p) {
+		return UtilDistance.dist2(this, p);
 	}
 	
 	/*

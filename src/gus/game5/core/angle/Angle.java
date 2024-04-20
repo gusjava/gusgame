@@ -1,35 +1,62 @@
 package gus.game5.core.angle;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import gus.game5.core.point.point1.Point1;
 import gus.game5.core.util.UtilAngle;
+import gus.game5.core.util.UtilDisplay;
 import gus.game5.core.util.UtilRandom;
 
 public class Angle {
 	
-	public static final Angle ANGLE360 = new Angle(Math.PI*2);
-	public static final Angle ANGLE345 = new Angle(Math.PI*23/12);
-	public static final Angle ANGLE330 = new Angle(Math.PI*22/12);
-	public static final Angle ANGLE315 = new Angle(Math.PI*21/12);
-	public static final Angle ANGLE300 = new Angle(Math.PI*20/12);
-	public static final Angle ANGLE285 = new Angle(Math.PI*19/12);
-	public static final Angle ANGLE270 = new Angle(Math.PI*18/12);
-	public static final Angle ANGLE255 = new Angle(Math.PI*17/12);
-	public static final Angle ANGLE240 = new Angle(Math.PI*16/12);
-	public static final Angle ANGLE225 = new Angle(Math.PI*15/12);
-	public static final Angle ANGLE210 = new Angle(Math.PI*14/12);
-	public static final Angle ANGLE195 = new Angle(Math.PI*13/12);
-	public static final Angle ANGLE180 = new Angle(Math.PI);
-	public static final Angle ANGLE165 = new Angle(Math.PI*11/12);
-	public static final Angle ANGLE150 = new Angle(Math.PI*10/12);
-	public static final Angle ANGLE135 = new Angle(Math.PI*9/12);
-	public static final Angle ANGLE120 = new Angle(Math.PI*8/12);
-	public static final Angle ANGLE105 = new Angle(Math.PI*7/12);
-	public static final Angle ANGLE90 = new Angle(Math.PI*6/12);
-	public static final Angle ANGLE75 = new Angle(Math.PI*5/12);
-	public static final Angle ANGLE60 = new Angle(Math.PI*4/12);
-	public static final Angle ANGLE45 = new Angle(Math.PI*3/12);
-	public static final Angle ANGLE30 = new Angle(Math.PI*2/12);
-	public static final Angle ANGLE15 = new Angle(Math.PI*1/12);
+	public static boolean CACHED = false;
+	
+	private static Map<String,Angle> cache = new HashMap<>();
+	
+	public static Angle angleRad(double val) {
+		val = val%PI2;
+		if(CACHED) {
+			String key = UtilDisplay.dec2(val);
+			if(!cache.containsKey(key)) cache.put(key, new Angle(val));
+			return cache.get(key);
+		}
+		return new Angle(val);
+	}
+	
+	public static Angle angleXY(double x, double y) {
+		return angleRad(UtilAngle.computeFromXY(x, y));
+	}
+	
+	
+
+	public static final double PI = Math.PI;
+	public static final double PI2 = Math.PI*2;
+	
+	public static final Angle ANGLE345 = angleRad(PI*23/12);
+	public static final Angle ANGLE330 = angleRad(PI*22/12);
+	public static final Angle ANGLE315 = angleRad(PI*21/12);
+	public static final Angle ANGLE300 = angleRad(PI*20/12);
+	public static final Angle ANGLE285 = angleRad(PI*19/12);
+	public static final Angle ANGLE270 = angleRad(PI*18/12);
+	public static final Angle ANGLE255 = angleRad(PI*17/12);
+	public static final Angle ANGLE240 = angleRad(PI*16/12);
+	public static final Angle ANGLE225 = angleRad(PI*15/12);
+	public static final Angle ANGLE210 = angleRad(PI*14/12);
+	public static final Angle ANGLE195 = angleRad(PI*13/12);
+	public static final Angle ANGLE180 = angleRad(PI);
+	public static final Angle ANGLE165 = angleRad(PI*11/12);
+	public static final Angle ANGLE150 = angleRad(PI*10/12);
+	public static final Angle ANGLE135 = angleRad(PI*9/12);
+	public static final Angle ANGLE120 = angleRad(PI*8/12);
+	public static final Angle ANGLE105 = angleRad(PI*7/12);
+	public static final Angle ANGLE90 = angleRad(PI*6/12);
+	public static final Angle ANGLE75 = angleRad(PI*5/12);
+	public static final Angle ANGLE60 = angleRad(PI*4/12);
+	public static final Angle ANGLE45 = angleRad(PI*3/12);
+	public static final Angle ANGLE30 = angleRad(PI*2/12);
+	public static final Angle ANGLE15 = angleRad(PI*1/12);
+	public static final Angle ANGLE0 = angleRad(0);
 	
 	
 	public static double degToRad(double value) {
@@ -40,20 +67,12 @@ public class Angle {
 		return UtilAngle.radToDeg(value);
 	}
 	
-	public static double radMod(double value) {
-		return UtilAngle.radMod(value);
-	}
-	
-	public static Angle angleRad(double rad) {
-		return new Angle(rad);
-	}
-	
 	public static Angle angleDeg(double deg) {
-		return new Angle(degToRad(deg));
+		return angleRad(degToRad(deg));
 	}
 	
 	public static Angle anglePart(int nb) {
-		return nb!=0 ? ANGLE360.div(nb) : null;
+		return nb!=0 ? angleRad(PI2/nb) : null;
 	}
 	
 	/*
@@ -61,11 +80,11 @@ public class Angle {
 	 */
 	
 	public static Angle random() {
-		return randomRad(Math.PI*2);
+		return randomRad(PI2);
 	}
 	
 	public static Angle randomRad(double limit) {
-		return new Angle(UtilRandom.randomDouble(limit));
+		return angleRad(UtilRandom.randomDouble(limit));
 	}
 	
 	public static Angle randomDeg(double limit) {
@@ -76,16 +95,8 @@ public class Angle {
 
 	private final double value;
 	
-	public Angle() {
-		value = 0;
-	}
-	
-	public Angle(double value) {
+	private Angle(double value) {
 		this.value = value;
-	}
-	
-	public Angle(double x, double y) {
-		this.value = UtilAngle.computeFromXY(x, y);
 	}
 	
 	/*
@@ -101,31 +112,48 @@ public class Angle {
 	}
 	
 	/*
-	 * VALUE MOD
+	 * COS
 	 */
 	
-	public double getValueRadMod() {
-		return radMod(value);
-	}
+	private boolean cosCached = false;
+	private double cos = 0;
 	
-	public double getValueDegMod() {
-		return radToDeg(radMod(value));
+	public double cos() {
+		if(!cosCached) {
+			cos = Math.cos(value);
+			cosCached = true;
+		}
+		return cos;
 	}
 	
 	/*
-	 * COS SIN TAN
+	 * SIN
 	 */
-	
-	public double cos() {
-		return Math.cos(value);
-	}
+
+	private boolean sinCached = false;
+	private double sin = 0;
 	
 	public double sin() {
-		return Math.sin(value);
+		if(!sinCached) {
+			sin = Math.sin(value);
+			sinCached = true;
+		}
+		return sin;
 	}
 	
+	/*
+	 * TAN
+	 */
+
+	private boolean tanCached = false;
+	private double tan = 0;
+	
 	public double tan() {
-		return Math.tan(value);
+		if(!tanCached) {
+			tan = Math.tan(value);
+			tanCached = true;
+		}
+		return tan;
 	}
 	
 	/*
@@ -133,15 +161,15 @@ public class Angle {
 	 */
 	
 	public Angle add(double val) {
-		return new Angle(value+val);
+		return angleRad(value+val);
 	}
 	
 	public Angle add(Angle a) {
-		return new Angle(value+a.value);
+		return add(a.value);
 	}
 	
 	public Angle addDeg(double val) {
-		return new Angle(value+degToRad(val));
+		return add(degToRad(val));
 	}
 	
 
@@ -245,15 +273,15 @@ public class Angle {
 	 */
 	
 	public Angle sub(double val) {
-		return new Angle(value-val);
+		return angleRad(value-val);
 	}
 	
 	public Angle sub(Angle a) {
-		return new Angle(value-a.value);
+		return sub(a.value);
 	}
 	
 	public Angle subDeg(double val) {
-		return new Angle(value-degToRad(val));
+		return sub(degToRad(val));
 	}
 	
 	
@@ -348,13 +376,146 @@ public class Angle {
 	public Angle sub345() {
 		return sub(ANGLE345);
 	}
+
+	
+	/*
+	 * SYM
+	 */
+	
+	public Angle sym(double val) {
+		return angleRad(2*val-value);
+	}
+	
+	public Angle sym(Angle a) {
+		return sym(a.value);
+	}
+	
+	public Angle symDeg(double val) {
+		return sym(degToRad(val));
+	}
+
+	
+	public Angle sym0() {
+		return sym(ANGLE0);
+	}
+	
+	public Angle sym15() {
+		return sym(ANGLE15);
+	}
+	
+	public Angle sym30() {
+		return sym(ANGLE30);
+	}
+	
+	public Angle sym45() {
+		return sym(ANGLE45);
+	}
+	
+	public Angle sym60() {
+		return sym(ANGLE60);
+	}
+	
+	public Angle sym75() {
+		return sym(ANGLE75);
+	}
+	
+	public Angle sym90() {
+		return sym(ANGLE90);
+	}
+	
+	public Angle sym105() {
+		return sym(ANGLE105);
+	}
+	
+	public Angle sym120() {
+		return sym(ANGLE120);
+	}
+	
+	public Angle sym135() {
+		return sym(ANGLE135);
+	}
+	
+	public Angle sym150() {
+		return sym(ANGLE150);
+	}
+	
+	public Angle sym165() {
+		return sym(ANGLE165);
+	}
+	
+	public Angle sym180() {
+		return sym(ANGLE180);
+	}
+	
+	public Angle sym195() {
+		return sym(ANGLE195);
+	}
+	
+	public Angle sym210() {
+		return sym(ANGLE210);
+	}
+	
+	public Angle sym225() {
+		return sym(ANGLE225);
+	}
+	
+	public Angle sym240() {
+		return sym(ANGLE240);
+	}
+	
+	public Angle sym255() {
+		return sym(ANGLE255);
+	}
+	
+	public Angle sym270() {
+		return sym(ANGLE270);
+	}
+	
+	public Angle sym285() {
+		return sym(ANGLE285);
+	}
+	
+	public Angle sym300() {
+		return sym(ANGLE300);
+	}
+	
+	public Angle sym315() {
+		return sym(ANGLE315);
+	}
+	
+	public Angle sym330() {
+		return sym(ANGLE330);
+	}
+	
+	public Angle sym345() {
+		return sym(ANGLE345);
+	}
+	
+	/*
+	 * APPROACH
+	 */
+	
+	public Angle approach(Angle target, double d) {
+		//TODO debug
+		if(target.value-value<PI) return add(d);
+		return sub(d);
+	}
+	
+	public Angle approach(Angle target, Angle a) {
+		return approach(target, a.value);
+	}
+	
+	public Angle approachDeg(Angle target, double val) {
+		return approach(target, degToRad(val));
+	}
+
 	
 	/*
 	 * MULT
 	 */
 	
 	public Angle mult(double val) {
-		return new Angle(value*val);
+		return angleRad(value*val);
 	}
 	
 	/*
@@ -363,7 +524,7 @@ public class Angle {
 	
 	public Angle div(double val) {
 		if(val==0) return null;
-		return new Angle(value/val);
+		return angleRad(value/val);
 	}
 	
 	/*
@@ -371,7 +532,7 @@ public class Angle {
 	 */
 	
 	public Angle inv() {
-		return new Angle(value*-1);
+		return angleRad(value*-1);
 	}
 	
 	/*
@@ -379,7 +540,7 @@ public class Angle {
 	 */
 	
 	public Angle suppl() {
-		return new Angle(Math.PI-value);
+		return angleRad(PI-value);
 	}
 	
 	/*
@@ -387,7 +548,7 @@ public class Angle {
 	 */
 	
 	public Angle compl() {
-		return new Angle(Math.PI/2-value);
+		return angleRad(PI/2-value);
 	}
 	
 	/*
@@ -408,6 +569,10 @@ public class Angle {
 	
 	public Point1 pointAt(double dist) {
 		return new Point1(dist, this);
+	}
+	
+	public Point1 point() {
+		return new Point1(this);
 	}
 	
 }
