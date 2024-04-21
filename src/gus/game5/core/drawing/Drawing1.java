@@ -214,12 +214,12 @@ public abstract class Drawing1 extends Drawing0 {
 		g2_drawRect(p0, width, height);
 	}
 	
-	protected void drawRect(Point0 p0, double width, double height) {
-		drawRect(color, p0, width, height);
-	}
-	
 	protected void drawRect(Color color, double width, double height) {
 		drawRect(color, p(0,0), width, height);
+	}
+	
+	protected void drawRect(Point0 p0, double width, double height) {
+		drawRect(color, p0, width, height);
 	}
 	
 	protected void drawRect(double width, double height) {
@@ -235,12 +235,12 @@ public abstract class Drawing1 extends Drawing0 {
 		g2_drawRectC(pc, width, height);
 	}
 	
-	protected void drawRectC(Point0 pc, double width, double height) {
-		drawRectC(color, pc, width, height);
-	}
-	
 	protected void drawRectC(Color color, double width, double height) {
 		drawRectC(color, p(0,0), width, height);
+	}
+	
+	protected void drawRectC(Point0 pc, double width, double height) {
+		drawRectC(color, pc, width, height);
 	}
 	
 	protected void drawRectC(double width, double height) {
@@ -255,16 +255,16 @@ public abstract class Drawing1 extends Drawing0 {
 		drawRect(color, p0, c, c);
 	}
 	
-	protected void drawSquare(Point0 p0, double c) {
-		drawSquare(color, p0, c);
-	}
-	
 	protected void drawSquare(Color color, double c) {
 		drawSquare(color, p(0, 0), c);
 	}
 	
+	protected void drawSquare(Point0 p0, double c) {
+		drawSquare(color, p0, c);
+	}
+	
 	protected void drawSquare(double c) {
-		drawSquare(color, c);
+		drawSquare(color, p(0, 0), c);
 	}
 	
 	/*
@@ -275,16 +275,16 @@ public abstract class Drawing1 extends Drawing0 {
 		drawRectC(color, pc, c, c);
 	}
 	
-	protected void drawSquareC(Point0 pc, double c) {
-		drawSquareC(color, pc, c);
-	}
-	
 	protected void drawSquareC(Color color, double c) {
 		drawSquareC(color, p(0, 0), c);
 	}
 	
+	protected void drawSquareC(Point0 pc, double c) {
+		drawSquareC(color, pc, c);
+	}
+	
 	protected void drawSquareC(double c) {
-		drawSquareC(color, c);
+		drawSquareC(color, p(0, 0), c);
 	}
 	
 	/*
@@ -296,12 +296,12 @@ public abstract class Drawing1 extends Drawing0 {
 		g2_drawOval(p0, width, height);
 	}
 	
-	protected void drawOval(Point0 p0, double width, double height) {
-		drawOval(color, p0, width, height);
-	}
-	
 	protected void drawOval(Color color, double width, double height) {
 		drawOval(color, p(0,0), width, height);
+	}
+	
+	protected void drawOval(Point0 p0, double width, double height) {
+		drawOval(color, p0, width, height);
 	}
 	
 	protected void drawOval(double width, double height) {
@@ -317,12 +317,12 @@ public abstract class Drawing1 extends Drawing0 {
 		g2_drawOvalC(pc, width, height);
 	}
 	
-	protected void drawOvalC(Point0 pc, double width, double height) {
-		drawOvalC(color, pc, width, height);
-	}
-	
 	protected void drawOvalC(Color color, double width, double height) {
 		drawOvalC(color, p(0,0), width, height);
+	}
+	
+	protected void drawOvalC(Point0 pc, double width, double height) {
+		drawOvalC(color, pc, width, height);
 	}
 	
 	protected void drawOvalC(double width, double height) {
@@ -638,12 +638,43 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	protected void drawLine(Color color, Point0 p2) {
-		g2_setColor(color);
-		g2_drawLine(p(0,0), p2);
+		drawLine(color, p(0,0), p2);
 	}
 	
 	protected void drawLine(Point0 p2) {
 		drawLine(color, p2);
+	}
+	
+	/*
+	 * DRAW THICK LINE
+	 * TODO mieux gérer l'épaisseur du trait avec les arrondis
+	 */
+	
+	protected void drawThickLine(Color color, Point0 p1, Point0 p2, double thickness) {
+		Angle a = p2.pSub(p1).angle();
+		Angle a1 = a.add90();
+		double d = thickness*0.5;
+		
+		Point0 p1a = p1.pAdd(d, a1);
+		Point0 p1b = p1.pAdd(-d, a1);
+		
+		Point0 p2a = p2.pAdd(d, a1);
+		Point0 p2b = p2.pAdd(-d, a1);
+		
+		g2_setColor(color);
+		g2_fillPoly(p1a, p1b, p2b, p2a);
+	}
+	
+	protected void drawThickLine(Point0 p1, Point0 p2, double thickness) {
+		drawThickLine(color, p1, p2, thickness);
+	}
+	
+	protected void drawThickLine(Color color, Point0 p2, double thickness) {
+		drawThickLine(color, p(0,0), p2, thickness);
+	}
+	
+	protected void drawThickLine(Point0 p2, double thickness) {
+		drawThickLine(color, p2, thickness);
 	}
 	
 	/*

@@ -575,4 +575,28 @@ public class Angle {
 		return new Point1(this);
 	}
 	
+	/*
+	 * X
+	 */
+	
+	public double xAt(double dist) {
+		return dist*cos();
+	}
+	
+	public double x() {
+		return cos();
+	}
+	
+	/*
+	 * Y
+	 */
+	
+	public double yAt(double dist) {
+		return dist*sin();
+	}
+	
+	public double y() {
+		return sin();
+	}
+	
 }
