@@ -26,10 +26,18 @@ public class MainDraws extends Game {
 	
 	private Drawing1 drawing = new Drawing1() {
 		protected void draw() {
+			
+			// thick line
 			for(int i=1;i<10;i++) {
 				double thickness = i*0.5;
 				drawThickLine(p(100,200+i*20), p(150,250+i*20), thickness);
 				drawString(p(160,250+i*20), ""+thickness);
+			}
+			
+			// draw string center
+			for(int i=0;i<13;i++) {
+				drawStringC(font(20), p(100+i*30,150), ""+i);
+				drawPoint(Color.RED, p(100+i*30,150));
 			}
 		}
 	};

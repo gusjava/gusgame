@@ -2,10 +2,12 @@ package gus.game5.core.drawing;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Paint;
 import java.awt.Polygon;
+import java.awt.font.FontRenderContext;
 import java.awt.geom.Arc2D;
 import java.awt.image.RenderedImage;
 
@@ -170,6 +172,26 @@ public abstract class Drawing0 implements Draw {
 	protected void g2_drawString(Point0 p, String text) {
 		p = alterPoint(p);
 		g2.drawString(text, (int) p.getX(), (int) p.getY());
+	}
+	
+	/*
+	 * G2 : FONT METRICS
+	 */
+	
+	protected FontMetrics getFontMetrics() {
+		return g2.getFontMetrics();
+	}
+	
+	protected FontMetrics getFontMetrics(Font font) {
+		return g2.getFontMetrics(font);
+	}
+	
+	/*
+	 * G2 : FONT RENDER CONTEXT
+	 */
+	
+	protected FontRenderContext getFontRenderContext() {
+		return g2.getFontRenderContext();
 	}
 	
 	/*

@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Paint;
 import java.awt.RadialGradientPaint;
+import java.awt.Rectangle;
+import java.awt.font.GlyphVector;
 import java.awt.geom.Point2D;
 import java.awt.image.RenderedImage;
 
@@ -245,6 +247,18 @@ public abstract class Drawing1 extends Drawing0 {
 	
 	protected void drawRectC(double width, double height) {
 		drawRectC(color, p(0,0), width, height);
+	}
+	
+	/*
+	 * DRAW POINT
+	 */
+	
+	protected void drawPoint(Color color, Point0 p) {
+		drawSquare(color, p, 1);
+	}
+	
+	protected void drawPoint(Point0 p) {
+		drawPoint(color, p);
 	}
 	
 	/*
@@ -746,6 +760,44 @@ public abstract class Drawing1 extends Drawing0 {
 	
 	protected void drawString(String text) {
 		drawString(p(0,0), text);
+	}
+	
+	/*
+	 * DRAW STRING C
+	 */
+	
+	protected void drawStringC(Color color, Font font, Point0 p, String text) {
+		g2_setColor(color);
+		g2_setFont(font);
+		
+//		FontMetrics fm = getFontMetrics();
+//		int width = fm.stringWidth(text);
+//		int height = fm.getHeight();
+		
+		GlyphVector gv = font.createGlyphVector(getFontRenderContext(), text);
+		Rectangle rect = gv.getPixelBounds(null, 0, 0);
+		int height = rect.height;
+		int width = rect.width;
+		
+		Point0 p1 = p.pAdd(-width*0.5, height*0.5);
+		g2_drawString(p1, text);
+		
+	}
+	
+	protected void drawStringC(Color color, Point0 p, String text) {
+		drawStringC(color, font, p, text);
+	}
+	
+	protected void drawStringC(Font font, Point0 p, String text) {
+		drawStringC(color, font, p, text);
+	}
+	
+	protected void drawStringC(Point0 p, String text) {
+		drawStringC(color, font, p, text);
+	}
+	
+	protected void drawStringC(String text) {
+		drawStringC(p(0,0), text);
 	}
 	
 	/*
