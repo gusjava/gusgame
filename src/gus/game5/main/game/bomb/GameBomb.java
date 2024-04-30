@@ -7,7 +7,6 @@ import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point0.Point0;
-import gus.game5.core.point.point1.Point1;
 import gus.game5.core.shape.ShapeList;
 import gus.game5.core.shape.ShapeRound;
 import gus.game5.core.util.UtilRandom;
@@ -74,19 +73,19 @@ public class GameBomb extends Game1 {
 		bonusList = newShapeList();
 		shotList = newShapeList();
 		
-		DrawingText lifeText = newDrawingText(new Point1(30, 40), ()->"life: "+life);
+		DrawingText lifeText = newDrawingText(p1(30, 40), ()->"life: "+life);
 		lifeText.setFontBold(20);
 		
-		DrawingText killedText = newDrawingText(new Point1(30, 70), ()->"killed: "+killedNb);
+		DrawingText killedText = newDrawingText(p1(30, 70), ()->"killed: "+killedNb);
 		killedText.setFontBold(20);
 		
-		DrawingText shotText = newDrawingText(new Point1(30, 100), ()->"shot: "+shotNb);
+		DrawingText shotText = newDrawingText(p1(30, 100), ()->"shot: "+shotNb);
 		shotText.setFontBold(20);
 		
-		DrawingText freezeText = newDrawingText(Color.CYAN, new Point1(800, 40), ()->"freeze: "+energy/FREEZE_ENERGY);
+		DrawingText freezeText = newDrawingText(Color.CYAN, p1(800, 40), ()->"freeze: "+energy/FREEZE_ENERGY);
 		freezeText.setFontBold(20);
 		
-		DrawingText gameOverText = newDrawingText(Color.RED, new Point1(300, 200), "GAME OVER");
+		DrawingText gameOverText = newDrawingText(Color.RED, p1(300, 200), "GAME OVER");
 		gameOverText.setFontBold(70);
 		gameOverText.setDrawable(()->gameOver);
 	}

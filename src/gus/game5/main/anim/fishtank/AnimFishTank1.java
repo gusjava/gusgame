@@ -1,4 +1,4 @@
-package gus.game5.main.anim.fishtank1;
+package gus.game5.main.anim.fishtank;
 
 import java.awt.Color;
 
