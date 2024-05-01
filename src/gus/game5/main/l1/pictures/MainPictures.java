@@ -29,12 +29,17 @@ public class MainPictures extends Game1 {
 	
 	private Pictures pictures;
 	private Clock clock;
+	private Cloud cloud;
+	
 	
 	protected void initialize1() {
 		pictures = new Pictures();
 		clock = new Clock();
+		cloud = new Cloud(p1(300, 100), 20);
+		
 		
 		newShape(clock);
+		newShape(cloud);
 		addDraw(pictures);
 	}
 
@@ -42,6 +47,26 @@ public class MainPictures extends Game1 {
 		Keyboard k = keyboard();
 		if(k.F1())	restart();
 		if(k.F2())	exit();	
+		
+		goNext();
+	}
+	
+	private class Cloud extends ShapeRound {
+
+		public Cloud(Point0 anchor, double radius) {
+			super(anchor, radius);
+			
+			setColor(Color.WHITE);
+			getAnchor().initDerived().setX(2);
+		}
+		
+		public void goNext() {
+			super.goNext();
+			if(getAnchor().getX()>850) {
+				getAnchor().setX(-50);
+			}
+		}
+		
 	}
 	
 	private class Pictures extends Drawing1 {
@@ -53,31 +78,42 @@ public class MainPictures extends Game1 {
 
 			// dessin de la verdure
 
-			Point0 p1 = p1(0, 780);
+			fillRect(Color.GREEN, p1(0, 780), 800, 20);
 
-			fillRect(Color.GREEN, p1, 800, 20);
-
-			// dessin de l'arbre 1
+			// dessin de l'arbre 
 
 			// dessin du tronc
 
-			Point0 p2 = p1(625, 400);
-
-			fillRect(new Color(165, 42, 42), p2, 100, 380);
+			fillRect(new Color(165, 42, 42), p1(625, 400), 100, 380);
 
 			// dessin des feuilles
 
-			Point0 p3 = p1(600, 250);
-
-			fillOval(Color.GREEN, p3, 150, 200);
+			fillOval(Color.GREEN, p1(600, 250), 150, 200);
 
 			// dessin des nuages
 			
+		
 			
 			
 			// dessin d'une pancarte
 			
-			Point0 p4 = p1();
+			// dessin du premier poteau
+
+			fillRect(new Color(165, 42, 42), p1(400, 700), 15, 80);
+
+			// dessin du deuxième poteau
+
+			fillRect(new Color(165, 42, 42), p1(315, 700), 15, 80);
+			
+			// dessin de la plaque
+
+			fillRect(new Color(165, 42, 42), p1(275, 625), 180, 75);
+			
+			// écriture
+
+			drawStringC(Color.WHITE, fontPlain(30), p1(365, 660), "Bienvenue !");
+			
+			
 			
 			
 			

@@ -2,11 +2,10 @@ package gus.game5.core.drawing;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Image;
 import java.awt.Paint;
 import java.awt.RadialGradientPaint;
-import java.awt.Rectangle;
-import java.awt.font.GlyphVector;
 import java.awt.geom.Point2D;
 import java.awt.image.RenderedImage;
 
@@ -770,14 +769,9 @@ public abstract class Drawing1 extends Drawing0 {
 		g2_setColor(color);
 		g2_setFont(font);
 		
-//		FontMetrics fm = getFontMetrics();
-//		int width = fm.stringWidth(text);
-//		int height = fm.getHeight();
-		
-		GlyphVector gv = font.createGlyphVector(getFontRenderContext(), text);
-		Rectangle rect = gv.getPixelBounds(null, 0, 0);
-		int height = rect.height;
-		int width = rect.width;
+		FontMetrics fm = getFontMetrics();
+		int width = fm.stringWidth(text);
+		int height = fm.getAscent();
 		
 		Point0 p1 = p.pAdd(-width*0.5, height*0.5);
 		g2_drawString(p1, text);
