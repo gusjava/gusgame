@@ -3,6 +3,7 @@ package gus.game5.main.game.reversi;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,10 +68,14 @@ public class GameReversi extends Game1 {
 	
 	protected void initMenuBar(JMenuBar1 menuBar) {
 		menuBar.add("Game", 
-			action("Restart", this::restart),
-			action("Exit", this::exit)
+			action("New game (F1)", this::restart),
+			action("Exit (F2)", this::exit)
 		);
 	}
+	
+	/*
+	 * SETTINGS
+	 */
 	
 	protected void initSettings(Settings s) {
 		s.setTitle(TITLE);
@@ -78,16 +83,25 @@ public class GameReversi extends Game1 {
 		s.setHeight(BOARD_SIZE);
 		s.setSleep(10);
 		s.setBackground(Color.WHITE);
+		s.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 	}
+	
+	/*
+	 * DATA
+	 */
 
+	private GameOver gameOver;
 	private Side player;
-	private Side winner;
 	private Cell[][] board;
 	private JLabel labelInfo;
 	
+	/*
+	 * INITIALIZE
+	 */
+	
 	protected void initialize1() {
+		gameOver = null;
 		changePlayer(Side.WHITE);
-		winner = null;
 		
 		board = new Cell[8][8];
 		for(int i=0;i<8;i++)
@@ -100,6 +114,10 @@ public class GameReversi extends Game1 {
 		gameOverText.setFontBold(40);
 		gameOverText.setDrawable(this::isGameOver);
 	}
+	
+	/*
+	 * TURN
+	 */
 
 	protected void turn() {
 		Keyboard k = keyboard();
@@ -126,34 +144,13 @@ public class GameReversi extends Game1 {
 	}
 	
 	private void finishGame() {
-		winner = findWinner();
-		if(winner.isEmpty()) 
-			labelInfo.setText(" Draw");
-		else labelInfo.setText(" "+winner.getLabel()+" won the game");
+		gameOver = new GameOver();
+		labelInfo.setText(" " + gameOver.getDescription());
 	}
-	
 	
 	private boolean isGameOver() {
-		return winner!=null;
+		return gameOver!=null;
 	}
-	
-	private Side findWinner() {
-		int scoreWhite = 0;
-		int scoreBlack = 0;
-		
-		for(int i=0;i<8;i++)
-		for(int j=0;j<8;j++) {
-			switch(board[i][j].getSide()) {
-			case WHITE: scoreWhite++;break;
-			case BLACK: scoreBlack++;break;
-			case EMPTY: break;
-			};
-		}
-		if(scoreWhite > scoreBlack) return Side.WHITE;
-		if(scoreBlack > scoreWhite) return Side.BLACK;
-		return Side.EMPTY;
-	}
-	
 	
 	private boolean isBoardPlayable() {
 		for(int i=0;i<8;i++)
@@ -163,8 +160,6 @@ public class GameReversi extends Game1 {
 		}
 		return false;
 	}
-	
-	
 	
 	private boolean attemptToPlay() {
 		Cell c = findClickedCell();
@@ -275,6 +270,37 @@ public class GameReversi extends Game1 {
 			if(i1<0 || i1>7) return null;
 			if(j1<0 || j1>7) return null;
 			return board[i1][j1];
+		}
+	}
+	
+	/*
+	 * GAME OVER
+	 */
+	
+	private class GameOver {
+		private Side winner;
+		private int scoreWinner;
+		private int scoreLoser;
+		
+		public GameOver() {
+			int scoreWhite = 0;
+			int scoreBlack = 0;
+			for(int i=0;i<8;i++)
+			for(int j=0;j<8;j++) {
+				switch(board[i][j].getSide()) {
+				case WHITE: scoreWhite++;break;
+				case BLACK: scoreBlack++;break;
+				case EMPTY: break;
+				};
+			}
+			scoreWinner = Math.max(scoreWhite, scoreBlack);
+			scoreLoser = Math.min(scoreWhite, scoreBlack);
+			winner = scoreWhite > scoreBlack ? Side.WHITE : scoreBlack > scoreWhite ? Side.BLACK : Side.EMPTY;
+		}
+		
+		public String getDescription() {
+			if(winner.isEmpty()) return "Draw";
+			return winner.getLabel()+" won the game (" + scoreWinner + "/" + scoreLoser + ")";
 		}
 	}
 }

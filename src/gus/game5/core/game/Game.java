@@ -246,11 +246,14 @@ public abstract class Game {
 	
 	
 	protected void initLookAndFeel() {
-		FontUIResource fontUI = new FontUIResource("Comic Sans MS", Font.PLAIN, 12);
-		UIManager.put("Frame.font", fontUI);
-		UIManager.put("Menu.font", fontUI);
-		UIManager.put("MenuItem.font", fontUI);
-		UIManager.put("Label.font", fontUI);
+		Font font = settings.getFont();
+		if(font!=null) {
+			FontUIResource fontUI = new FontUIResource(font);
+			UIManager.put("Frame.font", fontUI);
+			UIManager.put("Menu.font", fontUI);
+			UIManager.put("MenuItem.font", fontUI);
+			UIManager.put("Label.font", fontUI);
+		}
 	}
 	
 	/*
