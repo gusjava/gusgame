@@ -1,2 +1,5 @@
-*
-!/src/
+/.settings/
+/bin/
+/notes/
+.classpath
+.project

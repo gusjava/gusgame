@@ -76,6 +76,10 @@ public class Settings {
 		this.height = height;
 	}
 	
+	public void setSize(int length) {
+		setSize(length, length);
+	}
+	
 	/*
 	 * FONT
 	 */
