@@ -30,7 +30,11 @@ public class DrawingText extends Drawing1 {
 		this(origin, ()->text);
 	}
 	
+	public String getString() {
+		return gString.g();
+	}
+	
 	protected void draw() {
-		drawString(gString.g());
+		drawString(getString());
 	}
 }

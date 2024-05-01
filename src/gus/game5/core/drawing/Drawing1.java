@@ -148,34 +148,68 @@ public abstract class Drawing1 extends Drawing0 {
 		setFont(fontPlain(size));
 	}
 	
-	
 	public Font getFont() {
 		return font;
 	}
 	
-	public Font fontBold() {
-		return font.deriveFont(Font.BOLD);
-	}
-	public Font fontItalic() {
-		return font.deriveFont(Font.ITALIC);
-	}
-	public Font fontPlain() {
-		return font.deriveFont(Font.PLAIN);
-	}
+	/*
+	 * FONT SIZE
+	 */
 	
 	public Font font(int size) {
 		return font.deriveFont((float) size);
 	}
+	
+	/*
+	 * FONT BOLD
+	 */
+	
+	public Font fontBold() {
+		return font.deriveFont(Font.BOLD);
+	}
+	public Font fontBold(String name) {
+		return new Font(name, Font.BOLD, font.getSize());
+	}
 	public Font fontBold(int size) {
 		return font.deriveFont(Font.BOLD).deriveFont((float) size);
+	}
+	public Font fontBold(String name, int size) {
+		return new Font(name, Font.BOLD, size);
+	}
+	
+	/*
+	 * FONT ITALIC
+	 */
+	
+	public Font fontItalic() {
+		return font.deriveFont(Font.ITALIC);
+	}
+	public Font fontItalic(String name) {
+		return new Font(name, Font.ITALIC, font.getSize());
 	}
 	public Font fontItalic(int size) {
 		return font.deriveFont(Font.ITALIC).deriveFont((float) size);
 	}
+	public Font fontItalic(String name, int size) {
+		return new Font(name, Font.ITALIC, size);
+	}
+	
+	/*
+	 * FONT PLAIN
+	 */
+	
+	public Font fontPlain() {
+		return font.deriveFont(Font.PLAIN);
+	}
+	public Font fontPlain(String name) {
+		return new Font(name, Font.PLAIN, font.getSize());
+	}
 	public Font fontPlain(int size) {
 		return font.deriveFont(Font.PLAIN).deriveFont((float) size);
 	}
-	
+	public Font fontPlain(String name, int size) {
+		return new Font(name, Font.PLAIN, size);
+	}
 
 	
 	/*
@@ -611,17 +645,26 @@ public abstract class Drawing1 extends Drawing0 {
 	 * FILL ROUND C
 	 */
 	
+	protected void fillRoundC(Paint paint, Point0 pc, double radius) {
+		g2_setPaint(paint);
+		g2_fillOvalC(pc, radius*2, radius*2);
+	}
+	
+	protected void fillRoundC(Paint paint, double radius) {
+		fillRoundC(paint, p(0,0), radius);
+	}
+	
 	protected void fillRoundC(Color color, Point0 pc, double radius) {
 		g2_setColor(color);
 		g2_fillOvalC(pc, radius*2, radius*2);
 	}
 	
-	protected void fillRoundC(Point0 pc, double radius) {
-		fillRoundC(color, pc, radius);
-	}
-	
 	protected void fillRoundC(Color color, double radius) {
 		fillRoundC(color, p(0,0), radius);
+	}
+	
+	protected void fillRoundC(Point0 pc, double radius) {
+		fillRoundC(color, pc, radius);
 	}
 	
 	protected void fillRoundC(double radius) {
@@ -797,6 +840,12 @@ public abstract class Drawing1 extends Drawing0 {
 	/*
 	 * BUILD CIRCULAR GRADIENT
 	 */
+	
+
+	
+	protected Paint buildCircularGradient(double radius, Color color1, Color color2) {
+		return buildCircularGradient(p(0,0), radius, color1, color2);
+	}
 	
 	protected Paint buildCircularGradient(Point0 pc, double radius, Color color1, Color color2) {
 		pc = alterPoint(pc);

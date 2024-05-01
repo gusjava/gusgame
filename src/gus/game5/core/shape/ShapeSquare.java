@@ -7,6 +7,8 @@ import gus.game5.core.point.point2.Point2;
 
 public class ShapeSquare extends Shape0 {
 	
+	// ANCHOR P0
+	
 	public ShapeSquare(Point0 anchor, double length, Color color, AnchorType type) {
 		super(anchor, length, length, type);
 		this.color = color;
@@ -16,6 +18,17 @@ public class ShapeSquare extends Shape0 {
 		this(anchor, length, Color.BLACK, type);
 	}
 	
+	public ShapeSquare(Point0 anchor, double length, Color color) {
+		super(anchor, length, length);
+		this.color = color;
+	}
+
+	public ShapeSquare(Point0 anchor, double length) {
+		this(anchor, length, Color.BLACK);
+	}
+	
+	// ANCHOR P2
+	
 	public ShapeSquare(Point2 anchor, double length, Color color, AnchorType type) {
 		super(anchor, length, length, type);
 		this.color = color;
@@ -24,6 +37,19 @@ public class ShapeSquare extends Shape0 {
 	public ShapeSquare(Point2 anchor, double length, AnchorType type) {
 		this(anchor, length, Color.BLACK, type);
 	}
+	
+	public ShapeSquare(Point2 anchor, double length, Color color) {
+		super(anchor, length, length);
+		this.color = color;
+	}
+
+	public ShapeSquare(Point2 anchor, double length) {
+		this(anchor, length, Color.BLACK);
+	}
+	
+	/*
+	 * DRAW
+	 */
 
 	protected void drawShape() {
 		fillSquareC(getLength());

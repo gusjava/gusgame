@@ -9,6 +9,7 @@ import gus.game5.core.clean.CleanList;
 import gus.game5.core.draw.Draw;
 import gus.game5.core.draw.DrawList;
 import gus.game5.core.drawing.DrawingText;
+import gus.game5.core.drawing.DrawingTextC;
 import gus.game5.core.dyn.Dyn;
 import gus.game5.core.dyn.DynList;
 import gus.game5.core.features.g.G;
@@ -17,11 +18,11 @@ import gus.game5.core.point.point0.Point0;
 import gus.game5.core.point.point1.Point1;
 import gus.game5.core.point.point2.Point2;
 import gus.game5.core.shape.Shape;
+import gus.game5.core.shape.Shape0.AnchorType;
 import gus.game5.core.shape.ShapeImg;
 import gus.game5.core.shape.ShapeList;
 import gus.game5.core.shape.ShapeRect;
 import gus.game5.core.shape.ShapeRound;
-import gus.game5.core.shape.Shape0.AnchorType;
 
 public abstract class Game1 extends Game {
 	
@@ -246,13 +247,41 @@ public abstract class Game1 extends Game {
 	}
 	
 	protected DrawingText newDrawingText(Point1 origin, G<String> gString) {
-		DrawingText draw = new DrawingText( origin, gString);
+		DrawingText draw = new DrawingText(origin, gString);
 		addDraw(draw);
 		return draw;
 	}
 	
 	protected DrawingText newDrawingText(Point1 origin, String text) {
-		DrawingText draw = new DrawingText( origin, text);
+		DrawingText draw = new DrawingText(origin, text);
+		addDraw(draw);
+		return draw;
+	}
+	
+	/*
+	 * NEW DRAWING TEXT C
+	 */
+	
+	protected DrawingText newDrawingTextC(Color color, Point1 origin, G<String> gString) {
+		DrawingText draw = new DrawingTextC(color, origin, gString);
+		addDraw(draw);
+		return draw;
+	}
+	
+	protected DrawingText newDrawingTextC(Color color, Point1 origin, String text) {
+		DrawingText draw = new DrawingTextC(color, origin, text);
+		addDraw(draw);
+		return draw;
+	}
+	
+	protected DrawingText newDrawingTextC(Point1 origin, G<String> gString) {
+		DrawingText draw = new DrawingTextC(origin, gString);
+		addDraw(draw);
+		return draw;
+	}
+	
+	protected DrawingText newDrawingTextC(Point1 origin, String text) {
+		DrawingText draw = new DrawingTextC(origin, text);
 		addDraw(draw);
 		return draw;
 	}

@@ -1,10 +1,18 @@
 package gus.game5.core.game;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
 
 import gus.game5.core.angle.Angle;
 import gus.game5.core.draw.Draw;
@@ -83,7 +91,7 @@ public abstract class Game {
 	
 	public void start() {
 		if(thread!=null) throw new RuntimeException("Game already started");
-
+		
 		initialize();
 		thread = new Thread1();
 		thread.start();
@@ -104,20 +112,6 @@ public abstract class Game {
 		
 		initialize();
 		reset();
-	}
-	
-	public JFrame displayInWindows() {
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setContentPane(panel);
-		frame.setResizable(false);
-		frame.setTitle(settings.getTitle());
-		
-		frame.setVisible(true);
-		frame.pack();
-		frame.setLocationRelativeTo(null);
-		
-		return frame;
 	}
 	
 	
@@ -145,6 +139,10 @@ public abstract class Game {
 		return time;
 	}
 	
+	public JPanel panel() {
+		return panel;
+	}
+	
 	public int gameWidth() {
 		return settings.getWidth();
 	}
@@ -153,7 +151,7 @@ public abstract class Game {
 		return settings.getHeight();
 	}
 	
-	public Point0 gameCenter() {
+	public Point1 gameCenter() {
 		return new Point1(gameWidth()/2, gameHeight()/2);
 	}
 	
@@ -209,6 +207,64 @@ public abstract class Game {
 	}
 	public Point2 p2() {
 		return new Point2();
+	}
+	
+	
+	/*
+	 * DISPLAY
+	 */
+	
+	public JFrame displayInWindows() {
+		initLookAndFeel();
+		
+		JFrame frame = new JFrame();
+		initFrame(frame);
+		
+		JMenuBar1 menuBar = new JMenuBar1();
+		initMenuBar(menuBar);
+		frame.setJMenuBar(menuBar);
+		
+		frame.setVisible(true);
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		
+		return frame;
+	}
+	
+	protected void initFrame(JFrame frame) {
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setContentPane(buildContentPane());
+		frame.setResizable(false);
+		frame.setTitle(settings.getTitle());
+	}
+	
+	protected Container buildContentPane() {
+		return panel;
+	}
+	
+	protected void initMenuBar(JMenuBar1 menuBar) {}
+	
+	
+	protected void initLookAndFeel() {
+		FontUIResource fontUI = new FontUIResource("Comic Sans MS", Font.PLAIN, 12);
+		UIManager.put("Frame.font", fontUI);
+		UIManager.put("Menu.font", fontUI);
+		UIManager.put("MenuItem.font", fontUI);
+		UIManager.put("Label.font", fontUI);
+	}
+	
+	/*
+	 * ACTION
+	 */
+	
+	public Action action(String name, Runnable r) {
+		return new AbstractAction(name) {
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+				r.run();
+			}
+		};
 	}
 	
 	
