@@ -1,6 +1,7 @@
 package gus.game5.core.game;
 
 import java.awt.Color;
+import java.awt.Font;
 
 public class Settings {
 
@@ -9,6 +10,7 @@ public class Settings {
 	private int height = 700;
 	private long sleep = 10;
 	private Color background;
+	private Font font;
 	
 	/*
 	 * TITLE
@@ -72,5 +74,21 @@ public class Settings {
 	public void setSize(int width, int height) {
 		this.width = width;
 		this.height = height;
+	}
+	
+	public void setSize(int length) {
+		setSize(length, length);
+	}
+	
+	/*
+	 * FONT
+	 */
+	
+	public Font getFont() {
+		return font;
+	}
+	
+	public void setFont(Font font) {
+		this.font = font;
 	}
 }

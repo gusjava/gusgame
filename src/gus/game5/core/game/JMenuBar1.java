@@ -9,7 +9,10 @@ public class JMenuBar1 extends JMenuBar {
 
 	public void add(String title, Action... actions) {
 		JMenu menu = new JMenu(title);
-		for(Action action : actions) menu.add(action);
+		for(Action action : actions) {
+			if(action!=null) menu.add(action);
+			else menu.addSeparator();
+		}
 		super.add(menu);
 	}
 }
