@@ -9,8 +9,10 @@ import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point0.Point0;
+import gus.game5.core.shape.ShapeList;
 import gus.game5.core.shape.ShapeRound;
 import gus.game5.core.util.UtilDate;
+import gus.game5.core.util.UtilRandom;
 
 public class MainPictures extends Game1 {
 	
@@ -29,17 +31,24 @@ public class MainPictures extends Game1 {
 	
 	private Pictures pictures;
 	private Clock clock;
-	private Cloud cloud;
+	private ShapeList<Cloud> clouds;
 	
 	
 	protected void initialize1() {
 		pictures = new Pictures();
 		clock = new Clock();
-		cloud = new Cloud(p1(300, 100), 20);
+		clouds = newShapeList();
 		
+		int nb = UtilRandom.randomInt(5, 20);
+		for(int i=0; i<nb; i++) {
+			double x = UtilRandom.randomDouble(100, 700);
+			double y = UtilRandom.randomDouble(15, 500);
+			double r = UtilRandom.randomDouble(12, 50);
+			
+			clouds.add(new Cloud(p1(x, y), r));
+		}
 		
 		newShape(clock);
-		newShape(cloud);
 		addDraw(pictures);
 	}
 
@@ -47,6 +56,14 @@ public class MainPictures extends Game1 {
 		Keyboard k = keyboard();
 		if(k.F1())	restart();
 		if(k.F2())	exit();	
+		
+		if(UtilRandom.chance(10)) {
+			double x = -50;
+			double y = UtilRandom.randomDouble(15, 500);
+			double r = UtilRandom.randomDouble(12, 50);
+			
+			clouds.add(new Cloud(p1(x, y), r));
+		}
 		
 		goNext();
 	}
@@ -56,15 +73,18 @@ public class MainPictures extends Game1 {
 		public Cloud(Point0 anchor, double radius) {
 			super(anchor, radius);
 			
-			setColor(Color.WHITE);
+			
+			int c = UtilRandom.randomInt(200, 255);
+			setColor(new Color(c, c, c));
 			getAnchor().initDerived().setX(2);
 		}
 		
 		public void goNext() {
 			super.goNext();
-			if(getAnchor().getX()>850) {
-				getAnchor().setX(-50);
-			}
+		}
+		
+		public boolean isOver() {
+			return getAnchor().getX()>850;
 		}
 		
 	}
@@ -82,19 +102,20 @@ public class MainPictures extends Game1 {
 
 			// dessin de l'arbre 
 
-			// dessin du tronc
-
-			fillRect(new Color(165, 42, 42), p1(625, 400), 100, 380);
-
 			// dessin des feuilles
 
-			fillOval(Color.GREEN, p1(600, 250), 150, 200);
+			fillOval(Color.GREEN, p1(550, 180), 200, 250);
+						
+			// dessin du tronc
 
-			// dessin des nuages
-			
-		
-			
-			
+			fillRect(new Color(165, 42, 42), p1(625, 400), 60, 380);
+			drawThickLine(new Color(165, 42, 42), p1(650, 420), p1(600, 300), 20);
+			drawThickLine(new Color(165, 42, 42), p1(650, 400), p1(570, 335), 14);
+			drawThickLine(new Color(165, 42, 42), p1(680, 460), p1(620, 280), 16);
+			drawThickLine(new Color(165, 42, 42), p1(650, 420), p1(700, 284), 17);
+			drawThickLine(new Color(165, 42, 42), p1(650, 420), p1(730, 289), 17);
+			drawThickLine(new Color(165, 42, 42), p1(650, 420), p1(650, 289), 17);
+
 			// dessin d'une pancarte
 			
 			// dessin du premier poteau
