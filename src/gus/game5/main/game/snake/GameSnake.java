@@ -45,7 +45,7 @@ public class GameSnake extends Game1 {
 	}
 	
 	protected void initSettings(Settings s) {
-		s.setTitle(getClass().getSimpleName()+" - Snake");
+		s.setTitle("Snake");
 		s.setWidth(X*RATIO + GAP*2);
 		s.setHeight(Y*RATIO + GAP*2);
 		s.setSleep(SLEEP);

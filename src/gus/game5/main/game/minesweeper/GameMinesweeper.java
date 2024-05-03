@@ -69,7 +69,7 @@ public class GameMinesweeper extends Game1 {
 	}
 	
 	protected void initSettings(Settings s) {
-		s.setTitle(getClass().getSimpleName()+" - Mine sweeper");
+		s.setTitle("Mine sweeper");
 		s.setWidth(X3*CELL + GAP*2);
 		s.setHeight(Y3*CELL + GAP*2);
 		s.setSleep(50);

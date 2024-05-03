@@ -85,12 +85,23 @@ public abstract class Game {
 	 * PUBLIC
 	 */
 	
+	private Runnable exit;
+	
+	public void setExit(Runnable exit) {
+		this.exit = exit;
+	}
+	
 	public void exit() {
-		System.exit(0);
+		if(exit!=null) exit.run();
+		else System.exit(0);
+	}
+	
+	public boolean isRunning() {
+		return thread!=null;
 	}
 	
 	public void start() {
-		if(thread!=null) throw new RuntimeException("Game already started");
+		if(isRunning()) throw new RuntimeException("Game already started");
 		
 		initialize();
 		thread = new Thread1();
@@ -98,7 +109,7 @@ public abstract class Game {
 	}
 	
 	public void stop() {
-		if(thread==null) throw new RuntimeException("Game not started yet");
+		if(!isRunning()) throw new RuntimeException("Game not started yet");
 		
 		thread.running = false;
 		try {thread.join(1000);} 
@@ -108,7 +119,7 @@ public abstract class Game {
 	}
 	
 	public void restart() {
-		if(thread==null) throw new RuntimeException("Game not started yet");
+		if(!isRunning()) throw new RuntimeException("Game not started yet");
 		
 		initialize();
 		reset();
@@ -215,10 +226,17 @@ public abstract class Game {
 	 */
 	
 	public JFrame displayInWindows() {
+		return displayInWindows(true);
+	}
+	
+	public JFrame displayInWindows(boolean exitOnClose) {
 		initLookAndFeel();
 		
 		JFrame frame = new JFrame();
-		initFrame(frame);
+		frame.setDefaultCloseOperation(exitOnClose ? JFrame.EXIT_ON_CLOSE : JFrame.HIDE_ON_CLOSE);
+		frame.setContentPane(buildContentPane());
+		frame.setResizable(false);
+		frame.setTitle(settings.getTitle());
 		
 		JMenuBar1 menuBar = new JMenuBar1();
 		initMenuBar(menuBar);
@@ -229,13 +247,6 @@ public abstract class Game {
 		frame.setLocationRelativeTo(null);
 		
 		return frame;
-	}
-	
-	protected void initFrame(JFrame frame) {
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setContentPane(buildContentPane());
-		frame.setResizable(false);
-		frame.setTitle(settings.getTitle());
 	}
 	
 	protected Container buildContentPane() {

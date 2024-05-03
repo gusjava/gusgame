@@ -39,7 +39,7 @@ public class AnimFishTank2 extends Game1 {
 	public static Color COLOR_ROCK = Color.DARK_GRAY;
 	public static Color COLOR_OCEAN = Color.BLUE.brighter();
 
-	public static int NB_FISH = 1000;
+	public static int NB_FISH = 300;
 	public static double FISH_SPEED = 3;
 	public static double FISH_LENGTH = 8;
 	public static double ROCK_RADIUS_MAX = 40;

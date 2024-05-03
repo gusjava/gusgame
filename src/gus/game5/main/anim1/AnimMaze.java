@@ -120,6 +120,7 @@ public class AnimMaze extends Game1 {
 					fillSquare(Color.YELLOW, p(path[i][0], path[i][1]), 1);
 				}
 			}
+			if(current!=null)
 			fillSquare(Color.YELLOW, p(current[0], current[1]), 1);
 		}
 		

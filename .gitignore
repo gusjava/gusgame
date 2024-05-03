@@ -1,5 +1,6 @@
 /.settings/
 /bin/
 /notes/
+/build/
 .classpath
 .project
