@@ -2,15 +2,33 @@ package gus.game5.core.game;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
+
+import gus.game5.core.util.UtilImage;
 
 public class Settings {
 
+	private Image icon;
 	private String title = "Jeu";
 	private int width = 900;
 	private int height = 700;
 	private long sleep = 10;
 	private Color background;
 	private Font font;
+	
+	/*
+	 * ICON
+	 */
+	
+	public Image getIcon() {
+		return icon;
+	}
+	public void setIcon(Image icon) {
+		this.icon = icon;
+	}
+	public void setIcon(String iconPath) {
+		setIcon(UtilImage.readImg(iconPath));
+	}
 	
 	/*
 	 * TITLE

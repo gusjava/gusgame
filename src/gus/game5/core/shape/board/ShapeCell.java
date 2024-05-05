@@ -15,7 +15,7 @@ public class ShapeCell extends ShapeSquare {
 	
 	public void initCell(double cellSize) {
 		setLength(cellSize);
-		setAnchor(new Point2(cellSize*(i+0.5), cellSize*(j+0.5)));
+		setAnchor(new Point2(cellSize*(j+0.5), cellSize*(i+0.5)));
 		setOriginFromAnchor();
 	}
 	

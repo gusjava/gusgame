@@ -8,8 +8,10 @@ import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 public class UtilImage {
 	
@@ -17,7 +19,7 @@ public class UtilImage {
 	 * READ
 	 */
 	
-	public static BufferedImage read(File file) {
+	public static BufferedImage readImg(File file) {
 		try {
 			return ImageIO.read(file);
 		} catch (IOException e) {
@@ -25,13 +27,18 @@ public class UtilImage {
 		}
 	}
 	
-	public static BufferedImage read(String path) {
+	public static BufferedImage readImg(String path) {
 		try {
 			InputStream is = UtilImage.class.getResourceAsStream(path);
 			return ImageIO.read(is);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	public static ImageIcon readIcon(String path) {
+		URL url = UtilImage.class.getResource(path);
+		return new ImageIcon(url);
 	}
 	
 	/*

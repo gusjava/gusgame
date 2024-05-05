@@ -237,6 +237,7 @@ public abstract class Game {
 		frame.setContentPane(buildContentPane());
 		frame.setResizable(false);
 		frame.setTitle(settings.getTitle());
+		frame.setIconImage(settings.getIcon());
 		
 		JMenuBar1 menuBar = new JMenuBar1();
 		initMenuBar(menuBar);

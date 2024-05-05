@@ -249,11 +249,7 @@ public class GameReversi2 extends Game1 {
 		}
 		
 		public Cell neighbor(int di, int dj) {
-			int i1 = i+di;
-			int j1 = j+dj;
-			if(i1<0 || i1>7) return null;
-			if(j1<0 || j1>7) return null;
-			return board.cellAt(i1, j1);
+			return board.cellAt(i+di, j+dj);
 		}
 	}
 	

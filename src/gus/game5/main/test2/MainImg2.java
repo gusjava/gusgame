@@ -25,7 +25,7 @@ public class MainImg2 extends Game2 {
 	}
 
 	protected void initialize1() {
-		BufferedImage img = UtilImage.read("/game5/main/test2/img.jpg");
+		BufferedImage img = UtilImage.readImg("/gus/game5/main/test2/img.jpg");
 		Shape shape = newShapeImg(p1(100,100), 80, 100, AnchorType.NE, img);
 		shape.getAnchor().setDerived(new Point2Dxy(()->getCount()%200<100 ? 1 : -1, ()->0));
 //		shape.debugFrame(Color.RED);

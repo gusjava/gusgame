@@ -26,7 +26,7 @@ public class MainImg1 extends Game {
 	private ShapeImg shape;
 	
 	protected void initialize() {
-		BufferedImage img = UtilImage.read("/game5/main/test2/img.jpg");
+		BufferedImage img = UtilImage.readImg("/gus/game5/main/test2/img.jpg");
 		shape = new ShapeImg(p1(100,100), 80, 100, img);
 	}
 
