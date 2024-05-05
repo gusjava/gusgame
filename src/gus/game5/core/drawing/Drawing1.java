@@ -75,18 +75,18 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	/*
-	 * POINT 0
+	 * POINT
 	 */
 	
-	protected Point0 p(double x, double y) {
+	public static Point1 p(double x, double y) {
 		return new Point1(x, y);
 	}
 	
-	protected Point0 avg(Point0... points) {
-		return new Point0Avg(points);
+	public static Point1 avg(Point0... points) {
+		return new Point0Avg(points).p1();
 	}
 	
-	protected Point0 sum(Point0... points) {
+	public static Point1 sum(Point0... points) {
 		return new Point0Sum(points).p1();
 	}
 	

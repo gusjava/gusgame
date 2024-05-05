@@ -58,4 +58,13 @@ public class ShapeSquare extends Shape0 {
 	public double getLength() {
 		return getWidth();
 	}
+	
+	/*
+	 * LENGTH
+	 */
+	
+	public void setLength(double length) {
+		setWidth(length);
+		setHeight(length);
+	}
 }

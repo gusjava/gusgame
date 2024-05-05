@@ -23,6 +23,9 @@ import gus.game5.core.shape.ShapeImg;
 import gus.game5.core.shape.ShapeList;
 import gus.game5.core.shape.ShapeRect;
 import gus.game5.core.shape.ShapeRound;
+import gus.game5.core.shape.board.ShapeBoard;
+import gus.game5.core.shape.board.ShapeCell;
+import gus.game5.core.shape.board.ShapeCellBuilder;
 
 public abstract class Game1 extends Game {
 	
@@ -69,7 +72,23 @@ public abstract class Game1 extends Game {
 	
 	
 	
+	/*
+	 * NEW SHAPE BOARD
+	 */
 
+	protected <E extends ShapeCell> ShapeBoard<E> newShapeBoard(double cellSize, int x, int y, ShapeCellBuilder<E> builder) {
+		ShapeBoard<E> shapeBoard = new ShapeBoard<>(cellSize, x, y, builder);
+		addDraw(shapeBoard);
+		addDyn(shapeBoard);
+		return shapeBoard;
+	}
+	
+	protected <E extends ShapeCell> ShapeBoard<E> newShapeBoard(double cellSize, int x, ShapeCellBuilder<E> builder) {
+		ShapeBoard<E> shapeBoard = new ShapeBoard<>(cellSize, x, builder);
+		addDraw(shapeBoard);
+		addDyn(shapeBoard);
+		return shapeBoard;
+	}
 	
 	/*
 	 * NEW SHAPE LIST

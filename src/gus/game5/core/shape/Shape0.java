@@ -16,6 +16,7 @@ public abstract class Shape0 extends Drawing1 implements Shape {
 	
 	protected Point2 anchor;
 	protected double width;
+	protected AnchorType anchorType;
 	protected double height;
 	protected int count = 0;
 	
@@ -32,16 +33,26 @@ public abstract class Shape0 extends Drawing1 implements Shape {
 		this(anchor, width, height, AnchorType.CENTER);
 	}
 	
-	public Shape0(Point0 anchor, double width, double height, AnchorType type) {
-		this(new Point2(anchor), width, height, type);
+	public Shape0(Point0 anchor, double width, double height, AnchorType anchorType) {
+		this(new Point2(anchor), width, height, anchorType);
 	}
 
-	public Shape0(Point2 anchor, double width, double height, AnchorType type) {
+	public Shape0(Point2 anchor, double width, double height, AnchorType anchorType) {
 		super();
 		this.width = width;
 		this.height = height;
 		this.anchor = anchor;
-		setOrigin(buildOrigin(anchor, type));
+		this.anchorType = anchorType;
+		
+		setOriginFromAnchor();
+	}
+	
+	/*
+	 * SET ORIGIN FROM ANCHOR
+	 */
+	
+	protected void setOriginFromAnchor() {
+		setOrigin(buildOrigin(anchor, anchorType));
 	}
 	
 	private Point1 buildOrigin(Point2 anchor, AnchorType type) {
@@ -53,6 +64,18 @@ public abstract class Shape0 extends Drawing1 implements Shape {
 		case CENTER:return anchor;
 		default:return anchor;
 		}
+	}
+	
+	/*
+	 * ANCHOR TYPE
+	 */
+	
+	public AnchorType getAnchorType() {
+		return anchorType;
+	}
+	
+	public void setAnchorType(AnchorType anchorType) {
+		this.anchorType = anchorType;
 	}
 	
 	/*
