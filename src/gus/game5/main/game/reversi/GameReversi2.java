@@ -126,10 +126,10 @@ public class GameReversi2 extends Game1 {
 		if(isGameOver()) return;
 		
 		if(mouse().button1().justPressed())
-			handleClick();
+			handlePressed();
 	}
 	
-	private void handleClick() {
+	private void handlePressed() {
 		boolean played = attemptToPlay();
 		if(!played) return;
 		

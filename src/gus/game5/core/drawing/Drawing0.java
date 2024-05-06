@@ -1,6 +1,7 @@
 package gus.game5.core.drawing;
 
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -85,19 +86,51 @@ public abstract class Drawing0 implements Draw {
 	}
 	
 	/*
-	 * G2 : COLOR, PAINT, FONT
+	 * G2 : COLOR
 	 */
 	
 	protected void g2_setColor(Color color) {
 		g2.setColor(color);
 	}
 	
+	protected Color g2_getColor() {
+		return g2.getColor();
+	}
+	
+	/*
+	 * G2 : PAINT
+	 */
+	
 	protected void g2_setPaint(Paint paint) {
 		g2.setPaint(paint);
 	}
 	
+	protected Paint g2_getPaint() {
+		return g2.getPaint();
+	}
+	
+	/*
+	 * G2 : FONT
+	 */
+	
 	protected void g2_setFont(Font font) {
 		g2.setFont(font);
+	}
+	
+	protected Font g2_getFont() {
+		return g2.getFont();
+	}
+	
+	/*
+	 * G2 : COMPOSITE
+	 */
+	
+	public void g2_setComposite(Composite composite) {
+		g2.setComposite(composite);
+	}
+	
+	public Composite g2_getComposite() {
+		return g2.getComposite();
 	}
 	
 	/*

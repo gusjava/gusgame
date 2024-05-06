@@ -26,5 +26,21 @@ public class ShapeCell extends ShapeSquare {
 	public int getJ() {
 		return j;
 	}
+	
+	public int[] getIJ() {
+		return new int[] {i,j};
+	}
+	
+	public boolean isI(int i) {
+		return this.i==i;
+	}
+	
+	public boolean isJ(int j) {
+		return this.j==j;
+	}
+	
+	public boolean isIJ(int i, int j) {
+		return this.i==i && this.j==j;
+	}
 
 }

@@ -9,6 +9,10 @@ import java.util.List;
 import gus.game5.core.draw.Draw;
 import gus.game5.core.dyn.Dyn;
 import gus.game5.core.features.f.F;
+import gus.game5.core.features.t.T;
+import gus.game5.core.features.t.Tchar;
+import gus.game5.core.features.t.Tdouble;
+import gus.game5.core.features.t.Tint;
 import gus.game5.core.point.point0.Point0;
 
 public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
@@ -69,7 +73,7 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 	public U cellAt(int i, int j) {
 		if(i<0 || i>=x) return null;
 		if(j<0 || j>=y) return null;
-		return data.get(i*x+j);
+		return get(i, j);
 	}
 	
 	public U cellAt(Point0 p) {
@@ -122,5 +126,62 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 
 	public void draw(Graphics2D g2) {
 		for(U cell : data) cell.draw(g2);
+	}
+	
+	/*
+	 * AS
+	 */
+	
+	public boolean[][] asBoolean(F<U> f) {
+		boolean[][] data = new boolean[x][y];
+		for(int i=0;i<x;i++)
+		for(int j=0;j<x;j++) {
+			data[i][j] = f.f(get(i,j));
+		}
+		return data;
+	}
+	
+	public int[][] asInt(Tint<U> t) {
+		int[][] data = new int[x][y];
+		for(int i=0;i<x;i++)
+		for(int j=0;j<x;j++) {
+			data[i][j] = t.t(get(i,j));
+		}
+		return data;
+	}
+	
+	public double[][] asDouble(Tdouble<U> t) {
+		double[][] data = new double[x][y];
+		for(int i=0;i<x;i++)
+		for(int j=0;j<x;j++) {
+			data[i][j] = t.t(get(i,j));
+		}
+		return data;
+	}
+	
+	public char[][] asChar(Tchar<U> t) {
+		char[][] data = new char[x][y];
+		for(int i=0;i<x;i++)
+		for(int j=0;j<x;j++) {
+			data[i][j] = t.t(get(i,j));
+		}
+		return data;
+	}
+	
+	public String[][] asString(T<U, String> t) {
+		String[][] data = new String[x][y];
+		for(int i=0;i<x;i++)
+		for(int j=0;j<x;j++) {
+			data[i][j] = t.t(get(i,j));
+		}
+		return data;
+	}
+	
+	/*
+	 * PRIVATE
+	 */
+	
+	private U get(int i, int j)  {
+		return data.get(i*x+j);
 	}
 }
