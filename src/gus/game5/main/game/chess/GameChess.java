@@ -9,7 +9,6 @@ import java.awt.Composite;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,8 +22,6 @@ import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point1.Point1D0;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
-import gus.game5.core.util.UtilArray;
-import gus.game5.core.util.UtilList;
 import gus.game5.core.util.image.ImageLoader;
 
 public class GameChess extends Game1 {
@@ -68,6 +65,8 @@ public class GameChess extends Game1 {
 	 * CONTENT PANE
 	 */
 	
+	private JLabel labelInfo;
+	
 	protected Container buildContentPane() {
 		labelInfo = new JLabel(" ");
 		
@@ -106,38 +105,27 @@ public class GameChess extends Game1 {
 	 * DATA
 	 */
 
+	private Engine engine;
 	private ImageLoader imgLoader;
-	private JLabel labelInfo;
-	private GameOver gameOver;
-	private Player player;
 	private ShapeBoard<Cell> board;
 	private Cell dragged;
-	
-	private List<Snapshot> snapshots;
-	private boolean[][] moved;
-	private boolean whiteKingChecked;
-	private boolean blackKingChecked;
 	
 	/*
 	 * INITIALIZE
 	 */
 	
 	protected void initialize1() {
+		engine = new Engine();
 		imgLoader = new ImageLoader(BASE_IMG);
-		changePlayer(Player.WHITE);
-		gameOver = null;
-		
 		board = newShapeBoard(CELL_SIZE, 8, this::buildCell);
-		snapshots = UtilList.asList(new Snapshot(INIT_STATE));
-		moved = UtilArray.boolArray2(8, false);
-		whiteKingChecked = false;
-		blackKingChecked = false;
+		dragged = null;
 		
 		DrawingText gameOverText = newDrawingTextC(Color.GRAY, gameCenter(), "Game Over");
 		gameOverText.setFontBold(40);
 		gameOverText.setDrawable(this::isGameOver);
 		
 		addDraw(new Drag());
+		updateLabelInfo();
 	}
 	
 	private Cell buildCell(int i, int j) {
@@ -163,7 +151,7 @@ public class GameChess extends Game1 {
 	
 	private void handlePressed() {
 		Cell pressedCell = board.cellAt(mouse().pointCurrent());
-		if(pressedCell!=null && pressedCell.isPlayer(player)) {
+		if(pressedCell!=null && pressedCell.isPlayer(engine.getPlayer())) {
 			dragged = pressedCell;
 		}
 	}
@@ -175,7 +163,10 @@ public class GameChess extends Game1 {
 		dragged = null;
 		if(!played) return;
 		
-		changePlayer(player.opposite());
+		engine.shiftPlayer();
+		updateBoard();
+		updateLabelInfo();
+		
 //		if(!isBoardPlayable()) finishGame();
 	}
 	
@@ -188,115 +179,30 @@ public class GameChess extends Game1 {
 		Cell endCell = board.cellAt(mouse().pointCurrent());
 		if(endCell==null) return false;
 		
-		final int[] start = startCell.getIJ();
-		final int[] end = endCell.getIJ();
-		final int[][] state = snapshotDataAt(0);
-		final int[][] state0 = snapshotDataAt(1);
-		
-		Move move = computeMove(state, state0, start, end);
-		if(move==null) return false;
-		
-		boolean done = performMove(move, startCell, endCell);
-		if(!done) return false;
-
-		final int[][] state1 = board.asInt(Cell::getValue);
-		if(player.isWhite()) {
-			if(whiteKingIsChecked(state1)) {
-				restoreBoard(state);
-				return false;
-			}
-			whiteKingChecked = false;
-			blackKingChecked = blackKingIsChecked(state1);
-		}
-		else {
-			if(blackKingIsChecked(state1)) {
-				restoreBoard(state);
-				return false;
-			}
-			blackKingChecked = false;
-			whiteKingChecked = whiteKingIsChecked(state1);
-		}
-
-		checkMoved(state, state1);
-		snapshots.add(new Snapshot(state1));
-		return true;
+		int[] start = startCell.getIJ();
+		int[] end = endCell.getIJ();
+		return engine.attemptToPlay(start, end);
 	}
 	
-	private boolean performMove(Move move, Cell startCell, Cell endCell) {
-		switch(move) {
-		case EAT:
-			endCell.setValue(startCell.getValue());
-			startCell.setValue(0);
-			return true;
-			
-		case EN_PASSANT:
-			endCell.setValue(startCell.getValue());
-			startCell.setValue(0);
-			board.cellAt(endCell.getJ(),startCell.getI()).setValue(0);
-			return true;
-			
-		case CASTLING:
-			if(endCell.isIJ(7,6)) {
-				if(moved[7][7] || moved[7][4]) return false;
-				board.cellAt(7,7).setValue(0);
-				board.cellAt(7,5).setValue(WR);
-				endCell.setValue(startCell.getValue());
-				startCell.setValue(0);
-				return true;
-			}
-			if(endCell.isIJ(7,2)) {
-				if(moved[7][0] || moved[7][4]) return false;
-				board.cellAt(7,0).setValue(0);
-				board.cellAt(7,3).setValue(WR);
-				endCell.setValue(startCell.getValue());
-				startCell.setValue(0);
-				return true;
-			}
-			if(endCell.isIJ(0,6)) {
-				if(moved[0][7] || moved[0][4]) return false;
-				board.cellAt(0,7).setValue(0);
-				board.cellAt(0,5).setValue(BR);
-				endCell.setValue(startCell.getValue());
-				startCell.setValue(0);
-				return true;
-			}
-			if(endCell.isIJ(0,2)) {
-				if(moved[0][0] || moved[0][4]) return false;
-				board.cellAt(0,0).setValue(0);
-				board.cellAt(0,3).setValue(BR);
-				endCell.setValue(startCell.getValue());
-				startCell.setValue(0);
-				return true;
-			}
-			return false;
-		case PROMOTION:
-			endCell.setValue(player.isWhite() ? WQ : BQ);
-			startCell.setValue(0);
-			return true;
-		}
-		return false;
-	}
+	/*
+	 * UPDATE BOARD
+	 */
 	
-	private void restoreBoard(int[][] state) {
+	private void updateBoard() {
+		int[][] data = engine.getData();
 		for(int i=0;i<8;i++) for(int j=0;j<8;j++) {
-			board.cellAt(i, j).setValue(state[i][j]);
-		}
-	}
-	
-	private void checkMoved(int[][] state0, int[][] state) {
-		for(int i=0;i<8;i++) for(int j=0;j<8;j++) {
-			if(state[i][j]!=state0[i][j]) moved[i][j] = true;
+			board.cellAt(i, j).setValue(data[i][j]);
 		}
 	}
 	
 	/*
-	 * PLAYER
+	 * UPDATE LABELINFO
 	 */
 	
-	private void changePlayer(Player player) {
-		this.player = player;
+	private void updateLabelInfo() {
+		Player player = engine.getPlayer();
 		StringBuffer b = new StringBuffer(" "+player.getLabel()+" is playing");
-		if(isPlayerChecked()) b.append(" (check)");
+		if(engine.isPlayerChecked()) b.append(" (check)");
 		labelInfo.setText(b.toString());
 	}
 	
@@ -304,12 +210,8 @@ public class GameChess extends Game1 {
 	 * GAME OVER
 	 */
 	
-	private boolean isPlayerChecked() {
-		return player.isWhite() ? whiteKingChecked : blackKingChecked;
-	}
-	
-	private boolean isGameOver() {
-		return gameOver!=null;
+	public boolean isGameOver() {
+		return engine.isGameOver();
 	}
 	
 	/*
@@ -325,8 +227,8 @@ public class GameChess extends Game1 {
 		}
 		
 		private Color buildColor() {
-			if(value==WKI && whiteKingChecked) return Color.ORANGE;
-			if(value==BKI && blackKingChecked) return  Color.ORANGE;
+			if(value==WKI && engine.wkiChecked()) return Color.ORANGE;
+			if(value==BKI && engine.bkiChecked()) return  Color.ORANGE;
 			return (i+j)%2==0 ? LIGHT : DARK;
 		}
 		
@@ -343,9 +245,6 @@ public class GameChess extends Game1 {
 		
 		public BufferedImage getImage() {
 			return valueToImg(value);
-		}
-		public int getValue() {
-			return value;
 		}
 		public void setValue(int value) {
 			this.value = value;
@@ -371,14 +270,5 @@ public class GameChess extends Game1 {
 				paintRenderedImageC(CELL_SIZE-8, CELL_SIZE-8, dragged.getImage());
 			}
 		}
-	}
-	
-	/*
-	 * SNAPSHOT
-	 */
-	
-	private int[][] snapshotDataAt(int p) {
-		int size = snapshots.size();
-		return p<size ? snapshots.get(size-p-1).getData() : null;
 	}
 }

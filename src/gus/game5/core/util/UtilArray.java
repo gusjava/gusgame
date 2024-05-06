@@ -17,13 +17,29 @@ public class UtilArray {
 	}
 	
 	/*
+	 * CLONE
+	 */
+	
+	public static int[][] clone(int[][] data) {
+		if(data.length==0) return new int[0][0];
+		int x = data.length;
+		int y = data[0].length;
+		int[][] newData = new int[x][y];
+		for(int i=0;i<x;i++) for(int j=0;j<y;j++) 
+			newData[i][j] = data[i][j];
+		return newData;
+	}
+	
+	/*
 	 * FIND
 	 */
 	
-	public static int[] find(int[][] array, int value) {
-		if(array.length==0) return null;
-		for(int i=0;i<array.length;i++) for(int j=0;j<array[0].length;j++) 
-			if(array[i][j] == value) return new int[] {i,j};
+	public static int[] find(int[][] data, int value) {
+		if(data.length==0) return null;
+		int x = data.length;
+		int y = data[0].length;
+		for(int i=0;i<x;i++) for(int j=0;j<y;j++) 
+			if(data[i][j] == value) return new int[] {i,j};
 		return null;
 	}
 }
