@@ -31,6 +31,17 @@ import gus.game5.main.game.reversi.GameReversi;
 import gus.game5.main.game.snake.GameSnake;
 import gus.game5.main.game.space.GameSpace;
 import gus.game5.main.game.warrior.GameWarrior;
+import gus.game5.main.test1.MainBall1;
+import gus.game5.main.test1.MainBall1m;
+import gus.game5.main.test1.MainBall2;
+import gus.game5.main.test1.MainBall2p;
+import gus.game5.main.test1.MainBall2r;
+import gus.game5.main.test1.MainMouse1;
+import gus.game5.main.test1.MainSoucoupe1;
+import gus.game5.main.test1.MainSoucoupe2;
+import gus.game5.main.test2.MainDraws;
+import gus.game5.main.test2.MainImg1;
+import gus.game5.main.test2.MainImg2;
 
 public class Presentation extends Game {
 
@@ -83,6 +94,20 @@ public class Presentation extends Game {
 				new GameWarrior(),
 				new GameSpace()
 				);
+
+		Container panel4 = buildPanel(
+				new MainSoucoupe1(),
+				new MainSoucoupe2(),
+				new MainMouse1(),
+				new MainBall1(),
+				new MainBall1m(),
+				new MainBall2(),
+				new MainBall2p(),
+				new MainBall2r(),
+				new MainImg1(),
+				new MainImg2(),
+				new MainDraws()
+				);
 				
 				
 		
@@ -90,6 +115,7 @@ public class Presentation extends Game {
 		tabbedPane.addTab("Jeux", panel1);
 		tabbedPane.addTab("Animations", panel2);
 		tabbedPane.addTab("Experimental", panel3);
+		tabbedPane.addTab("Petits tests", panel4);
 		return tabbedPane;
 	}
 	
