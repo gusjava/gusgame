@@ -4,9 +4,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,6 +14,7 @@ import javax.swing.plaf.FontUIResource;
 
 import gus.game5.core.angle.Angle;
 import gus.game5.core.draw.Draw;
+import gus.game5.core.game.gui.Action1;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.mouse.Mouse;
 import gus.game5.core.point.point0.Point0;
@@ -274,16 +273,8 @@ public abstract class Game {
 	 */
 	
 	public Action action(String name, Runnable r) {
-		return new AbstractAction(name) {
-			private static final long serialVersionUID = 1L;
-
-			public void actionPerformed(ActionEvent e) {
-				r.run();
-			}
-		};
+		return new Action1(name, r);
 	}
-	
-	
 	
 	/*
 	 * ABSTRACTS

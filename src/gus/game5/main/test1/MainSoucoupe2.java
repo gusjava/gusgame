@@ -6,7 +6,9 @@ import gus.game5.core.draw.Draw;
 import gus.game5.core.draw.DrawList;
 import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.game.Game;
+import gus.game5.core.game.JMenuBar1;
 import gus.game5.core.game.Settings;
+import gus.game5.core.game.gui.Action1;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.control.PointControl;
 import gus.game5.core.point.control.PointControl0Mouse;
@@ -29,6 +31,27 @@ public class MainSoucoupe2 extends Game {
 		MainSoucoupe2 main = new MainSoucoupe2();
 		main.displayInWindows();
 		main.start();
+	}
+	
+	/*
+	 * MENU BAR
+	 */
+	
+	protected void initMenuBar(JMenuBar1 menuBar) {
+		menuBar.add("Maze", 
+			action("Restart (F1)", this::restart),
+			action("Exit (F2)", this::exit),
+			null,
+			new Action1("Position controlled by mouse (0)", this::num0),
+			null,
+			new Action1("Speed controlled by keyboard4 (1)", this::num1),
+			new Action1("Speed controlled by keyboard8 (2)", this::num2),
+			new Action1("Speed controlled by mouse (3)", this::num3),
+			null,
+			new Action1("Acceleration controlled by keyboard4 (4)", this::num4),
+			new Action1("Acceleration controlled by keyboard8 (5)", this::num5),
+			new Action1("Acceleration controlled by mouse (6)", this::num6)
+		);
 	}
 	
 	protected void initSettings(Settings s) {
@@ -65,18 +88,46 @@ public class MainSoucoupe2 extends Game {
 		if(kb.in().F1())	restart();
 		if(kb.in().F2())	exit();
 
-		if(kb.in().num0())	control = new PointControl0Mouse(this);
+		if(kb.in().num0())	num0();
 		
-		if(kb.in().num1())	control = new PointControl1KbD4(this,SPEED);
-		if(kb.in().num4())	control = new PointControl1KbD8(this,SPEED);
-		if(kb.in().num7())	control = new PointControl1Mouse(this,SPEED);
+		if(kb.in().num1())	num1();
+		if(kb.in().num2())	num2();
+		if(kb.in().num3())	num3();
 		
-		if(kb.in().num2())	control = new PointControl2KbD4(this,ACC);
-		if(kb.in().num3())	control = new PointControl2KbD8(this,ACC);
-		if(kb.in().num8())	control = new PointControl2Mouse(this,ACC);
+		if(kb.in().num4())	num4();
+		if(kb.in().num5())	num5();
+		if(kb.in().num6())	num6();
 		
 		control.handle(center);
 		center.goNext();
+	}
+	
+	private void num0() {
+		control = new PointControl0Mouse(this);
+	}
+	
+	private void num1() {
+		control = new PointControl1KbD4(this,SPEED);
+	}
+	
+	private void num2() {
+		control = new PointControl1KbD8(this,SPEED);
+	}
+	
+	private void num3() {
+		control = new PointControl1Mouse(this,SPEED);
+	}
+	
+	private void num4() {
+		control = new PointControl2KbD4(this,ACC);;
+	}
+	
+	private void num5() {
+		control = new PointControl2KbD8(this,ACC);
+	}
+	
+	private void num6() {
+		control = new PointControl2Mouse(this,ACC);
 	}
 	
 	
