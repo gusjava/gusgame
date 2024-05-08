@@ -265,6 +265,7 @@ public abstract class Game {
 			UIManager.put("Menu.font", fontUI);
 			UIManager.put("MenuItem.font", fontUI);
 			UIManager.put("Label.font", fontUI);
+			UIManager.put("TabbedPane.font", fontUI);
 		}
 	}
 	
