@@ -24,7 +24,7 @@ public class MainBall extends Game1 {
 		s.setWidth(800);
 		s.setHeight(700);
 		s.setSleep(10);
-		s.setBackground(Color.WHITE);
+		s.setBackground(Color.BLACK);
 	}
 	
 	private ShapeList<Ball> balls;
@@ -56,6 +56,8 @@ public class MainBall extends Game1 {
 			
 			getAnchor().initDerived().setXY(UtilRandom.randomInt(-5, 5), UtilRandom.randomInt(-5, 5));
 			getAnchor().getDerived().initDerived().setXY(UtilRandom.randomDouble(-0.2, 0.2), UtilRandom.randomDouble(-0.2, 0.2));
+			
+			setColor(Color.WHITE);
 		}
 	}
 	

@@ -31,6 +31,7 @@ import gus.game5.main.game.reversi.GameReversi;
 import gus.game5.main.game.snake.GameSnake;
 import gus.game5.main.game.space.GameSpace;
 import gus.game5.main.game.warrior.GameWarrior;
+import gus.game5.main.l1.bloon.GameBloon;
 import gus.game5.main.test1.MainBall1;
 import gus.game5.main.test1.MainBall1m;
 import gus.game5.main.test1.MainBall2;
@@ -92,7 +93,8 @@ public class Presentation extends Game {
 
 		Container panel3 = buildPanel(
 				new GameWarrior(),
-				new GameSpace()
+				new GameSpace(),
+				new GameBloon()
 				);
 
 		Container panel4 = buildPanel(
