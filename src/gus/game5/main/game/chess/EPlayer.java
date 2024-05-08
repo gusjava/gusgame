@@ -1,12 +1,12 @@
 package gus.game5.main.game.chess;
 
-public enum Player {
+public enum EPlayer {
 	WHITE, BLACK;
 	
 	public boolean isWhite() {return this==WHITE;}
 	public boolean isBlack() {return this==BLACK;}
 	
-	public Player opposite() {
+	public EPlayer opposite() {
 		return isWhite() ? BLACK : WHITE;
 	}
 	

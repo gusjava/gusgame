@@ -1,9 +1,9 @@
 package gus.game5.main.game.chess;
 
 public class GameOver {
-	private Player winner;
+	private EPlayer winner;
 	
-	public GameOver(Player winner) {
+	public GameOver(EPlayer winner) {
 		this.winner = winner;
 	}
 	

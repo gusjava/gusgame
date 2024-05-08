@@ -140,6 +140,8 @@ public class GameChess extends Game1 {
 		Keyboard k = keyboard();
 		if(k.F1())	restart();
 		if(k.F2())	exit();
+		
+		if(isGameOver()) return;
 
 		if(mouse().button1().justPressed()) {
 			handlePressed();
@@ -163,11 +165,9 @@ public class GameChess extends Game1 {
 		dragged = null;
 		if(!played) return;
 		
-		engine.shiftPlayer();
+		if(!isGameOver()) engine.shiftPlayer();
 		updateBoard();
 		updateLabelInfo();
-		
-//		if(!isBoardPlayable()) finishGame();
 	}
 	
 	/*
@@ -200,10 +200,15 @@ public class GameChess extends Game1 {
 	 */
 	
 	private void updateLabelInfo() {
-		Player player = engine.getPlayer();
-		StringBuffer b = new StringBuffer(" "+player.getLabel()+" is playing");
-		if(engine.isPlayerChecked()) b.append(" (check)");
-		labelInfo.setText(b.toString());
+		if(isGameOver()) {
+			labelInfo.setText("Chess Mate. "+engine.getGameOver().getDescription());
+		}
+		else {
+			EPlayer player = engine.getPlayer();
+			String info = " "+player.getLabel()+" is playing";
+			if(engine.isPlayerChecked()) info += " (check)";
+			labelInfo.setText(info);
+		}
 	}
 	
 	/*
@@ -211,7 +216,7 @@ public class GameChess extends Game1 {
 	 */
 	
 	public boolean isGameOver() {
-		return engine.isGameOver();
+		return engine!=null && engine.getGameOver()!=null;
 	}
 	
 	/*
@@ -227,8 +232,14 @@ public class GameChess extends Game1 {
 		}
 		
 		private Color buildColor() {
-			if(value==WKI && engine.wkiChecked()) return Color.ORANGE;
-			if(value==BKI && engine.bkiChecked()) return  Color.ORANGE;
+			if(value==WKI) {
+				if(engine.whiteChecked()) return Color.ORANGE;
+				if(engine.whiteMate()) return Color.RED;
+			}
+			else if(value==BKI) {
+				if(engine.blackChecked()) return  Color.ORANGE;
+				if(engine.blackMate()) return  Color.RED;
+			}
 			return (i+j)%2==0 ? LIGHT : DARK;
 		}
 		
@@ -249,7 +260,7 @@ public class GameChess extends Game1 {
 		public void setValue(int value) {
 			this.value = value;
 		}
-		public boolean isPlayer(Player player) {
+		public boolean isPlayer(EPlayer player) {
 			if(value>0) return player.isWhite();
 			if(value<0) return player.isBlack();
 			return false;

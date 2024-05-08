@@ -6,6 +6,12 @@ public class UtilArray {
 	 * GENERATE
 	 */
 
+	public static boolean[] boolArray(int x, boolean value) {
+		boolean[] data = new boolean[x];
+		for(int i=0;i<x;i++) data[i] = value;
+		return data;
+	}
+
 	public static boolean[][] boolArray2(int x, int y, boolean value) {
 		boolean[][] data = new boolean[x][y];
 		for(int i=0;i<x;i++) for(int j=0;j<y;j++) data[i][j] = value;

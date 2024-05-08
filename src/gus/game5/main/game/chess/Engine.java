@@ -10,28 +10,28 @@ import static gus.game5.main.game.chess.UtilChess.*;
 public class Engine {
 
 	private GameOver gameOver;
-	private Player player;
-	private boolean[][] moved;
-	private boolean wkiChecked;
-	private boolean bkiChecked;
+	private EPlayer player;
 	
 	private int[][] data;
 	private List<int[][]> history;
+	private boolean[][] changed;
+	private EState whiteState;
+	private EState blackState;
 	
 	public Engine() {
 		gameOver = null;
-		player = Player.WHITE;
+		player = EPlayer.WHITE;
 		
 		data = UtilArray.clone(INIT_STATE);
 		history = new ArrayList<>();
 		history.add(UtilArray.clone(data));
 		
-		moved = UtilArray.boolArray2(8, false);
-		wkiChecked = false;
-		bkiChecked = false;
+		changed = UtilArray.boolArray2(8, false);
+		whiteState = EState.SAFE;
+		blackState = EState.SAFE;
 	}
 	
-	public Player getPlayer() {
+	public EPlayer getPlayer() {
 		return player;
 	}
 	
@@ -39,20 +39,32 @@ public class Engine {
 		return data;
 	}
 	
-	public boolean wkiChecked() {
-		return wkiChecked;
+	public boolean whiteChecked() {
+		return whiteState.isChecked();
 	}
 	
-	public boolean bkiChecked() {
-		return bkiChecked;
+	public boolean blackChecked() {
+		return blackState.isChecked();
+	}
+	
+	public boolean whiteMate() {
+		return whiteState.isMate();
+	}
+	
+	public boolean blackMate() {
+		return blackState.isMate();
 	}
 
 	public boolean isPlayerChecked() {
-		return player.isWhite() ? wkiChecked : bkiChecked;
+		return player.isWhite() ? whiteChecked() : blackChecked();
+	}
+
+	public boolean isPlayerMate() {
+		return player.isWhite() ? whiteMate() : blackMate();
 	}
 	
-	public boolean isGameOver() {
-		return gameOver!=null;
+	public GameOver getGameOver() {
+		return gameOver;
 	}
 	
 	public void shiftPlayer() {
@@ -63,105 +75,33 @@ public class Engine {
 		final int[][] data0 = historyDataAt(0);
 		final int[][] data1 = historyDataAt(1);
 		
-		Move move = computeMove(data0, data1, start, end);
+		EMove move = new MoveBuilder(data0, data1, start, end).build();
 		if(move==null) return false;
-		
-		boolean done = performMove(move, start, end);
+		boolean done = new MoveExecutor(data, changed, move, start, end).execute();
 		if(!done) return false;
 
 		if(player.isWhite()) {
-			if(whiteKingIsChecked(data)) {
+			if(whiteIsChecked(data)) {
 				data = UtilArray.clone(data0);
 				return false;
 			}
-			wkiChecked = false;
-			bkiChecked = blackKingIsChecked(data);
+			whiteState = EState.SAFE;
+			blackState = new CheckerB(data, data0).check();
+			if(blackState.isMate()) gameOver = new GameOver(player);
 		}
 		else {
-			if(blackKingIsChecked(data)) {
+			if(blackIsChecked(data)) {
 				data = UtilArray.clone(data0);
 				return false;
 			}
-			bkiChecked = false;
-			wkiChecked = whiteKingIsChecked(data);
+			blackState = EState.SAFE;
+			whiteState = new CheckerW(data, data0).check();
+			if(whiteState.isMate()) gameOver = new GameOver(player);
 		}
 
-		checkMoved(data0);
+		updateChanged(data0);
 		history.add(UtilArray.clone(data));
 		return true;
-	}
-	
-	private boolean performMove(Move move, int[] start, int[] end) {
-		switch(move) {
-		case EAT:
-			setValueAt(end, valueAt(start));
-			setValueAt(start,0);
-			return true;
-			
-		case EN_PASSANT:
-			setValueAt(end, valueAt(start));
-			setValueAt(start,0);
-			setValueAt(start[0], end[1], 0);
-			return true;
-			
-		case CASTLING:
-			if(is(end,7,6)) {
-				if(moved[7][7] || moved[7][4]) return false;
-				if(blackCanAttack(data, 7, 4)) return false;
-				if(blackCanAttack(data, 7, 5)) return false;
-				if(blackCanAttack(data, 7, 6)) return false;
-				if(blackCanAttack(data, 7, 7)) return false;
-				setValueAt(7,7,0);
-				setValueAt(7,5,WR);
-				setValueAt(end, valueAt(start));
-				setValueAt(start,0);
-				return true;
-			}
-			if(is(end,7,2)) {
-				if(moved[7][0] || moved[7][4]) return false;
-				if(blackCanAttack(data, 7, 0)) return false;
-				if(blackCanAttack(data, 7, 1)) return false;
-				if(blackCanAttack(data, 7, 2)) return false;
-				if(blackCanAttack(data, 7, 3)) return false;
-				if(blackCanAttack(data, 7, 4)) return false;
-				setValueAt(7,0,0);
-				setValueAt(7,3,WR);
-				setValueAt(end, valueAt(start));
-				setValueAt(start,0);
-				return true;
-			}
-			if(is(end,0,6)) {
-				if(moved[0][7] || moved[0][4]) return false;
-				if(whiteCanAttack(data, 0, 4)) return false;
-				if(whiteCanAttack(data, 0, 5)) return false;
-				if(whiteCanAttack(data, 0, 6)) return false;
-				if(whiteCanAttack(data, 0, 7)) return false;
-				setValueAt(0,7,0);
-				setValueAt(0,5,WR);
-				setValueAt(end, valueAt(start));
-				setValueAt(start,0);
-				return true;
-			}
-			if(is(end,0,2)) {
-				if(moved[0][0] || moved[0][4]) return false;
-				if(whiteCanAttack(data, 0, 0)) return false;
-				if(whiteCanAttack(data, 0, 1)) return false;
-				if(whiteCanAttack(data, 0, 2)) return false;
-				if(whiteCanAttack(data, 0, 3)) return false;
-				if(whiteCanAttack(data, 0, 4)) return false;
-				setValueAt(0,0,0);
-				setValueAt(0,3,WR);
-				setValueAt(end, valueAt(start));
-				setValueAt(start,0);
-				return true;
-			}
-			return false;
-		case PROMOTION:
-			setValueAt(end, player.isWhite() ? WQ : BQ);
-			setValueAt(start,0);
-			return true;
-		}
-		return false;
 	}
 	
 	private int[][] historyDataAt(int p) {
@@ -169,25 +109,9 @@ public class Engine {
 		return p<size ? history.get(size-p-1) : null;
 	}
 	
-	private void checkMoved(int[][] state0) {
+	private void updateChanged(int[][] state0) {
 		for(int i=0;i<8;i++) for(int j=0;j<8;j++) {
-			if(data[i][j]!=state0[i][j]) moved[i][j] = true;
+			if(data[i][j]!=state0[i][j]) changed[i][j] = true;
 		}
-	}
-	
-	private void setValueAt(int[] pos, int value) {
-		data[pos[0]][pos[1]] = value;
-	}
-	
-	private void setValueAt(int x, int y, int value) {
-		data[x][y] = value;
-	}
-	
-	private int valueAt(int[] pos) {
-		return data[pos[0]][pos[1]];
-	}
-	
-	private boolean is(int[] pos, int x, int y) {
-		return pos[0]==x && pos[1]==y;
 	}
 }
