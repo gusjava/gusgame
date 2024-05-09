@@ -16,6 +16,9 @@ import javax.swing.plaf.FontUIResource;
 import gus.game5.core.angle.Angle;
 import gus.game5.core.draw.Draw;
 import gus.game5.core.game.gui.Action1;
+import gus.game5.core.game.gui.JMenuBar1;
+import gus.game5.core.game.gui.JPanel1;
+import gus.game5.core.game.gui.JRadioButtonMenuItem1;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.mouse.Mouse;
 import gus.game5.core.point.point0.Point0;
@@ -272,6 +275,7 @@ public abstract class Game {
 			UIManager.put("MenuItem.font", fontUI);
 			UIManager.put("Label.font", fontUI);
 			UIManager.put("TabbedPane.font", fontUI);
+			UIManager.put("RadioButtonMenuItem.font", fontUI);
 		}
 	}
 	
@@ -281,6 +285,14 @@ public abstract class Game {
 	
 	public Action action(String name, Runnable r) {
 		return new Action1(name, r);
+	}
+	
+	/*
+	 * MENU ITEM
+	 */
+	
+	public JRadioButtonMenuItem1 radioMenuItem(String name, Runnable r) {
+		return new JRadioButtonMenuItem1(name, r);
 	}
 	
 	/*

@@ -1,6 +1,7 @@
 package gus.game5.core.util;
 
 import java.awt.Color;
+import java.util.List;
 
 import gus.game5.core.game.Game;
 import gus.game5.core.point.point1.Point1;
@@ -83,5 +84,15 @@ public class UtilRandom {
 	
 	public static Point2 randomPoint2(Game game) {
 		return randomPoint2(game.gameWidth(), game.gameHeight());
+	}
+	
+	/*
+	 * RANDOM ELEMENT
+	 */
+	
+	public static <U> U randomElement(List<U> list) {
+		if(list==null || list.isEmpty()) return null;
+		int index = randomInt(list.size());
+		return list.get(index);
 	}
 }

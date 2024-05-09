@@ -10,20 +10,20 @@ import javax.swing.JPanel;
 
 import gus.game5.core.drawing.DrawingText;
 import gus.game5.core.game.Game1;
-import gus.game5.core.game.JMenuBar1;
 import gus.game5.core.game.Settings;
+import gus.game5.core.game.gui.JMenuBar1;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
 
-public class GameTicTacToe extends Game1 {
+public class GameTicTacToe2 extends Game1 {
 
 	public static final String TITLE = "Tic-tac-toe";
 	public static final int CELL_SIZE = 100;
 	public static final int BOARD_SIZE = CELL_SIZE*3;
 	
 	public static void main(String[] args) {
-		GameTicTacToe main = new GameTicTacToe();
+		GameTicTacToe2 main = new GameTicTacToe2();
 		main.displayInWindows();
 		main.start();
 	}
@@ -52,6 +52,10 @@ public class GameTicTacToe extends Game1 {
 			action("New game (F1)", this::restart),
 			action("Exit (F2)", this::exit)
 		);
+		menuBar.add("Mode", 
+			radioMenuItem("Play against human", this::changeModeHuman),
+			radioMenuItem("Play against computer", this::changeModeComputer)
+		);
 	}
 	
 	/*
@@ -75,6 +79,9 @@ public class GameTicTacToe extends Game1 {
 	private Side player;
 	private ShapeBoard<Cell> board;
 	
+	private Mode mode = Mode.HUMAN;
+	private long lastPlayCount;
+	
 	/*
 	 * INITIALIZE
 	 */
@@ -82,6 +89,7 @@ public class GameTicTacToe extends Game1 {
 	protected void initialize1() {
 		winner = null;
 		player = Side.CIRCLE;
+		lastPlayCount = 0;
 		
 		board = newShapeBoard(CELL_SIZE, 3, this::buildCell);
 		updateLabelInfo();
@@ -106,24 +114,42 @@ public class GameTicTacToe extends Game1 {
 		
 		if(isGameOver()) return;
 		
-		if(mouse().button1().justPressed())
-			handlePressed();
+		boolean played = handlePlay();
+		if(played) {
+			lastPlayCount = getCount();
+			player = player.opposite();
+			winner = searchWinner();
+			updateLabelInfo();
+		}
 	}
 	
-	private void handlePressed() {
-		boolean played = attemptToPlay();
-		if(!played) return;
-		
-		player = player.opposite();
-		winner = searchWinner();
-		updateLabelInfo();
+	/*
+	 * HANDLE PLAY
+	 */
+	
+	private boolean handlePlay() {
+		if(isComputerTurn()) 
+			return handleComputerPlay();
+		return handleHumanPlay();
 	}
 	
-	private boolean attemptToPlay() {
+	private boolean handleHumanPlay() {
+		if(!mouse().button1().justPressed()) return false;
 		Cell c = board.cellAt(mouse().pointCurrent());
 		if(c==null || !c.getSide().isEmpty()) return false;
 		c.setSide(player);
 		return true;
+	}
+	
+	private boolean handleComputerPlay() {
+		if(getCount()<lastPlayCount + 50) return false;
+		int[] play = UtilComputer.randomPlay(board.asInt(c->c.getSide().toInt()));
+		board.cellAt(play[0], play[1]).setSide(Side.CROSS);
+		return true;
+	}
+	
+	private boolean isComputerTurn() {
+		return mode==Mode.COMPUTER && player.isCross();
 	}
 	
 	private boolean isGameOver() {
@@ -185,6 +211,26 @@ public class GameTicTacToe extends Game1 {
 			if(isEmpty()) return "Draw";
 			return getLabel()+" won the game";
 		}
+		
+		public int toInt() {
+			return isCircle() ? 1 : isCross() ? -1 : 0;
+		}
+	}
+	
+	/*
+	 * MODE
+	 */
+	
+	private enum Mode {
+		HUMAN, COMPUTER
+	}
+	
+	private void changeModeHuman() {
+		mode = Mode.HUMAN;
+	}
+	
+	private void changeModeComputer() {
+		mode = Mode.COMPUTER;
 	}
 	
 	/*

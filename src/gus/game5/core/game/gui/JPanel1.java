@@ -1,4 +1,4 @@
-package gus.game5.core.game;
+package gus.game5.core.game.gui;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;

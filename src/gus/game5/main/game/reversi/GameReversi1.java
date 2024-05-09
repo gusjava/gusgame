@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 
 import gus.game5.core.drawing.DrawingText;
 import gus.game5.core.game.Game1;
-import gus.game5.core.game.JMenuBar1;
 import gus.game5.core.game.Settings;
+import gus.game5.core.game.gui.JMenuBar1;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point0.Point0;
 import gus.game5.core.shape.ShapeSquare;
