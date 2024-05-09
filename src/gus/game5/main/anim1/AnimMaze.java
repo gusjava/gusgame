@@ -41,7 +41,7 @@ public class AnimMaze extends Game1 {
 	}
 	
 	protected void initSettings(Settings s) {
-		s.setTitle(getClass().getSimpleName()+" - maze");
+		s.setTitle("Path searching inside Maze");
 		s.setSize(BOARD_SIZE);
 		s.setSleep(10);
 		s.setBackground(Color.WHITE);

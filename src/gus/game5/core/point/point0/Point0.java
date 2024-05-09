@@ -83,6 +83,14 @@ public abstract class Point0 {
 	}
 	
 	/*
+	 * NEAR
+	 */
+	
+	public boolean near(Point0 p, double limit) {
+		return dist2(p)<=limit*limit;
+	}
+	
+	/*
 	 * P1 P2
 	 */
 	

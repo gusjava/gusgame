@@ -46,8 +46,8 @@ public class GameBomb extends Game1 {
 	
 	protected void initSettings(Settings s) {
 		s.setTitle("Game bomb");
-		s.setWidth(1500);
-		s.setHeight(780);
+		s.setWidth(1000);
+		s.setHeight(700);
 		s.setSleep(10);
 		s.setBackground(Color.WHITE);
 	}

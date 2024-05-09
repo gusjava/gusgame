@@ -74,6 +74,11 @@ public class Point2 extends Point1 implements Dyn {
 	public void setDerived(double dist, Angle angle) {
 		this.derived = new Point2(dist,angle);
 	}
+	
+	public void setDerived(Point0 target, double speed) {
+		if(target==null) setDerived(null);
+		else setDerived(target.pSub(this).pDistSet(speed));
+	}
 
 	/*
 	 * GO NEXT

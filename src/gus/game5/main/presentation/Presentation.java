@@ -15,6 +15,7 @@ import gus.game5.core.draw.Draw;
 import gus.game5.core.game.Game;
 import gus.game5.core.game.JMenuBar1;
 import gus.game5.core.game.Settings;
+import gus.game5.core.util.image.IconLoader;
 import gus.game5.main.anim.fishtank.AnimFishTank2;
 import gus.game5.main.anim.life1.LifeBacteria1;
 import gus.game5.main.anim1.AnimBallBattle;
@@ -45,6 +46,7 @@ import gus.game5.main.test2.MainImg1;
 import gus.game5.main.test2.MainImg2;
 
 public class Presentation extends Game {
+	public static final String BASE_IMG = "/gus/game5/main/presentation/";
 
 	public static void main(String[] args) {
 		Presentation main = new Presentation();
@@ -58,6 +60,8 @@ public class Presentation extends Game {
 		s.setBackground(Color.WHITE);
 		s.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 	}
+	
+	private IconLoader iconLoader = new IconLoader(BASE_IMG);
 	
 	protected void initialize() {}
 	protected void turn() {}
@@ -82,22 +86,16 @@ public class Presentation extends Game {
 
 		Container panel2 = buildPanel(
 				new AnimClock(),
+				new AnimLandscape(),
+				new AnimMaze(),
 				new AnimLangtonAnt(),
 				new AnimGameOfLife(),
 				new AnimBallBattle(),
-				new AnimLandscape(),
 				new LifeBacteria1(),
-				new AnimFishTank2(),
-				new AnimMaze()
+				new AnimFishTank2()
 				);
 
 		Container panel3 = buildPanel(
-				new GameWarrior(),
-				new GameSpace(),
-				new GameBloon()
-				);
-
-		Container panel4 = buildPanel(
 				new MainSoucoupe1(),
 				new MainSoucoupe2(),
 				new MainMouse1(),
@@ -110,27 +108,34 @@ public class Presentation extends Game {
 				new MainImg2(),
 				new MainDraws()
 				);
-				
-				
+
+		Container panel4 = buildPanel(
+				new GameWarrior(),
+				new GameSpace(),
+				new GameBloon()
+				);	
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Jeux", panel1);
 		tabbedPane.addTab("Animations", panel2);
-		tabbedPane.addTab("Experimental", panel3);
-		tabbedPane.addTab("Petits tests", panel4);
+		tabbedPane.addTab("Petits tests", panel3);
+		tabbedPane.addTab("Experimental", panel4);
 		return tabbedPane;
 	}
 	
 	private Container buildPanel(Game... games) {
 		JPanel p = new JPanel(new GridLayout(0,2,10,10));
 		p.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		for(Game game : games) p.add(new GameArea(game));
+		for(Game game : games) p.add(buildArea(game));
 		
 		JScrollPane scroll = new JScrollPane(p);
-		scroll.setPreferredSize(new Dimension(800,600));
+		scroll.setPreferredSize(new Dimension(900,600));
 		return scroll;
 	}
 	
-	
-	
+	private GameArea buildArea(Game game) {
+		GameArea area = new GameArea(game);
+		area.setCaptureIcon(iconLoader.get("capture.gif"));
+		return area;
+	}
 }

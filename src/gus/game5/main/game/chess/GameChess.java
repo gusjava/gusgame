@@ -26,7 +26,7 @@ import gus.game5.core.util.image.ImageLoader;
 
 public class GameChess extends Game1 {
 
-	public static final String BASE_IMG = "/gus/game5/main/game/chess/icon/";
+	public static final String BASE_IMG = "/gus/game5/main/game/chess/";
 	public static final String TITLE = "Chess";
 	public static final int CELL_SIZE = 50;
 	public static final int BOARD_SIZE = CELL_SIZE*8;

@@ -29,8 +29,8 @@ public class AnimGameOfLife extends Game1 {
 	
 	protected void initSettings(Settings s) {
 		s.setTitle("Game of Life");
-		s.setWidth(X*RATIO + GAP*2);
-		s.setHeight(Y*RATIO + GAP*2);
+		s.setWidth(X*RATIO);
+		s.setHeight(Y*RATIO);
 		s.setSleep(50);
 		s.setBackground(COLOR_BORDER);
 	}
@@ -51,7 +51,6 @@ public class AnimGameOfLife extends Game1 {
 	public class GameDrawing extends Drawing1 {
 		public GameDrawing() {
 			setColor(COLOR_POINT);
-			setOrigin(addStruct(GAP, GAP));
 			addAlter(new AlterDilate(()->RATIO));
 		}
 		protected void draw() {

@@ -20,7 +20,7 @@ public class AnimClock extends Game1 {
 	}
 	
 	protected void initSettings(Settings s) {
-		s.setTitle("Clock");
+		s.setTitle("Clock animation");
 		s.setSize(800, 800);
 		s.setSleep(10);
 		s.setBackground(Color.WHITE);

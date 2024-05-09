@@ -8,10 +8,10 @@ import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
 import gus.game5.core.keyboard.Keyboard;
-import gus.game5.core.point.point0.Point0;
 import gus.game5.core.point.point1.Point1;
 import gus.game5.core.shape.ShapeList;
 import gus.game5.core.shape.ShapeRound;
+import gus.game5.core.util.UtilList;
 import gus.game5.core.util.UtilRandom;
 
 public class GameBloon extends Game1 {
@@ -67,31 +67,30 @@ public class GameBloon extends Game1 {
 	}
 	
 	private class Bloon extends ShapeRound {
-		
-		private int targetIndex = 0;
+		private int targetIndex;
+		private Point1 target;
 		
 		public Bloon() {
 			super(path.get(0), BLOON_RADIUS);
 			setColor(Color.RED);
+			setTarget(1);
 		}
 		
 		public void goNext() {
-			
-			Point1 target = path.get(targetIndex);
-			Point1 targetDist = target.pSub(getAnchor());
-			double speed = Math.min(BLOON_SPEED, targetDist.dist());
-			Point0 v = targetDist.pDistSet(speed);
-			
-			getAnchor().initDerived().setXY(v);
 			super.goNext();
-			
-			if(getAnchor().is(target)) {
-				targetIndex++;
+			if(getAnchor().near(target, BLOON_SPEED)) {
+				setTarget(targetIndex+1);
 			}
 		}
 		
 		public boolean isOver() {
-			return targetIndex==path.size();
+			return target==null;
+		}
+		
+		private void setTarget(int targetIndex) {
+			this.targetIndex = targetIndex;
+			target = UtilList.get(path, targetIndex);
+			getAnchor().setDerived(target, BLOON_SPEED);
 		}
 	}
 

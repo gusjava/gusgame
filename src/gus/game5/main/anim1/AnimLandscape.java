@@ -21,7 +21,7 @@ public class AnimLandscape extends Game2 {
 	}
 	
 	protected void initSettings(Settings s) {
-		s.setTitle(getClass().getSimpleName()+" - Landscape");
+		s.setTitle("Landscape animation");
 		s.setWidth(1000);
 		s.setHeight(700);
 		s.setSleep(10);

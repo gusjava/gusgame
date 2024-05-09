@@ -20,4 +20,9 @@ public class UtilList {
 		for(U u : list) list1.add(t.t(u));
 		return list1;
 	}
+	
+	public static <U> U get(List<U> list, int index) {
+		if(index<0 || index>=list.size()) return null;
+		return list.get(index);
+	}
 }

@@ -48,6 +48,14 @@ public class GameLaunch implements WindowListener {
 		return game.isRunning();
 	}
 	
+	public JFrame getFrame() {
+		return frame;
+	}
+	
+	public Game getGame() {
+		return game;
+	}
+	
 	private void disposeFrame() {
 		if(frame==null) return;
 		frame.removeWindowListener(this);

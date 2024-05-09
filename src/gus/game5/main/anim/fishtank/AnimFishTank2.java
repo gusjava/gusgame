@@ -28,7 +28,7 @@ public class AnimFishTank2 extends Game1 {
 	}
 	
 	protected void initSettings(Settings s) {
-		s.setTitle(getClass().getSimpleName()+" - Fish tank");
+		s.setTitle("Fish tank (v2)");
 		s.setWidth(1400);
 		s.setHeight(760);
 		s.setSleep(10);

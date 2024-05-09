@@ -21,7 +21,7 @@ public abstract class LifeBacteria0 extends Game1 {
 	protected abstract List<P<BacteriaType>> typeCustList();
 	
 	protected void initSettings(Settings s) {
-		s.setTitle(getClass().getSimpleName()+" - bacteria 1");
+		s.setTitle("Bacteria simulation 1");
 		s.setWidth(GAME_WIDTH);
 		s.setHeight(GAME_HEIGHT);
 		s.setSleep(GAME_SPEED);

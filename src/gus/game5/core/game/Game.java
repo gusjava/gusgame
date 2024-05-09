@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.Action;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -173,6 +174,10 @@ public abstract class Game {
 		return settings.getTitle();
 	}
 	
+	public ImageIcon getIcon() {
+		return settings.getIcon();
+	}
+	
 	public Color getBackground() {
 		return settings.getBackground();
 	}
@@ -231,12 +236,14 @@ public abstract class Game {
 	public JFrame displayInWindows(boolean exitOnClose) {
 		initLookAndFeel();
 		
+		ImageIcon icon = getIcon();
+		
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(exitOnClose ? JFrame.EXIT_ON_CLOSE : JFrame.HIDE_ON_CLOSE);
 		frame.setContentPane(buildContentPane());
 		frame.setResizable(false);
 		frame.setTitle(settings.getTitle());
-		frame.setIconImage(settings.getIcon());
+		if(icon!=null) frame.setIconImage(icon.getImage());
 		
 		JMenuBar1 menuBar = new JMenuBar1();
 		initMenuBar(menuBar);

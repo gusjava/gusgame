@@ -19,7 +19,7 @@ public class AnimBallBattle extends Game2 {
 	}
 	
 	protected void initSettings(Settings s) {
-		s.setTitle(getClass().getSimpleName()+" - Ball battle");
+		s.setTitle("Ball battle animation");
 		s.setWidth(1400);
 		s.setHeight(760);
 		s.setSleep(10);

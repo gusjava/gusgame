@@ -2,13 +2,14 @@ package gus.game5.core.game;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Image;
+
+import javax.swing.ImageIcon;
 
 import gus.game5.core.util.UtilImage;
 
 public class Settings {
 
-	private Image icon;
+	private ImageIcon icon;
 	private String title = "Jeu";
 	private int width = 900;
 	private int height = 700;
@@ -20,14 +21,14 @@ public class Settings {
 	 * ICON
 	 */
 	
-	public Image getIcon() {
+	public ImageIcon getIcon() {
 		return icon;
 	}
-	public void setIcon(Image icon) {
+	public void setIcon(ImageIcon icon) {
 		this.icon = icon;
 	}
 	public void setIcon(String iconPath) {
-		setIcon(UtilImage.readImg(iconPath));
+		setIcon(UtilImage.readIcon(iconPath));
 	}
 	
 	/*
