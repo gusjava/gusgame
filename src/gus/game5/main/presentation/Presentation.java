@@ -28,9 +28,10 @@ import gus.game5.main.game.bomb.GameBomb;
 import gus.game5.main.game.chess.GameChess;
 import gus.game5.main.game.minesweeper.GameMinesweeper;
 import gus.game5.main.game.missile.GameMissile;
-import gus.game5.main.game.reversi.GameReversi;
+import gus.game5.main.game.reversi.GameReversi2;
 import gus.game5.main.game.snake.GameSnake;
 import gus.game5.main.game.space.GameSpace;
+import gus.game5.main.game.tictactoe.GameTicTacToe;
 import gus.game5.main.game.warrior.GameWarrior;
 import gus.game5.main.l1.bloon.GameBloon;
 import gus.game5.main.test1.MainBall1;
@@ -77,10 +78,11 @@ public class Presentation extends Game {
 	
 	protected Container buildContentPane() {
 		Container panel1 = buildPanel(
-				new GameReversi(),
+				new GameReversi2(),
 				new GameChess(),
 				new GameMinesweeper(),
 				new GameSnake(),
+				new GameTicTacToe(),
 				new GameMissile(),
 				new GameBomb());
 

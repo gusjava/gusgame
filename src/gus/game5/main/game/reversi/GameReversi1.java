@@ -18,7 +18,7 @@ import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point0.Point0;
 import gus.game5.core.shape.ShapeSquare;
 
-public class GameReversi extends Game1 {
+public class GameReversi1 extends Game1 {
 	
 	public static final String TITLE = "Reversi";
 	public static final int CELL_SIZE = 50;
@@ -44,7 +44,7 @@ public class GameReversi extends Game1 {
 	}
 	
 	public static void main(String[] args) {
-		GameReversi main = new GameReversi();
+		GameReversi1 main = new GameReversi1();
 		main.displayInWindows();
 		main.start();
 	}
@@ -52,6 +52,8 @@ public class GameReversi extends Game1 {
 	/*
 	 * CONTENT PANE
 	 */
+	
+	private JLabel labelInfo;
 	
 	protected Container buildContentPane() {
 		labelInfo = new JLabel(" ");
@@ -93,7 +95,6 @@ public class GameReversi extends Game1 {
 	private GameOver gameOver;
 	private Side player;
 	private Cell[][] board;
-	private JLabel labelInfo;
 	
 	/*
 	 * INITIALIZE

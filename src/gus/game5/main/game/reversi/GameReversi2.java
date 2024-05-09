@@ -53,6 +53,8 @@ public class GameReversi2 extends Game1 {
 	 * CONTENT PANE
 	 */
 	
+	private JLabel labelInfo;
+	
 	protected Container buildContentPane() {
 		labelInfo = new JLabel(" ");
 		
@@ -93,7 +95,6 @@ public class GameReversi2 extends Game1 {
 	private GameOver gameOver;
 	private Side player;
 	private ShapeBoard<Cell> board;
-	private JLabel labelInfo;
 	
 	/*
 	 * INITIALIZE
