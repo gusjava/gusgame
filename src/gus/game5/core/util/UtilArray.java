@@ -65,4 +65,38 @@ public class UtilArray {
 			if(data[i][j] == value) found.add(new int[] {i,j});
 		return found;
 	}
+	
+	/*
+	 * ANY
+	 */
+	
+	public static boolean any(int[][] data, int value) {
+		if(data.length==0) return false;
+		int x = data.length;
+		int y = data[0].length;
+		for(int i=0;i<x;i++) for(int j=0;j<y;j++) 
+			if(data[i][j] == value) return true;
+		return false;
+	}
+	
+	/*
+	 * ALL
+	 */
+	
+	public static boolean all(int[][] data, int value) {
+		if(data.length==0) return true;
+		int x = data.length;
+		int y = data[0].length;
+		for(int i=0;i<x;i++) for(int j=0;j<y;j++) 
+			if(data[i][j] != value) return false;
+		return true;
+	}
+	
+	/*
+	 * NONE
+	 */
+	
+	public static boolean none(int[][] data, int value) {
+		return !any(data, value);
+	}
 }

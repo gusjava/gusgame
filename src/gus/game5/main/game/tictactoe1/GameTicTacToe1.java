@@ -1,4 +1,4 @@
-package gus.game5.main.game.tictactoe;
+package gus.game5.main.game.tictactoe1;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -148,7 +148,6 @@ public class GameTicTacToe1 extends Game1 {
 			if(sideAt(0, 1)==side00 && sideAt(0, 2)==side00) return side00;
 			if(sideAt(1, 0)==side00 && sideAt(2, 0)==side00) return side00;
 		}
-
 		Side side22 = sideAt(2, 2);
 		if(!side22.isEmpty()) {
 			if(sideAt(2, 0)==side22 && sideAt(2, 1)==side22) return side22;

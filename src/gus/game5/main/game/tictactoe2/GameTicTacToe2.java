@@ -1,4 +1,4 @@
-package gus.game5.main.game.tictactoe;
+package gus.game5.main.game.tictactoe2;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -129,7 +129,7 @@ public class GameTicTacToe2 extends Game1 {
 	
 	private boolean handlePlay() {
 		if(isComputerTurn()) 
-			return handleComputerPlay();
+			return handleComputerPlay(Side.CROSS);
 		return handleHumanPlay();
 	}
 	
@@ -141,10 +141,10 @@ public class GameTicTacToe2 extends Game1 {
 		return true;
 	}
 	
-	private boolean handleComputerPlay() {
+	private boolean handleComputerPlay(Side computerSide) {
 		if(getCount()<lastPlayCount + 50) return false;
-		int[] play = UtilComputer.randomPlay(board.asInt(c->c.getSide().toInt()));
-		board.cellAt(play[0], play[1]).setSide(Side.CROSS);
+		int[] play = UtilTTT2.randomPlay(boardData());
+		board.cellAt(play[0], play[1]).setSide(computerSide);
 		return true;
 	}
 	
@@ -162,26 +162,7 @@ public class GameTicTacToe2 extends Game1 {
 	}
 	
 	private Side searchWinner() {
-		Side side11 = sideAt(1, 1);
-		if(!side11.isEmpty()) {
-			if(sideAt(0, 0)==side11 && sideAt(2, 2)==side11) return side11;
-			if(sideAt(0, 1)==side11 && sideAt(2, 1)==side11) return side11;
-			if(sideAt(0, 2)==side11 && sideAt(2, 0)==side11) return side11;
-			if(sideAt(1, 0)==side11 && sideAt(1, 2)==side11) return side11;
-		}
-		Side side00 = sideAt(0, 0);
-		if(!side00.isEmpty()) {
-			if(sideAt(0, 1)==side00 && sideAt(0, 2)==side00) return side00;
-			if(sideAt(1, 0)==side00 && sideAt(2, 0)==side00) return side00;
-		}
-
-		Side side22 = sideAt(2, 2);
-		if(!side22.isEmpty()) {
-			if(sideAt(2, 0)==side22 && sideAt(2, 1)==side22) return side22;
-			if(sideAt(0, 2)==side22 && sideAt(1, 2)==side22) return side22;
-		}
-		if(board.none(c->c.getSide().isEmpty())) return Side.EMPTY;
-		return null;
+		return intToSide(UtilTTT2.searchWinner(boardData()));
 	}
 	
 	/*
@@ -210,10 +191,6 @@ public class GameTicTacToe2 extends Game1 {
 		public String getWinDescription() {
 			if(isEmpty()) return "Draw";
 			return getLabel()+" won the game";
-		}
-		
-		public int toInt() {
-			return isCircle() ? 1 : isCross() ? -1 : 0;
 		}
 	}
 	
@@ -262,17 +239,30 @@ public class GameTicTacToe2 extends Game1 {
 		public Side getSide() {
 			return side;
 		}
-		
 		public void setSide(Side side) {
 			this.side = side;
 		}
 	}
 	
 	/*
-	 * SIDE AT
+	 * SIDE
 	 */
 	
-	private Side sideAt(int i, int j) {
-		return board.cellAt(i, j).getSide();
+	private int sideToInt(Side side) {
+		if(side==null) return -1;
+		return side.isCircle() ? 1 : side.isCross() ? 2 : 0;
+	}
+	
+	private Side intToSide(int value) {
+		if(value==-1) return null;
+		return value==1 ? Side.CIRCLE : value==2 ? Side.CROSS : Side.EMPTY;
+	}
+	
+	/*
+	 * BOARD DATA
+	 */
+	
+	private int[][] boardData() {
+		return board.asInt(c->sideToInt(c.getSide()));
 	}
 }

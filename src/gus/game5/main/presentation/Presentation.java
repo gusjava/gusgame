@@ -31,7 +31,7 @@ import gus.game5.main.game.missile.GameMissile;
 import gus.game5.main.game.reversi.GameReversi2;
 import gus.game5.main.game.snake.GameSnake;
 import gus.game5.main.game.space.GameSpace;
-import gus.game5.main.game.tictactoe.GameTicTacToe2;
+import gus.game5.main.game.tictactoe3.GameTicTacToe3;
 import gus.game5.main.game.warrior.GameWarrior;
 import gus.game5.main.l1.bloon.GameBloon;
 import gus.game5.main.test1.MainBall1;
@@ -82,7 +82,7 @@ public class Presentation extends Game {
 				new GameChess(),
 				new GameMinesweeper(),
 				new GameSnake(),
-				new GameTicTacToe2(),
+				new GameTicTacToe3(),
 				new GameMissile(),
 				new GameBomb());
 
