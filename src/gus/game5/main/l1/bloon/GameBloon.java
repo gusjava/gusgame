@@ -17,7 +17,6 @@ import gus.game5.core.util.UtilRandom;
 public class GameBloon extends Game1 {
 	
 	public static final double BLOON_RADIUS = 12;
-	public static final double BLOON_SPEED = 2;
 	
 	public static void main(String[] args) {
 		GameBloon main = new GameBloon();
@@ -35,6 +34,7 @@ public class GameBloon extends Game1 {
 	
 	private ShapeList<Bloon> list;
 	private List<Point1> path;
+	private int life = 200;
 	
 	protected void initialize1() {
 		
@@ -48,7 +48,6 @@ public class GameBloon extends Game1 {
 		path.add(p1(400, 200));
 		
 		list = newShapeList();
-		list.add(new Bloon());
 		
 		addDraw(new PathDraw());
 	}
@@ -59,40 +58,88 @@ public class GameBloon extends Game1 {
 		if(k.F2())	exit();
 		
 		if(UtilRandom.chance(50)) {
-			list.add(new Bloon());
+			list.add(new RedBloon());
+		}
+		if(UtilRandom.chance(70)) {
+			list.add(new BlueBloon());
+		}
+		if(UtilRandom.chance(100)) {
+			list.add(new GreenBloon());
+		}
+		if(UtilRandom.chance(200)) {
+			list.add(new YellowBloon());
 		}
 		
 		goNext();
 		clean();
 	}
 	
-	private class Bloon extends ShapeRound {
+	private abstract class Bloon extends ShapeRound {
 		private int targetIndex;
 		private Point1 target;
+		private double speed;
+		private double life;
 		
-		public Bloon() {
+		public Bloon(double speed, double life) {
 			super(path.get(0), BLOON_RADIUS);
-			setColor(Color.RED);
+			this.speed = speed;
+			this.life = life;
 			setTarget(1);
 		}
 		
 		public void goNext() {
 			super.goNext();
-			if(getAnchor().near(target, BLOON_SPEED)) {
+			if(getAnchor().near(target, speed)) {
 				setTarget(targetIndex+1);
 			}
 		}
 		
+		protected void drawShape() {
+			super.drawShape();
+			drawRoundC(Color.BLACK, getRadius());
+		}
+		
 		public boolean isOver() {
-			return target==null;
+			return target==null || life<=0;
 		}
 		
 		private void setTarget(int targetIndex) {
 			this.targetIndex = targetIndex;
 			target = UtilList.get(path, targetIndex);
-			getAnchor().setDerived(target, BLOON_SPEED);
+			getAnchor().setDerived(target, speed);
 		}
 	}
+	
+	
+	private class RedBloon extends Bloon {
+		public RedBloon() {
+			super(2, 5);
+			setColor(Color.RED);
+		}
+	}
+	
+	
+	private class BlueBloon extends Bloon {
+		public BlueBloon() {
+			super(5, 12);
+			setColor(Color.BLUE);
+		}
+	}
+	
+	private class GreenBloon extends Bloon {
+		public GreenBloon() {
+			super(7, 28);
+			setColor(Color.GREEN);
+		}
+	}
+	
+	private class YellowBloon extends Bloon {
+		public YellowBloon() {
+			super(10, 50);
+			setColor(Color.YELLOW);
+		}
+	}
+	
 
 	
 	private class PathDraw extends Drawing1 {
