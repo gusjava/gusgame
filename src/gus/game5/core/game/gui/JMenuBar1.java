@@ -1,5 +1,7 @@
 package gus.game5.core.game.gui;
 
+import java.awt.Component;
+
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
@@ -13,6 +15,15 @@ public class JMenuBar1 extends JMenuBar {
 		JMenu menu = new JMenu(title);
 		for(Action action : actions) {
 			if(action!=null) menu.add(action);
+			else menu.addSeparator();
+		}
+		super.add(menu);
+	}
+
+	public void add(String title, Component... comps) {
+		JMenu menu = new JMenu(title);
+		for(Component comp : comps) {
+			if(comp!=null) menu.add(comp);
 			else menu.addSeparator();
 		}
 		super.add(menu);

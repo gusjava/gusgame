@@ -8,6 +8,7 @@ import java.awt.Font;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -16,6 +17,7 @@ import javax.swing.plaf.FontUIResource;
 import gus.game5.core.angle.Angle;
 import gus.game5.core.draw.Draw;
 import gus.game5.core.game.gui.Action1;
+import gus.game5.core.game.gui.JMenu1;
 import gus.game5.core.game.gui.JMenuBar1;
 import gus.game5.core.game.gui.JPanel1;
 import gus.game5.core.game.gui.JRadioButtonMenuItem1;
@@ -294,6 +296,20 @@ public abstract class Game {
 	public JRadioButtonMenuItem1 radioMenuItem(String name, Runnable r) {
 		return new JRadioButtonMenuItem1(name, r);
 	}
+	
+	/*
+	 * MENU
+	 */
+	
+	public JMenu1 menu(String title, JMenuItem... items) {
+		return new JMenu1(title, items);
+	}
+	
+	public JMenu1 menu(String title, int index, JMenuItem... items) {
+		return new JMenu1(title , index, items);
+	}
+	
+	
 	
 	/*
 	 * ABSTRACTS

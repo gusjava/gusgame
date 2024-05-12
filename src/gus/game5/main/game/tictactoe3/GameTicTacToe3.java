@@ -55,9 +55,17 @@ public class GameTicTacToe3 extends Play1 {
 			action("New game (F1)", this::restart),
 			action("Exit (F2)", this::exit)
 		);
-		menuBar.add("Mode", 
-			radioMenuItem("Play against human", this::changeModeHuman),
-			radioMenuItem("Play against computer", this::changeModeComputer)
+		menuBar.add("Players", 
+			menu("Player 1 (circle)",
+				radioMenuItem("Human", ()->mode1 = Mode.HUMAN),
+				radioMenuItem("Computer 1", ()->{mode1 = Mode.COMPUTER1;}),
+				radioMenuItem("Computer 2", ()->{mode1 = Mode.COMPUTER2;})
+			),
+			menu("Player 2 (cross)",
+				radioMenuItem("Human", ()->mode2 = Mode.HUMAN),
+				radioMenuItem("Computer 1", ()->{mode2 = Mode.COMPUTER1;}),
+				radioMenuItem("Computer 2", ()->{mode2 = Mode.COMPUTER2;})
+			)
 		);
 	}
 	
@@ -79,15 +87,16 @@ public class GameTicTacToe3 extends Play1 {
 	 */
 
 	private ShapeBoard<Cell> board;
-	private Mode mode = Mode.HUMAN;
+	private Mode mode1 = Mode.HUMAN;
+	private Mode mode2 = Mode.HUMAN;
 	
 	/*
 	 * INITIALIZE
 	 */
 	
 	protected void initialize2() {
-		addPlayer(new PlayerHuman(this));
-		addPlayer(mode==Mode.HUMAN ? new PlayerHuman(this) : new PlayerComputer1(this));
+		addPlayer(buildPlayer(mode1));
+		addPlayer(buildPlayer(mode2));
 		
 		board = newShapeBoard(CELL_SIZE, 3, (i,j)->new Cell(i, j, EMPTY));
 		updateLabelInfo();
@@ -122,15 +131,7 @@ public class GameTicTacToe3 extends Play1 {
 	 */
 	
 	private enum Mode {
-		HUMAN, COMPUTER
-	}
-	
-	private void changeModeHuman() {
-		mode = Mode.HUMAN;
-	}
-	
-	private void changeModeComputer() {
-		mode = Mode.COMPUTER;
+		HUMAN, COMPUTER1, COMPUTER2
 	}
 	
 	/*
@@ -205,6 +206,15 @@ public class GameTicTacToe3 extends Play1 {
 	private Player1 playerForValue(int value) {
 		if(value==CIRCLE) return firstPlayer();
 		if(value==CROSS) return secondPlayer();
+		return null;
+	}
+	
+	private Player1 buildPlayer(Mode mode) {
+		switch(mode) {
+		case HUMAN: return new PlayerHuman(this);
+		case COMPUTER1: return new PlayerComputer1(this);
+		case COMPUTER2: return new PlayerComputer2(this);
+		}
 		return null;
 	}
 }
