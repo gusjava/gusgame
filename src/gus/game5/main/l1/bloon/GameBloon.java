@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gus.game5.core.drawing.Drawing1;
+import gus.game5.core.drawing.DrawingText;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
 import gus.game5.core.keyboard.Keyboard;
@@ -34,11 +35,14 @@ public class GameBloon extends Game1 {
 	
 	private ShapeList<Bloon> list;
 	private List<Point1> path;
-	private int life = 200;
+	private double life;
 	
 	protected void initialize1() {
 		
+		life = 200;
+		
 		path = new ArrayList<>();
+		path.add(p1(0, 50));
 		path.add(p1(50, 50));
 		path.add(p1(80, 90));
 		path.add(p1(120, 500));
@@ -46,10 +50,17 @@ public class GameBloon extends Game1 {
 		path.add(p1(600, 470));
 		path.add(p1(200, 600));
 		path.add(p1(400, 200));
+		path.add(p1(600, 300));
+		path.add(p1(750, 300));
+		path.add(p1(900, 200));
+		path.add(p1(1000, 460));
 		
 		list = newShapeList();
 		
 		addDraw(new PathDraw());
+		
+		DrawingText dt = newDrawingText(Color.GREEN, p1(800, 100), ()->"Life = "+life);
+		dt.setFont(30);
 	}
 
 	protected void turn() {
@@ -57,33 +68,48 @@ public class GameBloon extends Game1 {
 		if(k.F1())	restart();
 		if(k.F2())	exit();
 		
-		if(UtilRandom.chance(50)) {
-			list.add(new RedBloon());
+		if(!isGameOver()) {
+			if(UtilRandom.chance(50)) {
+				list.add(new RedBloon());
+			}
+			if(UtilRandom.chance(70)) {
+				list.add(new BlueBloon());
+			}
+			if(UtilRandom.chance(100)) {
+				list.add(new GreenBloon());
+			}
+			if(UtilRandom.chance(200)) {
+				list.add(new YellowBloon());
+			}
+			if(UtilRandom.chance(300)) {
+				list.add(new PinkBloon());
+			}
+			
+			goNext();
+			clean();
 		}
-		if(UtilRandom.chance(70)) {
-			list.add(new BlueBloon());
-		}
-		if(UtilRandom.chance(100)) {
-			list.add(new GreenBloon());
-		}
-		if(UtilRandom.chance(200)) {
-			list.add(new YellowBloon());
-		}
-		
-		goNext();
-		clean();
+	}
+	
+	private void handleGameOver() {
+		life = 0;
+		DrawingText dt = newDrawingTextC(Color.RED, gameCenter(), "Game Over");
+		dt.setFont(50);
+	}
+	
+	private boolean isGameOver() {
+		return life<=0;
 	}
 	
 	private abstract class Bloon extends ShapeRound {
 		private int targetIndex;
 		private Point1 target;
 		private double speed;
-		private double life;
+		private double bloonLife;
 		
-		public Bloon(double speed, double life) {
+		public Bloon(double speed, double bloonLife) {
 			super(path.get(0), BLOON_RADIUS);
 			this.speed = speed;
-			this.life = life;
+			this.bloonLife = bloonLife;
 			setTarget(1);
 		}
 		
@@ -91,6 +117,11 @@ public class GameBloon extends Game1 {
 			super.goNext();
 			if(getAnchor().near(target, speed)) {
 				setTarget(targetIndex+1);
+			}
+			
+			if(isOver()) {
+				life-= bloonLife;
+				if(life<0) handleGameOver();
 			}
 		}
 		
@@ -100,7 +131,7 @@ public class GameBloon extends Game1 {
 		}
 		
 		public boolean isOver() {
-			return target==null || life<=0;
+			return target==null || bloonLife<=0;
 		}
 		
 		private void setTarget(int targetIndex) {
@@ -113,7 +144,7 @@ public class GameBloon extends Game1 {
 	
 	private class RedBloon extends Bloon {
 		public RedBloon() {
-			super(2, 5);
+			super(1, 1);
 			setColor(Color.RED);
 		}
 	}
@@ -121,22 +152,29 @@ public class GameBloon extends Game1 {
 	
 	private class BlueBloon extends Bloon {
 		public BlueBloon() {
-			super(5, 12);
+			super(2, 3);
 			setColor(Color.BLUE);
 		}
 	}
 	
 	private class GreenBloon extends Bloon {
 		public GreenBloon() {
-			super(7, 28);
+			super(3, 5);
 			setColor(Color.GREEN);
 		}
 	}
 	
 	private class YellowBloon extends Bloon {
 		public YellowBloon() {
-			super(10, 50);
+			super(5, 9);
 			setColor(Color.YELLOW);
+		}
+	}
+	
+	private class PinkBloon extends Bloon {
+		public PinkBloon() {
+			super(6, 20);
+			setColor(Color.PINK);
 		}
 	}
 	
