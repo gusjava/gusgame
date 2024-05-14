@@ -3,6 +3,7 @@ package gus.game5.core.play1;
 import java.util.ArrayList;
 import java.util.List;
 
+import gus.game5.core.features.p.P;
 import gus.game5.core.game.Game1;
 import gus.game5.core.util.UtilList;
 
@@ -65,6 +66,7 @@ public abstract class Play1 extends Game1 {
 	}
 	
 	public Player1 playerAt(int index) {
+		if(players==null) return null;
 		return UtilList.get(players, index);
 	}
 	
@@ -78,6 +80,18 @@ public abstract class Play1 extends Game1 {
 	
 	public Player1 currentPlayer() {
 		return playerAt(playIndex);
+	}
+	
+	public void eachPlayer(P<Player1> p) {
+		if(players!=null) for(Player1 player : players) p.p(player);
+	}
+	
+	public List<Player1> getPlayers() {
+		return players;
+	}
+	
+	public int playerNumber() {
+		return players!=null ? players.size() : 0;
 	}
 	
 	/*

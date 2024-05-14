@@ -1,6 +1,6 @@
 package gus.game5.main.game.tictactoe3;
 
-import static gus.game5.main.game.tictactoe3.UtilTTT3.CIRCLE;
+import static gus.game5.main.game.tictactoe3.UtilTTT3.NOUGHT;
 import static gus.game5.main.game.tictactoe3.UtilTTT3.CROSS;
 
 import gus.game5.core.play1.Player1;
@@ -22,11 +22,15 @@ public class PlayerHuman extends Player1 {
 	}
 	
 	public int getValue() {
-		return isFirst() ? CIRCLE : CROSS;
+		return isFirst() ? NOUGHT : CROSS;
 	}
 	
 	public String getDisplay() {
-		return isFirst() ? "Circle" : "Cross";
+		return isFirst() ? "Nought" : "Cross";
+	}
+	
+	public String getType() {
+		return "Human";
 	}
 
 }

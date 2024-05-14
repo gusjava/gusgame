@@ -21,6 +21,7 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 	private int y;
 	private double cellSize;
 	private List<U> data;
+	private int nb;
 	
 	public ShapeBoard(double cellSize, int x, ShapeCellBuilder<U> builder) {
 		this(cellSize, x, x, builder);
@@ -36,6 +37,7 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 			cell.initCell(cellSize);
 			data.add(cell);
 		}
+		nb = data.size();
 	}
 	
 	public int getX() {
@@ -44,6 +46,10 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 	
 	public int getY() {
 		return y;
+	}
+	
+	public int getNb() {
+		return nb;
 	}
 	
 	public double getCellSize() {
@@ -69,6 +75,11 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 	/*
 	 * CELL AT
 	 */
+	
+	public U cellAt(int index) {
+		if(index<0 || index>=nb) return null;
+		return get(index);
+	}
 	
 	public U cellAt(int i, int j) {
 		if(i<0 || i>=x) return null;
@@ -132,49 +143,89 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 	 * AS
 	 */
 	
-	public boolean[][] asBoolean(F<U> f) {
-		boolean[][] data = new boolean[x][y];
-		for(int i=0;i<x;i++)
-		for(int j=0;j<x;j++) {
-			data[i][j] = f.f(get(i,j));
+	public boolean[] asBoolean1(F<U> f) {
+		boolean[] ouput = new boolean[nb];
+		for(int i=0;i<nb;i++) {
+			ouput[i] = f.f(get(i));
 		}
-		return data;
+		return ouput;
 	}
 	
-	public int[][] asInt(Tint<U> t) {
-		int[][] data = new int[x][y];
+	public boolean[][] asBoolean2(F<U> f) {
+		boolean[][] ouput = new boolean[x][y];
 		for(int i=0;i<x;i++)
 		for(int j=0;j<x;j++) {
-			data[i][j] = t.t(get(i,j));
+			ouput[i][j] = f.f(get(i,j));
 		}
-		return data;
+		return ouput;
 	}
 	
-	public double[][] asDouble(Tdouble<U> t) {
-		double[][] data = new double[x][y];
-		for(int i=0;i<x;i++)
-		for(int j=0;j<x;j++) {
-			data[i][j] = t.t(get(i,j));
+	public int[] asInt1(Tint<U> t) {
+		int[] ouput = new int[nb];
+		for(int i=0;i<nb;i++) {
+			ouput[i] = t.t(get(i));
 		}
-		return data;
+		return ouput;
 	}
 	
-	public char[][] asChar(Tchar<U> t) {
-		char[][] data = new char[x][y];
+	public int[][] asInt2(Tint<U> t) {
+		int[][] ouput = new int[x][y];
 		for(int i=0;i<x;i++)
 		for(int j=0;j<x;j++) {
-			data[i][j] = t.t(get(i,j));
+			ouput[i][j] = t.t(get(i,j));
 		}
-		return data;
+		return ouput;
 	}
 	
-	public String[][] asString(T<U, String> t) {
-		String[][] data = new String[x][y];
+	public double[] asDouble1(Tdouble<U> t) {
+		double[] ouput = new double[nb];
+		for(int i=0;i<nb;i++) {
+			ouput[i] = t.t(get(i));
+		}
+		return ouput;
+	}
+	
+	public double[][] asDouble2(Tdouble<U> t) {
+		double[][] ouput = new double[x][y];
 		for(int i=0;i<x;i++)
 		for(int j=0;j<x;j++) {
-			data[i][j] = t.t(get(i,j));
+			ouput[i][j] = t.t(get(i,j));
 		}
-		return data;
+		return ouput;
+	}
+	
+	public char[] asChar1(Tchar<U> t) {
+		char[] ouput = new char[nb];
+		for(int i=0;i<nb;i++) {
+			ouput[i] = t.t(get(i));
+		}
+		return ouput;
+	}
+	
+	public char[][] asChar2(Tchar<U> t) {
+		char[][] ouput = new char[x][y];
+		for(int i=0;i<x;i++)
+		for(int j=0;j<x;j++) {
+			ouput[i][j] = t.t(get(i,j));
+		}
+		return ouput;
+	}
+	
+	public String[] asString1(T<U, String> t) {
+		String[] ouput = new String[nb];
+		for(int i=0;i<nb;i++) {
+			ouput[i] = t.t(get(i));
+		}
+		return ouput;
+	}
+	
+	public String[][] asString2(T<U, String> t) {
+		String[][] ouput = new String[x][y];
+		for(int i=0;i<x;i++)
+		for(int j=0;j<x;j++) {
+			ouput[i][j] = t.t(get(i,j));
+		}
+		return ouput;
 	}
 	
 	/*
@@ -182,6 +233,10 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 	 */
 	
 	private U get(int i, int j)  {
-		return data.get(i*x+j);
+		return get(i*x+j);
+	}
+	
+	private U get(int index) {
+		return data.get(index);
 	}
 }

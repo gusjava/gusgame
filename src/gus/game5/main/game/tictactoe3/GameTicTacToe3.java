@@ -35,14 +35,17 @@ public class GameTicTacToe3 extends Play1 {
 	 * CONTENT PANE
 	 */
 	
-	private JLabel labelInfo;
+	private JLabel labelInfo1;
+	private JLabel labelInfo2;
 	
 	protected Container buildContentPane() {
-		labelInfo = new JLabel(" ");
+		labelInfo1 = new JLabel(" ");
+		labelInfo2 = new JLabel(" ");
 		
 		JPanel p = new JPanel(new BorderLayout());
-		p.add(labelInfo, BorderLayout.NORTH);
+		p.add(labelInfo1, BorderLayout.NORTH);
 		p.add(panel(), BorderLayout.CENTER);
+		p.add(labelInfo2, BorderLayout.SOUTH);
 		return p;
 	}
 	
@@ -57,14 +60,14 @@ public class GameTicTacToe3 extends Play1 {
 		);
 		menuBar.add("Players", 
 			menu("Player 1 (circle)",
-				radioMenuItem("Human", ()->mode1 = Mode.HUMAN),
-				radioMenuItem("Computer 1", ()->{mode1 = Mode.COMPUTER1;}),
-				radioMenuItem("Computer 2", ()->{mode1 = Mode.COMPUTER2;})
+				radioMenuItem("Human", ()->changeMode1(Mode.HUMAN)),
+				radioMenuItem("Computer (Random)", ()->changeMode1(Mode.RANDOM)),
+				radioMenuItem("Computer (Min-Max)", ()->changeMode1(Mode.MINMAX))
 			),
 			menu("Player 2 (cross)",
-				radioMenuItem("Human", ()->mode2 = Mode.HUMAN),
-				radioMenuItem("Computer 1", ()->{mode2 = Mode.COMPUTER1;}),
-				radioMenuItem("Computer 2", ()->{mode2 = Mode.COMPUTER2;})
+				radioMenuItem("Human", ()->changeMode2(Mode.HUMAN)),
+				radioMenuItem("Computer (random)", ()->changeMode2(Mode.RANDOM)),
+				radioMenuItem("Computer (minmax)", ()->changeMode2(Mode.MINMAX))
 			)
 		);
 	}
@@ -99,7 +102,9 @@ public class GameTicTacToe3 extends Play1 {
 		addPlayer(buildPlayer(mode2));
 		
 		board = newShapeBoard(CELL_SIZE, 3, (i,j)->new Cell(i, j, EMPTY));
-		updateLabelInfo();
+		
+		updateLabelInfo1();
+		updateLabelInfo2();
 		
 		DrawingText gameOverText = newDrawingTextC(Color.GRAY, gameCenter(), "Game Over");
 		gameOverText.setFontBold(40);
@@ -118,12 +123,7 @@ public class GameTicTacToe3 extends Play1 {
 	
 	protected void played() {
 		handleGameOver();
-		updateLabelInfo();
-	}
-	
-	private void updateLabelInfo() {
-		if(isGameOver()) labelInfo.setText(" "+getGameOverDisplay());
-		else labelInfo.setText(" "+currentPlayer().getDisplay()+" is playing");
+		updateLabelInfo1();
 	}
 	
 	/*
@@ -131,7 +131,17 @@ public class GameTicTacToe3 extends Play1 {
 	 */
 	
 	private enum Mode {
-		HUMAN, COMPUTER1, COMPUTER2
+		HUMAN, RANDOM, MINMAX
+	}
+	
+	private void changeMode1(Mode mode) {
+		mode1 = mode;
+		updateLabelInfo2();
+	}
+	
+	private void changeMode2(Mode mode) {
+		mode2 = mode;
+		updateLabelInfo2();
 	}
 	
 	/*
@@ -150,7 +160,7 @@ public class GameTicTacToe3 extends Play1 {
 			int r = CELL_SIZE/2;
 			
 			drawSquareC(Color.GRAY, CELL_SIZE);
-			if(value==CIRCLE) {
+			if(value==NOUGHT) {
 				fillRoundC(r-5);
 				fillRoundC(Color.WHITE, r-15);
 			}
@@ -172,8 +182,8 @@ public class GameTicTacToe3 extends Play1 {
 	 * BOARD
 	 */
 	
-	public int[][] boardData() {
-		return board.asInt(Cell::getValue);
+	public int[] boardData() {
+		return board.asInt1(Cell::getValue);
 	}
 	
 	public Cell getPressedCell() {
@@ -181,8 +191,12 @@ public class GameTicTacToe3 extends Play1 {
 		return board.cellAt(mouse().pointCurrent());
 	}
 	
-	public void setValue(int i, int j, int value) {
+	public void setValueAt(int i, int j, int value) {
 		board.cellAt(i, j).setValue(value);
+	}
+	
+	public void setValueAt(int index, int value) {
+		board.cellAt(index).setValue(value);
 	}
 	
 	/*
@@ -204,7 +218,7 @@ public class GameTicTacToe3 extends Play1 {
 	 */
 	
 	private Player1 playerForValue(int value) {
-		if(value==CIRCLE) return firstPlayer();
+		if(value==NOUGHT) return firstPlayer();
 		if(value==CROSS) return secondPlayer();
 		return null;
 	}
@@ -212,9 +226,27 @@ public class GameTicTacToe3 extends Play1 {
 	private Player1 buildPlayer(Mode mode) {
 		switch(mode) {
 		case HUMAN: return new PlayerHuman(this);
-		case COMPUTER1: return new PlayerComputer1(this);
-		case COMPUTER2: return new PlayerComputer2(this);
+		case RANDOM: return new PlayerComputerRandom(this);
+		case MINMAX: return new PlayerComputerMinmax(this);
 		}
 		return null;
+	}
+	
+	/*
+	 * LABEL INFO
+	 */
+	
+	private void updateLabelInfo1() {
+		if(isGameOver()) labelInfo1.setText(" "+getGameOverDisplay());
+		else labelInfo1.setText(" "+currentPlayer().getDisplay()+" is playing");
+	}
+	
+	private void updateLabelInfo2() {
+		if(playerNumber()>0) {
+			String type1 = firstPlayer().getType();
+			String type2 = secondPlayer().getType();
+			labelInfo2.setText("Nought: "+type1+" , Cross: "+type2);
+		}
+		else labelInfo2.setText(" ");
 	}
 }

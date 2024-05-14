@@ -37,6 +37,20 @@ public abstract class Player1 {
 	public void setDisplay(String display) {
 		this.display = display;
 	}
+	
+	/*
+	 * TYPE
+	 */
+	
+	private String type;
+	
+	public String getType() {
+		return type;
+	}
+	
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	/*
 	 * PLAY

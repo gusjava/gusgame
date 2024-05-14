@@ -263,6 +263,6 @@ public class GameTicTacToe2 extends Game1 {
 	 */
 	
 	private int[][] boardData() {
-		return board.asInt(c->sideToInt(c.getSide()));
+		return board.asInt2(c->sideToInt(c.getSide()));
 	}
 }
