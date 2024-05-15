@@ -1,9 +1,9 @@
-package gus.game5.main.game.tictactoe3;
+package gus.game5.main.game.board2.tictactoe3;
 
-import static gus.game5.main.game.tictactoe3.UtilTTT3.*;
+import static gus.game5.main.game.board2.tictactoe3.UtilTTT3.*;
 
 import gus.game5.core.play1.Player1;
-import gus.game5.main.game.tictactoe3.GameTicTacToe3.Cell;
+import gus.game5.main.game.board2.tictactoe3.GameTicTacToe3.Cell;
 
 public class PlayerHuman extends Player1 {
 	

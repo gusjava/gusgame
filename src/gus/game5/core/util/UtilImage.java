@@ -39,7 +39,7 @@ public class UtilImage {
 	
 	public static ImageIcon readIcon(String path) {
 		URL url = UtilImage.class.getResource(path);
-		return new ImageIcon(url);
+		return url!=null ? new ImageIcon(url) : null;
 	}
 	
 	/*

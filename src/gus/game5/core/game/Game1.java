@@ -26,6 +26,7 @@ import gus.game5.core.shape.ShapeRound;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
 import gus.game5.core.shape.board.ShapeCellBuilder;
+import gus.game5.core.util.UtilResource;
 
 public abstract class Game1 extends Game {
 	
@@ -303,5 +304,13 @@ public abstract class Game1 extends Game {
 		DrawingText draw = new DrawingTextC(origin, text);
 		addDraw(draw);
 		return draw;
+	}
+	
+	/*
+	 * RESOURCE
+	 */
+	
+	protected String resourceAt(String fileName) {
+		return UtilResource.resourceAt(getClass(), fileName);
 	}
 }

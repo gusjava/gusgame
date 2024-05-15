@@ -1,6 +1,6 @@
-package gus.game5.main.game.chess;
+package gus.game5.main.game.board2.chess1;
 
-import static gus.game5.main.game.chess.UtilChess.*;
+import static gus.game5.main.game.board2.chess1.UtilChess.*;
 
 public class MoveExecutor {
 	

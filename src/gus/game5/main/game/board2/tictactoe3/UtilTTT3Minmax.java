@@ -1,10 +1,10 @@
-package gus.game5.main.game.tictactoe3;
+package gus.game5.main.game.board2.tictactoe3;
 
-import static gus.game5.main.game.tictactoe3.UtilTTT3.EMPTY;
-import static gus.game5.main.game.tictactoe3.UtilTTT3.NOUGHT;
-import static gus.game5.main.game.tictactoe3.UtilTTT3.findPossiblePlays;
-import static gus.game5.main.game.tictactoe3.UtilTTT3.oppositeValue;
-import static gus.game5.main.game.tictactoe3.UtilTTT3.searchWinner;
+import static gus.game5.main.game.board2.tictactoe3.UtilTTT3.EMPTY;
+import static gus.game5.main.game.board2.tictactoe3.UtilTTT3.NOUGHT;
+import static gus.game5.main.game.board2.tictactoe3.UtilTTT3.findPossiblePlays;
+import static gus.game5.main.game.board2.tictactoe3.UtilTTT3.oppositeValue;
+import static gus.game5.main.game.board2.tictactoe3.UtilTTT3.searchWinner;
 
 import java.util.List;
 

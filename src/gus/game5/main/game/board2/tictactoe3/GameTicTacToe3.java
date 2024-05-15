@@ -1,6 +1,6 @@
-package gus.game5.main.game.tictactoe3;
+package gus.game5.main.game.board2.tictactoe3;
 
-import static gus.game5.main.game.tictactoe3.UtilTTT3.*;
+import static gus.game5.main.game.board2.tictactoe3.UtilTTT3.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

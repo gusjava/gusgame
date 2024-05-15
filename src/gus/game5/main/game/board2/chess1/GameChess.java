@@ -1,6 +1,6 @@
-package gus.game5.main.game.chess;
+package gus.game5.main.game.board2.chess1;
 
-import static gus.game5.main.game.chess.UtilChess.*;
+import static gus.game5.main.game.board2.chess1.UtilChess.*;
 
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
@@ -26,7 +26,6 @@ import gus.game5.core.util.image.ImageLoader;
 
 public class GameChess extends Game1 {
 
-	public static final String BASE_IMG = "/gus/game5/main/game/chess/";
 	public static final String TITLE = "Chess";
 	public static final int CELL_SIZE = 50;
 	public static final int BOARD_SIZE = CELL_SIZE*8;
@@ -92,7 +91,7 @@ public class GameChess extends Game1 {
 	 */
 	
 	protected void initSettings(Settings s) {
-		s.setIcon(BASE_IMG+"app.gif");
+		s.setIcon(resourceAt("app.gif"));
 		s.setTitle(TITLE);
 		s.setWidth(BOARD_SIZE);
 		s.setHeight(BOARD_SIZE);
@@ -116,7 +115,7 @@ public class GameChess extends Game1 {
 	
 	protected void initialize1() {
 		engine = new Engine();
-		imgLoader = new ImageLoader(BASE_IMG);
+		imgLoader = new ImageLoader(this);
 		board = newShapeBoard(CELL_SIZE, 8, this::buildCell);
 		dragged = null;
 		

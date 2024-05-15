@@ -1,10 +1,11 @@
-package gus.game5.main.game.chess;
+package gus.game5.main.game.board2.chess1;
+
+import static gus.game5.main.game.board2.chess1.UtilChess.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import gus.game5.core.util.UtilArray;
-import static gus.game5.main.game.chess.UtilChess.*;
 
 
 public class Engine {

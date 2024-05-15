@@ -1,4 +1,4 @@
-package gus.game5.main.game.chess;
+package gus.game5.main.game.board2.chess1;
 
 import gus.game5.core.util.UtilArray;
 

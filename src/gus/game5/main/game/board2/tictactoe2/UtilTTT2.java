@@ -1,4 +1,4 @@
-package gus.game5.main.game.tictactoe2;
+package gus.game5.main.game.board2.tictactoe2;
 
 import java.util.List;
 

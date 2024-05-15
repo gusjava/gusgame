@@ -1,4 +1,4 @@
-package gus.game5.main.game.tictactoe1;
+package gus.game5.main.game.board2.tictactoe2;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -10,20 +10,20 @@ import javax.swing.JPanel;
 
 import gus.game5.core.drawing.DrawingText;
 import gus.game5.core.game.Game1;
-import gus.game5.core.game.gui.JMenuBar1;
 import gus.game5.core.game.Settings;
+import gus.game5.core.game.gui.JMenuBar1;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
 
-public class GameTicTacToe1 extends Game1 {
+public class GameTicTacToe2 extends Game1 {
 
 	public static final String TITLE = "Tic-tac-toe";
 	public static final int CELL_SIZE = 100;
 	public static final int BOARD_SIZE = CELL_SIZE*3;
 	
 	public static void main(String[] args) {
-		GameTicTacToe1 main = new GameTicTacToe1();
+		GameTicTacToe2 main = new GameTicTacToe2();
 		main.displayInWindows();
 		main.start();
 	}
@@ -52,6 +52,10 @@ public class GameTicTacToe1 extends Game1 {
 			action("New game (F1)", this::restart),
 			action("Exit (F2)", this::exit)
 		);
+		menuBar.add("Mode", 
+			radioMenuItem("Play against human", this::changeModeHuman),
+			radioMenuItem("Play against computer", this::changeModeComputer)
+		);
 	}
 	
 	/*
@@ -75,6 +79,9 @@ public class GameTicTacToe1 extends Game1 {
 	private Side player;
 	private ShapeBoard<Cell> board;
 	
+	private Mode mode = Mode.HUMAN;
+	private long lastPlayCount;
+	
 	/*
 	 * INITIALIZE
 	 */
@@ -82,6 +89,7 @@ public class GameTicTacToe1 extends Game1 {
 	protected void initialize1() {
 		winner = null;
 		player = Side.CIRCLE;
+		lastPlayCount = 0;
 		
 		board = newShapeBoard(CELL_SIZE, 3, this::buildCell);
 		updateLabelInfo();
@@ -106,24 +114,42 @@ public class GameTicTacToe1 extends Game1 {
 		
 		if(isGameOver()) return;
 		
-		if(mouse().button1().justPressed())
-			handlePressed();
+		boolean played = handlePlay();
+		if(played) {
+			lastPlayCount = getCount();
+			player = player.opposite();
+			winner = searchWinner();
+			updateLabelInfo();
+		}
 	}
 	
-	private void handlePressed() {
-		boolean played = attemptToPlay();
-		if(!played) return;
-		
-		player = player.opposite();
-		winner = searchWinner();
-		updateLabelInfo();
+	/*
+	 * HANDLE PLAY
+	 */
+	
+	private boolean handlePlay() {
+		if(isComputerTurn()) 
+			return handleComputerPlay(Side.CROSS);
+		return handleHumanPlay();
 	}
 	
-	private boolean attemptToPlay() {
+	private boolean handleHumanPlay() {
+		if(!mouse().button1().justPressed()) return false;
 		Cell c = board.cellAt(mouse().pointCurrent());
 		if(c==null || !c.getSide().isEmpty()) return false;
 		c.setSide(player);
 		return true;
+	}
+	
+	private boolean handleComputerPlay(Side computerSide) {
+		if(getCount()<lastPlayCount + 50) return false;
+		int[] play = UtilTTT2.randomPlay(boardData());
+		board.cellAt(play[0], play[1]).setSide(computerSide);
+		return true;
+	}
+	
+	private boolean isComputerTurn() {
+		return mode==Mode.COMPUTER && player.isCross();
 	}
 	
 	private boolean isGameOver() {
@@ -136,25 +162,7 @@ public class GameTicTacToe1 extends Game1 {
 	}
 	
 	private Side searchWinner() {
-		Side side11 = sideAt(1, 1);
-		if(!side11.isEmpty()) {
-			if(sideAt(0, 0)==side11 && sideAt(2, 2)==side11) return side11;
-			if(sideAt(0, 1)==side11 && sideAt(2, 1)==side11) return side11;
-			if(sideAt(0, 2)==side11 && sideAt(2, 0)==side11) return side11;
-			if(sideAt(1, 0)==side11 && sideAt(1, 2)==side11) return side11;
-		}
-		Side side00 = sideAt(0, 0);
-		if(!side00.isEmpty()) {
-			if(sideAt(0, 1)==side00 && sideAt(0, 2)==side00) return side00;
-			if(sideAt(1, 0)==side00 && sideAt(2, 0)==side00) return side00;
-		}
-		Side side22 = sideAt(2, 2);
-		if(!side22.isEmpty()) {
-			if(sideAt(2, 0)==side22 && sideAt(2, 1)==side22) return side22;
-			if(sideAt(0, 2)==side22 && sideAt(1, 2)==side22) return side22;
-		}
-		if(board.none(c->c.getSide().isEmpty())) return Side.EMPTY;
-		return null;
+		return intToSide(UtilTTT2.searchWinner(boardData()));
 	}
 	
 	/*
@@ -187,6 +195,22 @@ public class GameTicTacToe1 extends Game1 {
 	}
 	
 	/*
+	 * MODE
+	 */
+	
+	private enum Mode {
+		HUMAN, COMPUTER
+	}
+	
+	private void changeModeHuman() {
+		mode = Mode.HUMAN;
+	}
+	
+	private void changeModeComputer() {
+		mode = Mode.COMPUTER;
+	}
+	
+	/*
 	 * CELL
 	 */
 	
@@ -215,17 +239,30 @@ public class GameTicTacToe1 extends Game1 {
 		public Side getSide() {
 			return side;
 		}
-		
 		public void setSide(Side side) {
 			this.side = side;
 		}
 	}
 	
 	/*
-	 * SIDE AT
+	 * SIDE
 	 */
 	
-	private Side sideAt(int i, int j) {
-		return board.cellAt(i, j).getSide();
+	private int sideToInt(Side side) {
+		if(side==null) return -1;
+		return side.isCircle() ? 1 : side.isCross() ? 2 : 0;
+	}
+	
+	private Side intToSide(int value) {
+		if(value==-1) return null;
+		return value==1 ? Side.CIRCLE : value==2 ? Side.CROSS : Side.EMPTY;
+	}
+	
+	/*
+	 * BOARD DATA
+	 */
+	
+	private int[][] boardData() {
+		return board.asInt2(c->sideToInt(c.getSide()));
 	}
 }
