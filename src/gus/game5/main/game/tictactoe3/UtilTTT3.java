@@ -19,6 +19,10 @@ public class UtilTTT3 {
 		return UtilArray.findAll(data, EMPTY);
 	}
 	
+	public static boolean isPlayable(int cellValue) {
+		return cellValue==EMPTY;
+	}
+	
 	public static int searchWinner(int[] data) {
 		if(same(data,0,1,2)) return data[0];
 		if(same(data,3,4,5)) return data[3];

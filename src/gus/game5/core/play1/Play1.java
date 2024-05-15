@@ -24,7 +24,7 @@ public abstract class Play1 extends Game1 {
 	}
 
 	protected void turn() {
-		turn1();
+		turnStart();
 		if(isGameOver()) return;
 		
 		Player1 current = currentPlayer();
@@ -36,6 +36,7 @@ public abstract class Play1 extends Game1 {
 				nextPlayer();
 			}
 		}
+		turnEnd();
 	}
 	
 	
@@ -43,7 +44,11 @@ public abstract class Play1 extends Game1 {
 		
 	}
 	
-	protected void turn1() {
+	protected void turnStart() {
+		
+	}
+	
+	protected void turnEnd() {
 		
 	}
 	
@@ -80,6 +85,10 @@ public abstract class Play1 extends Game1 {
 	
 	public Player1 currentPlayer() {
 		return playerAt(playIndex);
+	}
+	
+	public int playIndex() {
+		return playIndex;
 	}
 	
 	public void eachPlayer(P<Player1> p) {

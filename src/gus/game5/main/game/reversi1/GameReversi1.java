@@ -1,4 +1,4 @@
-package gus.game5.main.game.reversi;
+package gus.game5.main.game.reversi1;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

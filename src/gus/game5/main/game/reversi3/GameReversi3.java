@@ -1,11 +1,12 @@
-package gus.game5.main.game.tictactoe3;
+package gus.game5.main.game.reversi3;
 
-import static gus.game5.main.game.tictactoe3.UtilTTT3.*;
+import static gus.game5.main.game.reversi3.UtilReversi3.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,14 +20,14 @@ import gus.game5.core.play1.Player1;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
 
-public class GameTicTacToe3 extends Play1 {
-
-	public static final String TITLE = "Tic-tac-toe";
-	public static final int CELL_SIZE = 100;
-	public static final int BOARD_SIZE = CELL_SIZE*3;
+public class GameReversi3 extends Play1 {
+	
+	public static final String TITLE = "Reversi";
+	public static final int CELL_SIZE = 50;
+	public static final int BOARD_SIZE = CELL_SIZE*8;
 	
 	public static void main(String[] args) {
-		GameTicTacToe3 main = new GameTicTacToe3();
+		GameReversi3 main = new GameReversi3();
 		main.displayInWindows();
 		main.start();
 	}
@@ -34,7 +35,7 @@ public class GameTicTacToe3 extends Play1 {
 	/*
 	 * CONTENT PANE
 	 */
-	
+
 	private JLabel labelInfo1;
 	private JLabel labelInfo2;
 	
@@ -59,12 +60,12 @@ public class GameTicTacToe3 extends Play1 {
 			action("Exit (F2)", this::exit)
 		);
 		menuBar.add("Players", 
-			menu("Player 1 (nought)",
+			menu("Player 1 (white)",
 				radioMenuItem("Human", ()->changeMode1(Mode.HUMAN)),
 				radioMenuItem("Computer (Random)", ()->changeMode1(Mode.RANDOM)),
 				radioMenuItem("Computer (Min-Max)", ()->changeMode1(Mode.MINMAX))
 			),
-			menu("Player 2 (cross)",
+			menu("Player 2 (black)",
 				radioMenuItem("Human", ()->changeMode2(Mode.HUMAN)),
 				radioMenuItem("Computer (Random)", ()->changeMode2(Mode.RANDOM)),
 				radioMenuItem("Computer (Min-Max)", ()->changeMode2(Mode.MINMAX))
@@ -101,7 +102,7 @@ public class GameTicTacToe3 extends Play1 {
 		addPlayer(buildPlayer(mode1));
 		addPlayer(buildPlayer(mode2));
 		
-		board = newShapeBoard(CELL_SIZE, 3, (i,j)->new Cell(i, j, EMPTY));
+		board = newShapeBoard(CELL_SIZE, 8, (i,j)->new Cell(i, j, INIT_STATE[i][j]));
 		
 		updateLabelInfo1();
 		updateLabelInfo2();
@@ -162,14 +163,8 @@ public class GameTicTacToe3 extends Play1 {
 		protected void drawShape() {
 			int r = CELL_SIZE/2;
 			drawSquareC(Color.GRAY, CELL_SIZE);
-			if(value==NOUGHT) {
-				fillRoundC(r-5);
-				fillRoundC(Color.WHITE, r-15);
-			}
-			else if(value==CROSS) {
-				drawThickLine(p(-r+10,-r+10), p(r-10,r-10), 10);
-				drawThickLine(p(-r+10,r-10), p(r-10,-r+10), 10);
-			}
+			if(value==WHITE) drawRoundC(r-5);
+			else if(value==BLACK) fillRoundC(r-5);
 		}
 		
 		public int getValue() {
@@ -184,8 +179,8 @@ public class GameTicTacToe3 extends Play1 {
 	 * BOARD
 	 */
 	
-	public int[] boardData() {
-		return board.asInt1(Cell::getValue);
+	public int[][] boardData() {
+		return board.asInt2(Cell::getValue);
 	}
 	
 	public Cell getPressedCell() {
@@ -193,8 +188,12 @@ public class GameTicTacToe3 extends Play1 {
 		return board.cellAt(mouse().pointCurrent());
 	}
 	
-	public void setValueAt(int index, int value) {
-		board.cellAt(index).setValue(value);
+	public void setValueAt(int i, int j, int value) {
+		board.cellAt(i, j).setValue(value);
+	}
+
+	public void setValues(List<int[]> play, int value) {
+		for(int[] p : play) setValueAt(p[0], p[1], value);
 	}
 	
 	/*
@@ -202,7 +201,7 @@ public class GameTicTacToe3 extends Play1 {
 	 */
 	
 	private void handleGameOver() {
-		int value = UtilTTT3.searchWinner(boardData());
+		int value = searchWinner(oppositePlayerValue(), boardData());
 		if(value!=-1) setGameOver(playerForValue(value));
 	}
 	
@@ -216,8 +215,8 @@ public class GameTicTacToe3 extends Play1 {
 	 */
 	
 	private Player1 playerForValue(int value) {
-		if(value==NOUGHT) return firstPlayer();
-		if(value==CROSS) return secondPlayer();
+		if(value==WHITE) return firstPlayer();
+		if(value==BLACK) return secondPlayer();
 		return null;
 	}
 	
@@ -228,6 +227,10 @@ public class GameTicTacToe3 extends Play1 {
 		case MINMAX: return new PlayerComputerMinmax(this);
 		}
 		return null;
+	}
+	
+	private int oppositePlayerValue() {
+		return playIndex()==1 ? WHITE : BLACK;
 	}
 	
 	/*
@@ -243,7 +246,7 @@ public class GameTicTacToe3 extends Play1 {
 		if(playerNumber()>0) {
 			String type1 = firstPlayer().getType();
 			String type2 = secondPlayer().getType();
-			labelInfo2.setText("Nought: "+type1+" , Cross: "+type2);
+			labelInfo2.setText("White: "+type1+" , Black: "+type2);
 		}
 		else labelInfo2.setText(" ");
 	}

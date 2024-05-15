@@ -1,7 +1,6 @@
 package gus.game5.main.game.tictactoe3;
 
-import static gus.game5.main.game.tictactoe3.UtilTTT3.NOUGHT;
-import static gus.game5.main.game.tictactoe3.UtilTTT3.CROSS;
+import static gus.game5.main.game.tictactoe3.UtilTTT3.*;
 
 import gus.game5.core.play1.Player1;
 import gus.game5.main.game.tictactoe3.GameTicTacToe3.Cell;
@@ -16,7 +15,7 @@ public class PlayerHuman extends Player1 {
 
 	public boolean play() {
 		Cell c = game.getPressedCell();
-		if(c==null || c.getValue()!=0) return false;
+		if(c==null || !isPlayable(c.getValue())) return false;
 		c.setValue(getValue());
 		return true;
 	}
@@ -32,5 +31,4 @@ public class PlayerHuman extends Player1 {
 	public String getType() {
 		return "Human";
 	}
-
 }

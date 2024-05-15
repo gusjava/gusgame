@@ -1,31 +1,33 @@
-package gus.game5.main.game.tictactoe3;
+package gus.game5.main.game.reversi3;
 
 import gus.game5.core.play1.Player1;
-import static gus.game5.main.game.tictactoe3.UtilTTT3.*;
+import static gus.game5.main.game.reversi3.UtilReversi3.*;
+
+import java.util.List;
 
 public class PlayerComputerRandom extends Player1 {
 	
-	private GameTicTacToe3 game;
+	private GameReversi3 game;
 	
-	public PlayerComputerRandom(GameTicTacToe3 game) {
+	public PlayerComputerRandom(GameReversi3 game) {
 		this.game = game;
 	}
 
 	public boolean play() {
 		if(game.getCount() < game.getLastPlayCount() + 50) return false;
-		int[] play = UtilTTT3.randomPlay(game.boardData());
+		List<int[]> play = UtilReversi3.randomPlay(getValue(), game.boardData());
 		if(play==null) throw new RuntimeException("PlayerComputerRandom found no play");
 		
-		game.setValueAt(play[0], getValue());
+		game.setValues(play, getValue());
 		return true;
 	}
 	
 	public int getValue() {
-		return isFirst() ? NOUGHT : CROSS;
+		return isFirst() ? WHITE : BLACK;
 	}
 	
 	public String getDisplay() {
-		return isFirst() ? "Circle" : "Cross";
+		return isFirst() ? "White" : "Black";
 	}
 	
 	public String getType() {

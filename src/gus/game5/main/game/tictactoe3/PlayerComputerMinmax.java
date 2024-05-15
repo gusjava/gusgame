@@ -13,8 +13,10 @@ public class PlayerComputerMinmax extends Player1 {
 
 	public boolean play() {
 		if(game.getCount() < game.getLastPlayCount() + 50) return false;
-		int[] play = UtilTTT3Minmax.computePlay(game.boardData(), getValue());
-		if(play!=null) game.setValueAt(play[0], getValue());
+		int[] play = UtilTTT3Minmax.computePlay(getValue(), game.boardData());
+		if(play==null) throw new RuntimeException("PlayerComputerMinmax found no play");
+		
+		game.setValueAt(play[0], getValue());
 		return true;
 	}
 	
