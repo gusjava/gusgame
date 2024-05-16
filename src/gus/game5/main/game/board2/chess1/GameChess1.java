@@ -22,9 +22,8 @@ import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point1.Point1D0;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
-import gus.game5.core.util.image.ImageLoader;
 
-public class GameChess extends Game1 {
+public class GameChess1 extends Game1 {
 
 	public static final String TITLE = "Chess";
 	public static final int CELL_SIZE = 50;
@@ -34,28 +33,8 @@ public class GameChess extends Game1 {
 	public static final Color LIGHT = new Color(255,255,240);
 	public static final Composite ALPHA = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.4f);
 	
-	
-	private BufferedImage valueToImg(int value) {
-		switch(value) {
-			case WP:return imgLoader.get("CHESS1_pawn1.gif");
-			case WR:return imgLoader.get("CHESS1_rook1.gif");
-			case WB:return imgLoader.get("CHESS1_bishop1.gif");
-			case WK:return imgLoader.get("CHESS1_knight1.gif");
-			case WQ:return imgLoader.get("CHESS1_queen1.gif");
-			case WKI:return imgLoader.get("CHESS1_king1.gif");
-			
-			case BP:return imgLoader.get("CHESS1_pawn2.gif");
-			case BR:return imgLoader.get("CHESS1_rook2.gif");
-			case BB:return imgLoader.get("CHESS1_bishop2.gif");
-			case BK:return imgLoader.get("CHESS1_knight2.gif");
-			case BQ:return imgLoader.get("CHESS1_queen2.gif");
-			case BKI:return imgLoader.get("CHESS1_king2.gif");
-		}
-		return null;
-	}
-	
 	public static void main(String[] args) {
-		GameChess main = new GameChess();
+		GameChess1 main = new GameChess1();
 		main.displayInWindows();
 		main.start();
 	}
@@ -105,7 +84,7 @@ public class GameChess extends Game1 {
 	 */
 
 	private Engine engine;
-	private ImageLoader imgLoader;
+	private ImageLoader1 imgLoader;
 	private ShapeBoard<Cell> board;
 	private Cell dragged;
 	
@@ -115,7 +94,7 @@ public class GameChess extends Game1 {
 	
 	protected void initialize1() {
 		engine = new Engine();
-		imgLoader = new ImageLoader(this);
+		imgLoader = new ImageLoader1(this);
 		board = newShapeBoard(CELL_SIZE, 8, this::buildCell);
 		dragged = null;
 		
@@ -254,7 +233,7 @@ public class GameChess extends Game1 {
 		}
 		
 		public BufferedImage getImage() {
-			return valueToImg(value);
+			return imgLoader.valueToImg(value);
 		}
 		public void setValue(int value) {
 			this.value = value;

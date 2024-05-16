@@ -1,14 +1,14 @@
 package gus.game5.main.game.board2.hex1;
 
 import gus.game5.core.play1.Player1;
-import gus.game5.main.game.board2.hex1.GameHex.Cell;
+import gus.game5.main.game.board2.hex1.GameHex1.Cell;
 import static gus.game5.main.game.board2.hex1.UtilHex.*;
 
 public class PlayerHuman extends Player1 {
 	
-	private GameHex game;
+	private GameHex1 game;
 	
-	public PlayerHuman(GameHex game) {
+	public PlayerHuman(GameHex1 game) {
 		this.game = game;
 	}
 

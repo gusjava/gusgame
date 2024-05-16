@@ -7,9 +7,9 @@ import gus.game5.core.play1.Player1;
 
 public class PlayerComputerRandom extends Player1 {
 	
-	private GameHex game;
+	private GameHex1 game;
 	
-	public PlayerComputerRandom(GameHex game) {
+	public PlayerComputerRandom(GameHex1 game) {
 		this.game = game;
 	}
 

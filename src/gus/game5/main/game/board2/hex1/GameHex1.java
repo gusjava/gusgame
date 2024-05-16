@@ -21,7 +21,7 @@ import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
 import static gus.game5.main.game.board2.hex1.UtilHex.*;
 
-public class GameHex extends Play1 {
+public class GameHex1 extends Play1 {
 	
 	public static final String TITLE = "Hex";
 	public static final int GAME_WIDTH = 650;
@@ -31,7 +31,7 @@ public class GameHex extends Play1 {
 	public static final Color COLOR_BLUE = Color.BLUE;
 	
 	public static void main(String[] args) {
-		GameHex main = new GameHex();
+		GameHex1 main = new GameHex1();
 		main.displayInWindows();
 		main.start();
 	}

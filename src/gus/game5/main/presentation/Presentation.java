@@ -24,8 +24,8 @@ import gus.game5.main.anim1.AnimGameOfLife;
 import gus.game5.main.anim1.AnimLandscape;
 import gus.game5.main.anim1.AnimLangtonAnt;
 import gus.game5.main.anim1.AnimMaze;
-import gus.game5.main.game.board2.chess1.GameChess;
-import gus.game5.main.game.board2.hex1.GameHex;
+import gus.game5.main.game.board2.chess1.GameChess1;
+import gus.game5.main.game.board2.hex1.GameHex1;
 import gus.game5.main.game.board2.reversi3.GameReversi3;
 import gus.game5.main.game.board2.tictactoe3.GameTicTacToe3;
 import gus.game5.main.game.bomb.GameBomb;
@@ -80,8 +80,8 @@ public class Presentation extends Game {
 	protected Container buildContentPane() {
 		Container panel1 = buildPanel(
 				new GameReversi3(),
-				new GameChess(),
-				new GameHex(),
+				new GameChess1(),
+				new GameHex1(),
 				new GameMinesweeper(),
 				new GameSnake(),
 				new GameTicTacToe3(),
