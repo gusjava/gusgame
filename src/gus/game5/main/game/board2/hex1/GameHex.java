@@ -220,8 +220,7 @@ public class GameHex extends Play1 {
 		
 		protected void initAnchor() {
 			int k = i+j;
-			double a = Math.sqrt(3);
-			double px = gameWidth()*0.5 + cellSize*a*(j - 0.5*k);
+			double px = gameWidth()*0.5 + cellSize*Math.sqrt(3)*(j - 0.5*k);
 			double py = gameHeight()*0.5 + cellSize*0.5*(k - x);
 			setAnchor(new Point2(px, py));
 		}
