@@ -1,6 +1,6 @@
-package gus.game5.main.game.reversi3;
+package gus.game5.main.game.board2.reversi3;
 
-import static gus.game5.main.game.reversi3.UtilReversi3.*;
+import static gus.game5.main.game.board2.reversi3.UtilReversi3.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -11,7 +11,7 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import gus.game5.core.drawing.DrawingText;
+import gus.game5.core.drawing.text.DrawingText;
 import gus.game5.core.game.Settings;
 import gus.game5.core.game.gui.JMenuBar1;
 import gus.game5.core.keyboard.Keyboard;

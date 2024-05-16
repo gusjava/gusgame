@@ -34,7 +34,7 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 		data = new ArrayList<>();
 		for(int i=0;i<x;i++) for(int j=0;j<y;j++) {
 			U cell = builder.build(i, j);
-			cell.initCell(cellSize);
+			cell.initCell(cellSize, x, y);
 			data.add(cell);
 		}
 		nb = data.size();

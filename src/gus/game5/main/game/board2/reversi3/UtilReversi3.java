@@ -1,4 +1,4 @@
-package gus.game5.main.game.reversi3;
+package gus.game5.main.game.board2.reversi3;
 
 import java.util.ArrayList;
 import java.util.List;

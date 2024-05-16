@@ -1,7 +1,8 @@
-package gus.game5.main.game.reversi3;
+package gus.game5.main.game.board2.reversi3;
 
 import gus.game5.core.play1.Player1;
-import static gus.game5.main.game.reversi3.UtilReversi3.*;
+
+import static gus.game5.main.game.board2.reversi3.UtilReversi3.*;
 
 import java.util.List;
 

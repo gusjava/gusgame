@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gus.game5.core.drawing.Drawing1;
-import gus.game5.core.drawing.DrawingText;
+import gus.game5.core.drawing.text.DrawingText;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
 import gus.game5.core.keyboard.Keyboard;

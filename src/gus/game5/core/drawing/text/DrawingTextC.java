@@ -1,4 +1,4 @@
-package gus.game5.core.drawing;
+package gus.game5.core.drawing.text;
 
 import java.awt.Color;
 

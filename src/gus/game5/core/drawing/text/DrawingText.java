@@ -1,7 +1,8 @@
-package gus.game5.core.drawing;
+package gus.game5.core.drawing.text;
 
 import java.awt.Color;
 
+import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.features.g.G;
 import gus.game5.core.point.point1.Point1;
 

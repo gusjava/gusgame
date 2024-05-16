@@ -2,7 +2,7 @@ package gus.game5.main.game.warrior;
 
 import java.awt.Color;
 
-import gus.game5.core.drawing.DrawingText;
+import gus.game5.core.drawing.text.DrawingText;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
 import gus.game5.core.keyboard.Keyboard;

@@ -39,18 +39,11 @@ public abstract class Play1 extends Game1 {
 		turnEnd();
 	}
 	
+	protected void played() {}
 	
-	protected void played() {
-		
-	}
+	protected void turnStart() {}
 	
-	protected void turnStart() {
-		
-	}
-	
-	protected void turnEnd() {
-		
-	}
+	protected void turnEnd() {}
 	
 	public long getLastPlayCount() {
 		return lastPlayCount;

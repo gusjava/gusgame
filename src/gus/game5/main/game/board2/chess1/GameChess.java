@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import gus.game5.core.drawing.Drawing1;
-import gus.game5.core.drawing.DrawingText;
+import gus.game5.core.drawing.text.DrawingText;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
 import gus.game5.core.game.gui.JMenuBar1;
