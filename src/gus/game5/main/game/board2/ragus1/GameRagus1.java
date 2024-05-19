@@ -1,10 +1,9 @@
-package gus.game5.main.game.board2.chess2;
+package gus.game5.main.game.board2.ragus1;
 
-import static gus.game5.main.game.board2.chess2.UtilChess.BKI;
-import static gus.game5.main.game.board2.chess2.UtilChess.BLACK;
-import static gus.game5.main.game.board2.chess2.UtilChess.INIT_STATE;
-import static gus.game5.main.game.board2.chess2.UtilChess.WHITE;
-import static gus.game5.main.game.board2.chess2.UtilChess.WKI;
+import static gus.game5.main.game.board2.ragus1.UtilRagus.INIT_STATE;
+import static gus.game5.main.game.board2.ragus1.UtilRagus.PLAYER_ANUBIS;
+import static gus.game5.main.game.board2.ragus1.UtilRagus.PLAYER_DINO;
+import static gus.game5.main.game.board2.ragus1.UtilRagus.searchWinner;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -26,19 +25,24 @@ import gus.game5.core.point.point1.Point1D0;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
 
-public class GameChess2 extends Play1 {
-
-	public static final String TITLE = "Chess";
-	public static final int CELL_SIZE = 50;
-	public static final int IMG_SIZE = CELL_SIZE-8;
-	public static final int BOARD_SIZE = CELL_SIZE*8;
+public class GameRagus1 extends Play1 {
 	
-	public static final Color DARK = new Color(153,204,255);
-	public static final Color LIGHT = new Color(255,255,240);
+	public static final String TITLE = "Ragus";
+	
+	public static final int CELL_SIZE = 50;
+	public static final int IMG_SIZE = 30;
+	public static final int BOARD_X = 13;
+	public static final int BOARD_Y = 8;
+
+	public static final int GAME_HEIGHT = CELL_SIZE * BOARD_X + 15;
+	public static final int GAME_WIDTH = CELL_SIZE * BOARD_Y;
+	
+	public static final Color COLOR_GROUND = new Color(238,238,191);
+	public static final Color COLOR_HOME = new Color(207,207,151);
 	public static final Composite ALPHA = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.4f);
 	
 	public static void main(String[] args) {
-		GameChess2 main = new GameChess2();
+		GameRagus1 main = new GameRagus1();
 		main.displayInWindows();
 		main.start();
 	}
@@ -49,11 +53,20 @@ public class GameChess2 extends Play1 {
 
 	private JLabel labelInfo1;
 	private JLabel labelInfo2;
+
+	private PlayerScoreBar scoreBar1;
+	private PlayerScoreBar scoreBar2;
 	
 	protected Container buildContentPane() {
 		labelInfo1 = new JLabel(" ");
 		labelInfo2 = new JLabel(" ");
-		return panelCNS(panel(), labelInfo1, labelInfo2);
+		
+		scoreBar1 = new PlayerScoreBar();
+		scoreBar2 = new PlayerScoreBar();
+		
+		return panelCNS(panel(), 
+				raised(panelCN(panelWE(scoreBar1, scoreBar2),labelInfo1)), 
+				raised(labelInfo2));
 	}
 	
 	/*
@@ -66,12 +79,12 @@ public class GameChess2 extends Play1 {
 			action("Exit (F2)", this::exit)
 		);
 		menuBar.add("Players", 
-			menu("Player 1 (white)",
+			menu("Player 1 (dino)",
 				radioMenuItem("Human", ()->changeMode1(Mode.HUMAN)),
 				radioMenuItem("Computer (Random)", ()->changeMode1(Mode.RANDOM))
 //				radioMenuItem("Computer (Min-Max)", ()->changeMode1(Mode.MINMAX))
 			),
-			menu("Player 2 (black)",
+			menu("Player 2 (anubis)",
 				radioMenuItem("Human", ()->changeMode2(Mode.HUMAN)),
 				radioMenuItem("Computer (Random)", ()->changeMode2(Mode.RANDOM))
 //				radioMenuItem("Computer (Min-Max)", ()->changeMode2(Mode.MINMAX))
@@ -84,10 +97,10 @@ public class GameChess2 extends Play1 {
 	 */
 	
 	protected void initSettings(Settings s) {
-		s.setIcon(resourceAt("app.gif"));
+		s.setIcon(iconAt("RAGUS_playerA_s.gif"));
 		s.setTitle(TITLE);
-		s.setWidth(BOARD_SIZE);
-		s.setHeight(BOARD_SIZE);
+		s.setWidth(GAME_WIDTH);
+		s.setHeight(GAME_HEIGHT);
 		s.setSleep(10);
 		s.setBackground(Color.WHITE);
 		s.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
@@ -97,28 +110,34 @@ public class GameChess2 extends Play1 {
 	 * DATA
 	 */
 
-	private Engine engine;
-	private ImageLoader1 imgLoader;
-	private ShapeBoard<Cell> board;
-	private Cell dragged;
 	private Mode mode1 = Mode.HUMAN;
 	private Mode mode2 = Mode.HUMAN;
+	private ImageLoader1 imgLoader;
+	
+	private PlayerRagus player1;
+	private PlayerRagus player2;
+	private ShapeBoard<Cell> board;
+	private Cell dragged;
 	
 	/*
 	 * INITIALIZE
 	 */
 	
 	protected void initialize2() {
-		addPlayer(buildPlayer(mode1));
-		addPlayer(buildPlayer(mode2));
-		
-		engine = new Engine();
 		imgLoader = new ImageLoader1(this);
-		board = newShapeBoard(CELL_SIZE, 8, (i,j)->new Cell(i, j, INIT_STATE[i][j]));
+		
+		player1 = buildPlayer(mode1, PLAYER_DINO);
+		player2 = buildPlayer(mode2, PLAYER_ANUBIS);
+		
+		scoreBar1.setPlayer(player1);
+		scoreBar2.setPlayer(player2);
+		
+		addPlayers(player1, player2);
+		
+		board = newShapeBoard(CELL_SIZE, BOARD_X, BOARD_Y, (i,j)->new Cell(i, j, INIT_STATE[i][j]));
 		dragged = null;
 		
-		updateLabelInfo1();
-		updateLabelInfo2();
+		updateLabels();
 		
 		DrawingText gameOverText = newDrawingTextC(Color.GRAY, gameCenter(), "Game Over");
 		gameOverText.setFontBold(40);
@@ -138,12 +157,11 @@ public class GameChess2 extends Play1 {
 	}
 	
 	protected void played() throws Exception {
-		updateBoardData();
 		handleGameOver();
 	}
 
 	protected void turnEnd() {
-		updateLabelInfo1();
+		updateLabels();
 	}
 	
 	/*
@@ -152,17 +170,14 @@ public class GameChess2 extends Play1 {
 	
 	private enum Mode {
 		HUMAN, RANDOM
-//		, MINMAX
 	}
 	
-	private void changeMode1(Mode mode) {
-		mode1 = mode;
-		updateLabelInfo2();
+	private void changeMode1(Mode mode1) {
+		this.mode1 = mode1;
 	}
 	
-	private void changeMode2(Mode mode) {
-		mode2 = mode;
-		updateLabelInfo2();
+	private void changeMode2(Mode mode2) {
+		this.mode2 = mode2;
 	}
 	
 	/*
@@ -177,43 +192,38 @@ public class GameChess2 extends Play1 {
 			this.value = value;
 		}
 		
-		private Color buildColor() {
-			if(value==WKI) {
-				if(engine.whiteChecked()) return Color.ORANGE;
-				if(engine.whiteMate()) return Color.RED;
-			}
-			else if(value==BKI) {
-				if(engine.blackChecked()) return  Color.ORANGE;
-				if(engine.blackMate()) return  Color.RED;
-			}
-			return (i+j)%2==0 ? LIGHT : DARK;
+		public int getValue() {
+			return value;
+		}
+		public void setValue(int value) {
+			this.value = value;
+		}
+		public boolean isPlayer(int player) {
+			if(value>0) return player==PLAYER_DINO;
+			if(value<0) return player==PLAYER_ANUBIS;
+			return false;
+		}
+		
+		public BufferedImage getImage(boolean blocked) {
+			return imgLoader.valueToImg(value, blocked);
 		}
 		
 		protected void drawShape() {
-			fillSquareC(buildColor(), CELL_SIZE);
-			BufferedImage img = getImage();
+			Color cellColor = i==0 || i==12 ? COLOR_HOME : COLOR_GROUND;
+			fillSquareC(cellColor, CELL_SIZE);
+			drawSquareC(Color.WHITE, CELL_SIZE);
+
+			boolean blocked = UtilRagus.isBlocked(boardData(), getIJ());
+			BufferedImage img = getImage(blocked);
 			if(img!=null) {
 				Composite composite = g2_getComposite();
 				if(this==dragged) g2_setComposite(ALPHA);
 				paintRenderedImageC(IMG_SIZE, img);
 				if(this==dragged) g2_setComposite(composite);
 			}
-		}
-		
-		public BufferedImage getImage() {
-			return imgLoader.valueToImg(value);
-		}
-		public boolean isPlayer(int player) {
-			if(value>0) return player==WHITE;
-			if(value<0) return player==BLACK;
-			return false;
-		}
-		
-		public int getValue() {
-			return value;
-		}
-		public void setValue(int value) {
-			this.value = value;
+			
+			int strengh = Math.abs(value);
+			if(strengh>1) drawString(blocked ? Color.gray : Color.BLACK, p(11,-8), ""+strengh);
 		}
 	}
 	
@@ -255,12 +265,8 @@ public class GameChess2 extends Play1 {
 		this.dragged = dragged;
 	}
 	
-	public boolean attemptToPlay(int player, int[] start, int[] end) {
-		return engine.attemptToPlay(player, start, end);
-	}
-	
-	public void updateBoardData() {
-		board.updateCells(engine.getData(), Cell::setValue);
+	public void updateBoard(int[][] data) {
+		board.updateCells(data, Cell::setValue);
 	}
 	
 	/*
@@ -268,57 +274,55 @@ public class GameChess2 extends Play1 {
 	 */
 	
 	private void handleGameOver() throws Exception {
-		int winner = engine.getWinner();
-		if(winner!=-1) System.out.println("winner: "+winner);
-		if(winner!=-1) setGameOver(playerForValue(winner));
+		PlayerRagus winner = searchWinner(boardData(), player1, player2);
+		if(winner!=null) setGameOver(winner);
 	}
 	
 	private String getGameOverDisplay() {
 		Player1 winner = getGameOver().getWinner();
-		return winner!=null ? "Chess Mate. "+winner.getDisplay()+" won the game" : "Draw";
+		return winner!=null ? winner.getDisplay()+" won the game" : "Draw";
 	}
 	
 	/*
 	 * PLAYER
 	 */
 	
-	private Player1 playerForValue(int value) {
-		if(value==WHITE) return firstPlayer();
-		if(value==BLACK) return secondPlayer();
+	private PlayerRagus buildPlayer(Mode mode, int value) {
+		switch(mode) {
+		case HUMAN: return new PlayerRagusHuman(this, value);
+		case RANDOM: return new PlayerRagusRandom(this, value);
+//		case MINMAX: return new PlayerComputerMinmax(this, value);
+		}
 		return null;
 	}
 	
-	private Player1 buildPlayer(Mode mode) {
-		switch(mode) {
-		case HUMAN: return new PlayerHuman(this);
-		case RANDOM: return new PlayerComputerRandom(this);
-//		case MINMAX: return new PlayerComputerMinmax(this);
-		}
-		return null;
+	private PlayerRagus currentRagusPlayer() {
+		return (PlayerRagus) currentPlayer();
 	}
 	
 	/*
 	 * LABEL INFO
 	 */
 	
-	private void updateLabelInfo1() {
+	private void updateLabels() {
+		if(playerNumber()==0) return;
+		
 		if(isGameOver()) {
 			labelInfo1.setText(" "+getGameOverDisplay());
+			labelInfo1.setIcon(null);
 		}
 		else {
-			String info = " "+currentPlayer().getDisplay()+" is playing";
-			if(engine.isPlayerChecked()) info += " (check)";
-			labelInfo1.setText(info);
+			labelInfo1.setText(" "+currentRagusPlayer().getDisplay()+" is playing");
+			labelInfo1.setIcon(currentRagusPlayer().getIconS());
 		}
-	}
-	
-	private void updateLabelInfo2() {
-		if(playerNumber()>0) {
-			String type1 = firstPlayer().getType();
-			String type2 = secondPlayer().getType();
-			labelInfo2.setText("White: "+type1+" , Black: "+type2);
-		}
-		else labelInfo2.setText(" ");
+		
+		String type1 = player1.getType();
+		String type2 = player2.getType();
+		
+		labelInfo2.setText("Dino: "+type1+" , Anubis: "+type2);
+		
+		scoreBar1.refresh();
+		scoreBar2.refresh();
 	}
 	
 	/*
@@ -332,7 +336,7 @@ public class GameChess2 extends Play1 {
 		}
 		protected void draw() {
 			if(dragged!=null) {
-				paintRenderedImageC(IMG_SIZE, dragged.getImage());
+				paintRenderedImageC(IMG_SIZE, dragged.getImage(false));
 			}
 		}
 	}

@@ -1,17 +1,15 @@
 package gus.game5.main.game.board2.tictactoe1;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import gus.game5.core.drawing.text.DrawingText;
 import gus.game5.core.game.Game1;
-import gus.game5.core.game.gui.JMenuBar1;
 import gus.game5.core.game.Settings;
+import gus.game5.core.game.gui.JMenuBar1;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
@@ -36,11 +34,7 @@ public class GameTicTacToe1 extends Game1 {
 	
 	protected Container buildContentPane() {
 		labelInfo = new JLabel(" ");
-		
-		JPanel p = new JPanel(new BorderLayout());
-		p.add(labelInfo, BorderLayout.NORTH);
-		p.add(panel(), BorderLayout.CENTER);
-		return p;
+		return panelCN(panel(), labelInfo);
 	}
 	
 	/*

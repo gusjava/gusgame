@@ -9,6 +9,7 @@ import java.util.List;
 import gus.game5.core.draw.Draw;
 import gus.game5.core.dyn.Dyn;
 import gus.game5.core.features.f.F;
+import gus.game5.core.features.p2.P2int;
 import gus.game5.core.features.t.T;
 import gus.game5.core.features.t.Tchar;
 import gus.game5.core.features.t.Tdouble;
@@ -154,7 +155,7 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 	public boolean[][] asBoolean2(F<U> f) {
 		boolean[][] ouput = new boolean[x][y];
 		for(int i=0;i<x;i++)
-		for(int j=0;j<x;j++) {
+		for(int j=0;j<y;j++) {
 			ouput[i][j] = f.f(get(i,j));
 		}
 		return ouput;
@@ -171,7 +172,7 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 	public int[][] asInt2(Tint<U> t) {
 		int[][] ouput = new int[x][y];
 		for(int i=0;i<x;i++)
-		for(int j=0;j<x;j++) {
+		for(int j=0;j<y;j++) {
 			ouput[i][j] = t.t(get(i,j));
 		}
 		return ouput;
@@ -188,7 +189,7 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 	public double[][] asDouble2(Tdouble<U> t) {
 		double[][] ouput = new double[x][y];
 		for(int i=0;i<x;i++)
-		for(int j=0;j<x;j++) {
+		for(int j=0;j<y;j++) {
 			ouput[i][j] = t.t(get(i,j));
 		}
 		return ouput;
@@ -205,7 +206,7 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 	public char[][] asChar2(Tchar<U> t) {
 		char[][] ouput = new char[x][y];
 		for(int i=0;i<x;i++)
-		for(int j=0;j<x;j++) {
+		for(int j=0;j<y;j++) {
 			ouput[i][j] = t.t(get(i,j));
 		}
 		return ouput;
@@ -222,10 +223,21 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 	public String[][] asString2(T<U, String> t) {
 		String[][] ouput = new String[x][y];
 		for(int i=0;i<x;i++)
-		for(int j=0;j<x;j++) {
+		for(int j=0;j<y;j++) {
 			ouput[i][j] = t.t(get(i,j));
 		}
 		return ouput;
+	}
+	
+	/*
+	 * UPDATE CELLS
+	 */
+	
+	public void updateCells(int[][] data, P2int<U> p) {
+		for(int i=0;i<x;i++)
+		for(int j=0;j<y;j++) {
+			p.p(get(i, j), data[i][j]);
+		}
 	}
 	
 	/*
@@ -233,7 +245,7 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 	 */
 	
 	private U get(int i, int j)  {
-		return get(i*x+j);
+		return get(i*y+j);
 	}
 	
 	private U get(int index) {

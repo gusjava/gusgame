@@ -454,9 +454,17 @@ public abstract class Drawing1 extends Drawing0 {
 	protected void paintImage(Point0 p0, double width, double height, Image img) {
 		g2_paintImage(p0, width, height, img);
 	}
+
+	protected void paintImage(Point0 p0, double size, Image img) {
+		g2_paintImage(p0, size, size, img);
+	}
 	
 	protected void paintImage(double width, double height, Image img) {
 		paintImage(p(0,0), width, height, img);
+	}
+	
+	protected void paintImage(double size, Image img) {
+		paintImage(p(0,0), size, size, img);
 	}
 	
 	/*
@@ -467,8 +475,16 @@ public abstract class Drawing1 extends Drawing0 {
 		g2_paintImageC(pc, width, height, img);
 	}
 	
+	protected void paintImageC(Point0 pc, double size, Image img) {
+		g2_paintImageC(pc, size, size, img);
+	}
+	
 	protected void paintImageC(double width, double height, Image img) {
 		paintImageC(p(0,0), width, height, img);
+	}
+	
+	protected void paintImageC(double size, Image img) {
+		paintImageC(p(0,0), size, size, img);
 	}
 	
 	/*
@@ -478,9 +494,17 @@ public abstract class Drawing1 extends Drawing0 {
 	protected void paintRenderedImage(Point0 p0, double width, double height, RenderedImage img) {
 		g2_paintRenderedImage(p0, width, height, img);
 	}
+
+	protected void paintRenderedImage(Point0 p0, double size, RenderedImage img) {
+		g2_paintRenderedImage(p0, size, size, img);
+	}
 	
 	protected void paintRenderedImage(double width, double height, RenderedImage img) {
 		paintRenderedImage(p(0,0), width, height, img);
+	}
+	
+	protected void paintRenderedImage(double size, RenderedImage img) {
+		paintRenderedImage(p(0,0), size, size, img);
 	}
 	
 	/*
@@ -491,8 +515,16 @@ public abstract class Drawing1 extends Drawing0 {
 		g2_paintRenderedImageC(pc, width, height, img);
 	}
 	
+	protected void paintRenderedImageC(Point0 pc, double size, RenderedImage img) {
+		g2_paintRenderedImageC(pc, size, size, img);
+	}
+	
 	protected void paintRenderedImageC(double width, double height, RenderedImage img) {
 		paintRenderedImageC(p(0,0), width, height, img);
+	}
+	
+	protected void paintRenderedImageC(double size, RenderedImage img) {
+		paintRenderedImageC(p(0,0), size, size, img);
 	}
 	
 	

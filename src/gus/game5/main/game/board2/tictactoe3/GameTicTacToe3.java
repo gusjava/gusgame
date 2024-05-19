@@ -1,14 +1,14 @@
 package gus.game5.main.game.board2.tictactoe3;
 
-import static gus.game5.main.game.board2.tictactoe3.UtilTTT3.*;
+import static gus.game5.main.game.board2.tictactoe3.UtilTTT3.CROSS;
+import static gus.game5.main.game.board2.tictactoe3.UtilTTT3.EMPTY;
+import static gus.game5.main.game.board2.tictactoe3.UtilTTT3.NOUGHT;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import gus.game5.core.drawing.text.DrawingText;
 import gus.game5.core.game.Settings;
@@ -41,12 +41,7 @@ public class GameTicTacToe3 extends Play1 {
 	protected Container buildContentPane() {
 		labelInfo1 = new JLabel(" ");
 		labelInfo2 = new JLabel(" ");
-		
-		JPanel p = new JPanel(new BorderLayout());
-		p.add(labelInfo1, BorderLayout.NORTH);
-		p.add(panel(), BorderLayout.CENTER);
-		p.add(labelInfo2, BorderLayout.SOUTH);
-		return p;
+		return panelCNS(panel(), labelInfo1, labelInfo2);
 	}
 	
 	/*

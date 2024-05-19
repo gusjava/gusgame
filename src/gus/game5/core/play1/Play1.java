@@ -66,6 +66,10 @@ public abstract class Play1 extends Game1 {
 		players.add(player);
 	}
 	
+	protected void addPlayers(Player1... players) {
+		for(Player1 player : players) addPlayer(player);
+	}
+	
 	protected void nextPlayer() {
 		playIndex++;
 		if(playIndex>=players.size()) playIndex = 0;
