@@ -1,6 +1,6 @@
-package gus.game5.main.game.board2.chess1;
+package gus.game5.main.game.board2.chess2;
 
-import static gus.game5.main.game.board2.chess1.UtilChess.*;
+import static gus.game5.main.game.board2.chess2.UtilChess.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,8 @@ import gus.game5.core.util.UtilArray;
 
 public class Engine {
 
-	private GameOver gameOver;
-	private EPlayer player;
+	private int winner;
+	private int player;
 	
 	private int[][] data;
 	private List<int[][]> history;
@@ -20,8 +20,7 @@ public class Engine {
 	private EState blackState;
 	
 	public Engine() {
-		gameOver = null;
-		player = EPlayer.WHITE;
+		winner = -1;
 		
 		data = UtilArray.clone(INIT_STATE);
 		history = new ArrayList<>();
@@ -30,10 +29,6 @@ public class Engine {
 		changed = UtilArray.boolArray2(8, false);
 		whiteState = EState.SAFE;
 		blackState = EState.SAFE;
-	}
-	
-	public EPlayer getPlayer() {
-		return player;
 	}
 	
 	public int[][] getData() {
@@ -57,22 +52,20 @@ public class Engine {
 	}
 
 	public boolean isPlayerChecked() {
-		return player.isWhite() ? whiteChecked() : blackChecked();
+		return player==WHITE ? whiteChecked() : blackChecked();
 	}
 
 	public boolean isPlayerMate() {
-		return player.isWhite() ? whiteMate() : blackMate();
+		return player==WHITE ? whiteMate() : blackMate();
 	}
 	
-	public GameOver getGameOver() {
-		return gameOver;
+	public int getWinner() {
+		return winner;
 	}
 	
-	public void shiftPlayer() {
-		player = player.opposite();
-	}
-	
-	public boolean attemptToPlay(int[] start, int[] end) {
+	public boolean attemptToPlay(int player, int[] start, int[] end) {
+		this.player = player;
+		
 		final int[][] data0 = historyDataAt(0);
 		final int[][] data1 = historyDataAt(1);
 		
@@ -81,14 +74,14 @@ public class Engine {
 		boolean done = new MoveExecutor(data, changed, move, start, end).execute();
 		if(!done) return false;
 
-		if(player.isWhite()) {
+		if(player==WHITE) {
 			if(whiteIsChecked(data)) {
 				data = UtilArray.clone(data0);
 				return false;
 			}
 			whiteState = EState.SAFE;
 			blackState = new CheckerB(data, data0).check();
-			if(blackState.isMate()) gameOver = new GameOver(player);
+			if(blackState.isMate()) winner = player;
 		}
 		else {
 			if(blackIsChecked(data)) {
@@ -97,12 +90,12 @@ public class Engine {
 			}
 			blackState = EState.SAFE;
 			whiteState = new CheckerW(data, data0).check();
-			if(whiteState.isMate()) gameOver = new GameOver(player);
+			if(whiteState.isMate()) winner = player;
 		}
 		
 		if(UtilArray.count(data, 0)==62) {
 			//only 2 kings left
-			gameOver = new GameOver(null);
+			winner = 0;
 		}
 
 		updateChanged(data0);

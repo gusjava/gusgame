@@ -139,7 +139,7 @@ public class GameHex1 extends Play1 {
 		if(k.F2())	exit();
 	}
 	
-	protected void played() {
+	protected void played() throws Exception {
 		handleGameOver();
 	}
 
@@ -251,7 +251,7 @@ public class GameHex1 extends Play1 {
 	 * GAME OVER
 	 */
 	
-	private void handleGameOver() {
+	private void handleGameOver() throws Exception {
 		int value = searchWinner(boardData());
 		if(value!=-1) setGameOver(playerForValue(value));
 	}

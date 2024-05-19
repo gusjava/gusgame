@@ -56,5 +56,5 @@ public abstract class Player1 {
 	 * PLAY
 	 */
 	
-	public abstract boolean play();
+	public abstract boolean play() throws Exception;
 }

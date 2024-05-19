@@ -300,6 +300,36 @@ public class UtilArray {
 	}
 	
 	/*
+	 * COUNT : INT[][]
+	 */
+	
+	public static int count(int[][] data, int value) {
+		int x = data.length;
+		if(x==0) return 0;
+		int y = data[0].length;
+		if(y==0) return 0;
+		
+		int count = 0;
+		for(int i=0;i<x;i++) for(int j=0;j<y;j++) 
+			if(data[i][j] == value) count++;
+		return count;
+	}
+	
+	public static int count(int[][] data, F<int[]> f) {
+		int x = data.length;
+		if(x==0) return 0;
+		int y = data[0].length;
+		if(y==0) return 0;
+
+		int count = 0;
+		for(int i=0;i<x;i++) for(int j=0;j<y;j++) {
+			int[] p = new int[] {i,j};
+			if(f.f(p)) count++;
+		}
+		return count;
+	}
+	
+	/*
 	 * ANY : INT[]
 	 */
 	

@@ -12,10 +12,10 @@ public class PlayerComputerRandom extends Player1 {
 		this.game = game;
 	}
 
-	public boolean play() {
+	public boolean play() throws Exception {
 		if(game.getCount() < game.getLastPlayCount() + 50) return false;
 		int[] play = UtilTTT3.randomPlay(game.boardData());
-		if(play==null) throw new RuntimeException("PlayerComputerRandom found no play");
+		if(play==null) throw new Exception("PlayerComputerRandom found no play");
 		
 		game.setValueAt(play[0], getValue());
 		return true;

@@ -179,7 +179,7 @@ public class GameChess1 extends Game1 {
 	
 	private void updateLabelInfo() {
 		if(isGameOver()) {
-			labelInfo.setText("Chess Mate. "+engine.getGameOver().getDescription());
+			labelInfo.setText(engine.getGameOver().getDescription());
 		}
 		else {
 			EPlayer player = engine.getPlayer();

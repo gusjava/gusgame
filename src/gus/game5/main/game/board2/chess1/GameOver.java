@@ -9,6 +9,6 @@ public class GameOver {
 	
 	public String getDescription() {
 		if(winner==null) return "Draw";
-		return winner.getLabel()+" won the game";
+		return "Chess Mate. "+winner.getLabel()+" won the game";
 	}
 }

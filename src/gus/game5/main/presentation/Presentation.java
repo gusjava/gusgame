@@ -79,16 +79,18 @@ public class Presentation extends Game {
 	
 	protected Container buildContentPane() {
 		Container panel1 = buildPanel(
+				new GameMinesweeper(),
+				new GameSnake(),
+				new GameMissile(),
+				new GameBomb());
+		
+		Container panel2 = buildPanel(
 				new GameReversi3(),
 				new GameChess1(),
 				new GameHex1(),
-				new GameMinesweeper(),
-				new GameSnake(),
-				new GameTicTacToe3(),
-				new GameMissile(),
-				new GameBomb());
+				new GameTicTacToe3());
 
-		Container panel2 = buildPanel(
+		Container panel3 = buildPanel(
 				new AnimClock(),
 				new AnimLandscape(),
 				new AnimMaze(),
@@ -99,7 +101,7 @@ public class Presentation extends Game {
 				new AnimFishTank2()
 				);
 
-		Container panel3 = buildPanel(
+		Container panel4 = buildPanel(
 				new MainSoucoupe1(),
 				new MainSoucoupe2(),
 				new MainMouse1(),
@@ -113,17 +115,18 @@ public class Presentation extends Game {
 				new MainDraws()
 				);
 
-		Container panel4 = buildPanel(
+		Container panel5 = buildPanel(
 				new GameWarrior(),
 				new GameSpace(),
 				new GameBloon()
 				);	
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
-		tabbedPane.addTab("Jeux", panel1);
-		tabbedPane.addTab("Animations", panel2);
-		tabbedPane.addTab("Petits tests", panel3);
-		tabbedPane.addTab("Experimental", panel4);
+		tabbedPane.addTab("Jeux solo", panel1);
+		tabbedPane.addTab("Jeux à 2", panel2);
+		tabbedPane.addTab("Animations", panel3);
+		tabbedPane.addTab("Petits tests", panel4);
+		tabbedPane.addTab("Experimental", panel5);
 		return tabbedPane;
 	}
 	

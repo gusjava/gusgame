@@ -14,19 +14,22 @@ public abstract class Play1 extends Game1 {
 	private GameOver gameOver;
 	private long lastPlayCount;
 	private int playIndex;
+	private boolean errorOccured;
 
 	protected void initialize1() {
 		players = new ArrayList<>();
 		lastPlayCount = 0;
 		playIndex = 0;
 		gameOver = null;
+		errorOccured = false;
 		initialize2();
 	}
 
 	protected void turn() {
 		turnStart();
-		if(isGameOver()) return;
+		if(isGameOver() || errorOccured) return;
 		
+		try {
 		Player1 current = currentPlayer();
 		if(current!=null) {
 			boolean played = current.play();
@@ -37,13 +40,18 @@ public abstract class Play1 extends Game1 {
 			}
 		}
 		turnEnd();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			errorOccured = true;
+		}
 	}
 	
-	protected void played() {}
+	protected void played() throws Exception {}
 	
 	protected void turnStart() {}
 	
-	protected void turnEnd() {}
+	protected void turnEnd() throws Exception {}
 	
 	public long getLastPlayCount() {
 		return lastPlayCount;
@@ -115,7 +123,8 @@ public abstract class Play1 extends Game1 {
 		return gameOver!=null;
 	}
 	
-	public void setGameOver(Player1 winner) {
+	public void setGameOver(Player1 winner) throws Exception {
+		if(gameOver!=null) throw new Exception("Recreating gameOver after gameOver !!");
 		gameOver = new GameOver(winner);
 	}
 	

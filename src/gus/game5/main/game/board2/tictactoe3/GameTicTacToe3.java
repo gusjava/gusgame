@@ -121,7 +121,7 @@ public class GameTicTacToe3 extends Play1 {
 		if(k.F2())	exit();
 	}
 	
-	protected void played() {
+	protected void played() throws Exception {
 		handleGameOver();
 	}
 
@@ -201,9 +201,9 @@ public class GameTicTacToe3 extends Play1 {
 	 * GAME OVER
 	 */
 	
-	private void handleGameOver() {
-		int value = UtilTTT3.searchWinner(boardData());
-		if(value!=-1) setGameOver(playerForValue(value));
+	private void handleGameOver() throws Exception {
+		int winner = UtilTTT3.searchWinner(boardData());
+		if(winner!=-1) setGameOver(playerForValue(winner));
 	}
 	
 	private String getGameOverDisplay() {

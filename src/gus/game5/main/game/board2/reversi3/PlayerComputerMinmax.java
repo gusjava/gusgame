@@ -14,10 +14,10 @@ public class PlayerComputerMinmax extends Player1 {
 		this.game = game;
 	}
 
-	public boolean play() {
+	public boolean play() throws Exception {
 //		if(game.getCount() < game.getLastPlayCount() + 50) return false;
 		List<int[]> play = UtilReversi3Minmax.computePlay(getValue(), game.boardData());
-		if(play==null) throw new RuntimeException("PlayerComputerMinmax found no play");
+		if(play==null) throw new Exception("PlayerComputerMinmax found no play");
 		
 		game.setValues(play, getValue());
 		return true;

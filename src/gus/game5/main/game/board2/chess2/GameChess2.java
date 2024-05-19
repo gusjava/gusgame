@@ -1,33 +1,41 @@
-package gus.game5.main.game.board2.reversi3;
+package gus.game5.main.game.board2.chess2;
 
-import static gus.game5.main.game.board2.reversi3.UtilReversi3.*;
+import static gus.game5.main.game.board2.chess2.UtilChess.*;
 
+import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Container;
 import java.awt.Font;
-import java.util.List;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.drawing.text.DrawingText;
 import gus.game5.core.game.Settings;
 import gus.game5.core.game.gui.JMenuBar1;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.play1.Play1;
 import gus.game5.core.play1.Player1;
+import gus.game5.core.point.point1.Point1D0;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
 
-public class GameReversi3 extends Play1 {
-	
-	public static final String TITLE = "Reversi";
+public class GameChess2 extends Play1 {
+
+	public static final String TITLE = "Chess";
 	public static final int CELL_SIZE = 50;
 	public static final int BOARD_SIZE = CELL_SIZE*8;
 	
+	public static final Color DARK = new Color(153,204,255);
+	public static final Color LIGHT = new Color(255,255,240);
+	public static final Composite ALPHA = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.4f);
+	
 	public static void main(String[] args) {
-		GameReversi3 main = new GameReversi3();
+		GameChess2 main = new GameChess2();
 		main.displayInWindows();
 		main.start();
 	}
@@ -62,13 +70,13 @@ public class GameReversi3 extends Play1 {
 		menuBar.add("Players", 
 			menu("Player 1 (white)",
 				radioMenuItem("Human", ()->changeMode1(Mode.HUMAN)),
-				radioMenuItem("Computer (Random)", ()->changeMode1(Mode.RANDOM)),
-				radioMenuItem("Computer (Min-Max)", ()->changeMode1(Mode.MINMAX))
+				radioMenuItem("Computer (Random)", ()->changeMode1(Mode.RANDOM))
+//				radioMenuItem("Computer (Min-Max)", ()->changeMode1(Mode.MINMAX))
 			),
 			menu("Player 2 (black)",
 				radioMenuItem("Human", ()->changeMode2(Mode.HUMAN)),
-				radioMenuItem("Computer (Random)", ()->changeMode2(Mode.RANDOM)),
-				radioMenuItem("Computer (Min-Max)", ()->changeMode2(Mode.MINMAX))
+				radioMenuItem("Computer (Random)", ()->changeMode2(Mode.RANDOM))
+//				radioMenuItem("Computer (Min-Max)", ()->changeMode2(Mode.MINMAX))
 			)
 		);
 	}
@@ -78,6 +86,7 @@ public class GameReversi3 extends Play1 {
 	 */
 	
 	protected void initSettings(Settings s) {
+		s.setIcon(resourceAt("app.gif"));
 		s.setTitle(TITLE);
 		s.setWidth(BOARD_SIZE);
 		s.setHeight(BOARD_SIZE);
@@ -90,7 +99,10 @@ public class GameReversi3 extends Play1 {
 	 * DATA
 	 */
 
+	private Engine engine;
+	private ImageLoader1 imgLoader;
 	private ShapeBoard<Cell> board;
+	private Cell dragged;
 	private Mode mode1 = Mode.HUMAN;
 	private Mode mode2 = Mode.HUMAN;
 	
@@ -102,7 +114,10 @@ public class GameReversi3 extends Play1 {
 		addPlayer(buildPlayer(mode1));
 		addPlayer(buildPlayer(mode2));
 		
+		engine = new Engine();
+		imgLoader = new ImageLoader1(this);
 		board = newShapeBoard(CELL_SIZE, 8, (i,j)->new Cell(i, j, INIT_STATE[i][j]));
+		dragged = null;
 		
 		updateLabelInfo1();
 		updateLabelInfo2();
@@ -110,6 +125,8 @@ public class GameReversi3 extends Play1 {
 		DrawingText gameOverText = newDrawingTextC(Color.GRAY, gameCenter(), "Game Over");
 		gameOverText.setFontBold(40);
 		gameOverText.setDrawable(this::isGameOver);
+		
+		addDraw(new Drag());
 	}
 	
 	/*
@@ -123,6 +140,7 @@ public class GameReversi3 extends Play1 {
 	}
 	
 	protected void played() throws Exception {
+		updateBoardData();
 		handleGameOver();
 	}
 
@@ -135,7 +153,8 @@ public class GameReversi3 extends Play1 {
 	 */
 	
 	private enum Mode {
-		HUMAN, RANDOM, MINMAX
+		HUMAN, RANDOM
+//		, MINMAX
 	}
 	
 	private void changeMode1(Mode mode) {
@@ -160,11 +179,36 @@ public class GameReversi3 extends Play1 {
 			this.value = value;
 		}
 		
+		private Color buildColor() {
+			if(value==WKI) {
+				if(engine.whiteChecked()) return Color.ORANGE;
+				if(engine.whiteMate()) return Color.RED;
+			}
+			else if(value==BKI) {
+				if(engine.blackChecked()) return  Color.ORANGE;
+				if(engine.blackMate()) return  Color.RED;
+			}
+			return (i+j)%2==0 ? LIGHT : DARK;
+		}
+		
 		protected void drawShape() {
-			int r = CELL_SIZE/2;
-			drawSquareC(Color.GRAY, CELL_SIZE);
-			if(value==WHITE) drawRoundC(r-5);
-			else if(value==BLACK) fillRoundC(r-5);
+			fillSquareC(buildColor(), CELL_SIZE);
+			BufferedImage img = getImage();
+			if(img!=null) {
+				Composite composite = g2_getComposite();
+				if(this==dragged) g2_setComposite(ALPHA);
+				paintRenderedImageC(CELL_SIZE-8, CELL_SIZE-8, img);
+				if(this==dragged) g2_setComposite(composite);
+			}
+		}
+		
+		public BufferedImage getImage() {
+			return imgLoader.valueToImg(value);
+		}
+		public boolean isPlayer(int player) {
+			if(value>0) return player==WHITE;
+			if(value<0) return player==BLACK;
+			return false;
 		}
 		
 		public int getValue() {
@@ -176,7 +220,7 @@ public class GameReversi3 extends Play1 {
 	}
 	
 	/*
-	 * BOARD
+	 * GAME DATA
 	 */
 	
 	public int[][] boardData() {
@@ -188,12 +232,40 @@ public class GameReversi3 extends Play1 {
 		return board.cellAt(mouse().pointCurrent());
 	}
 	
+	public Cell getReleasedCell() {
+		if(!mouse().button1().justReleased()) return null;
+		return board.cellAt(mouse().pointCurrent());
+	}
+	
+	public Cell getDragged() {
+		return dragged;
+	}
+	
+	/*
+	 * GAME ACTIONS
+	 */
+	
 	public void setValueAt(int i, int j, int value) {
 		board.cellAt(i, j).setValue(value);
 	}
 
-	public void setValues(List<int[]> play, int value) {
-		for(int[] p : play) setValueAt(p[0], p[1], value);
+	public void setValueAt(int[] p, int value) {
+		setValueAt(p[0], p[1], value);
+	}
+	
+	public void setDragged(Cell dragged) {
+		this.dragged = dragged;
+	}
+	
+	public boolean attemptToPlay(int player, int[] start, int[] end) {
+		return engine.attemptToPlay(player, start, end);
+	}
+	
+	public void updateBoardData() {
+		int[][] data = engine.getData();
+		for(int i=0;i<8;i++) for(int j=0;j<8;j++) {
+			board.cellAt(i, j).setValue(data[i][j]);
+		}
 	}
 	
 	/*
@@ -201,13 +273,14 @@ public class GameReversi3 extends Play1 {
 	 */
 	
 	private void handleGameOver() throws Exception {
-		int value = searchWinner(oppositePlayerValue(), boardData());
-		if(value!=-1) setGameOver(playerForValue(value));
+		int winner = engine.getWinner();
+		if(winner!=-1) System.out.println("winner: "+winner);
+		if(winner!=-1) setGameOver(playerForValue(winner));
 	}
 	
 	private String getGameOverDisplay() {
 		Player1 winner = getGameOver().getWinner();
-		return winner!=null ? winner.getDisplay()+" won the game" : "Draw";
+		return winner!=null ? "Chess Mate. "+winner.getDisplay()+" won the game" : "Draw";
 	}
 	
 	/*
@@ -224,13 +297,9 @@ public class GameReversi3 extends Play1 {
 		switch(mode) {
 		case HUMAN: return new PlayerHuman(this);
 		case RANDOM: return new PlayerComputerRandom(this);
-		case MINMAX: return new PlayerComputerMinmax(this);
+//		case MINMAX: return new PlayerComputerMinmax(this);
 		}
 		return null;
-	}
-	
-	private int oppositePlayerValue() {
-		return playIndex()==1 ? WHITE : BLACK;
 	}
 	
 	/*
@@ -238,8 +307,14 @@ public class GameReversi3 extends Play1 {
 	 */
 	
 	private void updateLabelInfo1() {
-		if(isGameOver()) labelInfo1.setText(" "+getGameOverDisplay());
-		else labelInfo1.setText(" "+currentPlayer().getDisplay()+" is playing");
+		if(isGameOver()) {
+			labelInfo1.setText(" "+getGameOverDisplay());
+		}
+		else {
+			String info = " "+currentPlayer().getDisplay()+" is playing";
+			if(engine.isPlayerChecked()) info += " (check)";
+			labelInfo1.setText(info);
+		}
 	}
 	
 	private void updateLabelInfo2() {
@@ -249,5 +324,21 @@ public class GameReversi3 extends Play1 {
 			labelInfo2.setText("White: "+type1+" , Black: "+type2);
 		}
 		else labelInfo2.setText(" ");
+	}
+	
+	/*
+	 * DRAG
+	 */
+	
+	private class Drag extends Drawing1 {
+		public Drag() {
+			super();
+			setOrigin(new Point1D0(mouse()::point));
+		}
+		protected void draw() {
+			if(dragged!=null) {
+				paintRenderedImageC(CELL_SIZE-8, CELL_SIZE-8, dragged.getImage());
+			}
+		}
 	}
 }
