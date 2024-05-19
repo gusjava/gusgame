@@ -18,7 +18,7 @@ public abstract class Shape0 extends Drawing1 implements Shape {
 	protected double width;
 	protected AnchorType anchorType;
 	protected double height;
-	protected int count = 0;
+	protected long count = 0;
 	
 	protected Color debugFrameColor;
 	protected Color debugOriginColor;
@@ -243,7 +243,7 @@ public abstract class Shape0 extends Drawing1 implements Shape {
 	 * COUNT
 	 */
 	
-	public int getCount() {
+	public long getCount() {
 		return count;
 	}
 	
