@@ -9,7 +9,7 @@ public class PlayerRagusRandom extends PlayerRagus {
 	}
 
 	public boolean play() {
-		if(game.getCount() < game.getLastPlayCount() + 50) return false;
+//		if(game.getCount() < game.getLastPlayCount() + 50) return false;
 		int[] play = UtilRagus.randomPlay(getValue(), game.boardData());
 		if(play==null) throw new RuntimeException("PlayerComputerRandom found no play");
 		

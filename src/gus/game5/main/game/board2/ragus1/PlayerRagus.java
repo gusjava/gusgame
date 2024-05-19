@@ -56,7 +56,11 @@ public abstract class PlayerRagus extends Player1 {
 	}
 	
 	public int getTargetIndex() {
-		return value==PLAYER_DINO ? SIDE2_HOME : SIDE1_HOME;
+		return targetIndex(value);
+	}
+	
+	public int getHomeIndex() {
+		return homeIndex(value);
 	}
 	
 	private ImageIcon valueToIconS() {

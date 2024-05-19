@@ -1,5 +1,6 @@
 package gus.game5.main.game.board2.ragus1;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import gus.game5.core.util.UtilArray;
@@ -33,27 +34,54 @@ public class UtilRagus {
 			{0,0,0,0,0,0,0,0},
 	};
 	
+	/*
+	 * INDEXES
+	 */
 	
-	public static boolean isPlayable(int[][] data, int player) {
+	public static int targetIndex(int player) {
+		return player==PLAYER_DINO ? SIDE2_HOME : SIDE1_HOME;
+	}
+	
+	public static int homeIndex(int player) {
+		return player==PLAYER_DINO ? SIDE1_HOME : SIDE2_HOME;
+	}
+	
+	
+	
+	/*
+	 * IS PLAYABLE
+	 */
+	
+	public static boolean isPlayable(int player, int[][] data) {
 		for(int i=0;i<13;i++) for(int j=0;j<8;j++) {
-			if(data[i][j]*player>0 && !isBlocked(data, new int[] {i,j})) return true;
+			if(isPlayable(player, data, i, j)) return true;
 		}
 		return false;
 	}
 	
+	public static boolean isPlayable(int player, int[][] data, int[] pos) {
+		return isPlayable(player, data, pos[0], pos[1]);
+	}
+	
+	private static boolean isPlayable(int player, int[][] data, int i, int j) {
+			return findPossiblePlays(player, data, i, j).size()>0;
+	}
+	
+	/*
+	 * WINNER
+	 */
+	
 	public static PlayerRagus searchWinner(int[][] data, PlayerRagus player1, PlayerRagus player2) {
 		if(player1.hasMaxScore()) return player1;
 		if(player2.hasMaxScore()) return player2;
-		if(!isPlayable(data, player1.getValue())) return player1;
-		if(!isPlayable(data, player2.getValue())) return player2;
+		if(!isPlayable(player1.getValue(), data)) return player1;
+		if(!isPlayable(player2.getValue(), data)) return player2;
 		return null;
 	}
 	
-	public static boolean canPlay(int player, int[][] data, int[] pos) {
-		int value = data[pos[0]][pos[1]];
-		int strength = Math.abs(value);
-		return value*player>0 && !isBlocked(data, pos, value, strength);
-	}
+	/*
+	 * ATTEMPT TO PLAY
+	 */
 	
 	public static int[][] attemptToPlay(int player, int[][] data, int[] start, int[] end) {
 		//il faut que les cases start et end soient proches voisines
@@ -64,6 +92,9 @@ public class UtilRagus {
 		
 		int endX = end[0];
 		int endY = end[1];
+		
+		//il faut que la case end soit en dehors du home du player
+		if(endX==homeIndex(player)) return null;
 		
 		int value1 = data[startX][startY];
 		int value2 = data[endX][endY];
@@ -142,6 +173,27 @@ public class UtilRagus {
 	 */
 	
 	public static List<int[]> findPossiblePlays(int player, int[][] data) {
-		return UtilArray.findAll(data, 0);
+		List<int[]> playList = new ArrayList<>();
+		for(int i=0;i<13;i++) for(int j=0;j<8;j++)
+			playList.addAll(findPossiblePlays(player, data, i, j));
+		return playList;
+	}
+	
+	private static List<int[]> findPossiblePlays(int player, int[][] data, int i, int j) {
+		List<int[]> playList = new ArrayList<>();
+		if(data[i][j]*player<=0) return playList;
+		if(isBlocked(data, new int[] {i,j})) return playList;
+		
+		if(possiblePlay(player, data, i,j, i-1, j)) playList.add(new int[] {i,j,i-1,j});
+		if(possiblePlay(player, data, i,j, i+1, j)) playList.add(new int[] {i,j,i+1,j});
+		if(possiblePlay(player, data, i,j, i, j-1)) playList.add(new int[] {i,j,i,j-1});
+		if(possiblePlay(player, data, i,j, i, j+1)) playList.add(new int[] {i,j,i,j+1});
+		return playList;
+	}
+	
+	private static boolean possiblePlay(int player, int[][] data, int i1, int j1, int i2, int j2) {
+		if(!UtilArray.has(data, i2,j2)) return false;
+		if(i2==homeIndex(player)) return false;
+		return data[i1][j1]!=data[i2][j2] || !isBlocked(data, new int[] {i2,j2});
 	}
 }

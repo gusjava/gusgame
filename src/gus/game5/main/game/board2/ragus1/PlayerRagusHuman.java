@@ -11,7 +11,7 @@ public class PlayerRagusHuman extends PlayerRagus {
 	public boolean play() {
 		Cell pressedCell = game.getPressedCell();
 		if(pressedCell!=null) {
-			if(UtilRagus.canPlay(getValue(), game.boardData(), pressedCell.getIJ())) 
+			if(UtilRagus.isPlayable(getValue(), game.boardData(), pressedCell.getIJ())) 
 				game.setDragged(pressedCell);
 			return false;
 		}

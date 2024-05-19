@@ -26,6 +26,7 @@ import gus.game5.main.anim1.AnimLangtonAnt;
 import gus.game5.main.anim1.AnimMaze;
 import gus.game5.main.game.board2.chess1.GameChess1;
 import gus.game5.main.game.board2.hex1.GameHex1;
+import gus.game5.main.game.board2.ragus1.GameRagus1;
 import gus.game5.main.game.board2.reversi3.GameReversi3;
 import gus.game5.main.game.board2.tictactoe3.GameTicTacToe3;
 import gus.game5.main.game.bomb.GameBomb;
@@ -88,6 +89,7 @@ public class Presentation extends Game {
 				new GameReversi3(),
 				new GameChess1(),
 				new GameHex1(),
+				new GameRagus1(),
 				new GameTicTacToe3());
 
 		Container panel3 = buildPanel(
