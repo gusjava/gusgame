@@ -79,15 +79,15 @@ public class GameRagus1 extends Play1 {
 			action("Exit (F2)", this::exit)
 		);
 		menuBar.add("Players", 
-			menu("Player 1 (dino)",
+			menu("Player 1 (Dino)",
 				radioMenuItem("Human", ()->changeMode1(Mode.HUMAN)),
-				radioMenuItem("Computer (Random)", ()->changeMode1(Mode.RANDOM))
-//				radioMenuItem("Computer (Min-Max)", ()->changeMode1(Mode.MINMAX))
+				radioMenuItem("Computer (Random)", ()->changeMode1(Mode.RANDOM)),
+				radioMenuItem("Computer (Min-Max)", ()->changeMode1(Mode.MINMAX))
 			),
-			menu("Player 2 (anubis)",
+			menu("Player 2 (Anubis)",
 				radioMenuItem("Human", ()->changeMode2(Mode.HUMAN)),
-				radioMenuItem("Computer (Random)", ()->changeMode2(Mode.RANDOM))
-//				radioMenuItem("Computer (Min-Max)", ()->changeMode2(Mode.MINMAX))
+				radioMenuItem("Computer (Random)", ()->changeMode2(Mode.RANDOM)),
+				radioMenuItem("Computer (Min-Max)", ()->changeMode2(Mode.MINMAX))
 			)
 		);
 	}
@@ -169,7 +169,7 @@ public class GameRagus1 extends Play1 {
 	 */
 	
 	private enum Mode {
-		HUMAN, RANDOM
+		HUMAN, RANDOM, MINMAX
 	}
 	
 	private void changeMode1(Mode mode1) {
@@ -291,7 +291,7 @@ public class GameRagus1 extends Play1 {
 		switch(mode) {
 		case HUMAN: return new PlayerRagusHuman(this, value);
 		case RANDOM: return new PlayerRagusRandom(this, value);
-//		case MINMAX: return new PlayerComputerMinmax(this, value);
+		case MINMAX: return new PlayerRagusMinmax(this, value);
 		}
 		return null;
 	}

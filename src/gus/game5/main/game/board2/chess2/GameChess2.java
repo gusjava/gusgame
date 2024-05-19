@@ -290,8 +290,8 @@ public class GameChess2 extends Play1 {
 	
 	private Player1 buildPlayer(Mode mode) {
 		switch(mode) {
-		case HUMAN: return new PlayerHuman(this);
-		case RANDOM: return new PlayerComputerRandom(this);
+		case HUMAN: return new PlayerChessHuman(this);
+		case RANDOM: return new PlayerChessRandom(this);
 //		case MINMAX: return new PlayerComputerMinmax(this);
 		}
 		return null;

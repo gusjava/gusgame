@@ -146,7 +146,7 @@ public class UtilRagus {
 		return isBlocked(data, pos, value, strength);
 	}
 	
-	private static boolean isBlocked(int[][] data, int[] pos, int value, int strength) {
+	public static boolean isBlocked(int[][] data, int[] pos, int value, int strength) {
 		List<int[]> neighbors = UtilArray.neighbor8Pos(data, pos);
 		for(int[] neighbor : neighbors) {
 			int value1 = data[neighbor[0]][neighbor[1]];

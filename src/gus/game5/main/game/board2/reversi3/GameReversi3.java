@@ -216,9 +216,9 @@ public class GameReversi3 extends Play1 {
 	
 	private Player1 buildPlayer(Mode mode) {
 		switch(mode) {
-		case HUMAN: return new PlayerHuman(this);
-		case RANDOM: return new PlayerComputerRandom(this);
-		case MINMAX: return new PlayerComputerMinmax(this);
+		case HUMAN: return new PlayerReversiHuman(this);
+		case RANDOM: return new PlayerReversiRandom(this);
+		case MINMAX: return new PlayerReversiMinmax(this);
 		}
 		return null;
 	}

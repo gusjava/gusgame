@@ -5,11 +5,11 @@ import static gus.game5.main.game.board2.hex1.UtilHex.RED;
 
 import gus.game5.core.play1.Player1;
 
-public class PlayerComputerRandom extends Player1 {
+public class PlayerHexRandom extends Player1 {
 	
 	private GameHex1 game;
 	
-	public PlayerComputerRandom(GameHex1 game) {
+	public PlayerHexRandom(GameHex1 game) {
 		this.game = game;
 	}
 
