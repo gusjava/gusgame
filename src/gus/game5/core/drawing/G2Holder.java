@@ -143,6 +143,10 @@ public class G2Holder {
 	 */
 	
 	protected void g2_drawArrow(Point0 p1, Point0 p2) {
+		g2_drawArrow(p1, p2, 8);
+	}
+	
+	protected void g2_drawArrow(Point0 p1, Point0 p2, double r) {
 		p1 = alterPoint(p1);
 		p2 = alterPoint(p2);
 		
@@ -155,7 +159,7 @@ public class G2Holder {
 		
 		if(x1s==x2s && y1s==y2s) return;
 		double d = UtilDistance.dist(x1s, y1s, x2s, y2s);
-		double k = 8/d;
+		double k = r/d;
 		
 		int xa = (int) (x2s + k*(x1s-x2s+y1s-y2s));
 		int ya = (int) (y2s + k*(x2s-x1s+y1s-y2s));

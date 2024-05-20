@@ -91,6 +91,18 @@ public class UtilList {
 		}
 		return found;
 	}
+
+	@SuppressWarnings("unchecked")
+	public static <U> List<U> addAll(List<U> list, U... uu) {
+		for(U u : uu) list.add(u);
+		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <U> List<U> addAllNotNull(List<U> list, U... uu) {
+		for(U u : uu) if(u!=null) list.add(u);
+		return list;
+	}
 	
 	
 }

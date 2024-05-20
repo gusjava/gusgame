@@ -1,9 +1,10 @@
 package gus.game5.main.game.board2.chess1;
 
-import static gus.game5.main.game.board2.chess1.UtilChess.*;
+import static gus.game5.main.game.board2.chess1.UtilChess.BKI;
+import static gus.game5.main.game.board2.chess1.UtilChess.INIT_STATE;
+import static gus.game5.main.game.board2.chess1.UtilChess.WKI;
 
 import java.awt.AlphaComposite;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Container;
@@ -11,7 +12,6 @@ import java.awt.Font;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.drawing.text.DrawingText;
@@ -47,11 +47,7 @@ public class GameChess1 extends Game1 {
 	
 	protected Container buildContentPane() {
 		labelInfo = new JLabel(" ");
-		
-		JPanel p = new JPanel(new BorderLayout());
-		p.add(labelInfo, BorderLayout.NORTH);
-		p.add(panel(), BorderLayout.CENTER);
-		return p;
+		return panelCN(panel(), labelInfo);
 	}
 	
 	/*

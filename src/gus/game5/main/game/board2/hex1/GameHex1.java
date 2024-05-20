@@ -1,12 +1,15 @@
 package gus.game5.main.game.board2.hex1;
 
-import java.awt.BorderLayout;
+import static gus.game5.main.game.board2.hex1.UtilHex.BLUE;
+import static gus.game5.main.game.board2.hex1.UtilHex.EMPTY;
+import static gus.game5.main.game.board2.hex1.UtilHex.RED;
+import static gus.game5.main.game.board2.hex1.UtilHex.searchWinner;
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import gus.game5.core.angle.Angle;
 import gus.game5.core.drawing.text.DrawingText;
@@ -19,7 +22,6 @@ import gus.game5.core.point.point0.Point0;
 import gus.game5.core.point.point2.Point2;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
-import static gus.game5.main.game.board2.hex1.UtilHex.*;
 
 public class GameHex1 extends Play1 {
 	
@@ -46,12 +48,7 @@ public class GameHex1 extends Play1 {
 	protected Container buildContentPane() {
 		labelInfo1 = new JLabel(" ");
 		labelInfo2 = new JLabel(" ");
-		
-		JPanel p = new JPanel(new BorderLayout());
-		p.add(labelInfo1, BorderLayout.NORTH);
-		p.add(panel(), BorderLayout.CENTER);
-		p.add(labelInfo2, BorderLayout.SOUTH);
-		return p;
+		return panelCNS(panel(), labelInfo1, labelInfo2);
 	}
 	
 	/*
@@ -273,8 +270,8 @@ public class GameHex1 extends Play1 {
 	
 	private Player1 buildPlayer(Mode mode) {
 		switch(mode) {
-		case HUMAN: return new PlayerHuman(this);
-		case RANDOM: return new PlayerComputerRandom(this);
+		case HUMAN: return new PlayerHexHuman(this);
+		case RANDOM: return new PlayerHexRandom(this);
 //		case MINMAX: return new PlayerComputerMinmax(this);
 		}
 		return null;

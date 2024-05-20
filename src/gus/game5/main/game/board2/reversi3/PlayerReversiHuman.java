@@ -7,11 +7,11 @@ import java.util.List;
 import gus.game5.core.play1.Player1;
 import gus.game5.main.game.board2.reversi3.GameReversi3.Cell;
 
-public class PlayerHuman extends Player1 {
+public class PlayerReversiHuman extends Player1 {
 	
 	private GameReversi3 game;
 	
-	public PlayerHuman(GameReversi3 game) {
+	public PlayerReversiHuman(GameReversi3 game) {
 		this.game = game;
 	}
 

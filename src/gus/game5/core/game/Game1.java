@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+
 import gus.game5.core.clean.Clean;
 import gus.game5.core.clean.CleanList;
 import gus.game5.core.draw.Draw;
@@ -26,6 +28,7 @@ import gus.game5.core.shape.ShapeRound;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
 import gus.game5.core.shape.board.ShapeCellBuilder;
+import gus.game5.core.util.UtilImage;
 import gus.game5.core.util.UtilResource;
 
 public abstract class Game1 extends Game {
@@ -310,7 +313,11 @@ public abstract class Game1 extends Game {
 	 * RESOURCE
 	 */
 	
-	protected String resourceAt(String fileName) {
+	public String resourceAt(String fileName) {
 		return UtilResource.resourceAt(getClass(), fileName);
+	}
+	
+	public ImageIcon iconAt(String fileName) {
+		return UtilImage.readIcon(resourceAt(fileName));
 	}
 }

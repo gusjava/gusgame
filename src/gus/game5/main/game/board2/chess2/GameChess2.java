@@ -1,9 +1,12 @@
 package gus.game5.main.game.board2.chess2;
 
-import static gus.game5.main.game.board2.chess2.UtilChess.*;
+import static gus.game5.main.game.board2.chess2.UtilChess.BKI;
+import static gus.game5.main.game.board2.chess2.UtilChess.BLACK;
+import static gus.game5.main.game.board2.chess2.UtilChess.INIT_STATE;
+import static gus.game5.main.game.board2.chess2.UtilChess.WHITE;
+import static gus.game5.main.game.board2.chess2.UtilChess.WKI;
 
 import java.awt.AlphaComposite;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Container;
@@ -11,7 +14,6 @@ import java.awt.Font;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.drawing.text.DrawingText;
@@ -28,6 +30,7 @@ public class GameChess2 extends Play1 {
 
 	public static final String TITLE = "Chess";
 	public static final int CELL_SIZE = 50;
+	public static final int IMG_SIZE = CELL_SIZE-8;
 	public static final int BOARD_SIZE = CELL_SIZE*8;
 	
 	public static final Color DARK = new Color(153,204,255);
@@ -50,12 +53,7 @@ public class GameChess2 extends Play1 {
 	protected Container buildContentPane() {
 		labelInfo1 = new JLabel(" ");
 		labelInfo2 = new JLabel(" ");
-		
-		JPanel p = new JPanel(new BorderLayout());
-		p.add(labelInfo1, BorderLayout.NORTH);
-		p.add(panel(), BorderLayout.CENTER);
-		p.add(labelInfo2, BorderLayout.SOUTH);
-		return p;
+		return panelCNS(panel(), labelInfo1, labelInfo2);
 	}
 	
 	/*
@@ -197,7 +195,7 @@ public class GameChess2 extends Play1 {
 			if(img!=null) {
 				Composite composite = g2_getComposite();
 				if(this==dragged) g2_setComposite(ALPHA);
-				paintRenderedImageC(CELL_SIZE-8, CELL_SIZE-8, img);
+				paintRenderedImageC(IMG_SIZE, img);
 				if(this==dragged) g2_setComposite(composite);
 			}
 		}
@@ -262,10 +260,7 @@ public class GameChess2 extends Play1 {
 	}
 	
 	public void updateBoardData() {
-		int[][] data = engine.getData();
-		for(int i=0;i<8;i++) for(int j=0;j<8;j++) {
-			board.cellAt(i, j).setValue(data[i][j]);
-		}
+		board.updateCells(engine.getData(), Cell::setValue);
 	}
 	
 	/*
@@ -295,8 +290,8 @@ public class GameChess2 extends Play1 {
 	
 	private Player1 buildPlayer(Mode mode) {
 		switch(mode) {
-		case HUMAN: return new PlayerHuman(this);
-		case RANDOM: return new PlayerComputerRandom(this);
+		case HUMAN: return new PlayerChessHuman(this);
+		case RANDOM: return new PlayerChessRandom(this);
 //		case MINMAX: return new PlayerComputerMinmax(this);
 		}
 		return null;
@@ -337,7 +332,7 @@ public class GameChess2 extends Play1 {
 		}
 		protected void draw() {
 			if(dragged!=null) {
-				paintRenderedImageC(CELL_SIZE-8, CELL_SIZE-8, dragged.getImage());
+				paintRenderedImageC(IMG_SIZE, dragged.getImage());
 			}
 		}
 	}

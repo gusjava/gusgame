@@ -16,4 +16,11 @@ public class UtilDisplay {
 		DecimalFormat df = new DecimalFormat("0.000",DecimalFormatSymbols.getInstance(Locale.US));
 		return df.format(data);
 	}
+	
+	public static String dec2s(double data) {
+		String s = dec2(data);
+		if(s.endsWith(".00")) return s.substring(0, s.length()-3);
+		if(s.endsWith("0")) return s.substring(0, s.length()-1);
+		return s;
+	}
 }

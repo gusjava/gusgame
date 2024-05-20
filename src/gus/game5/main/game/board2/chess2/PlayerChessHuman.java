@@ -4,11 +4,11 @@ import gus.game5.core.play1.Player1;
 import gus.game5.main.game.board2.chess2.GameChess2.Cell;
 import static gus.game5.main.game.board2.chess2.UtilChess.*;
 
-public class PlayerHuman extends Player1 {
+public class PlayerChessHuman extends Player1 {
 	
 	private GameChess2 game;
 	
-	public PlayerHuman(GameChess2 game) {
+	public PlayerChessHuman(GameChess2 game) {
 		this.game = game;
 	}
 

@@ -30,6 +30,16 @@ public abstract class Point0 {
 	}
 	
 	/*
+	 * SLOPE
+	 */
+	
+	public Double slope() {
+		double x = getX();
+		if(x==0) return null;
+		return getY()/x;
+	}
+	
+	/*
 	 * DIST
 	 */
 	

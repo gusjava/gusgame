@@ -1,15 +1,16 @@
 package gus.game5.main.game.board2.reversi3;
 
-import static gus.game5.main.game.board2.reversi3.UtilReversi3.*;
+import static gus.game5.main.game.board2.reversi3.UtilReversi3.BLACK;
+import static gus.game5.main.game.board2.reversi3.UtilReversi3.INIT_STATE;
+import static gus.game5.main.game.board2.reversi3.UtilReversi3.WHITE;
+import static gus.game5.main.game.board2.reversi3.UtilReversi3.searchWinner;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.util.List;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import gus.game5.core.drawing.text.DrawingText;
 import gus.game5.core.game.Settings;
@@ -42,12 +43,7 @@ public class GameReversi3 extends Play1 {
 	protected Container buildContentPane() {
 		labelInfo1 = new JLabel(" ");
 		labelInfo2 = new JLabel(" ");
-		
-		JPanel p = new JPanel(new BorderLayout());
-		p.add(labelInfo1, BorderLayout.NORTH);
-		p.add(panel(), BorderLayout.CENTER);
-		p.add(labelInfo2, BorderLayout.SOUTH);
-		return p;
+		return panelCNS(panel(), labelInfo1, labelInfo2);
 	}
 	
 	/*
@@ -140,12 +136,10 @@ public class GameReversi3 extends Play1 {
 	
 	private void changeMode1(Mode mode) {
 		mode1 = mode;
-		updateLabelInfo2();
 	}
 	
 	private void changeMode2(Mode mode) {
 		mode2 = mode;
-		updateLabelInfo2();
 	}
 	
 	/*
@@ -222,9 +216,9 @@ public class GameReversi3 extends Play1 {
 	
 	private Player1 buildPlayer(Mode mode) {
 		switch(mode) {
-		case HUMAN: return new PlayerHuman(this);
-		case RANDOM: return new PlayerComputerRandom(this);
-		case MINMAX: return new PlayerComputerMinmax(this);
+		case HUMAN: return new PlayerReversiHuman(this);
+		case RANDOM: return new PlayerReversiRandom(this);
+		case MINMAX: return new PlayerReversiMinmax(this);
 		}
 		return null;
 	}
