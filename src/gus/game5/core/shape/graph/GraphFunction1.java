@@ -4,17 +4,12 @@ import java.awt.Color;
 
 import gus.game5.core.function.Function;
 
-public abstract class GraphFunction1 extends GraphFunction {
+public class GraphFunction1 extends GraphFunction {
 	
 	private Function function;
 	
-	public GraphFunction1(Color color, String name, Function function) {
-		super(color, name);
-		this.function = function;
-	}
-	
-	public GraphFunction1(String name, Function function) {
-		super(name);
+	public GraphFunction1(Color color, Function function) {
+		super(color);
 		this.function = function;
 	}
 	
@@ -27,7 +22,11 @@ public abstract class GraphFunction1 extends GraphFunction {
 	 * FUNCTION
 	 */
 	
-	public Function function() {
+	public Function getFunction() {
 		return function;
+	}
+	
+	public void setFunction(Function function) {
+		this.function = function;
 	}
 }

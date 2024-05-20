@@ -5,6 +5,7 @@ import java.awt.Color;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
 import gus.game5.core.point.point2.Point2;
+import gus.game5.core.shape.graph.GraphLine0;
 import gus.game5.core.shape.graph.GraphLine1;
 import gus.game5.core.shape.graph.GraphLine2;
 import gus.game5.core.shape.graph.GraphObject;
@@ -48,16 +49,17 @@ public class MainGraph extends Game1 {
 		GraphPoint2 p1 = new GraphPoint2(Color.RED, "P1", pp1);
 		
 		GraphPoint2 p2 = new GraphPoint2("P2",4,3);
-		GraphLine2 l1 = new GraphLine2(Color.ORANGE, "L1", p1, p2);
+		GraphLine2 l1 = new GraphLine2(Color.ORANGE, p1.getPoint(), p2.getPoint());
 		
 		GraphPoint1 p3 = new GraphPoint1(Color.GREEN, "P3",-2,1);
 		p3.setDisplayMode(GraphPoint1.DISPLAY_MODE_ARROW);
 		
-		GraphLine1 l2 = new GraphLine1(Color.BLUE, "L2", 1);
-		GraphLine1 l3 = new GraphLine1(Color.BLUE, "L3", 1, 1.5);
-		GraphYLine1 l4 = new GraphYLine1(Color.BLUE, "L4", -2.5);
+		GraphLine1 l2 = new GraphLine1(Color.BLUE, 1);
+		GraphLine1 l3 = new GraphLine1(Color.BLUE, 1.5, 1);
+		GraphYLine1 l4 = new GraphYLine1(Color.BLUE, -2.5);
 		
-		GraphPolynom1 f1 = new GraphPolynom1(-2, 0, 0.5);
+		GraphPolynom1 f1 = new GraphPolynom1(Color.GRAY, -2, 0, 0.5);
+		GraphLine0 tf1 = f1.buildTangentAt(1);
 		
 		add(p1);
 		add(p2);
@@ -69,6 +71,7 @@ public class MainGraph extends Game1 {
 		add(l4);
 
 		add(f1);
+		add(tf1);
 	}
 	
 	private void add(GraphObject obj) {

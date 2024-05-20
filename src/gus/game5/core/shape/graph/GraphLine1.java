@@ -3,57 +3,90 @@ package gus.game5.core.shape.graph;
 import java.awt.Color;
 
 import gus.game5.core.function.FunctionPolynom;
+import gus.game5.core.point.point0.Point0;
 
 public class GraphLine1 extends GraphLine0 {
 	
-	private FunctionPolynom function;
+	private FunctionPolynom polynom;
 	
-	public GraphLine1(Color color, String name, GraphPoint1 p) {
-		super(color, name);
-		double a1 = p.getPoint().slope();
-		double a0 = 0;
-		function = new FunctionPolynom(a0, a1);
+	public GraphLine1(Color color, Point0 p) {
+		super(color);
+		setPolynom(p);
 	}
 	
-	public GraphLine1(Color color, String name, GraphPoint1 p1, GraphPoint1 p2) {
-		super(color, name);
-		double a1 = p1.getPoint().pSub(p2.getPoint()).slope();
-		double a0 = p1.getPoint().getY() - a1 * p1.getPoint().getX();
-		function = new FunctionPolynom(a0, a1);
+	public GraphLine1(Color color, Point0 p1, Point0 p2) {
+		super(color);
+		setPolynom(p1, p2);
 	}
 	
-	public GraphLine1(Color color, String name, double a1, double a0) {
-		super(color, name);
-		function = new FunctionPolynom(a0, a1);
+	public GraphLine1(Color color, Point0 p, double slope) {
+		super(color);
+		setPolynom(p, slope);
 	}
 	
-	public GraphLine1(String name, double a1, double a0) {
-		super(name);
-		function = new FunctionPolynom(a0, a1);
+	public GraphLine1(Color color, double y0, double slope) {
+		super(color);
+		setPolynom(y0, slope);
 	}
 	
-	public GraphLine1(double a1, double a0) {
+	public GraphLine1(Color color, double slope) {
+		super(color);
+		setPolynom(slope);
+	}
+	
+	public GraphLine1(Point0 p) {
 		super();
-		function = new FunctionPolynom(a0, a1);
+		setPolynom(p);
 	}
 	
-	public GraphLine1(Color color, String name, double a) {
-		this(color, name, a, 0);
+	public GraphLine1(Point0 p1, Point0 p2) {
+		super();
+		setPolynom(p1, p2);
 	}
 	
-	public GraphLine1(String name, double a) {
-		this(name, a, 0);
+	public GraphLine1(Point0 p, double slope) {
+		super();
+		setPolynom(p, slope);
 	}
 	
-	public GraphLine1(double a) {
-		this(a, 0);
+	public GraphLine1(double y0, double slope) {
+		super();
+		setPolynom(y0, slope);
+	}
+	
+	public GraphLine1(double slope) {
+		super();
+		setPolynom(slope);
 	}
 	
 	/*
-	 * FUNCTION
+	 * POLYNOM
 	 */
 	
-	public FunctionPolynom polynom() {
-		return function;
+	public FunctionPolynom getPolynom() {
+		return polynom;
+	}
+	
+	public void setPolynom(Point0 p) {
+		polynom = new FunctionPolynom(0, p.slope());
+	}
+	
+	public void setPolynom(Point0 p1, Point0 p2) {
+		double slope = p1.pSub(p2).slope();
+		double y0 = p1.getY() - slope * p1.getX();
+		polynom = new FunctionPolynom(y0, slope);
+	}
+	
+	public void setPolynom(Point0 p, double slope) {
+		double y0 = p.getY() - slope * p.getX();
+		polynom = new FunctionPolynom(y0, slope);
+	}
+	
+	public void setPolynom(double y0, double slope) {
+		polynom = new FunctionPolynom(y0, slope);
+	}
+	
+	public void setPolynom(double slope) {
+		polynom = new FunctionPolynom(0, slope);
 	}
 }

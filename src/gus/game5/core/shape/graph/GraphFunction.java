@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import gus.game5.core.function.Function;
 import gus.game5.core.point.point0.Point0;
+import gus.game5.core.point.point1.Point1;
 
 public abstract class GraphFunction extends GraphObject {
 	
@@ -11,12 +12,8 @@ public abstract class GraphFunction extends GraphObject {
 		super();
 	}
 	
-	public GraphFunction(Color color, String name) {
-		super(color, name);
-	}
-	
-	public GraphFunction(String name) {
-		super(name);
+	public GraphFunction(Color color) {
+		super(color);
 	}
 	
 	private double dx = 0.1;
@@ -33,7 +30,7 @@ public abstract class GraphFunction extends GraphObject {
 		Color c = getColor();
 		if(c==null) c = graph.getColor();
 		
-		Function h = function();
+		Function func = getFunction();
 		
 		double xMin = graph.getXMin();
 		double xMax = graph.getXMax();
@@ -41,25 +38,35 @@ public abstract class GraphFunction extends GraphObject {
 		double yMax = graph.getYMax();
 		
 		double x0 = xMin;
-		double y0 = h.h(xMin);
+		double y0 = func.h(xMin);
 		
 		for(double x=xMin; x<=xMax; x+=dx) {
-			double y = h.h(x);
+			double y = func.h(x);
 			
 			if(y>=yMin && y<=yMax && y0>=yMin && y0<=yMax) {
 				Point0 p0 = graph.pMult(x0, y0);
 				Point0 p = graph.pMult(x, y);
 				graph.drawLine(c, p0, p);
 			}
-			
 			x0 = x;
 			y0 = y;
 		}
+	}
+	
+	/*
+	 * TANGENTE
+	 */
+	
+	public GraphLine0 buildTangentAt(double x) {
+		Function f = getFunction();
+		double y = f.h(x);
+		double a = f.getDerived().h(x);
+		return new GraphLine1(getColor(), new Point1(x, y), a);
 	}
 
 	/*
 	 * FUNCTION
 	 */
 	
-	public abstract Function function();
+	public abstract Function getFunction();
 }

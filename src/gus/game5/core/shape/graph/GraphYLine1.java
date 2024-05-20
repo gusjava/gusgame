@@ -2,23 +2,25 @@ package gus.game5.core.shape.graph;
 
 import java.awt.Color;
 
+import gus.game5.core.point.point0.Point0;
+
 public class GraphYLine1 extends GraphYLine0 {
 	
 	private double x0;
 	
-	public GraphYLine1(Color color, String name, GraphPoint1 p) {
-		super(color, name);
+	public GraphYLine1(Color color, Point0 p) {
+		super(color);
 		x0 = p.getX();
 	}
 	
-	public GraphYLine1(Color color, String name, double x0) {
-		super(color, name);
+	public GraphYLine1(Color color, double x0) {
+		super(color);
 		this.x0 = x0;
 	}
 	
-	public GraphYLine1(String name, double x0) {
-		super(name);
-		this.x0 = x0;
+	public GraphYLine1(Point0 p) {
+		super();
+		x0 = p.getX();
 	}
 	
 	public GraphYLine1(double x0) {

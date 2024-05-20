@@ -15,15 +15,6 @@ public abstract class GraphObject implements Dyn {
 	public GraphObject() {
 	}
 	
-	public GraphObject(Color color, String name) {
-		this.color = color;
-		this.name = name;
-	}
-	
-	public GraphObject(String name) {
-		this.name = name;
-	}
-	
 	public GraphObject(Color color) {
 		this.color = color;
 	}

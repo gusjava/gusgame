@@ -12,12 +12,8 @@ public abstract class GraphYLine0 extends GraphObject {
 		super();
 	}
 	
-	public GraphYLine0(Color color, String name) {
-		super(color, name);
-	}
-	
-	public GraphYLine0(String name) {
-		super(name);
+	public GraphYLine0(Color color) {
+		super(color);
 	}
 
 	protected void drawObject(ShapeGraph graph) {

@@ -7,13 +7,8 @@ import gus.game5.core.function.FunctionPolynom;
 
 public abstract class GraphPolynom0 extends GraphFunction {
 	
-	
-	public GraphPolynom0(Color color, String name) {
-		super(color, name);
-	}
-	
-	public GraphPolynom0(String name) {
-		super(name);
+	public GraphPolynom0(Color color) {
+		super(color);
 	}
 	
 	public GraphPolynom0() {
@@ -23,19 +18,26 @@ public abstract class GraphPolynom0 extends GraphFunction {
 	/*
 	 * FUNCTION
 	 */
-
 	
-	public abstract FunctionPolynom polynom();
-	
-	public Function function() {
-		return polynom();
+	public Function getFunction() {
+		return getPolynom();
 	}
+	
+	/*
+	 * POLYNOM
+	 */
+	
+	public abstract FunctionPolynom getPolynom();
 
 	public double[] getCoef() {
-		return polynom().getCoef();
+		return getPolynom().getCoef();
 	}
 
 	public double coefAt(int i) {
-		return polynom().coefAt(i);
+		return getPolynom().coefAt(i);
+	}
+	
+	public int getDegree() {
+		return getCoef().length;
 	}
 }

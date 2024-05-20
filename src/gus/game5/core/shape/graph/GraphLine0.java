@@ -11,13 +11,8 @@ import gus.game5.core.point.point1.Point1;
 
 public abstract class GraphLine0 extends GraphFunction {
 	
-	
-	public GraphLine0(Color color, String name) {
-		super(color, name);
-	}
-	
-	public GraphLine0(String name) {
-		super(name);
+	public GraphLine0(Color color) {
+		super(color);
 	}
 	
 	public GraphLine0() {
@@ -28,7 +23,7 @@ public abstract class GraphLine0 extends GraphFunction {
 		Color c = getColor();
 		if(c==null) c = graph.getColor();
 		
-		FunctionPolynom polynom = polynom();
+		FunctionPolynom polynom = getPolynom();
 		double[] aa = polynom.getCoef();
 		if(aa.length!=2) throw new RuntimeException("Invalid polynom degree for straight line: "+aa.length);
 		double a1 = aa[1];
@@ -71,19 +66,22 @@ public abstract class GraphLine0 extends GraphFunction {
 	/*
 	 * FUNCTION
 	 */
+	
+	public Function getFunction() {
+		return getPolynom();
+	}
+	
+	/*
+	 * POLYNOM
+	 */
+	
+	public abstract FunctionPolynom getPolynom();
 
-	
-	public abstract FunctionPolynom polynom();
-	
-	public Function function() {
-		return polynom();
+	public double getA0() {
+		return getPolynom().coefAt(0);
 	}
 
 	public double getA1() {
-		return polynom().coefAt(1);
-	}
-
-	public double getA0() {
-		return polynom().coefAt(0);
+		return getPolynom().coefAt(1);
 	}
 }

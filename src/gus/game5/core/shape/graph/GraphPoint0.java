@@ -15,16 +15,18 @@ public abstract class GraphPoint0 extends GraphObject {
 		super();
 	}
 	
+	public GraphPoint0(Color color) {
+		super(color);
+	}
+	
 	public GraphPoint0(Color color, String name) {
-		super(color, name);
+		super(color);
+		setName(name);
 	}
 	
 	public GraphPoint0(String name) {
-		super(name);
-	}
-	
-	public GraphPoint0(Color color) {
-		super(color);
+		super();
+		setName(name);
 	}
 	
 	/*

@@ -4,35 +4,36 @@ import java.awt.Color;
 
 import gus.game5.core.function.FunctionPolynom;
 
+
 public class GraphPolynom1 extends GraphPolynom0 {
 	
-	private FunctionPolynom function;
+	private FunctionPolynom polynom;
 	
-	public GraphPolynom1(Color color, String name, FunctionPolynom function) {
-		super(color, name);
-		this.function = function;
+	public GraphPolynom1(Color color, FunctionPolynom polynom) {
+		super(color);
+		this.polynom = polynom;
 	}
 	
-	public GraphPolynom1(Color color, String name, double... a) {
-		super(color, name);
-		function = new FunctionPolynom(a);
+	public GraphPolynom1(Color color, double... a) {
+		super(color);
+		polynom = new FunctionPolynom(a);
 	}
 	
-	public GraphPolynom1(String name, double... a) {
-		super(name);
-		function = new FunctionPolynom(a);
+	public GraphPolynom1(FunctionPolynom polynom) {
+		super();
+		this.polynom = polynom;
 	}
 	
 	public GraphPolynom1(double... a) {
 		super();
-		function = new FunctionPolynom(a);
+		polynom = new FunctionPolynom(a);
 	}
 	
 	/*
-	 * FUNCTION
+	 * POLYNOM
 	 */
 	
-	public FunctionPolynom polynom() {
-		return function;
+	public FunctionPolynom getPolynom() {
+		return polynom;
 	}
 }

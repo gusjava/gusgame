@@ -9,19 +9,19 @@ import gus.game5.core.util.UtilArray;
 
 public class GraphPolynom2 extends GraphPolynom0 {
 	
-	private G<FunctionPolynom> gFunction;
+	private G<FunctionPolynom> gPolynom;
 	
-	public GraphPolynom2(Color color, String name, G<FunctionPolynom> gFunction) {
-		super(color, name);
-		this.gFunction = gFunction;
+	public GraphPolynom2(Color color, G<FunctionPolynom> gPolynom) {
+		super(color);
+		this.gPolynom = gPolynom;
 	}
 	
-	public GraphPolynom2(Color color, String name, GDouble... gA) {
-		super(color, name);
-		gFunction = ()->new FunctionPolynom(UtilArray.collectDouble2(gA));
+	public GraphPolynom2(Color color, GDouble... gA) {
+		super(color);
+		gPolynom = ()->new FunctionPolynom(UtilArray.collectDouble2(gA));
 	}
 
-	public FunctionPolynom polynom() {
-		return gFunction.g();
+	public FunctionPolynom getPolynom() {
+		return gPolynom.g();
 	}
 }
