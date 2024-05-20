@@ -11,20 +11,15 @@ import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
 import gus.game5.core.game.gui.JMenuBar1;
 import gus.game5.core.keyboard.Keyboard;
-import gus.game5.core.point.point0.Point0;
 import gus.game5.core.point.point1.Point1;
 import gus.game5.core.shape.ShapeList;
-import gus.game5.core.shape.ShapeRound;
-import gus.game5.core.shape.ShapeSquare;
-import gus.game5.core.util.UtilList;
-import gus.game5.core.util.UtilRandom;
+import gus.game5.main.l1.bloon.missile.Missile;
+import gus.game5.main.l1.bloon.round.Round;
+import gus.game5.main.l1.bloon.tower.Tower;
+import gus.game5.main.l1.bloon.tower.Tower1;
+import gus.game5.main.l1.bloon.type.Bloon;
 
 public class GameBloon extends Game1 {
-	
-	public static final double BLOON_RADIUS = 12;
-	public static final double TOWER_LENGTH = 20;
-	public static final double MISSILE_RADIUS = 4;
-	public static final double MISSILE_SPEED = 15;
 	
 	public static void main(String[] args) {
 		GameBloon main = new GameBloon();
@@ -55,13 +50,38 @@ public class GameBloon extends Game1 {
 	private ShapeList<Missile> missiles;
 	private List<Point1> path;
 	private double life;
-	private int round;
+	private Round round;
+	
 	private int step;
+	private long step1Start;
+	private long step1Stop;
+	
+	private double[] roundParams = new double[] {80, 100, 120, 150, 200};
+	private double ratio = 0.7;
+	
+	public List<Point1> getPath() {
+		return path;
+	}
+	
+	public double getLife() {
+		return life;
+	}
+	
+	public void setLife(double life) {
+		this.life = life;
+	}
+	
+	public ShapeList<Missile> getMissiles() {
+		return missiles;
+	}
+	
+	public ShapeList<Bloon> getBloons() {
+		return bloons;
+	}
 	
 	protected void initialize1() {
 		
 		life = 200;
-		round = 0;
 		step = 0;
 		
 		path = new ArrayList<>();
@@ -86,6 +106,10 @@ public class GameBloon extends Game1 {
 		
 		DrawingText dt = newDrawingText(Color.GREEN, p1(800, 100), ()->"Life = "+life);
 		dt.setFont(30);
+
+		dt = newDrawingText(Color.BLACK, p1(600, 100), ()->"Time = "+getStep1Duration());
+		dt.setDrawable(()->getStep1Duration()>0);
+		dt.setFont(30);
 	}
 
 	protected void turn() {
@@ -101,30 +125,20 @@ public class GameBloon extends Game1 {
 	
 	private void handleStep0() {
 		if(mouse().button1().justPressed()) {
-			Tower tower1 = new Tower1(mouse().pointCurrent());
+			Tower tower1 = new Tower1(this, mouse().pointCurrent());
 			towers.add(tower1);
-			if(towers.size()==3) {
-				step = 1;
-			}
+
+			for(int i=0;i<roundParams.length;i++)
+				roundParams[i] *= ratio;
+			round = new Round(this, 1000, roundParams);
+			step1Start = getCount();
+			step = 1;
 		}
 	}
 			
 	private void handleStep1() {
-		if (UtilRandom.chance(30)) {
-			bloons.add(new RedBloon());
-		}
-		if (UtilRandom.chance(50)) {
-			bloons.add(new BlueBloon());
-		}
-		if (UtilRandom.chance(90)) {
-			bloons.add(new GreenBloon());
-		}
-		if (UtilRandom.chance(130)) {
-			bloons.add(new YellowBloon());
-		}
-		if (UtilRandom.chance(150)) {
-			bloons.add(new PinkBloon());
-		}
+		if(!isStep1DurationOver())
+		round.generate();
 		
 		for(Tower tower : towers) {
 			for(Bloon bloon : bloons) {
@@ -146,9 +160,14 @@ public class GameBloon extends Game1 {
 
 		goNext();
 		clean();
+		
+		if(isStep1DurationOver() && bloons.isEmpty()) {
+			step = 0;
+			step1Stop = getCount();
+		}
 	}
 	
-	private void handleGameOver() {
+	public void handleGameOver() {
 		life = 0;
 		DrawingText dt = newDrawingTextC(Color.RED, gameCenter(), "Game Over");
 		dt.setFont(50);
@@ -158,156 +177,19 @@ public class GameBloon extends Game1 {
 		return life<=0;
 	}
 	
-	private abstract class Bloon extends ShapeRound {
-		private int targetIndex;
-		private Point1 target;
-		private double speed;
-		private double bloonLife;
-		
-		public Bloon(double speed, double bloonLife) {
-			super(path.get(0), BLOON_RADIUS);
-			this.speed = speed;
-			this.bloonLife = bloonLife;
-			setTarget(1);
-		}
-		
-		public void goNext() {
-			super.goNext();
-			if(getAnchor().near(target, speed)) {
-				setTarget(targetIndex+1);
-			}
-			
-			if(isOver()) {
-				life-= bloonLife;
-				if(life<0) handleGameOver();
-			}
-		}
-		
-		protected void drawShape() {
-			super.drawShape();
-			drawRoundC(Color.BLACK, getRadius());
-		}
-		
-		public boolean isOver() {
-			return target==null || bloonLife<=0;
-		}
-		
-		private void setTarget(int targetIndex) {
-			this.targetIndex = targetIndex;
-			target = UtilList.get(path, targetIndex);
-			getAnchor().setDerived(target, speed);
-		}
-		
-		public void damage(int damage) {
-			bloonLife -= damage;
-		}
-	}
-	
-	
-	private class RedBloon extends Bloon {
-		public RedBloon() {
-			super(1, 1);
-			setColor(Color.RED);
-		}
-	}
-	
-	
-	private class BlueBloon extends Bloon {
-		public BlueBloon() {
-			super(2, 2);
-			setColor(Color.BLUE);
-		}
-	}
-	
-	private class GreenBloon extends Bloon {
-		public GreenBloon() {
-			super(3, 3);
-			setColor(Color.GREEN);
-		}
-	}
-	
-	private class YellowBloon extends Bloon {
-		public YellowBloon() {
-			super(4, 5);
-			setColor(Color.YELLOW);
-		}
-	}
-	
-	private class PinkBloon extends Bloon {
-		public PinkBloon() {
-			super(5, 7);
-			setColor(Color.PINK);
-		}
-	}
-	
-	private abstract class Tower extends ShapeSquare {
-		
-		protected double range;
-		private long countLastMissile = -1;
-		private int shotCount = 0;
-		
-		public Tower(Point0 anchor) {
-			super(anchor, TOWER_LENGTH);
-		}
-
-		protected void drawShape() {
-			super.drawShape();
-			drawRoundC(range);
-			drawString(p(15,10), ""+shotCount);
-		}
-		
-		public double getRange() {
-			return range;
-		}
-		
-		public void targetBloon(Bloon bloon) {
-			if(getCount()<countLastMissile + 10) return;
-			Missile missile = new Missile(getAnchor(), bloon.getAnchor());
-			missiles.add(missile);
-			countLastMissile = getCount();
-			shotCount++;
-		}
-	}
-	
-	private class Tower1 extends Tower {
-		public Tower1(Point0 anchor) {
-			super(anchor);
-			setColor(Color.BLACK);
-			range = 100;
-		}
-	}
-	
-	private class Missile extends ShapeRound {
-		private int carburant = 1000;
-
-		public Missile(Point0 anchor, Point0 target) {
-			super(anchor, MISSILE_RADIUS);
-			setColor(Color.BLACK);
-			getAnchor().setDerived(target, MISSILE_SPEED);
-		}
-		
-		public void explode() {
-			if(carburant==0) return;
-			carburant = 0;
-		}
-		
-		public void goNext() {
-			super.goNext();
-			carburant--;
-		}
-		
-		public boolean isOver() {
-			return carburant<=0;
-		}
-	}
-	
 	private class PathDraw extends Drawing1 {
-
 		protected void draw() {
 			for(int i=1;i<path.size();i++) {
 				drawLine(path.get(i-1), path.get(i)); 
 			}
 		}
-		
+	}
+	
+	private long getStep1Duration() {
+		return step1Start>0 ? getCount()-step1Start : 0;
+	}
+	
+	private boolean isStep1DurationOver() {
+		return getStep1Duration() >= round.getDuration();
 	}
 }
