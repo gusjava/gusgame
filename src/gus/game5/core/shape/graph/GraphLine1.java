@@ -2,39 +2,39 @@ package gus.game5.core.shape.graph;
 
 import java.awt.Color;
 
+import gus.game5.core.function.FunctionPolynom;
+
 public class GraphLine1 extends GraphLine0 {
 	
-	private double a;
-	private double b;
-	
-	public GraphLine1(Color color, String name, GraphPoint1 p1, GraphPoint1 p2) {
-		super(color, name);
-		a = p1.getPoint().pSub(p2.getPoint()).slope();
-		b = p1.getPoint().getY() - a * p1.getPoint().getX();
-	}
+	private FunctionPolynom function;
 	
 	public GraphLine1(Color color, String name, GraphPoint1 p) {
 		super(color, name);
-		a = p.getPoint().slope();
-		b = 0;
+		double a1 = p.getPoint().slope();
+		double a0 = 0;
+		function = new FunctionPolynom(a0, a1);
 	}
 	
-	public GraphLine1(Color color, String name, double a, double b) {
+	public GraphLine1(Color color, String name, GraphPoint1 p1, GraphPoint1 p2) {
 		super(color, name);
-		this.a = a;
-		this.b = b;
+		double a1 = p1.getPoint().pSub(p2.getPoint()).slope();
+		double a0 = p1.getPoint().getY() - a1 * p1.getPoint().getX();
+		function = new FunctionPolynom(a0, a1);
 	}
 	
-	public GraphLine1(String name, double a, double b) {
+	public GraphLine1(Color color, String name, double a1, double a0) {
+		super(color, name);
+		function = new FunctionPolynom(a0, a1);
+	}
+	
+	public GraphLine1(String name, double a1, double a0) {
 		super(name);
-		this.a = a;
-		this.b = b;
+		function = new FunctionPolynom(a0, a1);
 	}
 	
-	public GraphLine1(double a, double b) {
+	public GraphLine1(double a1, double a0) {
 		super();
-		this.a = a;
-		this.b = b;
+		function = new FunctionPolynom(a0, a1);
 	}
 	
 	public GraphLine1(Color color, String name, double a) {
@@ -48,12 +48,12 @@ public class GraphLine1 extends GraphLine0 {
 	public GraphLine1(double a) {
 		this(a, 0);
 	}
-
-	public double getA() {
-		return a;
-	}
-
-	public double getB() {
-		return b;
+	
+	/*
+	 * FUNCTION
+	 */
+	
+	public FunctionPolynom polynom() {
+		return function;
 	}
 }

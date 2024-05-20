@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gus.game5.core.features.f.F;
+import gus.game5.core.features.g.GDouble;
 
 public class UtilArray {
 	
@@ -262,6 +263,16 @@ public class UtilArray {
 		for(int i=0;i<x;i++) for(int j=0;j<y;j++) for(int k=0;k<z;k++)
 			newData[i][j][k] = data[i][j][k];
 		return newData;
+	}
+	
+	/*
+	 * COLLECT
+	 */
+	
+	public static double[] collectDouble2(GDouble... dd) {
+		double[] data = new double[dd.length];
+		for(int i=0;i<data.length;i++) data[i] = dd[i].gDouble();
+		return data;
 	}
 	
 	/*

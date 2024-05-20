@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import gus.game5.core.dyn.DynList;
 import gus.game5.core.point.point0.Point0;
+import gus.game5.core.point.point1.Point1;
 import gus.game5.core.point.point2.Point2;
 import gus.game5.core.shape.Shape0;
 
@@ -177,6 +178,10 @@ public class ShapeGraph extends Shape0 {
 	
 	public Point0 pMult(Point0 p) {
 		return p.pMult(xStep, -yStep);
+	}
+	
+	public Point0 pMult(double x, double y) {
+		return new Point1(x * xStep, -y * yStep);
 	}
 	
 	public boolean includes(Point0 p) {

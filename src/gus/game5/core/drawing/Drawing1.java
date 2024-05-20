@@ -734,6 +734,48 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	/*
+	 * DRAW ARROW
+	 */
+	
+	public void drawArrow(Color color, Point0 p1, Point0 p2) {
+		g2_setColor(color);
+		g2_drawArrow(p1, p2);
+	}
+	
+	public void drawArrow(Point0 p1, Point0 p2) {
+		drawArrow(color, p1, p2);
+	}
+	
+	public void drawArrow(Color color, Point0 p2) {
+		drawArrow(color, p(0,0), p2);
+	}
+	
+	public void drawArrow(Point0 p2) {
+		drawArrow(color, p2);
+	}
+	
+	/*
+	 * DRAW ARROW (R)
+	 */
+	
+	public void drawArrow(Color color, Point0 p1, Point0 p2, double r) {
+		g2_setColor(color);
+		g2_drawArrow(p1, p2, r);
+	}
+	
+	public void drawArrow(Point0 p1, Point0 p2, double r) {
+		drawArrow(color, p1, p2, r);
+	}
+	
+	public void drawArrow(Color color, Point0 p2, double r) {
+		drawArrow(color, p(0,0), p2, r);
+	}
+	
+	public void drawArrow(Point0 p2, double r) {
+		drawArrow(color, p2, r);
+	}
+	
+	/*
 	 * DRAW THICK LINE
 	 * TODO mieux gérer l'épaisseur du trait avec les arrondis
 	 */
