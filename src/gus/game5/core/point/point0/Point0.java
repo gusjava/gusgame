@@ -127,6 +127,18 @@ public abstract class Point0 {
 	}
 	
 	/*
+	 * P SET
+	 */
+	
+	public Point1 pSetX(double x) {
+		return new Point1(x, getY());
+	}
+	
+	public Point1 pSetY(double y) {
+		return new Point1(getX(), y);
+	}
+	
+	/*
 	 * P ADD
 	 */
 	

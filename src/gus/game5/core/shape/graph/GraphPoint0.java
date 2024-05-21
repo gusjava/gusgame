@@ -37,6 +37,34 @@ public abstract class GraphPoint0 extends GraphObject {
 	}
 	
 	/*
+	 * COLOR PROJECTION
+	 */
+	
+	private Color colorProjX;
+	private Color colorProjY;
+	
+	public void setColorProjXY(Color colorProj) {
+		setColorProjX(colorProj);
+		setColorProjY(colorProj);
+	}
+	
+	public void setColorProjX(Color colorProjX) {
+		this.colorProjX = colorProjX;
+	}
+	
+	public void setColorProjY(Color colorProjY) {
+		this.colorProjY = colorProjY;
+	}
+	
+	public Color getColorProjX() {
+		return colorProjX;
+	}
+	
+	public Color getColorProjY() {
+		return colorProjY;
+	}
+	
+	/*
 	 * DRAW OBJECT
 	 */
 
@@ -47,6 +75,14 @@ public abstract class GraphPoint0 extends GraphObject {
 		Color c = getColor();
 		if(c==null) c = graph.getColor();
 		Point0 p_ = graph.pMult(p);
+
+		
+		if(colorProjX!=null) {
+			graph.drawLine(colorProjX, p_, p_.pSetY(0));
+		}
+		if(colorProjY!=null) {
+			graph.drawLine(colorProjY, p_, p_.pSetX(0));
+		}
 		
 		if(displayMode==DISPLAY_MODE_CROSS) {
 			graph.drawLine(c, p_.pAdd(5, 0), p_.pAdd(-5, 0));

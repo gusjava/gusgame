@@ -14,6 +14,7 @@ import gus.game5.core.shape.graph.GraphLine1;
 import gus.game5.core.shape.graph.GraphLine2;
 import gus.game5.core.shape.graph.GraphPoint1;
 import gus.game5.core.shape.graph.GraphPolynom1;
+import gus.game5.core.shape.graph.GraphSegment1;
 import gus.game5.core.shape.graph.GraphTangent2;
 import gus.game5.core.shape.graph.GraphTriangle1;
 import gus.game5.core.shape.graph.GraphYLine1;
@@ -80,8 +81,12 @@ public class MainGraph extends Game1 {
 		GraphTangent2 t1 = new GraphTangent2(Color.GRAY, y1.getFunction(), ()->x1);
 		GraphPoint1 p4 = new GraphPoint1(Color.RED, new Point0Dxh(y1.getFunction(), ()->x1));
 		
+		p1.setColorProjXY(Color.LIGHT_GRAY);
+		p4.setColorProjXY(Color.LIGHT_GRAY);
+		
 		GraphCircle1 c1 = new GraphCircle1(Color.RED.darker(), p1(-4,2), 1.2);
 		GraphTriangle1 c2 = new GraphTriangle1(Color.RED.darker(), p1(-3,-5), p1(-2,-2.5), p1(1,-4));
+		GraphSegment1 c3 = new GraphSegment1(Color.RED.darker(), p1(-6,-1), p1(-4,1.5));
 		
 		graph.add("P1", p1);
 		graph.add("P2", p2);
@@ -98,5 +103,6 @@ public class MainGraph extends Game1 {
 		
 		graph.add("C1", c1);
 		graph.add("C2", c2);
+		graph.add("C3", c3);
 	}
 }
