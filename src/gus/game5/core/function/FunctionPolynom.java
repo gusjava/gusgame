@@ -1,49 +1,59 @@
 package gus.game5.core.function;
 
+import gus.game5.core.util.UtilPolynom;
+
 public class FunctionPolynom implements Function {
 	
 
-	private double[] a;
+	private double[] coef;
 	
-	public FunctionPolynom(double... a) {
-		this.a = a;
+	public FunctionPolynom(double... coef) {
+		this.coef = coef;
 	}
 	
 	public double[] getCoef() {
-		return a;
+		return coef;
 	}
 	
 	public double coefAt(int i) {
-		return a[i];
+		return coef[i];
 	}
 
 	public double h(double value) {
 		double y = 0;
-		for(int i=0;i<a.length;i++) {
-			y += a[i] * Math.pow(value, i);
+		for(int i=0;i<coef.length;i++) {
+			y += coef[i] * Math.pow(value, i);
 		}
 		return y;
 	}
 
 	public Function getDerived() {
-		double[] a1 = new double[a.length-1];
+		double[] a1 = new double[coef.length-1];
 		for(int i=0;i<a1.length;i++) {
-			a1[i] = a[i+1] * (i+1);
+			a1[i] = coef[i+1] * (i+1);
 		}
 		return new FunctionPolynom(a1);
 	}
 
-	public boolean isEven() {
-		for(int i=0;i<a.length;i++) {
-			if(i%2==1 && a[i]!=0) return false;
+	public Boolean isEven() {
+		for(int i=0;i<coef.length;i++) {
+			if(i%2==1 && coef[i]!=0) return false;
 		}
 		return true;
 	}
 
-	public boolean isOdd() {
-		for(int i=0;i<a.length;i++) {
-			if(i%2==0 && a[i]!=0) return false;
+	public Boolean isOdd() {
+		for(int i=0;i<coef.length;i++) {
+			if(i%2==0 && coef[i]!=0) return false;
 		}
 		return true;
+	}
+	
+	public boolean isDefined(double value) {
+		return true;
+	}
+	
+	public double[] findRoots() {
+		return UtilPolynom.findRoots(coef);
 	}
 }
