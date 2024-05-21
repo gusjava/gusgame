@@ -93,6 +93,20 @@ public abstract class Point0 {
 	}
 	
 	/*
+	 * BETWEEN
+	 */
+	
+	public boolean xBetween(double xMin, double xMax) {
+		double x = getX();
+		return x>=xMin && x<=xMax;
+	}
+	
+	public boolean yBetween(double yMin, double yMax) {
+		double y = getY();
+		return y>=yMin && y<=yMax;
+	}
+	
+	/*
 	 * NEAR
 	 */
 	
