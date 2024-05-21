@@ -9,14 +9,9 @@ public class GraphPoint1 extends GraphPoint0 {
 	
 	private Point0 point;
 	
-	public GraphPoint1(Color color, String name, double x, double y) {
-		super(color, name);
+	public GraphPoint1(Color color, double x, double y) {
+		super(color);
 		this.point = new Point1(x,y);
-	}
-	
-	public GraphPoint1(Color color, String name, Point0 point) {
-		super(color, name);
-		this.point = point;
 	}
 	
 	public GraphPoint1(Color color, Point0 point) {
@@ -24,17 +19,9 @@ public class GraphPoint1 extends GraphPoint0 {
 		this.point = point;
 	}
 	
-	public GraphPoint1(String name, double x, double y) {
-		this(name, new Point1(x,y));
-	}
-	
 	public GraphPoint1(double x, double y) {
-		this(new Point1(x,y));
-	}
-	
-	public GraphPoint1(String name, Point0 point) {
-		super(name);
-		this.point = point;
+		super();
+		this.point = new Point1(x,y);
 	}
 	
 	public GraphPoint1(Point0 point) {

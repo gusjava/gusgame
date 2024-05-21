@@ -88,11 +88,16 @@ public class ShapeGraph extends Shape0 {
 	}
 	
 	/*
-	 * ADD OBJECT
+	 * ADD
 	 */
 	
-	public void addObject(GraphObject object) {
+	public void add(GraphObject object) {
 		objects.add(object);
+	}
+	
+	public void add(String name, GraphObject object) {
+		objects.add(object);
+		object.setName(name);
 	}
 	
 	/*

@@ -14,6 +14,16 @@ public class Point0Dda extends Point0 {
 		this.gAngle = gAngle;
 	}
 	
+	public Point0Dda(double dist, GAngle gAngle) {
+		this.gDist = ()->dist;
+		this.gAngle = gAngle;
+	}
+	
+	public Point0Dda(GDouble gDist, Angle angle) {
+		this.gDist = gDist;
+		this.gAngle = ()->angle;
+	}
+	
 	public Angle angle() {
 		return gAngle.g();
 	}

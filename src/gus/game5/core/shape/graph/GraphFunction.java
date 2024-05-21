@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import gus.game5.core.function.Function;
 import gus.game5.core.point.point0.Point0;
-import gus.game5.core.point.point1.Point1;
 
 public abstract class GraphFunction extends GraphObject {
 	
@@ -51,17 +50,6 @@ public abstract class GraphFunction extends GraphObject {
 			x0 = x;
 			y0 = y;
 		}
-	}
-	
-	/*
-	 * TANGENTE
-	 */
-	
-	public GraphLine0 buildTangentAt(double x) {
-		Function f = getFunction();
-		double y = f.h(x);
-		double a = f.getDerived().h(x);
-		return new GraphLine1(getColor(), new Point1(x, y), a);
 	}
 
 	/*

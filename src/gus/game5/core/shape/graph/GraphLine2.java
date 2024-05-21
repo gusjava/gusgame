@@ -11,19 +11,19 @@ public class GraphLine2 extends GraphLine0 {
 	
 	private G<FunctionPolynom> gPolynom;
 	
-	public GraphLine2(Color color, Point0 p) {
+	public GraphLine2(Color color, G<Point0> gP) {
 		super(color);
-		setPolynom(p);
+		setGPolynom(gP);
 	}
 	
-	public GraphLine2(Color color, Point0 p1, Point0 p2) {
+	public GraphLine2(Color color, G<Point0> gP1, G<Point0> gP2) {
 		super(color);
-		setPolynom(p1, p2);
+		setGPolynom(gP1, gP2);
 	}
 	
-	public GraphLine2(Color color, Point0 p, GDouble gSlope) {
+	public GraphLine2(Color color, G<Point0> gP, GDouble gSlope) {
 		super(color);
-		setPolynom(p, gSlope);
+		setGPolynom(gP, gSlope);
 	}
 	
 	public GraphLine2(Color color, GDouble gY0, GDouble gSlope) {
@@ -36,19 +36,19 @@ public class GraphLine2 extends GraphLine0 {
 		setPolynom(gSlope);
 	}
 	
-	public GraphLine2(Point0 p) {
+	public GraphLine2(G<Point0> gP) {
 		super();
-		setPolynom(p);
+		setGPolynom(gP);
 	}
 	
-	public GraphLine2(Point0 p1, Point0 p2) {
+	public GraphLine2(G<Point0> gP1, G<Point0> gP2) {
 		super();
-		setPolynom(p1, p2);
+		setGPolynom(gP1, gP2);
 	}
 	
-	public GraphLine2(Point0 p, GDouble gSlope) {
+	public GraphLine2(G<Point0> gP, GDouble gSlope) {
 		super();
-		setPolynom(p, gSlope);
+		setGPolynom(gP, gSlope);
 	}
 	
 	public GraphLine2(GDouble gY0, GDouble gSlope) {
@@ -69,20 +69,23 @@ public class GraphLine2 extends GraphLine0 {
 		return gPolynom.g();
 	}
 	
-	public void setPolynom(Point0 p) {
-		gPolynom = ()->new FunctionPolynom(0, p.slope());
+	public void setGPolynom(G<Point0> gP) {
+		gPolynom = ()->new FunctionPolynom(0, gP.g().slope());
 	}
 	
-	public void setPolynom(Point0 p1, Point0 p2) {
+	public void setGPolynom(G<Point0> gP1, G<Point0> gP2) {
 		gPolynom = ()->{
+			Point0 p1 = gP1.g();
+			Point0 p2 = gP2.g();
 			double slope = p1.pSub(p2).slope();
 			double y0 = p1.getY() - slope * p1.getX();
 			return new FunctionPolynom(y0, slope);
 		};
 	}
 	
-	public void setPolynom(Point0 p, GDouble gSlope) {
+	public void setGPolynom(G<Point0> gP, GDouble gSlope) {
 		gPolynom = ()->{
+			Point0 p = gP.g();
 			double y0 = p.getY() - gSlope.gDouble() * p.getX();
 			return new FunctionPolynom(y0, gSlope.gDouble());
 		};

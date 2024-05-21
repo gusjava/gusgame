@@ -67,26 +67,26 @@ public class GraphLine1 extends GraphLine0 {
 		return polynom;
 	}
 	
-	public void setPolynom(Point0 p) {
+	private void setPolynom(Point0 p) {
 		polynom = new FunctionPolynom(0, p.slope());
 	}
 	
-	public void setPolynom(Point0 p1, Point0 p2) {
+	private void setPolynom(Point0 p1, Point0 p2) {
 		double slope = p1.pSub(p2).slope();
 		double y0 = p1.getY() - slope * p1.getX();
 		polynom = new FunctionPolynom(y0, slope);
 	}
 	
-	public void setPolynom(Point0 p, double slope) {
+	private void setPolynom(Point0 p, double slope) {
 		double y0 = p.getY() - slope * p.getX();
 		polynom = new FunctionPolynom(y0, slope);
 	}
 	
-	public void setPolynom(double y0, double slope) {
+	private void setPolynom(double y0, double slope) {
 		polynom = new FunctionPolynom(y0, slope);
 	}
 	
-	public void setPolynom(double slope) {
+	private void setPolynom(double slope) {
 		polynom = new FunctionPolynom(0, slope);
 	}
 }
