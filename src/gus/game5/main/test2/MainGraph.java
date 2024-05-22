@@ -5,11 +5,11 @@ import java.awt.Color;
 import gus.game5.core.angle.Angle;
 import gus.game5.core.dyn.DynGAngle;
 import gus.game5.core.dyn.DynGDouble;
+import gus.game5.core.function.Function;
 import gus.game5.core.function.FunctionSin;
 import gus.game5.core.function.FunctionUScale;
-import gus.game5.core.game.Game1;
+import gus.game5.core.game.Game2;
 import gus.game5.core.game.Settings;
-import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point0.Point0Dda;
 import gus.game5.core.point.point0.Point0Dxh;
 import gus.game5.core.point.point2.Point2;
@@ -25,7 +25,7 @@ import gus.game5.core.shape.graph.GraphTriangle1;
 import gus.game5.core.shape.graph.GraphYLine1;
 import gus.game5.core.shape.graph.ShapeGraph;
 
-public class MainGraph extends Game1 {
+public class MainGraph extends Game2 {
 	
 	public static final int GRAPH_WIDTH = 700;
 	public static final int GRAPH_HEIGHT = 700;
@@ -41,25 +41,15 @@ public class MainGraph extends Game1 {
 		s.setBackground(Color.WHITE);
 		s.setSize(GRAPH_WIDTH+20, GRAPH_HEIGHT+20);
 	}
-	
-	private ShapeGraph graph;
-
-	protected void turn() {
-		Keyboard k = keyboard();
-		if(k.F1())	restart();
-		if(k.F2())	exit();	
-		
-		goNext();
-	}
 
 	protected void initialize1() {
-		graph = new ShapeGraph(gameCenter(), GRAPH_WIDTH, GRAPH_HEIGHT);
+		ShapeGraph graph = newShapeGraph(gameCenter(), GRAPH_WIDTH, GRAPH_HEIGHT);
 		graph.setStep(30);
-		newShape(graph);
 		
 		// initialisation des éléments dynamiques
 		
 		DynGDouble x1 = newDynGDouble(-3, 0.01);
+		DynGDouble x2 = newDynGDouble(-5, 0.005);
 		DynGAngle a1 = newDynGAngle(Angle.ANGLE120, 0.01);
 		Point2 pp1 = newDynPoint2(2, 2, 0, 0.01);
 		
@@ -81,13 +71,18 @@ public class MainGraph extends Game1 {
 		
 		// graph functions
 		
+		Function sin = new FunctionUScale(new FunctionSin(), 4, Math.PI/2, 1.5, 5);
+		
 		GraphPolynom1 y1 = new GraphPolynom1(Color.GRAY, -2, 0, 0.5);
-		GraphFunction1 y2 = new GraphFunction1(Color.GRAY, new FunctionUScale(new FunctionSin(), 4, Math.PI/2, 1.5, 5));
+		GraphFunction1 y2 = new GraphFunction1(Color.GRAY, sin);
 		GraphTangent2 t1 = new GraphTangent2(Color.GRAY, y1.getFunction(), x1);
+		
 		GraphPoint1 p4 = new GraphPoint1(Color.RED, new Point0Dxh(y1.getFunction(), x1));
+		GraphPoint1 p5 = new GraphPoint1(Color.BLACK, new Point0Dxh(sin, x2));
 		
 		p1.setColorProjXY(Color.LIGHT_GRAY);
 		p4.setColorProjXY(Color.LIGHT_GRAY);
+		p5.setColorProjXY(Color.LIGHT_GRAY);
 		
 		// graph forms
 		
@@ -98,6 +93,8 @@ public class MainGraph extends Game1 {
 		graph.add("P1", p1);
 		graph.add("P2", p2);
 		graph.add("P3", p3);
+		graph.add("P4", p4);
+		graph.add("P5", p5);
 		
 		graph.add("L1", l1);
 		graph.add("L2", l2);
@@ -107,7 +104,6 @@ public class MainGraph extends Game1 {
 		graph.add("Y1", y1);
 		graph.add("Y2", y2);
 		graph.add("T1", t1);
-		graph.add("P4", p4);
 		
 		graph.add("C1", c1);
 		graph.add("C2", c2);

@@ -33,6 +33,7 @@ import gus.game5.core.shape.ShapeRound;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
 import gus.game5.core.shape.board.ShapeCellBuilder;
+import gus.game5.core.shape.graph.ShapeGraph;
 import gus.game5.core.util.UtilImage;
 import gus.game5.core.util.UtilResource;
 
@@ -312,6 +313,16 @@ public abstract class Game1 extends Game {
 		DrawingText draw = new DrawingTextC(origin, text);
 		addDraw(draw);
 		return draw;
+	}
+	
+	/*
+	 * NEW SHAPE GRAPH
+	 */
+	
+	protected ShapeGraph newShapeGraph(Point0 anchor, double width, double height) {
+		ShapeGraph graph = new ShapeGraph(anchor, width, height);
+		newShape(graph);
+		return graph;
 	}
 	
 	/*
