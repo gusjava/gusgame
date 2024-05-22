@@ -3,6 +3,7 @@ package gus.game5.core.shape.graph;
 import java.awt.Color;
 
 import gus.game5.core.point.point0.Point0;
+import gus.game5.core.point.point0.Point0Sum;
 
 public abstract class GraphTriangle0 extends GraphObject {
 	
@@ -49,4 +50,20 @@ public abstract class GraphTriangle0 extends GraphObject {
 	public abstract Point0 getPoint1();
 	public abstract Point0 getPoint2();
 	public abstract Point0 getPoint3();
+	
+	public Point0 getPoint12() {
+		return new Point0Sum(getPoint1(), getPoint2());
+	}
+	
+	public Point0 getPoint13() {
+		return new Point0Sum(getPoint1(), getPoint3());
+	}
+	
+	public Point0 getPoint23() {
+		return new Point0Sum(getPoint2(), getPoint3());
+	}
+	
+	public Point0 getPoint123() {
+		return new Point0Sum(getPoint1(), getPoint2(), getPoint3());
+	}
 }

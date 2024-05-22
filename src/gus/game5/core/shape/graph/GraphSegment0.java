@@ -3,6 +3,7 @@ package gus.game5.core.shape.graph;
 import java.awt.Color;
 
 import gus.game5.core.point.point0.Point0;
+import gus.game5.core.point.point0.Point0Sum;
 
 public abstract class GraphSegment0 extends GraphObject {
 	
@@ -42,4 +43,8 @@ public abstract class GraphSegment0 extends GraphObject {
 	
 	public abstract Point0 getPoint1();
 	public abstract Point0 getPoint2();
+	
+	public Point0 getPoint12() {
+		return new Point0Sum(getPoint1(), getPoint2());
+	}
 }

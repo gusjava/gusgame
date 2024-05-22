@@ -1,7 +1,6 @@
 package gus.game5.core.function;
 
 public class FunctionUSum implements Function {
-	
 
 	private Function[] functions;
 	private int number;
