@@ -222,6 +222,11 @@ public abstract class Game {
 	public Point2 p2(double x, double y) {
 		return new Point2(x, y);
 	}
+	public Point2 p2(double x, double y, double dx, double dy) {
+		Point2 p2 = new Point2(x, y);
+		p2.setDerived(dx, dy);
+		return p2;
+	}
 	public Point2 p2(double dist, Angle angle) {
 		return new Point2(dist, angle);
 	}

@@ -4,11 +4,12 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import gus.game5.core.features.g.G;
 import gus.game5.core.point.point0.Point0;
 import gus.game5.core.util.UtilDisplay;
 import gus.game5.core.util.UtilString;
 
-public abstract class GraphPoint0 extends GraphObject {
+public abstract class GraphPoint0 extends GraphObject implements G<Point0> {
 	
 	
 	public GraphPoint0() {
@@ -122,4 +123,8 @@ public abstract class GraphPoint0 extends GraphObject {
 	 */
 	
 	public abstract Point0 getPoint();
+	
+	public Point0 g() {
+		return getPoint();
+	}
 }

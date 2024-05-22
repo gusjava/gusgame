@@ -57,29 +57,29 @@ public class MainGraph extends Game1 {
 		graph.setStep(30);
 		newShape(graph);
 		
-		DynGDouble x1 = new DynGDouble(-3, 0.01);
-		addDyn(x1);
+		// initialisation des éléments dynamiques
 		
-		DynGAngle a1 = new DynGAngle(Angle.ANGLE120, 0.01);
-		addDyn(a1);
+		DynGDouble x1 = newDynGDouble(-3, 0.01);
+		DynGAngle a1 = newDynGAngle(Angle.ANGLE120, 0.01);
+		Point2 pp1 = newDynPoint2(2, 2, 0, 0.01);
 		
-		Point2 pp1 = p2(2,2);
-		pp1.setDerived(0, 0.01);
-		addDyn(pp1);
-		
-		Point0Dda pp3 = new Point0Dda(2.5, a1);
+		// graph points
 		
 		GraphPoint1 p1 = new GraphPoint1(Color.RED, pp1);
 		GraphPoint1 p2 = new GraphPoint1(4,3);
-		GraphPoint1 p3 = new GraphPoint1(Color.GREEN.darker(), pp3);
+		GraphPoint1 p3 = new GraphPoint1(Color.GREEN.darker(), new Point0Dda(2.5, a1));
 		
 		p3.setDisplayMode(GraphPoint1.DISPLAY_MODE_ARROW);
 		
-		GraphLine2 l1 = new GraphLine2(Color.ORANGE, p1::getPoint, p2::getPoint);
+		// graph lines
+		
+		GraphLine2 l1 = new GraphLine2(Color.ORANGE, p1, p2);
 		
 		GraphLine1 l2 = new GraphLine1(Color.BLUE, 1);
 		GraphLine1 l3 = new GraphLine1(Color.BLUE, 1.5, 1);
 		GraphYLine1 l4 = new GraphYLine1(Color.BLUE, -2.5);
+		
+		// graph functions
 		
 		GraphPolynom1 y1 = new GraphPolynom1(Color.GRAY, -2, 0, 0.5);
 		GraphFunction1 y2 = new GraphFunction1(Color.GRAY, new FunctionUScale(new FunctionSin(), 4, Math.PI/2, 1.5, 5));
@@ -88,6 +88,8 @@ public class MainGraph extends Game1 {
 		
 		p1.setColorProjXY(Color.LIGHT_GRAY);
 		p4.setColorProjXY(Color.LIGHT_GRAY);
+		
+		// graph forms
 		
 		GraphCircle1 c1 = new GraphCircle1(Color.RED.darker(), p1(-4,2), 1.2);
 		GraphTriangle1 c2 = new GraphTriangle1(Color.RED.darker(), p1(-3,-5), p1(-2,-2.5), p1(1,-4));

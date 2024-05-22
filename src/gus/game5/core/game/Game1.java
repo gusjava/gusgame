@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import gus.game5.core.angle.Angle;
 import gus.game5.core.clean.Clean;
 import gus.game5.core.clean.CleanList;
 import gus.game5.core.draw.Draw;
@@ -13,6 +14,10 @@ import gus.game5.core.draw.DrawList;
 import gus.game5.core.drawing.text.DrawingText;
 import gus.game5.core.drawing.text.DrawingTextC;
 import gus.game5.core.dyn.Dyn;
+import gus.game5.core.dyn.DynGAngle;
+import gus.game5.core.dyn.DynGDouble;
+import gus.game5.core.dyn.DynGInt;
+import gus.game5.core.dyn.DynGLong;
 import gus.game5.core.dyn.DynList;
 import gus.game5.core.features.g.G;
 import gus.game5.core.map.GameMap;
@@ -307,6 +312,110 @@ public abstract class Game1 extends Game {
 		DrawingText draw = new DrawingTextC(origin, text);
 		addDraw(draw);
 		return draw;
+	}
+	
+	/*
+	 * NEW DYN GANGLE
+	 */
+	
+	protected DynGAngle newDynGAngle(Angle angle, DynGDouble derived) {
+		DynGAngle dyn = new DynGAngle(angle, derived);
+		addDyn(dyn);
+		return dyn;
+	}
+	
+	protected DynGAngle newDynGAngle(Angle angle, double derived) {
+		DynGAngle dyn = new DynGAngle(angle, derived);
+		addDyn(dyn);
+		return dyn;
+	}
+	
+	protected DynGAngle newDynGAngle(Angle angle) {
+		DynGAngle dyn = new DynGAngle(angle);
+		addDyn(dyn);
+		return dyn;
+	}
+	
+	/*
+	 * NEW DYN GDOUBLE
+	 */
+	
+	protected DynGDouble newDynGDouble(double val, DynGDouble derived) {
+		DynGDouble dyn = new DynGDouble(val, derived);
+		addDyn(dyn);
+		return dyn;
+	}
+	
+	protected DynGDouble newDynGDouble(double val, double derived) {
+		DynGDouble dyn = new DynGDouble(val, derived);
+		addDyn(dyn);
+		return dyn;
+	}
+	
+	protected DynGDouble newDynGDouble(double val) {
+		DynGDouble dyn = new DynGDouble(val);
+		addDyn(dyn);
+		return dyn;
+	}
+	
+	/*
+	 * NEW DYN GINT
+	 */
+	
+	protected DynGInt newDynGInt(int val, DynGInt derived) {
+		DynGInt dyn = new DynGInt(val, derived);
+		addDyn(dyn);
+		return dyn;
+	}
+	
+	protected DynGInt newDynGInt(int val, int derived) {
+		DynGInt dyn = new DynGInt(val, derived);
+		addDyn(dyn);
+		return dyn;
+	}
+	
+	protected DynGInt newDynGInt(int val) {
+		DynGInt dyn = new DynGInt(val);
+		addDyn(dyn);
+		return dyn;
+	}
+	
+	/*
+	 * NEW DYN GLONG
+	 */
+	
+	protected DynGLong newDynGLong(long val, DynGLong derived) {
+		DynGLong dyn = new DynGLong(val, derived);
+		addDyn(dyn);
+		return dyn;
+	}
+	
+	protected DynGLong newDynGLong(long val, long derived) {
+		DynGLong dyn = new DynGLong(val, derived);
+		addDyn(dyn);
+		return dyn;
+	}
+	
+	protected DynGLong newDynGLong(long val) {
+		DynGLong dyn = new DynGLong(val);
+		addDyn(dyn);
+		return dyn;
+	}
+	
+	/*
+	 * NEW DYN POINT2
+	 */
+	
+	protected Point2 newDynPoint2(double x, double y) {
+		Point2 dyn = p2(x, y);
+		addDyn(dyn);
+		return dyn;
+	}
+	
+	protected Point2 newDynPoint2(double x, double y, double dx, double dy) {
+		Point2 dyn = p2(x, y, dx, dy);
+		addDyn(dyn);
+		return dyn;
 	}
 	
 	/*
