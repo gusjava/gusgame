@@ -64,6 +64,27 @@ public class UtilArray {
 	}
 	
 	/*
+	 * SET
+	 */
+	
+	public static boolean set(int[][] data, int[] pos, int value) {
+		return set(data, pos[0], pos[1], value);
+	}
+	
+	public static boolean set(int[][] data, int i, int j, int value) {
+		int x = data.length;
+		if(x==0) return false;
+		int y = data[0].length;
+		if(y==0) return false;
+		
+		if(i<0 || i>=x) return false;
+		if(j<0 || j>=y) return false;
+		
+		data[i][j] = value;
+		return true;
+	}
+	
+	/*
 	 * NEIGHBOR VALUE
 	 */
 	

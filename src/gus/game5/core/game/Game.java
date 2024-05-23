@@ -257,7 +257,6 @@ public abstract class Game {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(exitOnClose ? JFrame.EXIT_ON_CLOSE : JFrame.HIDE_ON_CLOSE);
 		frame.setContentPane(buildContentPane());
-		frame.setResizable(false);
 		frame.setTitle(settings.getTitle());
 		if(icon!=null) frame.setIconImage(icon.getImage());
 		
@@ -267,6 +266,7 @@ public abstract class Game {
 		
 		frame.setVisible(true);
 		frame.pack();
+		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		
 		return frame;
