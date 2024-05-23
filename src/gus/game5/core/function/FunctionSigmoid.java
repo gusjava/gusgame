@@ -1,16 +1,17 @@
 package gus.game5.core.function;
 
-public class FunctionAbs implements Function {
+public class FunctionSigmoid implements Function {
 	
-	public FunctionAbs() {
+	public FunctionSigmoid() {
 	}
 
 	public double h(double value) {
-		return Math.abs(value);
+		return 1 / (1 + Math.exp(-value));
 	}
 
 	public Function getDerived() {
-		return new FunctionSign(); //TODO revoir... non dérivable en 0 ?
+		//TODO
+		return null;
 	}
 
 	public Boolean isEven() {
@@ -25,7 +26,11 @@ public class FunctionAbs implements Function {
 		return true;
 	}
 
+	/*
+	 * EXPRESSION
+	 */
+	
 	public String getExpression(String var) {
-		return "abs("+var+")";
+		return "1 / (1 + e(-"+var+"))";
 	}
 }

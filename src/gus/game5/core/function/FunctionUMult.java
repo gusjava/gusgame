@@ -35,4 +35,8 @@ public class FunctionUMult implements Function {
 	public boolean isDefined(double value) {
 		return f1.isDefined(value) && f2.isDefined(value);
 	}
+
+	public String getExpression(String var) {
+		return "("+f1.getExpression(var)+")*("+f2.getExpression(var)+")";
+	}
 }

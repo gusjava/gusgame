@@ -1,12 +1,13 @@
 package gus.game5.core.point.point0;
 
 import gus.game5.core.angle.Angle;
+import gus.game5.core.line.HasSlope;
 import gus.game5.core.point.point1.Point1;
 import gus.game5.core.point.point2.Point2;
 import gus.game5.core.util.UtilDisplay;
 import gus.game5.core.util.UtilDistance;
 
-public abstract class Point0 {
+public abstract class Point0 implements HasSlope {
 	
 	public abstract double getX();
 	public abstract double getY();
@@ -33,10 +34,16 @@ public abstract class Point0 {
 	 * SLOPE
 	 */
 	
-	public Double slope() {
+	public Double getSlope() {
 		double x = getX();
 		if(x==0) return null;
 		return getY()/x;
+	}
+	
+	public Double getSlopeInv() {
+		double y = getY();
+		if(y==0) return null;
+		return -getX()/y;
 	}
 	
 	/*
@@ -230,6 +237,14 @@ public abstract class Point0 {
 		return pSub(origin).pInv().pAdd(origin);
 	}
 	
+	public Point1 pInvX() {
+		return new Point1(-getX(), getY());
+	}
+	
+	public Point1 pInvY() {
+		return new Point1(getX(), -getY());
+	}
+	
 	/*
 	 * P DIST SET
 	 */
@@ -277,6 +292,14 @@ public abstract class Point0 {
 	 * P ROTATE
 	 */
 	
+	public Point1 pRotate90() {
+		return pRotate(Angle.ANGLE90);
+	}
+	
+	public Point1 pRotate270() {
+		return pRotate(Angle.ANGLE270);
+	}
+	
 	public Point1 pRotate(Angle angle) {
 		if(angle==null) return p1();
 		
@@ -286,6 +309,18 @@ public abstract class Point0 {
 		double x1 = angle.rotationX(x,y);
 		double y1 = angle.rotationY(x,y);
 		return new Point1(x1, y1);
+	}
+	
+	/*
+	 * P ROTATE (ORIGIN)
+	 */
+	
+	public Point1 pRotate90(Point0 origin) {
+		return pRotate(origin, Angle.ANGLE90);
+	}
+	
+	public Point1 pRotate270(Point0 origin) {
+		return pRotate(origin, Angle.ANGLE270);
 	}
 	
 	public Point1 pRotate(Point0 origin, Angle angle) {

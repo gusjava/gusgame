@@ -13,6 +13,24 @@ public abstract class GraphCircle0 extends GraphObject {
 	public GraphCircle0() {
 		super();
 	}
+	
+	/*
+	 * DISPLAY CENTER
+	 */
+	
+	protected boolean displayCenter = false;
+	
+	public void setDisplayCenter(boolean displayCenter) {
+		this.displayCenter = displayCenter;
+	}
+	
+	public boolean isDisplayCenter() {
+		return displayCenter;
+	}
+
+	/*
+	 * DRAW OBJECT
+	 */
 
 	protected void drawObject(ShapeGraph graph) {
 		Color c = getColor();
@@ -25,18 +43,19 @@ public abstract class GraphCircle0 extends GraphObject {
 		
 		double xMin = graph.getXMin();
 		double xMax = graph.getXMax();
-		double xStep = graph.getXStep();
 		
 		double yMin = graph.getYMin();
 		double yMax = graph.getYMax();
-		double yStep = graph.getYStep();
 		
 		
 		if(px>=xMin+r && px<=xMax-r && py>=yMin+r && py<=yMax-r) {
-			Point0 p_ = graph.pMult(p);
-			double width = r*2*xStep;
-			double height = r*2*yStep;
-			graph.drawOvalC(c, p_, width, height);
+			double width = r*2;
+			double height = r*2;
+			graph.drawOvalC(c, p, width, height);
+
+			if(displayCenter) {
+				graph.drawCross(c, p);
+			}
 		}
 	}
 	

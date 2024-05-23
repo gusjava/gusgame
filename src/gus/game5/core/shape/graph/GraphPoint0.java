@@ -4,12 +4,13 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import gus.game5.core.features.g.G;
+import gus.game5.core.features.g.GPoint0;
+import gus.game5.core.line.HasSlope;
 import gus.game5.core.point.point0.Point0;
 import gus.game5.core.util.UtilDisplay;
 import gus.game5.core.util.UtilString;
 
-public abstract class GraphPoint0 extends GraphObject implements G<Point0> {
+public abstract class GraphPoint0 extends GraphObject implements GPoint0, HasSlope {
 	
 	
 	public GraphPoint0() {
@@ -23,9 +24,10 @@ public abstract class GraphPoint0 extends GraphObject implements G<Point0> {
 	/*
 	 * DISPLAY MODE
 	 */
-	
-	public static final int DISPLAY_MODE_CROSS = 0;
-	public static final int DISPLAY_MODE_ARROW = 1;
+
+	public static final int DISPLAY_MODE_NO = 0;
+	public static final int DISPLAY_MODE_CROSS = 1;
+	public static final int DISPLAY_MODE_ARROW = 2;
 	
 	protected int displayMode = DISPLAY_MODE_CROSS;
 	
@@ -71,38 +73,39 @@ public abstract class GraphPoint0 extends GraphObject implements G<Point0> {
 
 	protected void drawObject(ShapeGraph graph) {
 		Point0 p = getPoint();
+		
+		if(p==null) return;
 		if(!graph.includes(p)) return;
 		
 		Color c = getColor();
 		if(c==null) c = graph.getColor();
-		Point0 p_ = graph.pMult(p);
 
 		
 		if(colorProjX!=null) {
-			graph.drawLine(colorProjX, p_, p_.pSetY(0));
+			graph.drawLine(colorProjX, p, p.pSetY(0));
 		}
 		if(colorProjY!=null) {
-			graph.drawLine(colorProjY, p_, p_.pSetX(0));
+			graph.drawLine(colorProjY, p, p.pSetX(0));
 		}
 		
 		if(displayMode==DISPLAY_MODE_CROSS) {
-			graph.drawLine(c, p_.pAdd(5, 0), p_.pAdd(-5, 0));
-			graph.drawLine(c, p_.pAdd(0, 5), p_.pAdd(0, -5));
+			graph.drawCross(c, p);
 		}
 		else if(displayMode==DISPLAY_MODE_ARROW) {
-			graph.drawArrow(c, p_, 5);
+			graph.drawArrow(c, p);
 		}
 		
 		List<String> desc = buildDescription();
 		if(!desc.isEmpty()) {
-			graph.drawString(c, p_.pAdd(10,5), UtilString.join(desc, " "));
+			String s = UtilString.join(desc, " ");
+			graph.drawString(c, p, s, 10, 5);
 		}
 	}
 	
 	private List<String> buildDescription() {
 		List<String> infos = new ArrayList<>();
-		if(displayName()) infos.add(getName());
-		if(displayInfo()) infos.add("("+UtilDisplay.dec2s(getX())+","+UtilDisplay.dec2s(getY())+")");
+		if(isDisplayName()) infos.add(getName());
+		if(isDisplayInfo()) infos.add("("+UtilDisplay.dec2s(getX())+","+UtilDisplay.dec2s(getY())+")");
 		return infos;
 	}
 	
@@ -126,5 +129,17 @@ public abstract class GraphPoint0 extends GraphObject implements G<Point0> {
 	
 	public Point0 g() {
 		return getPoint();
+	}
+	
+	/*
+	 * SLOPE
+	 */
+	
+	public Double getSlope() {
+		return getPoint().getSlope();
+	}
+	
+	public Double getSlopeInv() {
+		return getPoint().getSlopeInv();
 	}
 }

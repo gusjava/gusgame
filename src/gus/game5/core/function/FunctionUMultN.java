@@ -22,6 +22,10 @@ public class FunctionUMultN implements Function {
 		return function.isEven();
 	}
 
+	public String getExpression(String var) {
+		return k+"*("+function.getExpression(var)+")";
+	}
+
 	public Boolean isOdd() {
 		return function.isOdd();
 	}

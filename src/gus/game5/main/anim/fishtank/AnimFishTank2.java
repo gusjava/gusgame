@@ -59,7 +59,6 @@ public class AnimFishTank2 extends Game1 {
 	private ShapeList<Rock> rocks;
 
 	protected void initialize1() {
-		Angle.CACHED = true;
 		fishes = newShapeList();
 		rocks = newShapeList();
 		

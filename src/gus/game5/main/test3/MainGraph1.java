@@ -1,4 +1,4 @@
-package gus.game5.main.test2;
+package gus.game5.main.test3;
 
 import java.awt.Color;
 
@@ -25,13 +25,13 @@ import gus.game5.core.shape.graph.GraphTriangle1;
 import gus.game5.core.shape.graph.GraphYLine1;
 import gus.game5.core.shape.graph.ShapeGraph;
 
-public class MainGraph extends Game2 {
+public class MainGraph1 extends Game2 {
 	
 	public static final int GRAPH_WIDTH = 700;
 	public static final int GRAPH_HEIGHT = 700;
 
 	public static void main(String[] args) {
-		MainGraph main = new MainGraph();
+		MainGraph1 main = new MainGraph1();
 		main.displayInWindows();
 		main.start();
 	}
@@ -88,7 +88,11 @@ public class MainGraph extends Game2 {
 		
 		GraphCircle1 c1 = new GraphCircle1(Color.RED.darker(), p1(-4,2), 1.2);
 		GraphTriangle1 c2 = new GraphTriangle1(Color.RED.darker(), p1(-3,-5), p1(-2,-2.5), p1(1,-4));
-		GraphSegment1 c3 = new GraphSegment1(Color.RED.darker(), p1(-6,-1), p1(-4,1.5));
+		GraphSegment1 c3 = new GraphSegment1(Color.RED.darker(), p1(-8,-1), p1(-4, 1));
+
+		c1.setDisplayCenter(true);
+		c2.setDisplayCenter(true);
+		c3.setDisplayCenter(true);
 		
 		graph.add("P1", p1);
 		graph.add("P2", p2);

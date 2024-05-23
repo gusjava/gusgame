@@ -37,4 +37,9 @@ public class FunctionUScale implements Function {
 	public boolean isDefined(double value) {
 		return function.isDefined(value);
 	}
+
+	public String getExpression(String var) {
+		String var1 = xFactor+"*"+var+"+"+xOffset;
+		return fFactor+"*"+function.getExpression(var1)+"+"+fOffset;
+	}
 }

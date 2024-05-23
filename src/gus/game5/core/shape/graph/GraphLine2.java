@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import gus.game5.core.features.g.G;
 import gus.game5.core.features.g.GDouble;
+import gus.game5.core.features.g.GPoint0;
 import gus.game5.core.function.FunctionPolynom;
 import gus.game5.core.point.point0.Point0;
 
@@ -11,17 +12,17 @@ public class GraphLine2 extends GraphLine0 {
 	
 	private G<FunctionPolynom> gPolynom;
 	
-	public GraphLine2(Color color, G<Point0> gP) {
+	public GraphLine2(Color color, GPoint0 gP) {
 		super(color);
 		setGPolynom(gP);
 	}
 	
-	public GraphLine2(Color color, G<Point0> gP1, G<Point0> gP2) {
+	public GraphLine2(Color color, GPoint0 gP1, GPoint0 gP2) {
 		super(color);
 		setGPolynom(gP1, gP2);
 	}
 	
-	public GraphLine2(Color color, G<Point0> gP, GDouble gSlope) {
+	public GraphLine2(Color color, GPoint0 gP, GDouble gSlope) {
 		super(color);
 		setGPolynom(gP, gSlope);
 	}
@@ -36,17 +37,17 @@ public class GraphLine2 extends GraphLine0 {
 		setPolynom(gSlope);
 	}
 	
-	public GraphLine2(G<Point0> gP) {
+	public GraphLine2(GPoint0 gP) {
 		super();
 		setGPolynom(gP);
 	}
 	
-	public GraphLine2(G<Point0> gP1, G<Point0> gP2) {
+	public GraphLine2(GPoint0 gP1, GPoint0 gP2) {
 		super();
 		setGPolynom(gP1, gP2);
 	}
 	
-	public GraphLine2(G<Point0> gP, GDouble gSlope) {
+	public GraphLine2(GPoint0 gP, GDouble gSlope) {
 		super();
 		setGPolynom(gP, gSlope);
 	}
@@ -69,21 +70,21 @@ public class GraphLine2 extends GraphLine0 {
 		return gPolynom.g();
 	}
 	
-	public void setGPolynom(G<Point0> gP) {
-		gPolynom = ()->new FunctionPolynom(0, gP.g().slope());
+	public void setGPolynom(GPoint0 gP) {
+		gPolynom = ()->new FunctionPolynom(0, gP.g().getSlope());
 	}
 	
-	public void setGPolynom(G<Point0> gP1, G<Point0> gP2) {
+	public void setGPolynom(GPoint0 gP1, GPoint0 gP2) {
 		gPolynom = ()->{
 			Point0 p1 = gP1.g();
 			Point0 p2 = gP2.g();
-			double slope = p1.pSub(p2).slope();
+			double slope = p1.pSub(p2).getSlope();
 			double y0 = p1.getY() - slope * p1.getX();
 			return new FunctionPolynom(y0, slope);
 		};
 	}
 	
-	public void setGPolynom(G<Point0> gP, GDouble gSlope) {
+	public void setGPolynom(GPoint0 gP, GDouble gSlope) {
 		gPolynom = ()->{
 			Point0 p = gP.g();
 			double y0 = p.getY() - gSlope.gDouble() * p.getX();

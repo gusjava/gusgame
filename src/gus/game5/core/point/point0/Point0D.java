@@ -1,12 +1,12 @@
 package gus.game5.core.point.point0;
 
-import gus.game5.core.features.g.G;
+import gus.game5.core.features.g.GPoint0;
 
 public class Point0D extends Point0 {
 	
-	private G<Point0> gPoint;
+	private GPoint0 gPoint;
 	
-	public Point0D(G<Point0> gPoint) {
+	public Point0D(GPoint0 gPoint) {
 		this.gPoint = gPoint;
 	}
 

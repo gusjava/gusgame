@@ -56,4 +56,17 @@ public class FunctionUSum implements Function {
 		}
 		return true;
 	}
+
+	/*
+	 * EXPRESSION
+	 */
+	
+	public String getExpression(String var) {
+		StringBuffer b = new StringBuffer();
+		for(int i=0;i<number;i++) {
+			if(b.length()>0) b.append("+");
+			b.append(functions[i].getExpression(var));
+		}
+		return b.toString();
+	}
 }

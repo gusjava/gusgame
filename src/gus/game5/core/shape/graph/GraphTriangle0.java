@@ -3,7 +3,6 @@ package gus.game5.core.shape.graph;
 import java.awt.Color;
 
 import gus.game5.core.point.point0.Point0;
-import gus.game5.core.point.point0.Point0Sum;
 
 public abstract class GraphTriangle0 extends GraphObject {
 	
@@ -14,6 +13,24 @@ public abstract class GraphTriangle0 extends GraphObject {
 	public GraphTriangle0() {
 		super();
 	}
+	
+	/*
+	 * DISPLAY CENTER
+	 */
+	
+	protected boolean displayCenter = false;
+	
+	public void setDisplayCenter(boolean displayCenter) {
+		this.displayCenter = displayCenter;
+	}
+	
+	public boolean isDisplayCenter() {
+		return displayCenter;
+	}
+
+	/*
+	 * DRAW OBJECT
+	 */
 
 	protected void drawObject(ShapeGraph graph) {
 		Color c = getColor();
@@ -33,13 +50,13 @@ public abstract class GraphTriangle0 extends GraphObject {
 		boolean p3Inside = p3.xBetween(xMin, xMax) && p3.yBetween(yMin, yMax);
 		
 		if(p1Inside && p2Inside && p3Inside) {
-			Point0 p1_ = graph.pMult(p1);
-			Point0 p2_ = graph.pMult(p2);
-			Point0 p3_ = graph.pMult(p3);
-			
-			graph.drawLine(c, p1_, p2_);
-			graph.drawLine(c, p2_, p3_);
-			graph.drawLine(c, p3_, p1_);
+			graph.drawLine(c, p1, p2);
+			graph.drawLine(c, p2, p3);
+			graph.drawLine(c, p3, p1);
+
+			if(displayCenter) {
+				graph.drawCross(c, getPoint123());
+			}
 		}
 	}
 	
@@ -52,18 +69,18 @@ public abstract class GraphTriangle0 extends GraphObject {
 	public abstract Point0 getPoint3();
 	
 	public Point0 getPoint12() {
-		return new Point0Sum(getPoint1(), getPoint2());
+		return avg(getPoint1(), getPoint2());
 	}
 	
 	public Point0 getPoint13() {
-		return new Point0Sum(getPoint1(), getPoint3());
+		return avg(getPoint1(), getPoint3());
 	}
 	
 	public Point0 getPoint23() {
-		return new Point0Sum(getPoint2(), getPoint3());
+		return avg(getPoint2(), getPoint3());
 	}
 	
 	public Point0 getPoint123() {
-		return new Point0Sum(getPoint1(), getPoint2(), getPoint3());
+		return avg(getPoint1(), getPoint2(), getPoint3());
 	}
 }

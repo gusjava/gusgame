@@ -22,6 +22,10 @@ public class FunctionUDivide implements Function {
 		return null;
 	}
 
+	public String getExpression(String var) {
+		return "("+f1.getExpression(var)+")/("+f2.getExpression(var)+")";
+	}
+
 	public Boolean isOdd() {
 		return null;
 	}

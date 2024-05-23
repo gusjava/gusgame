@@ -1,6 +1,7 @@
 package gus.game5.core.util;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class UtilPolynom {
@@ -83,5 +84,35 @@ public class UtilPolynom {
 		}
 		
 		return null;
+	}
+	
+	/*
+	 * SUM POLYNOMS
+	 */
+	
+	public static double[] sum(List<double[]> coefList) {
+		int nb = coefList.size();
+		int max = UtilList.collectMaxInt(coefList, a->a.length);
+		double[] coefSum = new double[max];
+		for(int i=0;i<max;i++) {
+			coefSum[i] = 0;
+			for(int j=0;j<nb;j++) {
+				double[] coef = coefList.get(i);
+				if(coef.length>i) coefSum[i] += coef[i]; 
+			}
+		}
+		return coefSum;
+	}
+	
+	/*
+	 * MULTIPLY BY FACTOR
+	 */
+	
+	public static double[] multiply(double[] coef, double factor) {
+		double[] newCoef = new double[coef.length];
+		for(int i=0;i<coef.length;i++) {
+			newCoef[i] = coef[i] * factor;
+		}
+		return newCoef;
 	}
 }

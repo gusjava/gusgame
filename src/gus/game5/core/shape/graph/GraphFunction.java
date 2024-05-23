@@ -3,7 +3,6 @@ package gus.game5.core.shape.graph;
 import java.awt.Color;
 
 import gus.game5.core.function.Function;
-import gus.game5.core.point.point0.Point0;
 
 public abstract class GraphFunction extends GraphObject {
 	
@@ -43,9 +42,7 @@ public abstract class GraphFunction extends GraphObject {
 			double y = func.h(x);
 			
 			if(y>=yMin && y<=yMax && y0>=yMin && y0<=yMax) {
-				Point0 p0 = graph.pMult(x0, y0);
-				Point0 p = graph.pMult(x, y);
-				graph.drawLine(c, p0, p);
+				graph.drawLine(c, p(x0,y0), p(x, y));
 			}
 			x0 = x;
 			y0 = y;

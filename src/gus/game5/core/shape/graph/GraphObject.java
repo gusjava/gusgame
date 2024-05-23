@@ -3,6 +3,10 @@ package gus.game5.core.shape.graph;
 import java.awt.Color;
 
 import gus.game5.core.dyn.Dyn;
+import gus.game5.core.point.point0.Point0;
+import gus.game5.core.point.point0.Point0Avg;
+import gus.game5.core.point.point0.Point0Sum;
+import gus.game5.core.point.point1.Point1;
 
 public abstract class GraphObject implements Dyn {
 
@@ -47,16 +51,24 @@ public abstract class GraphObject implements Dyn {
 	 * DISPLAY NAME
 	 */
 	
-	public boolean displayName() {
+	public boolean isDisplayName() {
 		return displayName;
+	}
+	
+	public void setDisplayName(boolean displayName) {
+		this.displayName = displayName;
 	}
 	
 	/*
 	 * DISPLAY INFO
 	 */
 	
-	public boolean displayInfo() {
+	public boolean isDisplayInfo() {
 		return displayInfo;
+	}
+	
+	public void setDisplayInfo(boolean displayInfo) {
+		this.displayInfo = displayInfo;
 	}
 	
 	/*
@@ -72,4 +84,20 @@ public abstract class GraphObject implements Dyn {
 	 */
 	
 	protected abstract void drawObject(ShapeGraph graph);
+	
+	/*
+	 * POINT
+	 */
+	
+	public static Point1 p(double x, double y) {
+		return new Point1(x, y);
+	}
+	
+	public static Point0 avg(Point0... points) {
+		return new Point0Avg(points);
+	}
+	
+	public static Point0 sum(Point0... points) {
+		return new Point0Sum(points);
+	}
 }

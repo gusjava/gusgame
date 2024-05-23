@@ -1,16 +1,17 @@
 package gus.game5.core.function;
 
-public class FunctionSin implements Function {
+public class FunctionInverse implements Function {
 	
-	public FunctionSin() {
+	public FunctionInverse() {
 	}
-
+	
 	public double h(double value) {
-		return Math.sin(value);
+		return 1/value;
 	}
 
 	public Function getDerived() {
-		return new FunctionCos();
+		//TODO
+		return null;
 	}
 
 	public Boolean isEven() {
@@ -20,12 +21,12 @@ public class FunctionSin implements Function {
 	public Boolean isOdd() {
 		return true;
 	}
-	
-	public boolean isDefined(double value) {
-		return true;
-	}
 
 	public String getExpression(String var) {
-		return "sin("+var+")";
+		return "1/"+var;
+	}
+	
+	public boolean isDefined(double value) {
+		return value!=0;
 	}
 }

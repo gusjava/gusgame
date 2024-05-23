@@ -13,6 +13,7 @@ public class FunctionUInverse implements Function {
 	}
 
 	public Function getDerived() {
+		//TODO
 		return null;
 	}
 
@@ -26,5 +27,9 @@ public class FunctionUInverse implements Function {
 	
 	public boolean isDefined(double value) {
 		return function.isDefined(value) && function.h(value)!=0;
+	}
+
+	public String getExpression(String var) {
+		return "1/("+function.getExpression(var)+")";
 	}
 }

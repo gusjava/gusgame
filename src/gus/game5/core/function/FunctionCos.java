@@ -24,4 +24,8 @@ public class FunctionCos implements Function {
 	public boolean isDefined(double value) {
 		return true;
 	}
+
+	public String getExpression(String var) {
+		return "cos("+var+")";
+	}
 }

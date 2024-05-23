@@ -31,4 +31,8 @@ public class FunctionUCombine implements Function {
 	public boolean isDefined(double value) {
 		return f2.isDefined(value) && f1.isDefined(f2.h(value));
 	}
+
+	public String getExpression(String var) {
+		return f1.getExpression(f2.getExpression(var));
+	}
 }

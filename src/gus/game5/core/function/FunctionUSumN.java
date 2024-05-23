@@ -29,4 +29,8 @@ public class FunctionUSumN implements Function {
 	public boolean isDefined(double value) {
 		return function.isDefined(value);
 	}
+
+	public String getExpression(String var) {
+		return "("+function.getExpression(var)+")+"+k;
+	}
 }

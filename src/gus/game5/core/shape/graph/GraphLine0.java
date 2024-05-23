@@ -6,10 +6,11 @@ import java.util.List;
 
 import gus.game5.core.function.Function;
 import gus.game5.core.function.FunctionPolynom;
+import gus.game5.core.line.Line;
 import gus.game5.core.point.point0.Point0;
 import gus.game5.core.point.point1.Point1;
 
-public abstract class GraphLine0 extends GraphFunction {
+public abstract class GraphLine0 extends GraphFunction implements Line {
 	
 	public GraphLine0(Color color) {
 		super(color);
@@ -57,8 +58,8 @@ public abstract class GraphLine0 extends GraphFunction {
 		}
 		
 		if(pp.size()==2) {
-			Point0 p1 = graph.pMult(pp.get(0));
-			Point0 p2 = graph.pMult(pp.get(1));
+			Point0 p1 = pp.get(0);
+			Point0 p2 = pp.get(1);
 			graph.drawLine(c, p1, p2);
 		}
 	}
@@ -76,12 +77,29 @@ public abstract class GraphLine0 extends GraphFunction {
 	 */
 	
 	public abstract FunctionPolynom getPolynom();
+	
+	/*
+	 * SLOPE
+	 */
+	
+	public Double getSlope() {
+		return getPolynom().coefAt(1);
+	}
+	
+	public Double getSlopeInv() {
+		double a1 = getPolynom().coefAt(1);
+		return a1==0 ? null : -1/a1;
+	}
+	
+	/*
+	 * Y0 / VAL0
+	 */
 
-	public double getA0() {
+	public double getY0() {
 		return getPolynom().coefAt(0);
 	}
-
-	public double getA1() {
-		return getPolynom().coefAt(1);
+	
+	public double getVal0() {
+		return getY0();
 	}
 }

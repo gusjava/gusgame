@@ -1,20 +1,19 @@
 package gus.game5.core.point.point2;
 
-import gus.game5.core.features.g.G;
-import gus.game5.core.point.point0.Point0;
+import gus.game5.core.features.g.GPoint0;
 import gus.game5.core.point.point1.Point1;
 
 public class Point2Dp extends Point2 {
 
 	private Point1 point1;
-	private G<Point0> gPoint;
+	private GPoint0 gPoint;
 	
-	public Point2Dp(Point1 point1, G<Point0> gPoint) {
+	public Point2Dp(Point1 point1, GPoint0 gPoint) {
 		this.point1 = point1;
 		this.gPoint = gPoint;
 	}
 	
-	public Point2Dp(double x, double y, G<Point0> gPoint) {
+	public Point2Dp(double x, double y, GPoint0 gPoint) {
 		this(new Point1(x,y), gPoint);
 	}
 	

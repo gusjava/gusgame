@@ -1,27 +1,13 @@
 package gus.game5.core.angle;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import gus.game5.core.point.point1.Point1;
 import gus.game5.core.util.UtilAngle;
-import gus.game5.core.util.UtilDisplay;
 import gus.game5.core.util.UtilRandom;
 
 public class Angle {
 	
-	public static boolean CACHED = false;
-	
-	private static Map<String,Angle> cache = new HashMap<>();
-	
 	public static Angle angleRad(double val) {
-		val = val%PI2;
-		if(CACHED) {
-			String key = UtilDisplay.dec2(val);
-			if(!cache.containsKey(key)) cache.put(key, new Angle(val));
-			return cache.get(key);
-		}
-		return new Angle(val);
+		return new Angle(val%PI2);
 	}
 	
 	public static Angle angleXY(double x, double y) {
@@ -597,6 +583,14 @@ public class Angle {
 	
 	public double y() {
 		return sin();
+	}
+	
+	/*
+	 * TO STRING
+	 */
+	
+	public String toString() {
+		return ""+getValueDeg();
 	}
 	
 }

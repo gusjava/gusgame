@@ -24,4 +24,12 @@ public class FunctionSign implements Function {
 	public boolean isDefined(double value) {
 		return true;
 	}
+
+	/*
+	 * EXPRESSION
+	 */
+	
+	public String getExpression(String var) {
+		return null;
+	}
 }

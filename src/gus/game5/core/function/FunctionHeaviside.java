@@ -1,17 +1,16 @@
 package gus.game5.core.function;
 
-public class FunctionTan implements Function {
+public class FunctionHeaviside implements Function {
 	
-	public FunctionTan() {
+	public FunctionHeaviside() {
 	}
 
 	public double h(double value) {
-		return Math.tan(value);
+		return value>=0 ? 1 : 0;
 	}
 
 	public Function getDerived() {
-		return new FunctionUInverse(
-				new FunctionUMult(new FunctionCos(), new FunctionCos()));
+		return new FunctionConst(0); //TODO revoir... non dérivable en 0 ?
 	}
 
 	public Boolean isEven() {
@@ -19,14 +18,14 @@ public class FunctionTan implements Function {
 	}
 
 	public Boolean isOdd() {
-		return true;
+		return false;
 	}
 	
 	public boolean isDefined(double value) {
-		return ((value*2/Math.PI) + 1) % 2!=0;
+		return true;
 	}
 
 	public String getExpression(String var) {
-		return "tan("+var+")";
+		return null;
 	}
 }
