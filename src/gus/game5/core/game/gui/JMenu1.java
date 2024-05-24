@@ -27,6 +27,6 @@ public class JMenu1 extends JMenu {
 			group.add(item);
 			add(item);
 		}
-		items[index].setSelected(true);
+		if(index>=0) items[index].setSelected(true);
 	}
 }

@@ -91,7 +91,7 @@ public class GameAntivirus extends Game1 {
 	
 	private Cell draggedCell;
 	private List<Cell> draggedPiece;
-	private int draggedPieceValue;
+	private int draggedValue;
 	
 	private int[][] data;
 	private int level;
@@ -102,14 +102,15 @@ public class GameAntivirus extends Game1 {
 	
 	protected void initialize1() {
 		changeLevel(1);
-		board = newShapeBoard(CELL_SIZE, 7, Cell::new);
+		board = newShapeBoard(CELL_SIZE, 8, 7, Cell::new);
 		draggedCell = null;
 		draggedPiece = null;
-		draggedPieceValue = UtilAntivirus.EMPTY;
+		draggedValue = UtilAntivirus.EMPTY;
 		addDraw(new Drag());
 	}
 	
 	private void changeLevel(int level) {
+		if(level<1) return;
 		if(level>UtilAntivirus.LEVEL_NUMBER) return;
 		
 		this.level = level;
@@ -125,13 +126,15 @@ public class GameAntivirus extends Game1 {
 		Keyboard k = keyboard();
 		if(k.F1())	restart();
 		if(k.F2())	exit();
+		if(k.in().right()) changeLevel(level+1);
+		if(k.in().left()) changeLevel(level-1);
 		
 		if(mouse().button1().justPressed()) {
 			Cell pressedCell = board.cellAt(mouse().pointCurrent());
 			if(pressedCell!=null && pressedCell.isDraggable()) {
 				draggedCell = pressedCell;
-				draggedPieceValue = pressedCell.getValue();
-				draggedPiece = board.findAll(c->c.getValue()==draggedPieceValue);
+				draggedValue = pressedCell.getValue();
+				draggedPiece = board.findAll(c->c.getValue()==draggedValue);
 			}
 		}
 		else if(mouse().button1().justReleased()) {
@@ -149,7 +152,7 @@ public class GameAntivirus extends Game1 {
 							UtilArray.set(data, c.getIJ(), UtilAntivirus.EMPTY);
 						}
 						for(Cell c : draggedPieceTarget) {
-							UtilArray.set(data, c.getIJ(), draggedPieceValue);
+							UtilArray.set(data, c.getIJ(), draggedValue);
 						}
 						if(board.find(Cell::isOutput).hasAntivirus()) {
 							changeLevel(level+1);
@@ -159,7 +162,7 @@ public class GameAntivirus extends Game1 {
 			}
 			draggedCell = null;
 			draggedPiece = null;
-			draggedPieceValue = UtilAntivirus.EMPTY;
+			draggedValue = UtilAntivirus.EMPTY;
 		}
 	}
 	
@@ -167,7 +170,7 @@ public class GameAntivirus extends Game1 {
 		List<Cell> target = new ArrayList<>();
 		for(Cell c : draggedPiece) {
 			Cell c1 = board.cellAt(c.getI()+di, c.getJ()+dj);
-			if(c1.isEmpty() || c1.getValue()==draggedPieceValue) target.add(c1);
+			if(c1.isEmpty() || c1.getValue()==draggedValue) target.add(c1);
 			else return null;
 		}
 		return target;
@@ -188,7 +191,7 @@ public class GameAntivirus extends Game1 {
 			boolean isDraggedPiece = draggedCell!=null && draggedCell.getValue()==getValue();
 			
 			if(isDraggedPiece) g2_setComposite(ALPHA);
-			if(isPiece()) drawRoundC(Color.GRAY, r);
+			if(isPiece() || isBlocked() && !isExternal()) drawRoundC(Color.GRAY, r);
 			fillRoundC(color, r*0.7);
 			if(isDraggedPiece) g2_setComposite(composite);
 			
@@ -199,8 +202,8 @@ public class GameAntivirus extends Game1 {
 		
 		protected void initAnchor() {
 			int k = i+j;
-			double px = gameHeight()*0.5 + CELL_SIZE*1.4*0.5*(k - x);
-			double py = gameWidth()*0.5 - CELL_SIZE*1.4*(j - 0.5*k);
+			double px = gameHeight()*0.5 + CELL_SIZE*1.4*0.5*(k - 0.9*x);
+			double py = gameWidth()*0.5 - 50 - CELL_SIZE*1.4*(j - 0.5*k);
 			setAnchor(new Point2(px, py));
 		}
 		
@@ -215,6 +218,12 @@ public class GameAntivirus extends Game1 {
 		}
 		public boolean isEmpty() {
 			return data[i][j]==UtilAntivirus.EMPTY;
+		}
+		public boolean isBlocked() {
+			return data[i][j]==UtilAntivirus.BLOCKED;
+		}
+		public boolean isExternal() {
+			return UtilAntivirus.isExternal(i,j);
 		}
 		public boolean isDraggable() {
 			return isPiece();
@@ -239,8 +248,6 @@ public class GameAntivirus extends Game1 {
 		protected void draw() {
 			if(draggedCell!=null) {
 				Color color = draggedCell.getColor();
-				int value = draggedCell.getValue();
-				int[] pos = draggedCell.getIJ();
 				Point1 draggedCellAnchor = draggedCell.getAnchor();
 				
 				for(Cell c : draggedPiece) {

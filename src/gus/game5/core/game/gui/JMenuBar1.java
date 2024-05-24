@@ -40,7 +40,15 @@ public class JMenuBar1 extends JMenuBar {
 			group.add(item);
 			menu.add(item);
 		}
-		items[index].setSelected(true);
+		if(index>=0) items[index].setSelected(true);
+		super.add(menu);
+	}
+	
+	public void add(String title, JMenu... menus) {
+		JMenu menu = new JMenu(title);
+		for(JMenu item : menus) {
+			menu.add(item);
+		}
 		super.add(menu);
 	}
 }
