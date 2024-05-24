@@ -403,5 +403,31 @@ public class G2Holder {
 		int y2 = (int) (pc.getY()+h/2);
 		g2.drawOval(Math.min(x1,x2), Math.min(y1,y2), Math.abs((int) w), Math.abs((int) h));
 	}
+	
+	/*
+	 * G2 : DRAW ARC C
+	 */
+	
+	protected void g2_drawArcC(Point0 pc, double w, double h, Angle angle1, Angle angle2) {
+		pc = alterPoint(pc);
+		w = alterDistance(w);
+		h = alterDistance(h);
+
+		double x1 = pc.getX()-w/2;
+		double x2 = pc.getX()+w/2;
+		double y1 = pc.getY()-h/2;
+		double y2 = pc.getY()+h/2;
+		
+		Arc2D arc = new Arc2D.Double(
+				Math.min(x1,x2), 
+				Math.min(y1,y2), 
+				Math.abs((int) w), 
+				Math.abs((int) h),
+				-angle1.getValueDeg(),
+				-angle2.getValueDeg(),
+				Arc2D.OPEN);
+		
+		g2.draw(arc);
+	}
 }
 

@@ -704,8 +704,22 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	/*
+	 * DRAW ARC C
+	 */
+	
+	public void drawArcC(Color color, Point0 pc, double radius, Angle angle1, Angle angle2) {
+		g2_setColor(color);
+		g2_drawArcC(pc, radius*2, radius*2, angle1, angle2);
+	}
+	
+	/*
 	 * FILL ARC C
 	 */
+	
+	public void fillArcC(Color color, Point0 pc, double radius, Angle angle1, Angle angle2) {
+		g2_setColor(color);
+		g2_fillArcC(pc, radius*2, radius*2, angle1, angle2);
+	}
 	
 	public void fillArcC(Paint paint, Point0 pc, double radius, Angle angle1, Angle angle2) {
 		g2_setPaint(paint);
