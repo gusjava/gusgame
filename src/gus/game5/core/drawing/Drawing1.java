@@ -712,6 +712,19 @@ public abstract class Drawing1 extends Drawing0 {
 		g2_drawArcC(pc, radius*2, radius*2, angle1, angle2);
 	}
 	
+	public void drawArcC(Color color, double radius, Angle angle1, Angle angle2) {
+		g2_setColor(color);
+		g2_drawArcC(p(0,0), radius*2, radius*2, angle1, angle2);
+	}
+	
+	public void drawArcC(Point0 pc, double radius, Angle angle1, Angle angle2) {
+		drawArcC(color, pc, radius, angle1, angle2);
+	}
+	
+	public void drawArcC(double radius, Angle angle1, Angle angle2) {
+		drawArcC(color, radius, angle1, angle2);
+	}
+	
 	/*
 	 * FILL ARC C
 	 */
@@ -721,9 +734,19 @@ public abstract class Drawing1 extends Drawing0 {
 		g2_fillArcC(pc, radius*2, radius*2, angle1, angle2);
 	}
 	
+	public void fillArcC(Color color, double radius, Angle angle1, Angle angle2) {
+		g2_setColor(color);
+		g2_fillArcC(p(0,0), radius*2, radius*2, angle1, angle2);
+	}
+	
 	public void fillArcC(Paint paint, Point0 pc, double radius, Angle angle1, Angle angle2) {
 		g2_setPaint(paint);
 		g2_fillArcC(pc, radius*2, radius*2, angle1, angle2);
+	}
+	
+	public void fillArcC(Paint paint, double radius, Angle angle1, Angle angle2) {
+		g2_setPaint(paint);
+		g2_fillArcC(p(0,0), radius*2, radius*2, angle1, angle2);
 	}
 	
 	/*
@@ -893,6 +916,38 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	/*
+	 * DRAW STRING P
+	 */
+	
+	public void drawStringP(Color color, Font font, Point0 p, String text, double fW, double fH) {
+		g2_setColor(color);
+		g2_setFont(font);
+		
+		FontMetrics fm = getFontMetrics();
+		int width = fm.stringWidth(text);
+		int height = fm.getAscent();
+		
+		Point0 p1 = p.pAdd(-width*fW, height*fH);
+		g2_drawString(p1, text);
+	}
+	
+	public void drawStringP(Color color, Point0 p, String text, double fW, double fH) {
+		drawStringP(color, font, p, text, fW, fH);
+	}
+	
+	public void drawStringP(Font font, Point0 p, String text, double fW, double fH) {
+		drawStringP(color, font, p, text, fW, fH);
+	}
+	
+	public void drawStringP(Point0 p, String text, double fW, double fH) {
+		drawStringP(color, font, p, text, fW, fH);
+	}
+	
+	public void drawStringP(String text, double fW, double fH) {
+		drawStringP(p(0,0), text, fW, fH);
+	}
+	
+	/*
 	 * DRAW STRING C
 	 */
 	
@@ -906,7 +961,10 @@ public abstract class Drawing1 extends Drawing0 {
 		
 		Point0 p1 = p.pAdd(-width*0.5, height*0.5);
 		g2_drawString(p1, text);
-		
+	}
+	
+	public void drawStringC(Color color, Font font, String text) {
+		drawStringC(color, font, p(0,0), text);
 	}
 	
 	public void drawStringC(Color color, Point0 p, String text) {
@@ -919,6 +977,14 @@ public abstract class Drawing1 extends Drawing0 {
 	
 	public void drawStringC(Point0 p, String text) {
 		drawStringC(color, font, p, text);
+	}
+	
+	public void drawStringC(Color color, String text) {
+		drawStringC(color, font, p(0,0), text);
+	}
+	
+	public void drawStringC(Font font, String text) {
+		drawStringC(color, font, p(0,0), text);
 	}
 	
 	public void drawStringC(String text) {

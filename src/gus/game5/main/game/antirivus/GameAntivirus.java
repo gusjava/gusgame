@@ -3,19 +3,16 @@ package gus.game5.main.game.antirivus;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
-import java.awt.Container;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JLabel;
-
 import gus.game5.core.angle.Angle;
 import gus.game5.core.drawing.Drawing1;
+import gus.game5.core.drawing.text.DrawingText;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
 import gus.game5.core.game.gui.JMenuBar1;
-import gus.game5.core.game.gui.JRadioButtonMenuItem1;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point1.Point1;
 import gus.game5.core.point.point1.Point1D0;
@@ -48,16 +45,22 @@ public class GameAntivirus extends Game1 {
 	protected void initMenuBar(JMenuBar1 menuBar) {
 		menuBar.add("Game", 
 			action("New game (F1)", this::restart),
-			action("Exit (F2)", this::exit)
+			action("Exit (F2)", this::exit),
+			action("About (F3)", this::displayAbout),
+			null,
+			action("Choose level (SHIFT)", this::chooseLevel),
+			action("Next level (\u2192)", this::levelUp),
+			action("Previous level (\u2190)", this::levelDown),
+			action("First level (\u2191)", this::level1),
+			action("Last level (\u2193)", this::level60)
 		);
 		
-		int nb = UtilAntivirus.LEVEL_NUMBER;
-		JRadioButtonMenuItem1[] levelButtons = new JRadioButtonMenuItem1[nb];
-		for(int i=0;i<nb;i++) {
-			final int level = i+1;
-			levelButtons[i] = radioMenuItem(""+level, ()->changeLevel(level));
-		}
-		menuBar.add("Level",levelButtons);
+//		int nb = UtilAntivirus.LEVEL_NUMBER;
+//		JRadioButtonMenuItem1[] levelButtons = new JRadioButtonMenuItem1[nb];
+//		for(int i=0;i<nb;i++) {
+//			final int level = i+1;
+//			levelButtons[i] = radioMenuItem(""+level, ()->changeLevel(level));
+//		}
 	}
 	
 	/*
@@ -70,7 +73,7 @@ public class GameAntivirus extends Game1 {
 		s.setHeight(GAME_HEIGHT);
 		s.setSleep(10);
 		s.setBackground(Color.WHITE);
-		s.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
+		s.setFont(new Font("Calibri", Font.PLAIN, 12));
 	}
 	
 	/*
@@ -78,6 +81,7 @@ public class GameAntivirus extends Game1 {
 	 */
 
 	private ShapeBoard<Cell> board;
+	private DrawingText levelTitle;
 	
 	private Cell draggedCell;
 	private List<Cell> draggedPiece;
@@ -91,7 +95,6 @@ public class GameAntivirus extends Game1 {
 	 */
 	
 	protected void initialize1() {
-		changeLevel(1);
 		board = newShapeBoard(CELL_SIZE, 8, 7, Cell::new);
 		draggedCell = null;
 		draggedPiece = null;
@@ -100,7 +103,24 @@ public class GameAntivirus extends Game1 {
 		addDraw(new Drag());
 		addDraw(new LevelChip());
 		
+		levelTitle = newDrawingTextP(p1(gameWidth()-20, 20), "", 1, 1);
+		levelTitle.setFontBold(26);
+		
+		changeLevel(1);
 	}
+	
+	/*
+	 * ABOUT
+	 */
+	
+	private void displayAbout() {
+		//TODO show choose popup
+		System.out.println("displayAbout");
+	}
+	
+	/*
+	 * LEVEL
+	 */
 	
 	private void changeLevel(int level) {
 		if(level<1) return;
@@ -108,6 +128,30 @@ public class GameAntivirus extends Game1 {
 		
 		this.level = level;
 		data = UtilAntivirus.dataForLevel(level);
+		
+		levelTitle.setString(UtilAntivirus.getLevelTitle(level));
+		levelTitle.setColor(UtilAntivirus.getLevelColor(level));
+	}
+	
+	private void levelUp() {
+		changeLevel(level+1);
+	}
+	
+	private void levelDown() {
+		changeLevel(level-1);
+	}
+	
+	private void level1() {
+		changeLevel(1);
+	}
+	
+	private void level60() {
+		changeLevel(UtilAntivirus.LEVEL_NUMBER);
+	}
+	
+	private void chooseLevel() {
+		//TODO show choose popup
+		System.out.println("choose level");
 	}
 	
 	/*
@@ -116,13 +160,15 @@ public class GameAntivirus extends Game1 {
 
 	protected void turn() {
 		Keyboard k = keyboard();
-		if(k.F1())	restart();
-		if(k.F2())	exit();
-		
-		if(k.in().right()) changeLevel(level+1);
-		if(k.in().left()) changeLevel(level-1);
-		if(k.in().up()) changeLevel(1);
-		if(k.in().down()) changeLevel(UtilAntivirus.LEVEL_NUMBER);
+		if(k.in().F1())	restart();
+		if(k.in().F2())	exit();
+		if(k.in().F3())	displayAbout();
+
+		if(k.in().shift())	chooseLevel();
+		if(k.in().right()) levelUp();
+		if(k.in().left()) levelDown();
+		if(k.in().up()) level1();
+		if(k.in().down()) level60();
 		
 		if(mouse().button1().justPressed()) {
 			Cell pressedCell = board.cellAt(mouse().pointCurrent());
@@ -158,6 +204,8 @@ public class GameAntivirus extends Game1 {
 			draggedCell = null;
 			draggedPiece = null;
 			draggedValue = UtilAntivirus.EMPTY;
+			
+			
 		}
 	}
 	
@@ -177,75 +225,586 @@ public class GameAntivirus extends Game1 {
 	public class Cell extends ShapeCell {
 		public Cell(int i, int j) {
 			super(i, j);
+			setColor(Color.GRAY);
 		}
 		
+		protected void initAnchor() {
+			int k = i+j;
+			double px = gameHeight()*0.5 + CELL_SIZE*1.4*0.5*(k - 0.9*x);
+			double py = gameWidth()*0.5 - 50 - CELL_SIZE*1.4*(j - 0.5*k);
+			setAnchor(new Point2(px, py));
+		}
+		
+		public Color getColor() {
+			return isEmpty() ? Color.LIGHT_GRAY : UtilAntivirus.COLORS[getValue()];
+		}
+		public int getValue() {
+			return data[i][j];
+		}
+		public boolean isPiece() {
+			return data[i][j]>=0 && data[i][j]<=8;
+		}
+		public boolean isEmpty() {
+			return data[i][j]==UtilAntivirus.EMPTY;
+		}
+		public boolean isBlocked() {
+			return data[i][j]==UtilAntivirus.BLOCKED;
+		}
+		public boolean isExternal() {
+			return UtilAntivirus.isExternal(i,j);
+		}
+		public boolean isDraggable() {
+			return isPiece();
+		}
+		public boolean isOutput() {
+			return i==UtilAntivirus.OUTPUT_I && j==UtilAntivirus.OUTPUT_J;
+		}
+		public boolean hasAntivirus() {
+			return data[i][j]==UtilAntivirus.PIECE0;
+		}
+		
+		/*
+		 * DRAW
+		 */
+		
 		protected void drawShape() {
-			double r = CELL_SIZE*0.5;
-			Color color = getColor();
+			drawBorders();
+			
+			if(!isExternal()) {
+				if(isBlocked()) drawBlocked();
+				else if(isEmpty()) drawEmpty();
+				else if(isPiece()) drawPiece();
+			}
+		}
+		
+		private void drawPiece() {
 			Composite composite = g2_getComposite();
 			boolean isDraggedPiece = draggedCell!=null && draggedCell.getValue()==getValue();
 			
-			if (isIJ(0, 3)) {
+			if(isDraggedPiece) g2_setComposite(ALPHA);
+			drawPieceContent();
+			drawPieceBorders();
+			if(isDraggedPiece) g2_setComposite(composite);
+		}
+		
+		private void drawPieceContent() {
+			double r = getRadius();
+			Color color = getColor();
+			fillRoundC(Color.WHITE, r-1);
+			fillRoundC(color, r*0.7);
+		}
+		
+		private void drawPieceBorders() {
+
+			boolean hasE = UtilArray.is(data, i+1, j+1, getValue());
+			boolean hasS = UtilArray.is(data, i+1, j-1, getValue());
+			boolean hasN = UtilArray.is(data, i-1, j+1, getValue());
+			boolean hasW = UtilArray.is(data, i-1, j-1, getValue());
+			boolean hasNE = UtilArray.is(data, i, j+1, getValue());
+			boolean hasSW = UtilArray.is(data, i, j-1, getValue());
+			boolean hasSE = UtilArray.is(data, i+1, j, getValue());
+			boolean hasNW = UtilArray.is(data, i-1, j, getValue());
+			
+			StringBuffer b = new StringBuffer();
+			if(hasN) b.append("N-");
+			if(hasS) b.append("S-");
+			if(hasE) b.append("E-");
+			if(hasW) b.append("W-");
+			if(hasNE) b.append("NE-");
+			if(hasNW) b.append("NW-");
+			if(hasSW) b.append("SW-");
+			if(hasSE) b.append("SE-");
+			b.deleteCharAt(b.length()-1);
+			String sign = b.toString();
+			
+			double r = getRadius();
+			
+			switch(sign) {
+				case "N" : {
+					drawArcC(r, Angle.ANGLE315, Angle.ANGLE270);
+					
+					Point1 p1 = Angle.ANGLE225.pointAt(2*r);
+					drawArcC(p1, r, Angle.ANGLE0, Angle.ANGLE45);
+					
+					Point1 p2 = Angle.ANGLE315.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE135, Angle.ANGLE45);
+					break;
+				}
+				case "S" : {
+					drawArcC(r, Angle.ANGLE135, Angle.ANGLE270);
+					
+					Point1 p1 = Angle.ANGLE45.pointAt(2*r);
+					drawArcC(p1, r, Angle.ANGLE180, Angle.ANGLE45);
+					
+					Point1 p2 = Angle.ANGLE135.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE315, Angle.ANGLE45);
+					break;
+				}
+				case "W" : {
+					drawArcC(r, Angle.ANGLE225, Angle.ANGLE270);
+					
+					Point1 p1 = Angle.ANGLE135.pointAt(2*r);
+					drawArcC(p1, r, Angle.ANGLE270, Angle.ANGLE45);
+					
+					Point1 p2 = Angle.ANGLE225.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE45, Angle.ANGLE45);
+					break;
+				}
+				case "E" : {
+					drawArcC(r, Angle.ANGLE45, Angle.ANGLE270);
+					
+					Point1 p1 = Angle.ANGLE45.pointAt(2*r);
+					drawArcC(p1, r, Angle.ANGLE225, Angle.ANGLE45);
+					
+					Point1 p2 = Angle.ANGLE315.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE90, Angle.ANGLE45);
+					break;
+				}
+				case "NW": {
+					drawArcC(r, Angle.ANGLE315, Angle.ANGLE180);
+					
+					Point1 p1 = Angle.ANGLE315.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE225));
+					
+					Point1 p2 = Angle.ANGLE135.pointAt(r);
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE225));
+					break;
+				}
+				case "NE": {
+					drawArcC(r, Angle.ANGLE45, Angle.ANGLE180);
+					
+					Point1 p1 = Angle.ANGLE45.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE315));
+
+					Point1 p2 = Angle.ANGLE225.pointAt(r);
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE315));
+					break;
+				}
+				case "SE": {
+					drawArcC(r, Angle.ANGLE135, Angle.ANGLE180);
+					
+					Point1 p1 = Angle.ANGLE315.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE45));
+
+					Point1 p2 = Angle.ANGLE135.pointAt(r);
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE45));
+					break;
+				}
+				case "SW": {
+					drawArcC(r, Angle.ANGLE225, Angle.ANGLE180);
+					
+					Point1 p1 = Angle.ANGLE45.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE135));
+
+					Point1 p2 = Angle.ANGLE225.pointAt(r);
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE135));
+					break;
+				}
+				case "S-E": {
+					drawArcC(r, Angle.ANGLE135, Angle.ANGLE180);
+					
+					Point1 p1 = Angle.ANGLE135.pointAt(2*r);
+					drawArcC(p1, r, Angle.ANGLE315, Angle.ANGLE45);
+					
+					Point1 p2 = Angle.ANGLE315.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE90, Angle.ANGLE45);
+					
+					Point1 p3 = Angle.ANGLE45.pointAt(2*r);
+					drawArcC(p3, r, Angle.ANGLE180, Angle.ANGLE90);
+					break;
+				}
+				case "S-W": {
+					drawArcC(r, Angle.ANGLE225, Angle.ANGLE180);
+					
+					Point1 p1 = Angle.ANGLE135.pointAt(2*r);
+					drawArcC(p1, r, Angle.ANGLE270, Angle.ANGLE90);
+					
+					Point1 p2 = Angle.ANGLE225.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE45, Angle.ANGLE45);
+					
+					Point1 p3 = Angle.ANGLE45.pointAt(2*r);
+					drawArcC(p3, r, Angle.ANGLE180, Angle.ANGLE45);
+					break;
+				}
+				case "E-W": {
+					drawArcC(r, Angle.ANGLE225, Angle.ANGLE90);
+					drawArcC(r, Angle.ANGLE45, Angle.ANGLE90);
+					
+					Point1 p1 = Angle.ANGLE135.pointAt(2*r);
+					drawArcC(p1, r, Angle.ANGLE270, Angle.ANGLE45);
+					
+					Point1 p2 = Angle.ANGLE225.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE45, Angle.ANGLE45);
+					
+					Point1 p3 = Angle.ANGLE315.pointAt(2*r);
+					drawArcC(p3, r, Angle.ANGLE90, Angle.ANGLE45);
+					
+					Point1 p4 = Angle.ANGLE45.pointAt(2*r);
+					drawArcC(p4, r, Angle.ANGLE225, Angle.ANGLE45);
+					break;
+				}
+				case "N-W": {
+					drawArcC(r, Angle.ANGLE315, Angle.ANGLE180);
+					
+					Point1 p1 = Angle.ANGLE225.pointAt(2*r);
+					drawArcC(p1, r, Angle.ANGLE0, Angle.ANGLE90);
+					
+					Point1 p2 = Angle.ANGLE315.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE135, Angle.ANGLE45);
+					
+					Point1 p3 = Angle.ANGLE135.pointAt(2*r);
+					drawArcC(p3, r, Angle.ANGLE270, Angle.ANGLE45);
+					break;
+				}
+				case "N-E": {
+					drawArcC(r, Angle.ANGLE45, Angle.ANGLE180);
+					
+					Point1 p1 = Angle.ANGLE315.pointAt(2*r);
+					drawArcC(p1, r, Angle.ANGLE90, Angle.ANGLE90);
+					
+					Point1 p2 = Angle.ANGLE45.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE225, Angle.ANGLE45);
+					
+					Point1 p3 = Angle.ANGLE225.pointAt(2*r);
+					drawArcC(p3, r, Angle.ANGLE0, Angle.ANGLE45);
+					break;
+				}
+				case "N-S": {
+					drawArcC(r, Angle.ANGLE315, Angle.ANGLE90);
+					drawArcC(r, Angle.ANGLE135, Angle.ANGLE90);
+					
+					Point1 p1 = Angle.ANGLE135.pointAt(2*r);
+					drawArcC(p1, r, Angle.ANGLE315, Angle.ANGLE45);
+					
+					Point1 p2 = Angle.ANGLE225.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE0, Angle.ANGLE45);
+					
+					Point1 p3 = Angle.ANGLE315.pointAt(2*r);
+					drawArcC(p3, r, Angle.ANGLE135, Angle.ANGLE45);
+					
+					Point1 p4 = Angle.ANGLE45.pointAt(2*r);
+					drawArcC(p4, r, Angle.ANGLE180, Angle.ANGLE45);
+					break;
+				}
+				case "S-NE": {
+					drawArcC(r, Angle.ANGLE135, Angle.ANGLE90);
+					
+					Point1 p1 = Angle.ANGLE45.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE315));
+
+					Point1 p2 = Angle.ANGLE225.pointAt(r);
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE315));
+					
+					Point1 p3 = Angle.ANGLE45.pointAt(2*r);
+					drawArcC(p3, r, Angle.ANGLE180, Angle.ANGLE45);
+					
+					Point1 p4 = Angle.ANGLE135.pointAt(2*r);
+					drawArcC(p4, r, Angle.ANGLE315, Angle.ANGLE45);
+					break;
+				}
+				case "S-SW": {
+					drawArcC(r, Angle.ANGLE225, Angle.ANGLE180);
+					
+					Point1 p1 = Angle.ANGLE225.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE135));
+
+					Point1 p2 = Angle.ANGLE45.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE180, Angle.ANGLE45);
+					break;
+				}
+				case "S-SE": {
+					drawArcC(r, Angle.ANGLE135, Angle.ANGLE180);
+					
+					Point1 p1 = Angle.ANGLE315.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE45));
+
+					Point1 p2 = Angle.ANGLE135.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE315, Angle.ANGLE45);
+					break;
+				}
+				case "N-NW": {
+					drawArcC(r, Angle.ANGLE315, Angle.ANGLE180);
+					
+					Point1 p1 = Angle.ANGLE135.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE225));
+
+					Point1 p2 = Angle.ANGLE315.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE135, Angle.ANGLE45);
+					break;
+				}
+				case "N-NE": {
+					drawArcC(r, Angle.ANGLE45, Angle.ANGLE180);
+					
+					Point1 p1 = Angle.ANGLE45.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE315));
+
+					Point1 p2 = Angle.ANGLE225.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE0, Angle.ANGLE45);
+					break;
+				}
+				case "S-NW": {
+					drawArcC(r, Angle.ANGLE315, Angle.ANGLE90);
+					
+					Point1 p1 = Angle.ANGLE315.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE225));
+
+					Point1 p2 = Angle.ANGLE135.pointAt(r);
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE225));
+					
+					Point1 p3 = Angle.ANGLE45.pointAt(2*r);
+					drawArcC(p3, r, Angle.ANGLE180, Angle.ANGLE45);
+					
+					Point1 p4 = Angle.ANGLE135.pointAt(2*r);
+					drawArcC(p4, r, Angle.ANGLE315, Angle.ANGLE45);
+					break;
+				}
+				case "N-SW": {
+					drawArcC(r, Angle.ANGLE315, Angle.ANGLE90);
+					
+					Point1 p1 = Angle.ANGLE45.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE135));
+
+					Point1 p2 = Angle.ANGLE225.pointAt(r);
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE135));
+					
+					Point1 p3 = Angle.ANGLE315.pointAt(2*r);
+					drawArcC(p3, r, Angle.ANGLE135, Angle.ANGLE45);
+					
+					Point1 p4 = Angle.ANGLE225.pointAt(2*r);
+					drawArcC(p4, r, Angle.ANGLE0, Angle.ANGLE45);
+					break;
+				}
+				case "N-SE": {
+					drawArcC(r, Angle.ANGLE135, Angle.ANGLE90);
+					
+					Point1 p1 = Angle.ANGLE315.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE45));
+
+					Point1 p2 = Angle.ANGLE135.pointAt(r);
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE45));
+					
+					Point1 p3 = Angle.ANGLE315.pointAt(2*r);
+					drawArcC(p3, r, Angle.ANGLE135, Angle.ANGLE45);
+					
+					Point1 p4 = Angle.ANGLE225.pointAt(2*r);
+					drawArcC(p4, r, Angle.ANGLE0, Angle.ANGLE45);
+					break;
+				}
+				case "E-SW": {
+					drawArcC(r, Angle.ANGLE225, Angle.ANGLE90);
+					
+					Point1 p1 = Angle.ANGLE45.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE135));
+
+					Point1 p2 = Angle.ANGLE225.pointAt(r);
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE135));
+					
+					Point1 p3 = Angle.ANGLE315.pointAt(2*r);
+					drawArcC(p3, r, Angle.ANGLE90, Angle.ANGLE45);
+					
+					Point1 p4 = Angle.ANGLE45.pointAt(2*r);
+					drawArcC(p4, r, Angle.ANGLE225, Angle.ANGLE45);
+					break;
+				}
+				case "E-NW": {
+					drawArcC(r, Angle.ANGLE45, Angle.ANGLE90);
+					
+					Point1 p1 = Angle.ANGLE315.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE225));
+
+					Point1 p2 = Angle.ANGLE135.pointAt(r);
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE225));
+					
+					Point1 p3 = Angle.ANGLE315.pointAt(2*r);
+					drawArcC(p3, r, Angle.ANGLE90, Angle.ANGLE45);
+					
+					Point1 p4 = Angle.ANGLE45.pointAt(2*r);
+					drawArcC(p4, r, Angle.ANGLE225, Angle.ANGLE45);
+					break;
+				}
+				case "E-NE": {
+					drawArcC(r, Angle.ANGLE45, Angle.ANGLE180);
+					
+					Point1 p1 = Angle.ANGLE225.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE315));
+
+					Point1 p2 = Angle.ANGLE45.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE225, Angle.ANGLE45);
+					break;
+				}
+				case "W-SE": {
+					drawArcC(r, Angle.ANGLE225, Angle.ANGLE90);
+					
+					Point1 p1 = Angle.ANGLE315.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE45));
+
+					Point1 p2 = Angle.ANGLE135.pointAt(r);
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE45));
+					
+					Point1 p3 = Angle.ANGLE225.pointAt(2*r);
+					drawArcC(p3, r, Angle.ANGLE45, Angle.ANGLE45);
+					
+					Point1 p4 = Angle.ANGLE135.pointAt(2*r);
+					drawArcC(p4, r, Angle.ANGLE270, Angle.ANGLE45);
+					break;
+				}
+				case "W-NE": {
+					drawArcC(r, Angle.ANGLE45, Angle.ANGLE90);
+					
+					Point1 p1 = Angle.ANGLE225.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE315));
+
+					Point1 p2 = Angle.ANGLE45.pointAt(r);
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE315));
+					
+					Point1 p3 = Angle.ANGLE225.pointAt(2*r);
+					drawArcC(p3, r, Angle.ANGLE45, Angle.ANGLE45);
+					
+					Point1 p4 = Angle.ANGLE135.pointAt(2*r);
+					drawArcC(p4, r, Angle.ANGLE270, Angle.ANGLE45);
+					break;
+				}
+				case "W-NW": {
+					drawArcC(r, Angle.ANGLE315, Angle.ANGLE180);
+					
+					Point1 p1 = Angle.ANGLE315.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE225));
+
+					Point1 p2 = Angle.ANGLE135.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE270, Angle.ANGLE45);
+					break;
+				}
+				case "E-SE": {
+					drawArcC(r, Angle.ANGLE135, Angle.ANGLE180);
+					
+					Point1 p1 = Angle.ANGLE135.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE45));
+					
+					Point1 p2 = Angle.ANGLE315.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE90, Angle.ANGLE45);
+					break;
+				}
+				case "W-SW": {
+					drawArcC(r, Angle.ANGLE225, Angle.ANGLE180);
+					
+					Point1 p1 = Angle.ANGLE45.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE135));
+					
+					Point1 p2 = Angle.ANGLE225.pointAt(2*r);
+					drawArcC(p2, r, Angle.ANGLE45, Angle.ANGLE45);
+					break;
+				}
+				case "NE-NW": {
+					drawArcC(r, Angle.ANGLE45, Angle.ANGLE90);
+					
+					Point1 p1 = Angle.ANGLE45.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE315));
+					
+					Point1 p2 = Angle.ANGLE135.pointAt(r);
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE225));
+					break;
+				}
+				case "SW-SE": {
+					drawArcC(r, Angle.ANGLE225, Angle.ANGLE90);
+					
+					Point1 p1 = Angle.ANGLE225.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE135));
+					
+					Point1 p2 = Angle.ANGLE315.pointAt(r);
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE45));
+					break;
+				}
+				case "NE-SE": {
+					drawArcC(r, Angle.ANGLE135, Angle.ANGLE90);
+					
+					Point1 p1 = Angle.ANGLE135.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE45));
+					
+					Point1 p2 = Angle.ANGLE225.pointAt(r);
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE315));
+					break;
+				}
+				case "NW-SW": {
+					drawArcC(r, Angle.ANGLE315, Angle.ANGLE90);
+					
+					Point1 p1 = Angle.ANGLE315.pointAt(r);
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE225));
+					
+					Point1 p2 = Angle.ANGLE45.pointAt(r);
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE135));
+					break;
+				}
+				default:drawRoundC(r);
+			}
+			
+//			drawStringC(Color.WHITE, fontBold(10), b.toString());
+		}
+		
+		private void drawEmpty() {
+			double r = getRadius();
+			Color color = getColor();
+
+			fillRoundC(Color.WHITE, r-1);
+			if(isOutput()) {
+				fillArcC(color, r*0.7, Angle.ANGLE315, Angle.ANGLE180);
 				Point1 p1 = Angle.ANGLE135.pointAt(r + 3);
 				Point1 p2 = Angle.ANGLE315.pointAt(r + 3);
 				drawLine(EDGE_BORDER, p1, p2);
 			}
-			
-			if(!isExternal()) {
-				if(isPiece() || isBlocked()) {
-					fillRoundC(Color.WHITE, r);
-				}
-				if(isDraggedPiece) g2_setComposite(ALPHA);
-				if(isPiece() || isBlocked()) {
-					drawRoundC(Color.GRAY, r);
-				}
-				if(isEmpty() && isOutput()) 
-					fillArcC(color, p(0,0), r*0.7, Angle.ANGLE315, Angle.ANGLE180);
-				else fillRoundC(color, r*0.7);
-				if(isDraggedPiece) g2_setComposite(composite);
-			}
-			
+			else fillRoundC(color, r*0.7);
+		}
+		
+		private void drawBlocked() {
+			double r = getRadius();
+			Color color = getColor();
+			drawRoundC(Color.GRAY, r);
+			fillRoundC(Color.WHITE, r-1);
+			fillRoundC(color, r*0.7);
+		}
+		
+		private void drawBorders() {
+			double r = getRadius();
 			// West edge
 			if(isIJ(1, 2) || isIJ(2, 1) || isIJ(3, 0)) {
-				drawArcC(EDGE_BORDER, p(0,0), r-3, Angle.ANGLE315, Angle.ANGLE90);
+				drawArcC(EDGE_BORDER, r-3, Angle.ANGLE315, Angle.ANGLE90);
 			}
 			if(isIJ(2, 2) || isIJ(3, 1)) {
-				drawArcC(EDGE_BORDER, p(0,0), r+3, Angle.ANGLE135, Angle.ANGLE90);
+				drawArcC(EDGE_BORDER, r+3, Angle.ANGLE135, Angle.ANGLE90);
 			}
 			// North edge
 			if(isIJ(1, 4) || isIJ(2, 5) || isIJ(3, 6)) {
-				drawArcC(EDGE_BORDER, p(0,0), r-3, Angle.ANGLE45, Angle.ANGLE90);
+				drawArcC(EDGE_BORDER, r-3, Angle.ANGLE45, Angle.ANGLE90);
 			}
 			if(isIJ(2, 4) || isIJ(3, 5)) {
-				drawArcC(EDGE_BORDER, p(0,0), r+3, Angle.ANGLE225, Angle.ANGLE90);
+				drawArcC(EDGE_BORDER, r+3, Angle.ANGLE225, Angle.ANGLE90);
 			}
 			// East edge
 			if(isIJ(5, 6) || isIJ(6, 5) || isIJ(7, 4)) {
-				drawArcC(EDGE_BORDER, p(0,0), r-3, Angle.ANGLE135, Angle.ANGLE90);
+				drawArcC(EDGE_BORDER, r-3, Angle.ANGLE135, Angle.ANGLE90);
 			}
 			if(isIJ(5, 5) || isIJ(6, 4)) {
-				drawArcC(EDGE_BORDER, p(0,0), r+3, Angle.ANGLE315, Angle.ANGLE90);
+				drawArcC(EDGE_BORDER, r+3, Angle.ANGLE315, Angle.ANGLE90);
 			}
 			// South edge
 			if(isIJ(5, 0) || isIJ(6, 1) || isIJ(7, 2)) {
-				drawArcC(EDGE_BORDER, p(0,0), r-3, Angle.ANGLE225, Angle.ANGLE90);
+				drawArcC(EDGE_BORDER, r-3, Angle.ANGLE225, Angle.ANGLE90);
 			}
 			if(isIJ(5, 1) || isIJ(6, 2)) {
-				drawArcC(EDGE_BORDER, p(0,0), r+3, Angle.ANGLE45, Angle.ANGLE90);
+				drawArcC(EDGE_BORDER, r+3, Angle.ANGLE45, Angle.ANGLE90);
 			}
 			
 			// North-East corner
 			if(isIJ(4, 6)) {
-				drawArcC(EDGE_BORDER, p(0,0), r+3, Angle.ANGLE225, Angle.ANGLE180);
+				drawArcC(EDGE_BORDER, r+3, Angle.ANGLE225, Angle.ANGLE180);
 			}
 			// South-East corner
 			if(isIJ(7, 3)) {
-				drawArcC(EDGE_BORDER, p(0,0), r+3, Angle.ANGLE315, Angle.ANGLE180);
+				drawArcC(EDGE_BORDER, r+3, Angle.ANGLE315, Angle.ANGLE180);
 			}
 			
 			// South-West corner
 			if(isIJ(4, 0)) {
-				drawArcC(EDGE_BORDER, p(0,0), r+3, Angle.ANGLE45, Angle.ANGLE180);
+				drawArcC(EDGE_BORDER, r+3, Angle.ANGLE45, Angle.ANGLE180);
 			}
 			
 			// North-West corner (output)
@@ -298,41 +857,6 @@ public class GameAntivirus extends Game1 {
 				drawArcC(EDGE_BORDER, pp, d3, Angle.ANGLE0, Angle.ANGLE90);
 			}
 		}
-		
-		protected void initAnchor() {
-			int k = i+j;
-			double px = gameHeight()*0.5 + CELL_SIZE*1.4*0.5*(k - 0.9*x);
-			double py = gameWidth()*0.5 - 50 - CELL_SIZE*1.4*(j - 0.5*k);
-			setAnchor(new Point2(px, py));
-		}
-		
-		public Color getColor() {
-			return isEmpty() ? Color.LIGHT_GRAY : UtilAntivirus.COLORS[getValue()];
-		}
-		public int getValue() {
-			return data[i][j];
-		}
-		public boolean isPiece() {
-			return data[i][j]>=0 && data[i][j]<=8;
-		}
-		public boolean isEmpty() {
-			return data[i][j]==UtilAntivirus.EMPTY;
-		}
-		public boolean isBlocked() {
-			return data[i][j]==UtilAntivirus.BLOCKED;
-		}
-		public boolean isExternal() {
-			return UtilAntivirus.isExternal(i,j);
-		}
-		public boolean isDraggable() {
-			return isPiece();
-		}
-		public boolean isOutput() {
-			return i==UtilAntivirus.OUTPUT_I && j==UtilAntivirus.OUTPUT_J;
-		}
-		public boolean hasAntivirus() {
-			return data[i][j]==UtilAntivirus.PIECE0;
-		}
 	}
 	
 	/*
@@ -343,19 +867,467 @@ public class GameAntivirus extends Game1 {
 		public Drag() {
 			super();
 			setOrigin(new Point1D0(mouse()::point));
+			setColor(Color.GRAY);
 		}
 		protected void draw() {
 			if(draggedCell!=null) {
+				double r = CELL_SIZE*0.5;
 				Color color = draggedCell.getColor();
 				Point1 draggedCellAnchor = draggedCell.getAnchor();
 				
 				for(Cell c : draggedPiece) {
 					Point1 m = c.getAnchor().pSub(draggedCellAnchor);
-					double r = CELL_SIZE*0.5;
-					drawRoundC(Color.GRAY, m, r);
+					fillRoundC(Color.WHITE, m, r-1);
 					fillRoundC(color, m, r*0.7);
+					drawPieceBorders(m, c.getI(), c.getJ());
 				}
 			}
+		}
+		
+		private void drawPieceBorders(Point1 m, int i, int j) {
+
+			boolean hasE = UtilArray.is(data, i+1, j+1, draggedValue);
+			boolean hasS = UtilArray.is(data, i+1, j-1, draggedValue);
+			boolean hasN = UtilArray.is(data, i-1, j+1, draggedValue);
+			boolean hasW = UtilArray.is(data, i-1, j-1, draggedValue);
+			boolean hasNE = UtilArray.is(data, i, j+1, draggedValue);
+			boolean hasSW = UtilArray.is(data, i, j-1, draggedValue);
+			boolean hasSE = UtilArray.is(data, i+1, j, draggedValue);
+			boolean hasNW = UtilArray.is(data, i-1, j, draggedValue);
+			
+			StringBuffer b = new StringBuffer();
+			if(hasN) b.append("N-");
+			if(hasS) b.append("S-");
+			if(hasE) b.append("E-");
+			if(hasW) b.append("W-");
+			if(hasNE) b.append("NE-");
+			if(hasNW) b.append("NW-");
+			if(hasSW) b.append("SW-");
+			if(hasSE) b.append("SE-");
+			b.deleteCharAt(b.length()-1);
+			String sign = b.toString();
+			
+			double r = CELL_SIZE*0.5;
+			
+			switch(sign) {
+				case "N" : {
+					drawArcC(m, r, Angle.ANGLE315, Angle.ANGLE270);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE225.pointAt(2*r));
+					drawArcC(p1, r, Angle.ANGLE0, Angle.ANGLE45);
+					
+					Point1 p2 = m.pAdd(Angle.ANGLE315.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE135, Angle.ANGLE45);
+					break;
+				}
+				case "S" : {
+					drawArcC(m, r, Angle.ANGLE135, Angle.ANGLE270);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE45.pointAt(2*r));
+					drawArcC(p1, r, Angle.ANGLE180, Angle.ANGLE45);
+					
+					Point1 p2 = m.pAdd(Angle.ANGLE135.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE315, Angle.ANGLE45);
+					break;
+				}
+				case "W" : {
+					drawArcC(m, r, Angle.ANGLE225, Angle.ANGLE270);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE135.pointAt(2*r));
+					drawArcC(p1, r, Angle.ANGLE270, Angle.ANGLE45);
+					
+					Point1 p2 = m.pAdd(Angle.ANGLE225.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE45, Angle.ANGLE45);
+					break;
+				}
+				case "E" : {
+					drawArcC(m, r, Angle.ANGLE45, Angle.ANGLE270);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE45.pointAt(2*r));
+					drawArcC(p1, r, Angle.ANGLE225, Angle.ANGLE45);
+					
+					Point1 p2 = m.pAdd(Angle.ANGLE315.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE90, Angle.ANGLE45);
+					break;
+				}
+				case "NW": {
+					drawArcC(m, r, Angle.ANGLE315, Angle.ANGLE180);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE315.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE225));
+					
+					Point1 p2 = m.pAdd(Angle.ANGLE135.pointAt(r));
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE225));
+					break;
+				}
+				case "NE": {
+					drawArcC(m, r, Angle.ANGLE45, Angle.ANGLE180);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE45.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE315));
+
+					Point1 p2 = m.pAdd(Angle.ANGLE225.pointAt(r));
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE315));
+					break;
+				}
+				case "SE": {
+					drawArcC(m, r, Angle.ANGLE135, Angle.ANGLE180);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE315.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE45));
+
+					Point1 p2 = m.pAdd(Angle.ANGLE135.pointAt(r));
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE45));
+					break;
+				}
+				case "SW": {
+					drawArcC(m, r, Angle.ANGLE225, Angle.ANGLE180);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE45.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE135));
+
+					Point1 p2 = m.pAdd(Angle.ANGLE225.pointAt(r));
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE135));
+					break;
+				}
+				case "S-E": {
+					drawArcC(m, r, Angle.ANGLE135, Angle.ANGLE180);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE135.pointAt(2*r));
+					drawArcC(p1, r, Angle.ANGLE315, Angle.ANGLE45);
+					
+					Point1 p2 = m.pAdd(Angle.ANGLE315.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE90, Angle.ANGLE45);
+					
+					Point1 p3 = m.pAdd(Angle.ANGLE45.pointAt(2*r));
+					drawArcC(p3, r, Angle.ANGLE180, Angle.ANGLE90);
+					break;
+				}
+				case "S-W": {
+					drawArcC(m, r, Angle.ANGLE225, Angle.ANGLE180);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE135.pointAt(2*r));
+					drawArcC(p1, r, Angle.ANGLE270, Angle.ANGLE90);
+					
+					Point1 p2 = m.pAdd(Angle.ANGLE225.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE45, Angle.ANGLE45);
+					
+					Point1 p3 = m.pAdd(Angle.ANGLE45.pointAt(2*r));
+					drawArcC(p3, r, Angle.ANGLE180, Angle.ANGLE45);
+					break;
+				}
+				case "E-W": {
+					drawArcC(m, r, Angle.ANGLE225, Angle.ANGLE90);
+					drawArcC(m, r, Angle.ANGLE45, Angle.ANGLE90);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE135.pointAt(2*r));
+					drawArcC(p1, r, Angle.ANGLE270, Angle.ANGLE45);
+					
+					Point1 p2 = m.pAdd(Angle.ANGLE225.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE45, Angle.ANGLE45);
+					
+					Point1 p3 = m.pAdd(Angle.ANGLE315.pointAt(2*r));
+					drawArcC(p3, r, Angle.ANGLE90, Angle.ANGLE45);
+					
+					Point1 p4 = m.pAdd(Angle.ANGLE45.pointAt(2*r));
+					drawArcC(p4, r, Angle.ANGLE225, Angle.ANGLE45);
+					break;
+				}
+				case "N-W": {
+					drawArcC(m, r, Angle.ANGLE315, Angle.ANGLE180);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE225.pointAt(2*r));
+					drawArcC(p1, r, Angle.ANGLE0, Angle.ANGLE90);
+					
+					Point1 p2 = m.pAdd(Angle.ANGLE315.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE135, Angle.ANGLE45);
+					
+					Point1 p3 = m.pAdd(Angle.ANGLE135.pointAt(2*r));
+					drawArcC(p3, r, Angle.ANGLE270, Angle.ANGLE45);
+					break;
+				}
+				case "N-E": {
+					drawArcC(m, r, Angle.ANGLE45, Angle.ANGLE180);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE315.pointAt(2*r));
+					drawArcC(p1, r, Angle.ANGLE90, Angle.ANGLE90);
+					
+					Point1 p2 = m.pAdd(Angle.ANGLE45.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE225, Angle.ANGLE45);
+					
+					Point1 p3 = m.pAdd(Angle.ANGLE225.pointAt(2*r));
+					drawArcC(p3, r, Angle.ANGLE0, Angle.ANGLE45);
+					break;
+				}
+				case "N-S": {
+					drawArcC(m, r, Angle.ANGLE315, Angle.ANGLE90);
+					drawArcC(m, r, Angle.ANGLE135, Angle.ANGLE90);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE135.pointAt(2*r));
+					drawArcC(p1, r, Angle.ANGLE315, Angle.ANGLE45);
+					
+					Point1 p2 = m.pAdd(Angle.ANGLE225.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE0, Angle.ANGLE45);
+					
+					Point1 p3 = m.pAdd(Angle.ANGLE315.pointAt(2*r));
+					drawArcC(p3, r, Angle.ANGLE135, Angle.ANGLE45);
+					
+					Point1 p4 = m.pAdd(Angle.ANGLE45.pointAt(2*r));
+					drawArcC(p4, r, Angle.ANGLE180, Angle.ANGLE45);
+					break;
+				}
+				case "S-NE": {
+					drawArcC(m, r, Angle.ANGLE135, Angle.ANGLE90);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE45.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE315));
+
+					Point1 p2 = m.pAdd(Angle.ANGLE225.pointAt(r));
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE315));
+					
+					Point1 p3 = m.pAdd(Angle.ANGLE45.pointAt(2*r));
+					drawArcC(p3, r, Angle.ANGLE180, Angle.ANGLE45);
+					
+					Point1 p4 = m.pAdd(Angle.ANGLE135.pointAt(2*r));
+					drawArcC(p4, r, Angle.ANGLE315, Angle.ANGLE45);
+					break;
+				}
+				case "S-SW": {
+					drawArcC(m, r, Angle.ANGLE225, Angle.ANGLE180);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE225.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE135));
+
+					Point1 p2 = m.pAdd(Angle.ANGLE45.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE180, Angle.ANGLE45);
+					break;
+				}
+				case "S-SE": {
+					drawArcC(m, r, Angle.ANGLE135, Angle.ANGLE180);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE315.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE45));
+
+					Point1 p2 = m.pAdd(Angle.ANGLE135.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE315, Angle.ANGLE45);
+					break;
+				}
+				case "N-NW": {
+					drawArcC(m, r, Angle.ANGLE315, Angle.ANGLE180);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE135.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE225));
+
+					Point1 p2 = m.pAdd(Angle.ANGLE315.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE135, Angle.ANGLE45);
+					break;
+				}
+				case "N-NE": {
+					drawArcC(m, r, Angle.ANGLE45, Angle.ANGLE180);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE45.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE315));
+
+					Point1 p2 = m.pAdd(Angle.ANGLE225.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE0, Angle.ANGLE45);
+					break;
+				}
+				case "S-NW": {
+					drawArcC(m, r, Angle.ANGLE315, Angle.ANGLE90);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE315.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE225));
+
+					Point1 p2 = m.pAdd(Angle.ANGLE135.pointAt(r));
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE225));
+					
+					Point1 p3 = m.pAdd(Angle.ANGLE45.pointAt(2*r));
+					drawArcC(p3, r, Angle.ANGLE180, Angle.ANGLE45);
+					
+					Point1 p4 = m.pAdd(Angle.ANGLE135.pointAt(2*r));
+					drawArcC(p4, r, Angle.ANGLE315, Angle.ANGLE45);
+					break;
+				}
+				case "N-SW": {
+					drawArcC(m, r, Angle.ANGLE315, Angle.ANGLE90);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE45.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE135));
+
+					Point1 p2 = m.pAdd(Angle.ANGLE225.pointAt(r));
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE135));
+					
+					Point1 p3 = m.pAdd(Angle.ANGLE315.pointAt(2*r));
+					drawArcC(p3, r, Angle.ANGLE135, Angle.ANGLE45);
+					
+					Point1 p4 = m.pAdd(Angle.ANGLE225.pointAt(2*r));
+					drawArcC(p4, r, Angle.ANGLE0, Angle.ANGLE45);
+					break;
+				}
+				case "N-SE": {
+					drawArcC(m, r, Angle.ANGLE135, Angle.ANGLE90);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE315.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE45));
+
+					Point1 p2 = m.pAdd(Angle.ANGLE135.pointAt(r));
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE45));
+					
+					Point1 p3 = m.pAdd(Angle.ANGLE315.pointAt(2*r));
+					drawArcC(p3, r, Angle.ANGLE135, Angle.ANGLE45);
+					
+					Point1 p4 = m.pAdd(Angle.ANGLE225.pointAt(2*r));
+					drawArcC(p4, r, Angle.ANGLE0, Angle.ANGLE45);
+					break;
+				}
+				case "E-SW": {
+					drawArcC(m, r, Angle.ANGLE225, Angle.ANGLE90);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE45.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE135));
+
+					Point1 p2 = m.pAdd(Angle.ANGLE225.pointAt(r));
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE135));
+					
+					Point1 p3 = m.pAdd(Angle.ANGLE315.pointAt(2*r));
+					drawArcC(p3, r, Angle.ANGLE90, Angle.ANGLE45);
+					
+					Point1 p4 = m.pAdd(Angle.ANGLE45.pointAt(2*r));
+					drawArcC(p4, r, Angle.ANGLE225, Angle.ANGLE45);
+					break;
+				}
+				case "E-NW": {
+					drawArcC(m, r, Angle.ANGLE45, Angle.ANGLE90);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE315.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE225));
+
+					Point1 p2 = m.pAdd(Angle.ANGLE135.pointAt(r));
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE225));
+					
+					Point1 p3 = m.pAdd(Angle.ANGLE315.pointAt(2*r));
+					drawArcC(p3, r, Angle.ANGLE90, Angle.ANGLE45);
+					
+					Point1 p4 = m.pAdd(Angle.ANGLE45.pointAt(2*r));
+					drawArcC(p4, r, Angle.ANGLE225, Angle.ANGLE45);
+					break;
+				}
+				case "E-NE": {
+					drawArcC(m, r, Angle.ANGLE45, Angle.ANGLE180);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE225.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE315));
+
+					Point1 p2 = m.pAdd(Angle.ANGLE45.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE225, Angle.ANGLE45);
+					break;
+				}
+				case "W-SE": {
+					drawArcC(m, r, Angle.ANGLE225, Angle.ANGLE90);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE315.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE45));
+
+					Point1 p2 = m.pAdd(Angle.ANGLE135.pointAt(r));
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE45));
+					
+					Point1 p3 = m.pAdd(Angle.ANGLE225.pointAt(2*r));
+					drawArcC(p3, r, Angle.ANGLE45, Angle.ANGLE45);
+					
+					Point1 p4 = m.pAdd(Angle.ANGLE135.pointAt(2*r));
+					drawArcC(p4, r, Angle.ANGLE270, Angle.ANGLE45);
+					break;
+				}
+				case "W-NE": {
+					drawArcC(m, r, Angle.ANGLE45, Angle.ANGLE90);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE225.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE315));
+
+					Point1 p2 = m.pAdd(Angle.ANGLE45.pointAt(r));
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE315));
+					
+					Point1 p3 = m.pAdd(Angle.ANGLE225.pointAt(2*r));
+					drawArcC(p3, r, Angle.ANGLE45, Angle.ANGLE45);
+					
+					Point1 p4 = m.pAdd(Angle.ANGLE135.pointAt(2*r));
+					drawArcC(p4, r, Angle.ANGLE270, Angle.ANGLE45);
+					break;
+				}
+				case "W-NW": {
+					drawArcC(m, r, Angle.ANGLE315, Angle.ANGLE180);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE315.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE225));
+
+					Point1 p2 = m.pAdd(Angle.ANGLE135.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE270, Angle.ANGLE45);
+					break;
+				}
+				case "E-SE": {
+					drawArcC(m, r, Angle.ANGLE135, Angle.ANGLE180);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE135.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE45));
+					
+					Point1 p2 = m.pAdd(Angle.ANGLE315.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE90, Angle.ANGLE45);
+					break;
+				}
+				case "W-SW": {
+					drawArcC(m, r, Angle.ANGLE225, Angle.ANGLE180);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE45.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE135));
+					
+					Point1 p2 = m.pAdd(Angle.ANGLE225.pointAt(2*r));
+					drawArcC(p2, r, Angle.ANGLE45, Angle.ANGLE45);
+					break;
+				}
+				case "NE-NW": {
+					drawArcC(m, r, Angle.ANGLE45, Angle.ANGLE90);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE45.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE315));
+					
+					Point1 p2 = m.pAdd(Angle.ANGLE135.pointAt(r));
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE225));
+					break;
+				}
+				case "SW-SE": {
+					drawArcC(m, r, Angle.ANGLE225, Angle.ANGLE90);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE225.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE135));
+					
+					Point1 p2 = m.pAdd(Angle.ANGLE315.pointAt(r));
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE45));
+					break;
+				}
+				case "NE-SE": {
+					drawArcC(m, r, Angle.ANGLE135, Angle.ANGLE90);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE135.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE45));
+					
+					Point1 p2 = m.pAdd(Angle.ANGLE225.pointAt(r));
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE315));
+					break;
+				}
+				case "NW-SW": {
+					drawArcC(m, r, Angle.ANGLE315, Angle.ANGLE90);
+					
+					Point1 p1 = m.pAdd(Angle.ANGLE315.pointAt(r));
+					drawLine(p1, p1.pAdd(r, Angle.ANGLE225));
+					
+					Point1 p2 = m.pAdd(Angle.ANGLE45.pointAt(r));
+					drawLine(p2, p2.pAdd(r, Angle.ANGLE135));
+					break;
+				}
+				default:drawRoundC(m, r);
+			}
+			
+//			drawStringC(Color.WHITE, fontBold(10), m, b.toString());
 		}
 	}
 	

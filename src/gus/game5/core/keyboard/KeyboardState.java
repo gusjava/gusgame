@@ -39,6 +39,10 @@ public class KeyboardState {
 	public boolean escap() {
 		return state.contains(KeyEvent.VK_ESCAPE);
 	}
+	
+	public boolean shift() {
+		return state.contains(KeyEvent.VK_SHIFT);
+	}
 
 	public boolean F1() {
 		return state.contains(KeyEvent.VK_F1);

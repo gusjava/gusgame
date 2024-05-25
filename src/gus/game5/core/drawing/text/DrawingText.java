@@ -31,9 +31,25 @@ public class DrawingText extends Drawing1 {
 		this(origin, ()->text);
 	}
 	
+	/*
+	 * G STRING
+	 */
+	
+	public void setGString(G<String> gString) {
+		this.gString = gString;
+	}
+	
+	public void setString(String s) {
+		gString = ()->s;
+	}
+	
 	public String getString() {
 		return gString.g();
 	}
+	
+	/*
+	 * DRAW
+	 */
 	
 	protected void draw() {
 		drawString(getString());

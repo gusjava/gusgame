@@ -13,6 +13,7 @@ import gus.game5.core.draw.Draw;
 import gus.game5.core.draw.DrawList;
 import gus.game5.core.drawing.text.DrawingText;
 import gus.game5.core.drawing.text.DrawingTextC;
+import gus.game5.core.drawing.text.DrawingTextP;
 import gus.game5.core.dyn.Dyn;
 import gus.game5.core.dyn.DynGAngle;
 import gus.game5.core.dyn.DynGDouble;
@@ -311,6 +312,34 @@ public abstract class Game1 extends Game {
 	
 	protected DrawingText newDrawingTextC(Point1 origin, String text) {
 		DrawingText draw = new DrawingTextC(origin, text);
+		addDraw(draw);
+		return draw;
+	}
+	
+	/*
+	 * NEW DRAWING TEXT P
+	 */
+	
+	protected DrawingText newDrawingTextP(Color color, Point1 origin, G<String> gString, double fW, double fH) {
+		DrawingText draw = new DrawingTextP(color, origin, gString, fW, fH);
+		addDraw(draw);
+		return draw;
+	}
+	
+	protected DrawingText newDrawingTextP(Color color, Point1 origin, String text, double fW, double fH) {
+		DrawingText draw = new DrawingTextP(color, origin, text, fW, fH);
+		addDraw(draw);
+		return draw;
+	}
+	
+	protected DrawingText newDrawingTextP(Point1 origin, G<String> gString, double fW, double fH) {
+		DrawingText draw = new DrawingTextP(origin, gString, fW, fH);
+		addDraw(draw);
+		return draw;
+	}
+	
+	protected DrawingText newDrawingTextP(Point1 origin, String text, double fW, double fH) {
+		DrawingText draw = new DrawingTextP(origin, text, fW, fH);
 		addDraw(draw);
 		return draw;
 	}
