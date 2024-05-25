@@ -20,6 +20,7 @@ import gus.game5.core.point.point2.Point2;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
 import gus.game5.core.util.UtilArray;
+import gus.game5.core.util.UtilList;
 
 public class GameAntivirus extends Game1 {
 
@@ -186,17 +187,19 @@ public class GameAntivirus extends Game1 {
 				if(UtilArray.distance(releasedPos, draggedPos)==1) {
 					int di = releasedPos[0]-draggedPos[0];
 					int dj = releasedPos[1]-draggedPos[1];
-					List<Cell> draggedPieceTarget = findDraggedPieceTarget(di, dj);
+					List<Cell[]> moves = findMoves(di, dj);
 					
-					if(draggedPieceTarget!=null) {
-						for(Cell c : draggedPiece) {
-							UtilArray.set(data, c.getIJ(), UtilAntivirus.EMPTY);
+					if(moves!=null) {
+						int[][] data1 = UtilArray.clone(data);
+						for(Cell[] move : moves) {
+							UtilArray.set(data1, move[0].getIJ(), UtilAntivirus.EMPTY);
 						}
-						for(Cell c : draggedPieceTarget) {
-							UtilArray.set(data, c.getIJ(), draggedValue);
+						for(Cell[] move : moves) {
+							UtilArray.set(data1, move[1].getIJ(), move[0].getValue());
 						}
-						if(board.find(Cell::isOutput).hasAntivirus()) {
-							changeLevel(level+1);
+						data = data1;
+						if(getOutputCell().hasAntivirus()) {
+							levelUp();
 						}
 					}
 				}
@@ -209,14 +212,34 @@ public class GameAntivirus extends Game1 {
 		}
 	}
 	
-	private List<Cell> findDraggedPieceTarget(int di, int dj) {
-		List<Cell> target = new ArrayList<>();
-		for(Cell c : draggedPiece) {
-			Cell c1 = board.cellAt(c.getI()+di, c.getJ()+dj);
-			if(c1.isEmpty() || c1.getValue()==draggedValue) target.add(c1);
-			else return null;
+	private List<Cell[]> findMoves(int di, int dj) {
+		List<Cell[]> target = new ArrayList<>();
+		List<Integer> values1 = UtilList.asList(draggedValue);
+		List<Integer> values2 = UtilList.asList(draggedValue);
+		
+		while(!values1.isEmpty()) {
+			int value1 = values1.get(0);
+			values1.remove(0);
+			List<Cell> piece = board.findAll(f->f.getValue()==value1);
+			for(Cell c : piece) {
+				Cell c1 = board.cellAt(c.getI()+di, c.getJ()+dj);
+				if(c1==null || c1.isBlocked()) return null;
+				
+				target.add(new Cell[] {c, c1});
+				if(c1.isPiece()) {
+					int newValue = c1.getValue();
+					if(!values2.contains(newValue)) {
+						values1.add(newValue);
+						values2.add(newValue);
+					}
+				}
+			}
 		}
 		return target;
+	}
+	
+	private Cell getOutputCell() {
+		return board.cellAt(UtilAntivirus.OUTPUT_I, UtilAntivirus.OUTPUT_J);
 	}
 	
 	
@@ -314,6 +337,7 @@ public class GameAntivirus extends Game1 {
 			if(hasNW) b.append("NW-");
 			if(hasSW) b.append("SW-");
 			if(hasSE) b.append("SE-");
+			if(b.length()==0) throw new RuntimeException("Invalid data found at position "+i+":"+j+" with value="+getValue()+" (no neighbors)");
 			b.deleteCharAt(b.length()-1);
 			String sign = b.toString();
 			
