@@ -45,6 +45,22 @@ public class UtilArray {
 	}
 	
 	/*
+	 * EQ
+	 */
+	
+	public static boolean eq(int[] data, int i) {
+		return data.length==1 && data[0]==i;
+	}
+	
+	public static boolean eq(int[] data, int i, int j) {
+		return data.length==2 && data[0]==i && data[1]==j;
+	}
+	
+	public static boolean eq(int[] data, int i, int j, int k) {
+		return data.length==3 && data[0]==i && data[1]==j && data[2]==k;
+	}
+	
+	/*
 	 * GET
 	 */
 	

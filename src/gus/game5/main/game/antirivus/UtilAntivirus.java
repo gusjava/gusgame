@@ -45,6 +45,10 @@ public class UtilAntivirus {
 			WHITE
 	};
 	
+	public static boolean isOutput(int i, int j) {
+		return i==OUTPUT_I && j==OUTPUT_J;
+	}
+	
 	public static boolean isExternal(int i, int j) {
 		if(i==0) return j==0 || j==1 || j==2 || j==4 || j==5 || j==6;
 		if(i==1) return j==0 || j==1 || j==2 || j==4 || j==5 || j==6;

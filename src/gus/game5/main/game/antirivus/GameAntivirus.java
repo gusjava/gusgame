@@ -7,7 +7,6 @@ import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 
-import gus.game5.core.angle.Angle;
 import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.drawing.text.DrawingText;
 import gus.game5.core.game.Game1;
@@ -29,8 +28,6 @@ public class GameAntivirus extends Game1 {
 	public static final int GAME_WIDTH = 500;
 	public static final double CELL_SIZE = 50;
 	
-	public static final Color EDGE_BORDER = Color.LIGHT_GRAY;
-	public static final Color BACKGROUND = new Color(246,246,246);
 	public static final Composite ALPHA = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.4f);
 	
 	public static void main(String[] args) {
@@ -257,7 +254,7 @@ public class GameAntivirus extends Game1 {
 		}
 		
 		public Color getColor() {
-			return isEmpty() ? Color.LIGHT_GRAY : UtilAntivirus.COLORS[getValue()];
+			return isEmpty() ? UtilAntivirusDraw.COLOR_EMPTY : UtilAntivirus.COLORS[getValue()];
 		}
 		public int getValue() {
 			return data[i][j];
@@ -277,8 +274,11 @@ public class GameAntivirus extends Game1 {
 		public boolean isDraggable() {
 			return isPiece();
 		}
+		public boolean isDragged() {
+			return draggedCell!=null && draggedCell.getValue()==getValue();
+		}
 		public boolean isOutput() {
-			return i==UtilAntivirus.OUTPUT_I && j==UtilAntivirus.OUTPUT_J;
+			return UtilAntivirus.isOutput(i,j);
 		}
 		public boolean hasAntivirus() {
 			return data[i][j]==UtilAntivirus.PIECE0;
@@ -289,7 +289,7 @@ public class GameAntivirus extends Game1 {
 		 */
 		
 		protected void drawShape() {
-			drawBorders();
+			drawBoardEdges();
 			
 			if(!isExternal()) {
 				if(isBlocked()) drawBlocked();
@@ -300,129 +300,23 @@ public class GameAntivirus extends Game1 {
 		
 		private void drawPiece() {
 			Composite composite = g2_getComposite();
-			boolean isDraggedPiece = draggedCell!=null && draggedCell.getValue()==getValue();
+			boolean isDragged = isDragged();
 			
-			if(isDraggedPiece) g2_setComposite(ALPHA);
+			if(isDragged) g2_setComposite(ALPHA);
 			UtilAntivirusDraw.drawPiece(this, p(0,0), getRadius(), data, i, j);
-			if(isDraggedPiece) g2_setComposite(composite);
+			if(isDragged) g2_setComposite(composite);
 		}
 		
 		private void drawEmpty() {
-			double r = getRadius();
-			Color color = getColor();
-
-			fillRoundC(Color.WHITE, r-1);
-			if(isOutput()) {
-				fillArcC(color, r*0.7, Angle.ANGLE315, Angle.ANGLE180);
-				Point1 p1 = Angle.ANGLE135.pointAt(r + 3);
-				Point1 p2 = Angle.ANGLE315.pointAt(r + 3);
-				drawLine(EDGE_BORDER, p1, p2);
-			}
-			else fillRoundC(color, r*0.7);
+			UtilAntivirusDraw.drawEmpty(this, getRadius(), data, i, j);
 		}
 		
 		private void drawBlocked() {
-			double r = getRadius();
-			Color color = getColor();
-			drawRoundC(Color.GRAY, r);
-			fillRoundC(Color.WHITE, r-1);
-			fillRoundC(color, r*0.7);
+			UtilAntivirusDraw.drawBlocked(this, getRadius());
 		}
 		
-		private void drawBorders() {
-			double r = getRadius();
-			// West edge
-			if(isIJ(1, 2) || isIJ(2, 1) || isIJ(3, 0)) {
-				drawArcC(EDGE_BORDER, r-3, Angle.ANGLE315, Angle.ANGLE90);
-			}
-			if(isIJ(2, 2) || isIJ(3, 1)) {
-				drawArcC(EDGE_BORDER, r+3, Angle.ANGLE135, Angle.ANGLE90);
-			}
-			// North edge
-			if(isIJ(1, 4) || isIJ(2, 5) || isIJ(3, 6)) {
-				drawArcC(EDGE_BORDER, r-3, Angle.ANGLE45, Angle.ANGLE90);
-			}
-			if(isIJ(2, 4) || isIJ(3, 5)) {
-				drawArcC(EDGE_BORDER, r+3, Angle.ANGLE225, Angle.ANGLE90);
-			}
-			// East edge
-			if(isIJ(5, 6) || isIJ(6, 5) || isIJ(7, 4)) {
-				drawArcC(EDGE_BORDER, r-3, Angle.ANGLE135, Angle.ANGLE90);
-			}
-			if(isIJ(5, 5) || isIJ(6, 4)) {
-				drawArcC(EDGE_BORDER, r+3, Angle.ANGLE315, Angle.ANGLE90);
-			}
-			// South edge
-			if(isIJ(5, 0) || isIJ(6, 1) || isIJ(7, 2)) {
-				drawArcC(EDGE_BORDER, r-3, Angle.ANGLE225, Angle.ANGLE90);
-			}
-			if(isIJ(5, 1) || isIJ(6, 2)) {
-				drawArcC(EDGE_BORDER, r+3, Angle.ANGLE45, Angle.ANGLE90);
-			}
-			
-			// North-East corner
-			if(isIJ(4, 6)) {
-				drawArcC(EDGE_BORDER, r+3, Angle.ANGLE225, Angle.ANGLE180);
-			}
-			// South-East corner
-			if(isIJ(7, 3)) {
-				drawArcC(EDGE_BORDER, r+3, Angle.ANGLE315, Angle.ANGLE180);
-			}
-			
-			// South-West corner
-			if(isIJ(4, 0)) {
-				drawArcC(EDGE_BORDER, r+3, Angle.ANGLE45, Angle.ANGLE180);
-			}
-			
-			// North-West corner (output)
-			if (isIJ(1, 3)) {
-
-				Point1 p1 = Angle.ANGLE135.pointAt(r + 3);
-				Point1 p2 = p1.pAdd(r, Angle.ANGLE225);
-				Point1 p3 = Angle.ANGLE315.pointAt(r + 3);
-				Point1 p4 = p3.pAdd(r, Angle.ANGLE225);
-				
-				drawLine(EDGE_BORDER, p1, p2);
-				drawLine(EDGE_BORDER, p3, p4);
-			}
-			if (isIJ(0, 3)) {
-				Point1 p1 = Angle.ANGLE135.pointAt(r + 3);
-				Point1 p2 = Angle.ANGLE315.pointAt(r + 3);
-				Point1 pp = Angle.ANGLE45.pointAt(15.2*r);
-				
-				Point1 p1a = p1.pAdd(r, Angle.ANGLE45);
-				Point1 p2a = p2.pAdd(r, Angle.ANGLE45);
-				
-				double d1 = 10*r;
-				double d2 = d1+10;
-				double d3 = r+3;
-				
-				Point1 p1b = p1.pAdd(0, d1);
-				Point1 p2b = p2.pAdd(d1, 0);
-				
-				Point1 p1c = p1b.pAdd(d3, 0);
-				Point1 p2c = p2b.pAdd(0, d3);
-				
-				Point1 p1d = p1b.pAdd(d3, d3);
-				Point1 p2d = p2b.pAdd(d3, d3);
-				
-				Point1 p1e = p1d.pAdd(d2, 0);
-				Point1 p2e = p2d.pAdd(0, d2);
-				
-				drawLine(EDGE_BORDER, p1, p1a);
-				drawLine(EDGE_BORDER, p2, p2a);
-				
-				drawLine(EDGE_BORDER, p1, p1b);
-				drawLine(EDGE_BORDER, p2, p2b);
-				
-				drawArcC(EDGE_BORDER, p1c, d3, Angle.ANGLE90, Angle.ANGLE90);
-				drawArcC(EDGE_BORDER, p2c, d3, Angle.ANGLE270, Angle.ANGLE90);
-				
-				drawLine(EDGE_BORDER, p1d, p1e);
-				drawLine(EDGE_BORDER, p2d, p2e);
-				
-				drawArcC(EDGE_BORDER, pp, d3, Angle.ANGLE0, Angle.ANGLE90);
-			}
+		private void drawBoardEdges() {
+			UtilAntivirusDraw.drawBoardEdges(this, getRadius(), getIJ());
 		}
 	}
 	
