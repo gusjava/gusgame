@@ -6,11 +6,65 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import gus.game5.core.features.f.F;
 import gus.game5.core.features.t.T;
 import gus.game5.core.features.t.Tdouble;
 import gus.game5.core.features.t.Tint;
 
 public class UtilList {
+	
+	/*
+	 * FIND ALL
+	 */
+	
+	public static <U> List<U> findAll(List<U> list, F<? super U> f) {
+		List<U> list1 = newList(list);
+		keep(list1,f);
+		return list1;
+	}
+	
+	/*
+	 * KEEP
+	 */
+	
+	public static <U> int keep(List<U> list, F<? super U> f) {
+		if(f==null || list==null) return 0;
+		Iterator<U> it = list.iterator();
+		int removed = 0;
+		while(it.hasNext()) {
+			if(!f.f(it.next())) {
+				removed++;
+				it.remove();
+			}
+		}
+		return removed;
+    }
+	
+	/*
+	 * NEW LIST
+	 */
+	
+	public static <U> List<U> newList(List<U> list) {
+		if(list==null) return null;
+		return new ArrayList<>(list);
+	}
+	
+	public static <U> List<U> newList(Set<U> set) {
+		if(set==null) return null;
+		return new ArrayList<>(set);
+	}
+	
+	public static <U> List<U> newList(Collection<U> col) {
+		if(col==null) return null;
+		return new ArrayList<>(col);
+	}
+	
+	public static <U> List<U> newList(U[] array) {
+		if(array==null) return null;
+		List<U> list = new ArrayList<>();
+		for(U u : array) list.add(u);
+		return list;
+	}
 	
 	/*
 	 * AS LIST

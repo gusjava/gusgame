@@ -7,12 +7,16 @@ import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.drawing.text.DrawingText;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
+import gus.game5.core.game.gui.JDialog1;
 import gus.game5.core.game.gui.JMenuBar1;
 import gus.game5.core.keyboard.Keyboard;
+import gus.game5.core.persister.Persister1;
 import gus.game5.core.point.point1.Point1;
 import gus.game5.core.point.point1.Point1D0;
 import gus.game5.core.point.point2.Point2;
@@ -20,6 +24,7 @@ import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
 import gus.game5.core.util.UtilArray;
 import gus.game5.core.util.UtilList;
+import gus.game5.core.util.UtilRandom;
 
 public class GameAntivirus extends Game1 {
 
@@ -37,6 +42,14 @@ public class GameAntivirus extends Game1 {
 	}
 	
 	/*
+	 * GUI
+	 */
+	
+	private JDialog1 dialog = new JDialog1();
+	private JTextPaneAbout paneAbout = new JTextPaneAbout();
+	private JPanelLevel panelLevel = new JPanelLevel();
+	
+	/*
 	 * MENU BAR
 	 */
 	
@@ -49,16 +62,13 @@ public class GameAntivirus extends Game1 {
 			action("Choose level (SHIFT)", this::chooseLevel),
 			action("Next level (\u2192)", this::levelUp),
 			action("Previous level (\u2190)", this::levelDown),
-			action("First level (\u2191)", this::level1),
-			action("Last level (\u2193)", this::level60)
+			action("First level (\u2191)", this::levelFirst),
+			action("Last level (\u2193)", this::levelLast)
 		);
-		
-//		int nb = UtilAntivirus.LEVEL_NUMBER;
-//		JRadioButtonMenuItem1[] levelButtons = new JRadioButtonMenuItem1[nb];
-//		for(int i=0;i<nb;i++) {
-//			final int level = i+1;
-//			levelButtons[i] = radioMenuItem(""+level, ()->changeLevel(level));
-//		}
+		menuBar.add("Profile", 
+			action("Create new profile", this::createNewProfile),
+			action("Load profile", this::loadProfile),
+			action("Close profile", this::closeProfile));
 	}
 	
 	/*
@@ -80,6 +90,7 @@ public class GameAntivirus extends Game1 {
 
 	private ShapeBoard<Cell> board;
 	private DrawingText levelTitle;
+	private DrawingText profileDisplay;
 	
 	private Cell draggedCell;
 	private List<Cell> draggedPiece;
@@ -87,6 +98,8 @@ public class GameAntivirus extends Game1 {
 	
 	private int[][] data;
 	private int level;
+	private Profile profile;
+	private Persister1 persister;
 	
 	/*
 	 * INITIALIZE
@@ -104,7 +117,15 @@ public class GameAntivirus extends Game1 {
 		levelTitle = newDrawingTextP(p1(gameWidth()-20, 20), "", 1, 1);
 		levelTitle.setFontBold(26);
 		
-		changeLevel(1);
+		profileDisplay = newDrawingTextP(p1(gameWidth()-20, 50), ()->profile.getDisplay(), 1, 1);
+		profileDisplay.setDrawable(()->profile!=null);
+		profileDisplay.setFontBold(14);
+		
+		persister = new Persister1(this);
+		
+		String currentProfileId = persister.get("CURRENT_PROFILE_ID");
+		if(currentProfileId!=null) loadProfile(currentProfileId);
+		else changeLevel(1);
 	}
 	
 	/*
@@ -112,17 +133,22 @@ public class GameAntivirus extends Game1 {
 	 */
 	
 	private void displayAbout() {
-		//TODO show choose popup
-		System.out.println("displayAbout");
+		dialog.showContent(paneAbout, 1000, 700);
 	}
 	
 	/*
-	 * LEVEL
+	 * LEVEL	
 	 */
+	
+	private void levelWon() {
+		if(profile!=null && level<UtilAntivirus.LEVEL_NUMBER) 
+			profile.accessLevel(level+1);
+		levelUp(); 
+	}
 	
 	private void changeLevel(int level) {
 		if(level<1) return;
-		if(level>UtilAntivirus.LEVEL_NUMBER) return;
+		if(level>getLastLevel()) return;
 		
 		this.level = level;
 		data = UtilAntivirus.dataForLevel(level);
@@ -139,17 +165,23 @@ public class GameAntivirus extends Game1 {
 		changeLevel(level-1);
 	}
 	
-	private void level1() {
+	private void levelFirst() {
 		changeLevel(1);
 	}
 	
-	private void level60() {
-		changeLevel(UtilAntivirus.LEVEL_NUMBER);
+	private void levelLast() {
+		changeLevel(getLastLevel());
 	}
 	
 	private void chooseLevel() {
-		//TODO show choose popup
-		System.out.println("choose level");
+		panelLevel.setLevel(level);
+		panelLevel.setMaxLevel(getLastLevel());
+		dialog.showContent(panelLevel, 1000, 700);
+	}
+	
+	private int getLastLevel() {
+		if(profile!=null) return profile.getLevel();
+		return UtilAntivirus.LEVEL_NUMBER;
 	}
 	
 	/*
@@ -165,8 +197,8 @@ public class GameAntivirus extends Game1 {
 		if(k.in().shift())	chooseLevel();
 		if(k.in().right()) levelUp();
 		if(k.in().left()) levelDown();
-		if(k.in().up()) level1();
-		if(k.in().down()) level60();
+		if(k.in().up()) levelFirst();
+		if(k.in().down()) levelLast();
 		
 		if(mouse().button1().justPressed()) {
 			Cell pressedCell = board.cellAt(mouse().pointCurrent());
@@ -187,8 +219,8 @@ public class GameAntivirus extends Game1 {
 			draggedPiece = null;
 			draggedValue = UtilAntivirus.EMPTY;
 			
-			if(getOutputCell().hasAntivirus()) {
-				levelUp();
+			if(getOutputCell().hasVirus()) {
+				levelWon();
 			}
 		}
 	}
@@ -303,7 +335,7 @@ public class GameAntivirus extends Game1 {
 		public boolean isOutput() {
 			return UtilAntivirus.isOutput(i,j);
 		}
-		public boolean hasAntivirus() {
+		public boolean hasVirus() {
 			return data[i][j]==UtilAntivirus.PIECE0;
 		}
 		
@@ -378,6 +410,72 @@ public class GameAntivirus extends Game1 {
 				Color color = UtilAntivirus.getLevelColor(level);
 				fillRoundC(color, 20);
 				drawStringC(Color.WHITE, fontBold(23), p(0,-2), ""+level);
+		}
+	}
+	
+	/*
+	 * PROFILE
+	 */
+	
+	private void createNewProfile() {
+		String profileName = JOptionPane.showInputDialog("Please, enter profile's name:");
+		if(profileName==null || profileName.equals("")) return;
+		
+		String profileId = ""+UtilRandom.randomInt(1000);
+		persister.put("profile_"+profileId, "name", profileName);
+		persister.put("profile_"+profileId, "level", "1");
+		
+		profile = new Profile(profileId, profileName, 1);
+		persister.put("CURRENT_PROFILE_ID", profileId);
+		changeLevel(1);
+	}
+	
+	private void loadProfile() {
+		List<String> names = persister.names(name->name.startsWith("profile_"));
+		List<String> profileIds = UtilList.collect(names, name->name.substring(8));
+		int profileNb = profileIds.size();
+		if(profileNb==0) return;
+		if(profileNb==1) loadProfile(profileIds.get(0));
+		else {
+			//CHOOSE ONE PROFILE
+		}
+	}
+	
+	private void loadProfile(String profileId) {
+		String profileName = persister.get("profile_"+profileId, "name");
+		int profileLevel = persister.getInt("profile_"+profileId, "level");
+		
+		profile = new Profile(profileId, profileName, profileLevel);
+		changeLevel(profileLevel);
+	}
+	
+	private void closeProfile() {
+		profile = null;
+		changeLevel(1);
+	}
+	
+	private class Profile {
+		private String id;
+		private String name;
+		private int level;
+		
+		public Profile(String id, String name, int level) {
+			this.id = id;
+			this.name = name;
+			this.level = level;
+		}
+		
+		public int getLevel() {
+			return level;
+		}
+		
+		public String getDisplay() {
+			return name+" "+level;
+		}
+		
+		public void accessLevel(int newLevel) {
+			if(newLevel>level) level = newLevel;
+			persister.put("profile_"+id, "level", ""+level);
 		}
 	}
 }
