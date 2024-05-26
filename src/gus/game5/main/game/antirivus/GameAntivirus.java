@@ -181,31 +181,54 @@ public class GameAntivirus extends Game1 {
 			if(releasedCell!=null && draggedCell!=null) {
 				int[] releasedPos = releasedCell.getIJ();
 				int[] draggedPos = draggedCell.getIJ();
-				if(UtilArray.distance(releasedPos, draggedPos)==1) {
-					int di = releasedPos[0]-draggedPos[0];
-					int dj = releasedPos[1]-draggedPos[1];
-					List<Cell[]> moves = findMoves(di, dj);
-					
-					if(moves!=null) {
-						int[][] data1 = UtilArray.clone(data);
-						for(Cell[] move : moves) {
-							UtilArray.set(data1, move[0].getIJ(), UtilAntivirus.EMPTY);
-						}
-						for(Cell[] move : moves) {
-							UtilArray.set(data1, move[1].getIJ(), move[0].getValue());
-						}
-						data = data1;
-						if(getOutputCell().hasAntivirus()) {
-							levelUp();
-						}
-					}
-				}
+				handleMoves(draggedPos, releasedPos);
 			}
 			draggedCell = null;
 			draggedPiece = null;
 			draggedValue = UtilAntivirus.EMPTY;
 			
+			if(getOutputCell().hasAntivirus()) {
+				levelUp();
+			}
+		}
+	}
+	
+	private void handleMoves(int[] startPos, int[] endPos) {
+		int di = endPos[0]-startPos[0];
+		int dj = endPos[1]-startPos[1];
+		
+		if(di==0 && dj==0) return;
+		if(di==0) {
+			int dj1 = Math.abs(dj);
+			int dj0 = dj<0 ? -1 : 1;
 			
+			for(int n=0;n<dj1;n++) {
+				List<Cell[]> moves = findMoves(0, dj0);
+				if(moves==null) return;
+				
+				int[][] data1 = UtilArray.clone(data);
+				for(Cell[] move : moves)
+					UtilArray.set(data1, move[0].getIJ(), UtilAntivirus.EMPTY);
+				for(Cell[] move : moves)
+					UtilArray.set(data1, move[1].getIJ(), move[0].getValue());
+				data = data1;
+			}
+		}
+		if(dj==0) {
+			int di1 = Math.abs(di);
+			int di0 = di<0 ? -1 : 1;
+			
+			for(int n=0;n<di1;n++) {
+				List<Cell[]> moves = findMoves(di0, 0);
+				if(moves==null) return;
+				
+				int[][] data1 = UtilArray.clone(data);
+				for(Cell[] move : moves)
+					UtilArray.set(data1, move[0].getIJ(), UtilAntivirus.EMPTY);
+				for(Cell[] move : moves)
+					UtilArray.set(data1, move[1].getIJ(), move[0].getValue());
+				data = data1;
+			}
 		}
 	}
 	
