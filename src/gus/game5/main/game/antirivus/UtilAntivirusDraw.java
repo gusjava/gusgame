@@ -8,7 +8,7 @@ import gus.game5.core.point.point1.Point1;
 import gus.game5.core.util.UtilArray;
 
 public class UtilAntivirusDraw {
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 
 	public static final Angle E = Angle.ANGLE0;
 	public static final Angle SE = Angle.ANGLE45;
@@ -19,7 +19,29 @@ public class UtilAntivirusDraw {
 	public static final Angle N = Angle.ANGLE270;
 	public static final Angle NE = Angle.ANGLE315;
 	
-	public static void drawPieceBorder(Drawing1 d, Point1 m, double r, int[][] data, int i, int j, int value) {
+	public static void drawPiece(Drawing1 d, Point1 m, double r, int[][] data, int i, int j) {
+		drawPieceContent(d, m, r, data, i, j);
+		drawPieceBorder(d, m, r, data, i, j);
+	}
+	
+	private static void drawPieceContent(Drawing1 d, Point1 m, double r, int[][] data, int i, int j) {
+		int value = data[i][j];
+		Color color = UtilAntivirus.COLORS[value];
+		
+		d.fillRoundC(Color.WHITE, m, r-1);
+		d.fillRoundC(color, m, r*0.7);
+		
+		if(value==UtilAntivirus.PIECE0) {
+			boolean hasSE = UtilArray.is(data, i+1, j, value);
+			Angle angle = hasSE ? SE : NW;
+			Point1 p1 = m.pAdd(angle.pointAt(r*0.6));
+			Point1 p2 = m.pAdd(angle.pointAt(r));
+			d.drawThickLine(color, p1, p2, r*0.3);
+		}
+	}
+	
+	private static void drawPieceBorder(Drawing1 d, Point1 m, double r, int[][] data, int i, int j) {
+		int value = data[i][j];
 		boolean hasE = UtilArray.is(data, i+1, j+1, value);
 		boolean hasS = UtilArray.is(data, i+1, j-1, value);
 		boolean hasN = UtilArray.is(data, i-1, j+1, value);

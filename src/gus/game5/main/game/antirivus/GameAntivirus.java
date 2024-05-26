@@ -243,8 +243,6 @@ public class GameAntivirus extends Game1 {
 	}
 	
 	
-	
-	
 	public class Cell extends ShapeCell {
 		public Cell(int i, int j) {
 			super(i, j);
@@ -305,20 +303,8 @@ public class GameAntivirus extends Game1 {
 			boolean isDraggedPiece = draggedCell!=null && draggedCell.getValue()==getValue();
 			
 			if(isDraggedPiece) g2_setComposite(ALPHA);
-			drawPieceContent();
-			drawPieceBorders();
+			UtilAntivirusDraw.drawPiece(this, p(0,0), getRadius(), data, i, j);
 			if(isDraggedPiece) g2_setComposite(composite);
-		}
-		
-		private void drawPieceContent() {
-			double r = getRadius();
-			Color color = getColor();
-			fillRoundC(Color.WHITE, r-1);
-			fillRoundC(color, r*0.7);
-		}
-		
-		private void drawPieceBorders() {
-			UtilAntivirusDraw.drawPieceBorder(this, p(0,0), getRadius(), data, i, j, getValue());
 		}
 		
 		private void drawEmpty() {
@@ -451,22 +437,14 @@ public class GameAntivirus extends Game1 {
 			setColor(Color.GRAY);
 		}
 		protected void draw() {
-			if(draggedCell!=null) {
-				double r = CELL_SIZE*0.5;
-				Color color = draggedCell.getColor();
-				Point1 draggedCellAnchor = draggedCell.getAnchor();
-				
-				for(Cell c : draggedPiece) {
-					Point1 m = c.getAnchor().pSub(draggedCellAnchor);
-					fillRoundC(Color.WHITE, m, r-1);
-					fillRoundC(color, m, r*0.7);
-					drawPieceBorders(m, c.getI(), c.getJ());
-				}
+			if(draggedCell==null) return;
+			
+			double r = CELL_SIZE*0.5;
+			Point1 draggedCellAnchor = draggedCell.getAnchor();
+			for(Cell c : draggedPiece) {
+				Point1 m = c.getAnchor().pSub(draggedCellAnchor);
+				UtilAntivirusDraw.drawPiece(this, m, r, data, c.getI(), c.getJ());
 			}
-		}
-		
-		private void drawPieceBorders(Point1 m, int i, int j) {
-			UtilAntivirusDraw.drawPieceBorder(this, m, CELL_SIZE*0.5, data, i, j, draggedValue);
 		}
 	}
 	

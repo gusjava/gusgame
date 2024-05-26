@@ -58,5 +58,9 @@ public class ShapeCell extends ShapeRound {
 	public boolean isIJ(int i, int j) {
 		return this.i==i && this.j==j;
 	}
+	
+	public String toString() {
+		return "["+i+","+j+"]";
+	}
 
 }
