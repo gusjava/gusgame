@@ -90,12 +90,57 @@ public class Persister1 {
 	 * GET INT
 	 */
 	
-	public int getInt(String key) {
-		return Integer.parseInt(get(key));
+	public Integer getInt(String key) {
+		return getInt(DEFAULT,key);
 	}
 	
-	public int getInt(String name, String key) {
-		return Integer.parseInt(get(name, key));
+	public Integer getInt(String name, String key) {
+		String value = get(name, key);
+		if (value == null)
+			return null;
+		try {
+			return Integer.parseInt(value);
+		} catch (NumberFormatException e) {
+			return null;
+		}
+	}
+	
+	/*
+	 * GET LONG
+	 */
+	
+	public Long getLong(String key) {
+		return getLong(DEFAULT,key);
+	}
+	
+	public Long getLong(String name, String key) {
+		String value = get(name, key);
+		if (value == null)
+			return null;
+		try {
+			return Long.parseLong(value);
+		} catch (NumberFormatException e) {
+			return null;
+		}
+	}
+	
+	/*
+	 * GET DOUBLE
+	 */
+	
+	public Double getDouble(String key) {
+		return getDouble(DEFAULT,key);
+	}
+	
+	public Double getDouble(String name, String key) {
+		String value = get(name, key);
+		if (value == null)
+			return null;
+		try {
+			return Double.parseDouble(value);
+		} catch (NumberFormatException e) {
+			return null;
+		}
 	}
 	
 	/*

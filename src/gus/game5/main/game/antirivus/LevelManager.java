@@ -79,8 +79,7 @@ public class LevelManager {
 	
 	public void loadCurrent() {
 		String currentProfileId = persister.get(CURRENT_PROFILE_ID);
-		if(currentProfileId!=null) loadProfile(currentProfileId);
-		else changeLevel(1);
+		if(!loadProfile(currentProfileId)) changeLevel(1);
 	}
 	
 	
@@ -138,17 +137,17 @@ public class LevelManager {
 	 * LOAD PROFILE
 	 */
 	
-	public void loadProfile() {
-		String profileId = chooseProfileId();
-		if(profileId!=null) loadProfile(profileId);
+	public boolean loadProfile() {
+		return loadProfile(chooseProfileId());
 	}
 	
-	public void loadProfile(String profileId) {
+	public boolean loadProfile(String profileId) {
+		if(profileId==null) return false;
 		String profileName = persister.get(OFFSET_PROFILE+profileId, KEY_NAME);
-		int profileLevel = persister.getInt(OFFSET_PROFILE+profileId, KEY_LEVEL);
-		
+		Integer profileLevel = persister.getInt(OFFSET_PROFILE+profileId, KEY_LEVEL);
+		if(profileName==null || profileLevel==null) return false;
 		profile = new Profile(profileId, profileName, profileLevel);
-		changeLevel(profileLevel);
+		return changeLevel(profileLevel);
 	}
 	
 	/*
@@ -171,6 +170,7 @@ public class LevelManager {
 	
 	public void closeProfile() {
 		profile = null;
+		persister.put(CURRENT_PROFILE_ID, null);
 		changeLevel(1);
 	}
 	
@@ -186,7 +186,7 @@ public class LevelManager {
 			return m.get(names.get(0)).substring(OFFSET_PROFILE.length());
 		}
 		Object[] values = names.toArray();
-		String value = (String) JOptionPane.showInputDialog(null, "Please, choose profile':", "", 
+		String value = (String) JOptionPane.showInputDialog(null, "Please, choose your profile:", "Profile chooser", 
 				JOptionPane.PLAIN_MESSAGE, null, values, names.get(0));
 		if(value==null) return null;
 		return m.get(value).substring(OFFSET_PROFILE.length());
