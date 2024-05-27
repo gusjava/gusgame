@@ -9,7 +9,7 @@ public class ShapeOval extends Shape0 {
 
 	public ShapeOval(Point0 anchor, double width, double height, Color color, AnchorType type) {
 		super(anchor, width, height, type);
-		this.color = color;
+		setColor(color);
 	}
 
 	public ShapeOval(Point0 anchor, double width, double height, AnchorType type) {
@@ -18,7 +18,7 @@ public class ShapeOval extends Shape0 {
 
 	public ShapeOval(Point2 anchor, double width, double height, Color color, AnchorType type) {
 		super(anchor, width, height, type);
-		this.color = color;
+		setColor(color);
 	}
 
 	public ShapeOval(Point2 anchor, double width, double height, AnchorType type) {

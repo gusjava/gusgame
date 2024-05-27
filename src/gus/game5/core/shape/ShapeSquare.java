@@ -11,7 +11,7 @@ public class ShapeSquare extends Shape0 {
 	
 	public ShapeSquare(Point0 anchor, double length, Color color, AnchorType type) {
 		super(anchor, length, length, type);
-		this.color = color;
+		setColor(color);
 	}
 
 	public ShapeSquare(Point0 anchor, double length, AnchorType type) {
@@ -20,7 +20,7 @@ public class ShapeSquare extends Shape0 {
 	
 	public ShapeSquare(Point0 anchor, double length, Color color) {
 		super(anchor, length, length);
-		this.color = color;
+		setColor(color);
 	}
 
 	public ShapeSquare(Point0 anchor, double length) {
@@ -31,7 +31,7 @@ public class ShapeSquare extends Shape0 {
 	
 	public ShapeSquare(Point2 anchor, double length, Color color, AnchorType type) {
 		super(anchor, length, length, type);
-		this.color = color;
+		setColor(color);
 	}
 
 	public ShapeSquare(Point2 anchor, double length, AnchorType type) {
@@ -40,7 +40,7 @@ public class ShapeSquare extends Shape0 {
 	
 	public ShapeSquare(Point2 anchor, double length, Color color) {
 		super(anchor, length, length);
-		this.color = color;
+		setColor(color);
 	}
 
 	public ShapeSquare(Point2 anchor, double length) {

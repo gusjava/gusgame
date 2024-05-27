@@ -11,7 +11,7 @@ public class ShapeRect extends Shape0 {
 
 	public ShapeRect(Point0 anchor, double width, double height, Color color, AnchorType type) {
 		super(anchor, width, height, type);
-		this.color = color;
+		setColor(color);
 	}
 
 	public ShapeRect(Point0 anchor, double width, double height, AnchorType type) {
@@ -20,7 +20,7 @@ public class ShapeRect extends Shape0 {
 
 	public ShapeRect(Point0 anchor, double width, double height, Color color) {
 		super(anchor, width, height);
-		this.color = color;
+		setColor(color);
 	}
 
 	public ShapeRect(Point0 anchor, double width, double height) {
@@ -31,7 +31,7 @@ public class ShapeRect extends Shape0 {
 
 	public ShapeRect(Point2 anchor, double width, double height, Color color, AnchorType type) {
 		super(anchor, width, height, type);
-		this.color = color;
+		setColor(color);
 	}
 
 	public ShapeRect(Point2 anchor, double width, double height, AnchorType type) {
@@ -40,7 +40,7 @@ public class ShapeRect extends Shape0 {
 
 	public ShapeRect(Point2 anchor, double width, double height, Color color) {
 		super(anchor, width, height);
-		this.color = color;
+		setColor(color);
 	}
 
 	public ShapeRect(Point2 anchor, double width, double height) {

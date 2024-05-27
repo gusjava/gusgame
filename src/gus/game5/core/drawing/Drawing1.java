@@ -11,6 +11,7 @@ import java.awt.image.RenderedImage;
 
 import gus.game5.core.alter.AlterAdd;
 import gus.game5.core.angle.Angle;
+import gus.game5.core.features.g.G;
 import gus.game5.core.point.point0.Point0;
 import gus.game5.core.point.point0.Point0Avg;
 import gus.game5.core.point.point0.Point0Sum;
@@ -61,17 +62,18 @@ public abstract class Drawing1 extends Drawing0 {
 	 * COLOR
 	 */
 	
-	public Color color = Color.BLACK;
+	public G<Color> gColor = ()->Color.BLACK;
+	
+	public void setGColor(G<Color> gColor) {
+		this.gColor = gColor;
+	}
 	
 	public void setColor(Color color) {
-		this.color = color;
-	}
-	public Color getColor() {
-		return color;
+		gColor = ()->color;
 	}
 	
-	public Color c(int r, int g, int b) {
-		return new Color(r, g, b);
+	public Color getColor() {
+		return gColor.g();
 	}
 	
 	/*
@@ -237,7 +239,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawPoly(Point0... pp) {
-		drawPoly(color, pp);
+		drawPoly(getColor(), pp);
 	}
 	
 	/*
@@ -254,11 +256,11 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawRect(Point0 p0, double width, double height) {
-		drawRect(color, p0, width, height);
+		drawRect(getColor(), p0, width, height);
 	}
 	
 	public void drawRect(double width, double height) {
-		drawRect(color, p(0,0), width, height);
+		drawRect(getColor(), p(0,0), width, height);
 	}
 	
 	/*
@@ -275,11 +277,11 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawRectC(Point0 pc, double width, double height) {
-		drawRectC(color, pc, width, height);
+		drawRectC(getColor(), pc, width, height);
 	}
 	
 	public void drawRectC(double width, double height) {
-		drawRectC(color, p(0,0), width, height);
+		drawRectC(getColor(), p(0,0), width, height);
 	}
 	
 	/*
@@ -291,7 +293,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawPoint(Point0 p) {
-		drawPoint(color, p);
+		drawPoint(getColor(), p);
 	}
 	
 	/*
@@ -307,11 +309,11 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawSquare(Point0 p0, double c) {
-		drawSquare(color, p0, c);
+		drawSquare(getColor(), p0, c);
 	}
 	
 	public void drawSquare(double c) {
-		drawSquare(color, p(0, 0), c);
+		drawSquare(getColor(), p(0, 0), c);
 	}
 	
 	/*
@@ -327,11 +329,11 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawSquareC(Point0 pc, double c) {
-		drawSquareC(color, pc, c);
+		drawSquareC(getColor(), pc, c);
 	}
 	
 	public void drawSquareC(double c) {
-		drawSquareC(color, p(0, 0), c);
+		drawSquareC(getColor(), p(0, 0), c);
 	}
 	
 	/*
@@ -348,11 +350,11 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawOval(Point0 p0, double width, double height) {
-		drawOval(color, p0, width, height);
+		drawOval(getColor(), p0, width, height);
 	}
 	
 	public void drawOval(double width, double height) {
-		drawOval(color, p(0,0), width, height);
+		drawOval(getColor(), p(0,0), width, height);
 	}
 	
 	/*
@@ -369,11 +371,11 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawOvalC(Point0 pc, double width, double height) {
-		drawOvalC(color, pc, width, height);
+		drawOvalC(getColor(), pc, width, height);
 	}
 	
 	public void drawOvalC(double width, double height) {
-		drawOvalC(color, p(0,0), width, height);
+		drawOvalC(getColor(), p(0,0), width, height);
 	}
 	
 	/*
@@ -385,7 +387,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawRound(Point0 p0, double radius) {
-		drawRound(color, p0, radius);
+		drawRound(getColor(), p0, radius);
 	}
 	
 	public void drawRound(Color color, double radius) {
@@ -393,7 +395,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawRound(double radius) {
-		drawRound(color, radius);
+		drawRound(getColor(), radius);
 	}
 	
 	/*
@@ -405,7 +407,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawRoundC(Point0 pc, double radius) {
-		drawRoundC(color, pc, radius);
+		drawRoundC(getColor(), pc, radius);
 	}
 	
 	public void drawRoundC(Color color, double radius) {
@@ -413,7 +415,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawRoundC(double radius) {
-		drawRoundC(color, radius);
+		drawRoundC(getColor(), radius);
 	}
 	
 	
@@ -444,7 +446,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void fillPoly(Point0... pp) {
-		fillPoly(color, pp);
+		fillPoly(getColor(), pp);
 	}
 	
 	/*
@@ -538,7 +540,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void fillRect(Point0 p0, double width, double height) {
-		fillRect(color, p0, width, height);
+		fillRect(getColor(), p0, width, height);
 	}
 	
 	public void fillRect(Color color, double width, double height) {
@@ -546,7 +548,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void fillRect(double width, double height) {
-		fillRect(color, p(0,0), width, height);
+		fillRect(getColor(), p(0,0), width, height);
 	}
 	
 	/*
@@ -559,7 +561,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void fillRectC(Point0 pc, double width, double height) {
-		fillRectC(color, pc, width, height);
+		fillRectC(getColor(), pc, width, height);
 	}
 	
 	public void fillRectC(Color color, double width, double height) {
@@ -567,7 +569,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void fillRectC(double width, double height) {
-		fillRectC(color, p(0,0), width, height);
+		fillRectC(getColor(), p(0,0), width, height);
 	}
 	
 	/*
@@ -580,7 +582,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void fillOval(Point0 p0, double width, double height) {
-		fillOval(color, p0, width, height);
+		fillOval(getColor(), p0, width, height);
 	}
 	
 	public void fillOval(Color color, double width, double height) {
@@ -588,7 +590,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void fillOval(double width, double height) {
-		fillOval(color, p(0,0), width, height);
+		fillOval(getColor(), p(0,0), width, height);
 	}
 	
 	/*
@@ -601,7 +603,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void fillOvalC(Point0 pc, double width, double height) {
-		fillOvalC(color, pc, width, height);
+		fillOvalC(getColor(), pc, width, height);
 	}
 	
 	public void fillOvalC(Color color, double width, double height) {
@@ -609,7 +611,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void fillOvalC(double width, double height) {
-		fillOvalC(color, p(0,0), width, height);
+		fillOvalC(getColor(), p(0,0), width, height);
 	}
 	
 	/*
@@ -621,7 +623,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void fillSquare(Point0 p0, double c) {
-		fillSquare(color, p0, c);
+		fillSquare(getColor(), p0, c);
 	}
 	
 	public void fillSquare(Color color, double c) {
@@ -629,7 +631,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void fillSquare(double c) {
-		fillSquare(color, c);
+		fillSquare(getColor(), c);
 	}
 	
 	/*
@@ -641,7 +643,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void fillSquareC(Point0 pc, double c) {
-		fillSquareC(color, pc, c);
+		fillSquareC(getColor(), pc, c);
 	}
 	
 	public void fillSquareC(Color color, double c) {
@@ -649,7 +651,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void fillSquareC(double c) {
-		fillSquareC(color, c);
+		fillSquareC(getColor(), c);
 	}
 	
 	/*
@@ -662,7 +664,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void fillRound(Point0 p0, double radius) {
-		fillRound(color, p0, radius);
+		fillRound(getColor(), p0, radius);
 	}
 	
 	public void fillRound(Color color, double radius) {
@@ -670,7 +672,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void fillRound(double radius) {
-		fillRound(color, p(0,0), radius);
+		fillRound(getColor(), p(0,0), radius);
 	}
 	
 	/*
@@ -696,11 +698,11 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void fillRoundC(Point0 pc, double radius) {
-		fillRoundC(color, pc, radius);
+		fillRoundC(getColor(), pc, radius);
 	}
 	
 	public void fillRoundC(double radius) {
-		fillRoundC(color, p(0,0), radius);
+		fillRoundC(getColor(), p(0,0), radius);
 	}
 	
 	/*
@@ -718,11 +720,11 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawArcC(Point0 pc, double radius, Angle angle1, Angle angle2) {
-		drawArcC(color, pc, radius, angle1, angle2);
+		drawArcC(getColor(), pc, radius, angle1, angle2);
 	}
 	
 	public void drawArcC(double radius, Angle angle1, Angle angle2) {
-		drawArcC(color, radius, angle1, angle2);
+		drawArcC(getColor(), radius, angle1, angle2);
 	}
 	
 	/*
@@ -759,7 +761,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawLine(Point0 p1, Point0 p2) {
-		drawLine(color, p1, p2);
+		drawLine(getColor(), p1, p2);
 	}
 	
 	public void drawLine(Color color, Point0 p2) {
@@ -767,7 +769,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawLine(Point0 p2) {
-		drawLine(color, p2);
+		drawLine(getColor(), p2);
 	}
 	
 	/*
@@ -780,7 +782,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawArrow(Point0 p1, Point0 p2) {
-		drawArrow(color, p1, p2);
+		drawArrow(getColor(), p1, p2);
 	}
 	
 	public void drawArrow(Color color, Point0 p2) {
@@ -788,7 +790,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawArrow(Point0 p2) {
-		drawArrow(color, p2);
+		drawArrow(getColor(), p2);
 	}
 	
 	/*
@@ -801,7 +803,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawArrow(Point0 p1, Point0 p2, double r) {
-		drawArrow(color, p1, p2, r);
+		drawArrow(getColor(), p1, p2, r);
 	}
 	
 	public void drawArrow(Color color, Point0 p2, double r) {
@@ -809,7 +811,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawArrow(Point0 p2, double r) {
-		drawArrow(color, p2, r);
+		drawArrow(getColor(), p2, r);
 	}
 	
 	/*
@@ -833,7 +835,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawThickLine(Point0 p1, Point0 p2, double thickness) {
-		drawThickLine(color, p1, p2, thickness);
+		drawThickLine(getColor(), p1, p2, thickness);
 	}
 	
 	public void drawThickLine(Color color, Point0 p2, double thickness) {
@@ -841,7 +843,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawThickLine(Point0 p2, double thickness) {
-		drawThickLine(color, p2, thickness);
+		drawThickLine(getColor(), p2, thickness);
 	}
 	
 	/*
@@ -853,7 +855,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawStar(Point0 pc, double radius, int number) {
-		drawStar(color, pc, radius, number);
+		drawStar(getColor(), pc, radius, number);
 	}
 	
 	public void drawStar(Color color, double radius, int number) {
@@ -861,7 +863,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawStar(double radius, int number) {
-		drawStar(color, radius, number);
+		drawStar(getColor(), radius, number);
 	}
 	
 	/*
@@ -878,7 +880,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawStarC(Point0 pc, double radius, int number) {
-		drawStarC(color, pc, radius, number);
+		drawStarC(getColor(), pc, radius, number);
 	}
 	
 	public void drawStarC(Color color, double radius, int number) {
@@ -886,7 +888,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawStarC(double radius, int number) {
-		drawStarC(color, radius, number);
+		drawStarC(getColor(), radius, number);
 	}
 	
 	/*
@@ -904,11 +906,11 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawString(Font font, Point0 p, String text) {
-		drawString(color, font, p, text);
+		drawString(getColor(), font, p, text);
 	}
 	
 	public void drawString(Point0 p, String text) {
-		drawString(color, font, p, text);
+		drawString(getColor(), font, p, text);
 	}
 	
 	public void drawString(String text) {
@@ -936,11 +938,11 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawStringP(Font font, Point0 p, String text, double fW, double fH) {
-		drawStringP(color, font, p, text, fW, fH);
+		drawStringP(getColor(), font, p, text, fW, fH);
 	}
 	
 	public void drawStringP(Point0 p, String text, double fW, double fH) {
-		drawStringP(color, font, p, text, fW, fH);
+		drawStringP(getColor(), font, p, text, fW, fH);
 	}
 	
 	public void drawStringP(String text, double fW, double fH) {
@@ -972,11 +974,11 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawStringC(Font font, Point0 p, String text) {
-		drawStringC(color, font, p, text);
+		drawStringC(getColor(), font, p, text);
 	}
 	
 	public void drawStringC(Point0 p, String text) {
-		drawStringC(color, font, p, text);
+		drawStringC(getColor(), font, p, text);
 	}
 	
 	public void drawStringC(Color color, String text) {
@@ -984,7 +986,7 @@ public abstract class Drawing1 extends Drawing0 {
 	}
 	
 	public void drawStringC(Font font, String text) {
-		drawStringC(color, font, p(0,0), text);
+		drawStringC(getColor(), font, p(0,0), text);
 	}
 	
 	public void drawStringC(String text) {
@@ -994,8 +996,6 @@ public abstract class Drawing1 extends Drawing0 {
 	/*
 	 * BUILD CIRCULAR GRADIENT
 	 */
-	
-
 	
 	public Paint buildCircularGradient(double radius, Color color1, Color color2) {
 		return buildCircularGradient(p(0,0), radius, color1, color2);
@@ -1007,5 +1007,13 @@ public abstract class Drawing1 extends Drawing0 {
 		
 		Point2D p1 = new Point2D.Double(pc.getX(), pc.getY());
 		return new RadialGradientPaint(p1, (float) radius, new float[] {0,1}, new Color[] {color1, color2});
+	}
+	
+	/*
+	 * STATIC
+	 */
+	
+	public static Color c(int r, int g, int b) {
+		return new Color(r, g, b);
 	}
 }

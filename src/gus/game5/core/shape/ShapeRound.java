@@ -9,7 +9,7 @@ public class ShapeRound extends Shape0 {
 	
 	public ShapeRound(Point0 anchor, double radius, Color color, AnchorType type) {
 		super(anchor, 2*radius, 2*radius, type);
-		this.color = color;
+		setColor(color);
 	}
 
 	public ShapeRound(Point0 anchor, double radius, AnchorType type) {
@@ -18,7 +18,7 @@ public class ShapeRound extends Shape0 {
 	
 	public ShapeRound(Point2 anchor, double radius, Color color, AnchorType type) {
 		super(anchor, 2*radius, 2*radius, type);
-		this.color = color;
+		setColor(color);
 	}
 
 	public ShapeRound(Point2 anchor, double radius, AnchorType type) {
@@ -27,7 +27,7 @@ public class ShapeRound extends Shape0 {
 	
 	public ShapeRound(Point0 anchor, double radius, Color color) {
 		super(anchor, 2*radius, 2*radius);
-		this.color = color;
+		setColor(color);
 	}
 
 	public ShapeRound(Point0 anchor, double radius) {
@@ -36,7 +36,7 @@ public class ShapeRound extends Shape0 {
 	
 	public ShapeRound(Point2 anchor, double radius, Color color) {
 		super(anchor, 2*radius, 2*radius);
-		this.color = color;
+		setColor(color);
 	}
 
 	public ShapeRound(Point2 anchor, double radius) {

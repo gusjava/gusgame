@@ -7,8 +7,6 @@ import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.drawing.text.DrawingText;
 import gus.game5.core.game.Game1;
@@ -16,7 +14,6 @@ import gus.game5.core.game.Settings;
 import gus.game5.core.game.gui.JDialog1;
 import gus.game5.core.game.gui.JMenuBar1;
 import gus.game5.core.keyboard.Keyboard;
-import gus.game5.core.persister.Persister1;
 import gus.game5.core.point.point1.Point1;
 import gus.game5.core.point.point1.Point1D0;
 import gus.game5.core.point.point2.Point2;
@@ -24,7 +21,6 @@ import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
 import gus.game5.core.util.UtilArray;
 import gus.game5.core.util.UtilList;
-import gus.game5.core.util.UtilRandom;
 
 public class GameAntivirus extends Game1 {
 
@@ -97,15 +93,15 @@ public class GameAntivirus extends Game1 {
 	private int draggedValue;
 	
 	private int[][] data;
-	private int level;
-	private Profile profile;
-	private Persister1 persister;
+	private LevelManager levelManager;
 	
 	/*
 	 * INITIALIZE
 	 */
 	
 	protected void initialize1() {
+		levelManager = new LevelManager(this);
+		
 		board = newShapeBoard(CELL_SIZE, 8, 7, Cell::new);
 		draggedCell = null;
 		draggedPiece = null;
@@ -114,18 +110,15 @@ public class GameAntivirus extends Game1 {
 		addDraw(new Drag());
 		addDraw(new LevelChip());
 		
-		levelTitle = newDrawingTextP(p1(gameWidth()-20, 20), "", 1, 1);
+		levelTitle = newDrawingTextP(p1(gameWidth()-20, 20), levelManager::getLevelTitle, 1, 1);
+		levelTitle.setGColor(levelManager::getLevelColor);
 		levelTitle.setFontBold(26);
 		
-		profileDisplay = newDrawingTextP(p1(gameWidth()-20, 50), ()->profile.getDisplay(), 1, 1);
-		profileDisplay.setDrawable(()->profile!=null);
+		profileDisplay = newDrawingTextP(p1(gameWidth()-20, 50), levelManager::getProfileDisplay, 1, 1);
+		profileDisplay.setDrawable(levelManager::hasProfile);
 		profileDisplay.setFontBold(14);
 		
-		persister = new Persister1(this);
-		
-		String currentProfileId = persister.get("CURRENT_PROFILE_ID");
-		if(currentProfileId!=null) loadProfile(currentProfileId);
-		else changeLevel(1);
+		levelManager.loadCurrent();
 	}
 	
 	/*
@@ -136,52 +129,38 @@ public class GameAntivirus extends Game1 {
 		dialog.showContent(paneAbout, 1000, 700);
 	}
 	
+	public void setData(int[][] data) {
+		this.data = data;
+	}
+	
 	/*
 	 * LEVEL	
 	 */
 	
 	private void levelWon() {
-		if(profile!=null && level<UtilAntivirus.LEVEL_NUMBER) 
-			profile.accessLevel(level+1);
-		levelUp(); 
-	}
-	
-	private void changeLevel(int level) {
-		if(level<1) return;
-		if(level>getLastLevel()) return;
-		
-		this.level = level;
-		data = UtilAntivirus.dataForLevel(level);
-		
-		levelTitle.setString(UtilAntivirus.getLevelTitle(level));
-		levelTitle.setColor(UtilAntivirus.getLevelColor(level));
+		levelManager.levelWon();
 	}
 	
 	private void levelUp() {
-		changeLevel(level+1);
+		levelManager.levelUp();
 	}
 	
 	private void levelDown() {
-		changeLevel(level-1);
+		levelManager.levelDown();
 	}
 	
 	private void levelFirst() {
-		changeLevel(1);
+		levelManager.levelFirst();
 	}
 	
 	private void levelLast() {
-		changeLevel(getLastLevel());
+		levelManager.levelLast();
 	}
 	
 	private void chooseLevel() {
-		panelLevel.setLevel(level);
-		panelLevel.setMaxLevel(getLastLevel());
+		panelLevel.setLevel(levelManager.getLevel());
+		panelLevel.setLastLevel(levelManager.getLastLevel());
 		dialog.showContent(panelLevel, 1000, 700);
-	}
-	
-	private int getLastLevel() {
-		if(profile!=null) return profile.getLevel();
-		return UtilAntivirus.LEVEL_NUMBER;
 	}
 	
 	/*
@@ -309,7 +288,7 @@ public class GameAntivirus extends Game1 {
 		}
 		
 		public Color getColor() {
-			return isEmpty() ? UtilAntivirusDraw.COLOR_EMPTY : UtilAntivirus.COLORS[getValue()];
+			return UtilAntivirusColor.getValueColor(getValue());
 		}
 		public int getValue() {
 			return data[i][j];
@@ -407,7 +386,8 @@ public class GameAntivirus extends Game1 {
 			setOrigin(p1(243, 80));
 		}
 		protected void draw() {
-				Color color = UtilAntivirus.getLevelColor(level);
+				Color color = levelManager.getLevelColor();
+				int level = levelManager.getLevel();
 				fillRoundC(color, 20);
 				drawStringC(Color.WHITE, fontBold(23), p(0,-2), ""+level);
 		}
@@ -418,64 +398,14 @@ public class GameAntivirus extends Game1 {
 	 */
 	
 	private void createNewProfile() {
-		String profileName = JOptionPane.showInputDialog("Please, enter profile's name:");
-		if(profileName==null || profileName.equals("")) return;
-		
-		String profileId = ""+UtilRandom.randomInt(1000);
-		persister.put("profile_"+profileId, "name", profileName);
-		persister.put("profile_"+profileId, "level", "1");
-		
-		profile = new Profile(profileId, profileName, 1);
-		persister.put("CURRENT_PROFILE_ID", profileId);
-		changeLevel(1);
+		levelManager.createNewProfile();
 	}
 	
 	private void loadProfile() {
-		List<String> names = persister.names(name->name.startsWith("profile_"));
-		List<String> profileIds = UtilList.collect(names, name->name.substring(8));
-		int profileNb = profileIds.size();
-		if(profileNb==0) return;
-		if(profileNb==1) loadProfile(profileIds.get(0));
-		else {
-			//CHOOSE ONE PROFILE
-		}
-	}
-	
-	private void loadProfile(String profileId) {
-		String profileName = persister.get("profile_"+profileId, "name");
-		int profileLevel = persister.getInt("profile_"+profileId, "level");
-		
-		profile = new Profile(profileId, profileName, profileLevel);
-		changeLevel(profileLevel);
+		levelManager.loadProfile();
 	}
 	
 	private void closeProfile() {
-		profile = null;
-		changeLevel(1);
-	}
-	
-	private class Profile {
-		private String id;
-		private String name;
-		private int level;
-		
-		public Profile(String id, String name, int level) {
-			this.id = id;
-			this.name = name;
-			this.level = level;
-		}
-		
-		public int getLevel() {
-			return level;
-		}
-		
-		public String getDisplay() {
-			return name+" "+level;
-		}
-		
-		public void accessLevel(int newLevel) {
-			if(newLevel>level) level = newLevel;
-			persister.put("profile_"+id, "level", ""+level);
-		}
+		levelManager.closeProfile();
 	}
 }

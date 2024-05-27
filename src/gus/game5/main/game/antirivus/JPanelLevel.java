@@ -9,7 +9,7 @@ public class JPanelLevel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private int level;
-	private int maxLevel;
+	private int lastLevel;
 
 	public JPanelLevel() {
 		super(new GridLayout(0, 5, 10, 10));
@@ -21,7 +21,7 @@ public class JPanelLevel extends JPanel {
 		this.level = level;
 	}
 	
-	public void setMaxLevel(int maxLevel) {
-		this.maxLevel = maxLevel;
+	public void setLastLevel(int lastLevel) {
+		this.lastLevel = lastLevel;
 	}
 }

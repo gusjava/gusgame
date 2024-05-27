@@ -1,19 +1,6 @@
 package gus.game5.main.game.antirivus;
 
-import java.awt.Color;
-
 public class UtilAntivirus {
-
-	public static final Color RED = Color.RED;
-	public static final Color BLUE = new Color(0,153,255);
-	public static final Color ORANGE = new Color(255,153,51);
-	public static final Color PINK = new Color(255,51,153);
-	public static final Color DARK_GREEN = Color.GREEN.darker();
-	public static final Color DARK_BLUE = Color.BLUE.darker();
-	public static final Color VIOLET = Color.MAGENTA.darker();
-	public static final Color GREEN = new Color(153,255,102);
-	public static final Color YELLOW = Color.YELLOW;
-	public static final Color WHITE = Color.WHITE;
 	
 	public static final int PIECE0 = 0;//RED (2)
 	public static final int PIECE1 = 1;//BLUE (2)
@@ -32,19 +19,6 @@ public class UtilAntivirus {
 	public static final int OUTPUT_J = 3;
 	public static final int LEVEL_NUMBER = 60;
 	
-	public static final Color[] COLORS = new Color[] {
-			RED,
-			BLUE,
-			ORANGE,
-			PINK,
-			DARK_GREEN,
-			DARK_BLUE,
-			VIOLET,
-			GREEN,
-			YELLOW,
-			WHITE
-	};
-	
 	public static boolean isOutput(int i, int j) {
 		return i==OUTPUT_I && j==OUTPUT_J;
 	}
@@ -58,14 +32,6 @@ public class UtilAntivirus {
 		if(i==6) return j==0 || j==1 || j==5 || j==6;
 		if(i==7) return j==0 || j==1 || j==2 || j==4 || j==5 || j==6;
 		return false;
-	}
-	
-	public static Color getLevelColor(int level) {
-		if(level<=12) return GREEN;// STARTER
-		if(level<=24) return ORANGE;// JUNIOR
-		if(level<=36) return RED;// EXPERT
-		if(level<=48) return VIOLET;// MASTER
-		return DARK_BLUE; //WIZARD
 	}
 	
 	public static String getLevelTitle(int level) {
