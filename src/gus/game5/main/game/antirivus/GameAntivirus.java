@@ -64,7 +64,8 @@ public class GameAntivirus extends Game1 {
 		menuBar.add("Profile", 
 			action("Create new profile", this::createNewProfile),
 			action("Load profile", this::loadProfile),
-			action("Close profile", this::closeProfile));
+			action("Close profile", this::closeProfile),
+			action("Remove profile", this::removeProfile));
 	}
 	
 	/*
@@ -403,6 +404,10 @@ public class GameAntivirus extends Game1 {
 	
 	private void loadProfile() {
 		levelManager.loadProfile();
+	}
+	
+	private void removeProfile() {
+		levelManager.removeProfile();
 	}
 	
 	private void closeProfile() {

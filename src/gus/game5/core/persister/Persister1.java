@@ -4,13 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import gus.game5.core.features.f.F;
 import gus.game5.core.game.Game;
 import gus.game5.core.util.UtilFile;
 import gus.game5.core.util.UtilList;
+import gus.game5.core.util.UtilMap;
 
 public class Persister1 {
 	
@@ -110,6 +113,81 @@ public class Persister1 {
 	}
 	
 	/*
+	 * REMOVE
+	 */
+	
+	public void remove(String name) {
+		File f = file(name);
+		if(f!=null && f.exists()) f.delete();
+	}
+	
+	/*
+	 * PROPS
+	 */
+	
+	public Map<String, Properties> props() {
+		Map<String, Properties> map = new HashMap<>();
+		File[] ff = dir.listFiles();
+		for(File f : ff) {
+			String name = name(f);
+			map.put(name, load(f));
+		}
+		return map;
+	}
+	
+	public Map<String, Properties> props(F<String> filter) {
+		Map<String, Properties> map = new HashMap<>();
+		File[] ff = dir.listFiles();
+		for(File f : ff) {
+			String name = name(f);
+			if(filter.f(name)) {
+				map.put(name, load(f));
+			}
+		}
+		return map;
+	}
+	
+	/*
+	 * PROP
+	 */
+	
+	public Properties prop(String name) {
+		return load(name);
+	}
+	
+	/*
+	 * ALL VALUES
+	 */
+	
+	public Map<String,String> allValuesForKey(String key) {
+		Map<String,String> map = new HashMap<>();
+		File[] ff = dir.listFiles();
+		for(File f : ff) {
+			String name = name(f);
+			Properties p = load(f);
+			if(p.containsKey(key)) {
+				map.put(name, p.getProperty(key));
+			}
+		}
+		return map;
+	}
+	
+	public Map<String,String> allValuesForKey(String key, F<String> filter) {
+		Map<String,String> map = new HashMap<>();
+		File[] ff = dir.listFiles();
+		for(File f : ff) {
+			String name = name(f);
+			if(filter.f(name)) {
+				Properties p = load(f);
+				if(p.containsKey(key)) {
+					map.put(name, p.getProperty(key));
+				}
+			}
+		}
+		return map;
+	}
+	
+	/*
 	 * PRIVATE
 	 */
 	
@@ -117,17 +195,30 @@ public class Persister1 {
 		return new File(dir, name+"."+EXT);
 	}
 	
+	private String name(File file) {
+		String name = file.getName();
+		return name.substring(0, name.length()-EXT.length()-1);
+	}
+	
 	private Properties load(String name) {
+		return load(file(name));
+	}
+	
+	private Properties load(File file) {
 		try {
-			return UtilFile.readPropFile(file(name));
+			return UtilFile.readPropFile(file);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 	
 	private void write(String name, Properties p) {
+		write(file(name), p);
+	}
+	
+	private void write(File file, Properties p) {
 		try {
-			UtilFile.write(file(name), p);
+			UtilFile.write(file, p);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -139,6 +230,7 @@ public class Persister1 {
 	}
 	
 	private void putValue(Properties p, String key, String value) {
-		p.setProperty(key, value);
+		if(value==null) p.remove(key);
+		else p.setProperty(key, value);
 	}
 }

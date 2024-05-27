@@ -1,12 +1,13 @@
 package gus.game5.main.game.antirivus;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
+import java.util.Map;
 import javax.swing.JOptionPane;
-
 import gus.game5.core.persister.Persister1;
-import gus.game5.core.util.UtilList;
+import gus.game5.core.util.UtilMap;
 import gus.game5.core.util.UtilRandom;
 
 public class LevelManager {
@@ -133,27 +134,69 @@ public class LevelManager {
 		changeLevel(1);
 	}
 	
+	/*
+	 * LOAD PROFILE
+	 */
+	
 	public void loadProfile() {
-		List<String> names = persister.names(name->name.startsWith(OFFSET_PROFILE));
-		List<String> profileIds = UtilList.collect(names, name->name.substring(OFFSET_PROFILE.length()));
-		int profileNb = profileIds.size();
-		if(profileNb==0) return;
-		if(profileNb==1) loadProfile(profileIds.get(0));
-		else {
-			//CHOOSE ONE PROFILE
-		}
+		String profileId = chooseProfileId();
+		if(profileId!=null) loadProfile(profileId);
 	}
 	
 	public void loadProfile(String profileId) {
-		String profileName = persister.get("profile_"+profileId, KEY_NAME);
-		int profileLevel = persister.getInt("profile_"+profileId, KEY_LEVEL);
+		String profileName = persister.get(OFFSET_PROFILE+profileId, KEY_NAME);
+		int profileLevel = persister.getInt(OFFSET_PROFILE+profileId, KEY_LEVEL);
 		
 		profile = new Profile(profileId, profileName, profileLevel);
 		changeLevel(profileLevel);
 	}
 	
+	/*
+	 * REMOVE PROFILE
+	 */
+	
+	public void removeProfile() {
+		String profileId = chooseProfileId();
+		if(profileId!=null) removeProfile(profileId);
+	}
+	
+	public void removeProfile(String profileId) {
+		persister.remove(OFFSET_PROFILE+profileId);
+		if(isProfile(profileId)) closeProfile();
+	}
+	
+	/*
+	 * CLOSE PROFILE
+	 */
+	
 	public void closeProfile() {
 		profile = null;
 		changeLevel(1);
+	}
+	
+	private String chooseProfileId() {
+		Map<String, String> m = persister.allValuesForKey(KEY_NAME, name->name.startsWith(OFFSET_PROFILE));
+		if(m.isEmpty()) return null;
+		
+		m = UtilMap.invMap0(m);
+		List<String> names = new ArrayList<>(m.keySet());
+		Collections.sort(names);
+		
+		if(names.size()==1) {
+			return m.get(names.get(0)).substring(OFFSET_PROFILE.length());
+		}
+		Object[] values = names.toArray();
+		String value = (String) JOptionPane.showInputDialog(null, "Please, choose profile':", "", 
+				JOptionPane.PLAIN_MESSAGE, null, values, names.get(0));
+		if(value==null) return null;
+		return m.get(value).substring(OFFSET_PROFILE.length());
+	}
+	
+	/*
+	 * IS PROFILE
+	 */
+	
+	public boolean isProfile(String id) {
+		return profile!=null && profile.id.equals(id);
 	}
 }
