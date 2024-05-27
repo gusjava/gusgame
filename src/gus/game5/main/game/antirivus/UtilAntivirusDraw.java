@@ -305,17 +305,17 @@ public class UtilAntivirusDraw {
 	}
 	
 	private static void arc(Drawing1 d, Point1 m, double r, Angle a1, Angle a2) {
-		d.drawArcC(m, r, a1, a2);
+		d.drawArcC(LIGHT_GRAY, m, r, a1, a2);
 	}
 	
 	private static void arc(Drawing1 d, Point1 m, double r, Angle aC, Angle a1, Angle a2) {
 		Point1 p = m.pAdd(aC.pointAt(2*r));
-		d.drawArcC(p, r, a1, a2);
+		d.drawArcC(LIGHT_GRAY, p, r, a1, a2);
 	}
 	
 	private static void line(Drawing1 d, Point1 m, double r, Angle aC, Angle aD) {
 		Point1 p = m.pAdd(aC.pointAt(r));
-		d.drawLine(p, p.pAdd(r, aD));
+		d.drawLine(LIGHT_GRAY, p, p.pAdd(r, aD));
 	}
 	
 	/*

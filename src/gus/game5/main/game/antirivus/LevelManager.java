@@ -61,7 +61,7 @@ public class LevelManager {
 		changeLevel(getLastLevel());
 	}
 	
-	private boolean changeLevel(int level) {
+	public boolean changeLevel(int level) {
 		if(level<1) return false;
 		if(level>getLastLevel()) return false;
 		
@@ -146,7 +146,9 @@ public class LevelManager {
 		String profileName = persister.get(OFFSET_PROFILE+profileId, KEY_NAME);
 		Integer profileLevel = persister.getInt(OFFSET_PROFILE+profileId, KEY_LEVEL);
 		if(profileName==null || profileLevel==null) return false;
+		
 		profile = new Profile(profileId, profileName, profileLevel);
+		persister.put(CURRENT_PROFILE_ID, profileId);
 		return changeLevel(profileLevel);
 	}
 	

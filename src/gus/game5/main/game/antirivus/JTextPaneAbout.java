@@ -1,9 +1,12 @@
 package gus.game5.main.game.antirivus;
 
+import gus.game5.core.game.gui.JDialog1;
 import gus.game5.core.game.gui.JTextPane1;
 
 public class JTextPaneAbout extends JTextPane1 {
 	private static final long serialVersionUID = 1L;
+	
+	private JDialog1 dialog = new JDialog1();
 
 	public JTextPaneAbout() {
 		super();
@@ -19,5 +22,9 @@ public class JTextPaneAbout extends JTextPane1 {
 		appendLine(20, "to make space to move other game pieces around during your challenge");
 		appendLine(20, "\u26ac You can move all the game pieces except the small white ones.");
 		appendLine(20, "You should consider them part of the game board during that specific challenge");
+	}
+	
+	public void display() {
+		dialog.showContent(this, 1000, 700);
 	}
 }

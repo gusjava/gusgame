@@ -11,7 +11,6 @@ import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.drawing.text.DrawingText;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
-import gus.game5.core.game.gui.JDialog1;
 import gus.game5.core.game.gui.JMenuBar1;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point1.Point1;
@@ -36,14 +35,6 @@ public class GameAntivirus extends Game1 {
 		main.displayInWindows();
 		main.start();
 	}
-	
-	/*
-	 * GUI
-	 */
-	
-	private JDialog1 dialog = new JDialog1();
-	private JTextPaneAbout paneAbout = new JTextPaneAbout();
-	private JPanelLevel panelLevel = new JPanelLevel();
 	
 	/*
 	 * MENU BAR
@@ -95,6 +86,8 @@ public class GameAntivirus extends Game1 {
 	
 	private int[][] data;
 	private LevelManager levelManager;
+	private JTextPaneAbout paneAbout;
+	private JPanelLevel panelLevel;
 	
 	/*
 	 * INITIALIZE
@@ -102,6 +95,8 @@ public class GameAntivirus extends Game1 {
 	
 	protected void initialize1() {
 		levelManager = new LevelManager(this);
+		panelLevel = new JPanelLevel(levelManager);
+		paneAbout = new JTextPaneAbout();
 		
 		board = newShapeBoard(CELL_SIZE, 8, 7, Cell::new);
 		draggedCell = null;
@@ -127,8 +122,12 @@ public class GameAntivirus extends Game1 {
 	 */
 	
 	private void displayAbout() {
-		dialog.showContent(paneAbout, 1000, 700);
+		paneAbout.display();
 	}
+	
+	/*
+	 * DATA
+	 */
 	
 	public void setData(int[][] data) {
 		this.data = data;
@@ -159,9 +158,7 @@ public class GameAntivirus extends Game1 {
 	}
 	
 	private void chooseLevel() {
-		panelLevel.setLevel(levelManager.getLevel());
-		panelLevel.setLastLevel(levelManager.getLastLevel());
-		dialog.showContent(panelLevel, 1000, 700);
+		panelLevel.display();
 	}
 	
 	/*
@@ -363,7 +360,9 @@ public class GameAntivirus extends Game1 {
 		public Drag() {
 			super();
 			setOrigin(new Point1D0(mouse()::point));
-			setColor(Color.GRAY);
+		}
+		public Color getColor() {
+			return UtilAntivirusColor.getValueColor(draggedValue);
 		}
 		protected void draw() {
 			if(draggedCell==null) return;
