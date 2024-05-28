@@ -20,6 +20,7 @@ import gus.game5.core.dyn.DynGDouble;
 import gus.game5.core.dyn.DynGInt;
 import gus.game5.core.dyn.DynGLong;
 import gus.game5.core.dyn.DynList;
+import gus.game5.core.dyn.DynTimer;
 import gus.game5.core.features.g.G;
 import gus.game5.core.map.GameMap;
 import gus.game5.core.point.point0.Point0;
@@ -454,6 +455,16 @@ public abstract class Game1 extends Game {
 	
 	protected Point2 newDynPoint2(double x, double y, double dx, double dy) {
 		Point2 dyn = p2(x, y, dx, dy);
+		addDyn(dyn);
+		return dyn;
+	}
+	
+	/*
+	 * NEW DYN TIMER
+	 */
+	
+	protected DynTimer newDynTimer() {
+		DynTimer dyn = new DynTimer();
 		addDyn(dyn);
 		return dyn;
 	}

@@ -1,5 +1,7 @@
 package gus.game5.main.game.antivirus;
 
+import static gus.game5.core.util.UtilGui.action;
+
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
@@ -9,6 +11,7 @@ import java.util.List;
 
 import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.drawing.text.DrawingText;
+import gus.game5.core.dyn.DynTimer;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
 import gus.game5.core.game.gui.JMenuBar1;
@@ -20,8 +23,6 @@ import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
 import gus.game5.core.util.UtilArray;
 import gus.game5.core.util.UtilList;
-
-import static gus.game5.core.util.UtilGui.*;
 
 public class GameAntivirus extends Game1 {
 
@@ -81,6 +82,7 @@ public class GameAntivirus extends Game1 {
 	private ShapeBoard<Cell> board;
 	private DrawingText levelTitle;
 	private DrawingText profileDisplay;
+	private DrawingText completeDisplay;
 	
 	private Cell draggedCell;
 	private List<Cell> draggedPiece;
@@ -90,6 +92,7 @@ public class GameAntivirus extends Game1 {
 	private LevelManager levelManager;
 	private JTextPaneAbout paneAbout;
 	private JPanelLevel panelLevel;
+	private DynTimer completeTimer;
 	
 	/*
 	 * INITIALIZE
@@ -99,6 +102,7 @@ public class GameAntivirus extends Game1 {
 		levelManager = new LevelManager(this);
 		panelLevel = new JPanelLevel(levelManager);
 		paneAbout = new JTextPaneAbout();
+		completeTimer = newDynTimer();
 		
 		board = newShapeBoard(CELL_SIZE, 8, 7, Cell::new);
 		draggedCell = null;
@@ -115,6 +119,10 @@ public class GameAntivirus extends Game1 {
 		profileDisplay = newDrawingTextP(p1(gameWidth()-20, 50), levelManager::getProfileDisplay, 1, 1);
 		profileDisplay.setDrawable(levelManager::hasProfile);
 		profileDisplay.setFontBold(14);
+		
+		completeDisplay = newDrawingTextC(p1(240, 30), "Level Complete");
+		completeDisplay.setDrawable(completeTimer);
+		completeDisplay.setFontBold(25);
 		
 		levelManager.loadCurrent();
 	}
@@ -173,6 +181,9 @@ public class GameAntivirus extends Game1 {
 		if(k.in().F2())	exit();
 		if(k.in().F3())	displayAbout();
 
+		goNext();
+		if(completeTimer.gBool()) return;
+
 		if(k.in().shift())	chooseLevel();
 		if(k.in().right()) levelUp();
 		if(k.in().left()) levelDown();
@@ -199,7 +210,7 @@ public class GameAntivirus extends Game1 {
 			draggedValue = UtilAntivirus.EMPTY;
 			
 			if(getOutputCell().hasVirus()) {
-				levelWon();
+				completeTimer.start(60, this::levelWon);
 			}
 		}
 	}
