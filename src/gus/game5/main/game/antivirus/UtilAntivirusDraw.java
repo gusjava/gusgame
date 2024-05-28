@@ -1,11 +1,11 @@
-package gus.game5.main.game.antirivus;
+package gus.game5.main.game.antivirus;
 
 import gus.game5.core.angle.Angle;
 
 import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.point.point1.Point1;
 import static gus.game5.core.util.UtilArray.*;
-import static gus.game5.main.game.antirivus.UtilAntivirusColor.*;
+import static gus.game5.main.game.antivirus.UtilAntivirusColor.*;
 
 public class UtilAntivirusDraw {
 	public static final boolean DEBUG = false;

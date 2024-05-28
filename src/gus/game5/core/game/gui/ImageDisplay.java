@@ -1,12 +1,14 @@
-package gus.game5.main.presentation;
+package gus.game5.core.game.gui;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.RenderedImage;
+import java.io.File;
 
 import javax.swing.JPanel;
 
 import gus.game5.core.util.UtilImage;
+import gus.game5.core.util.UtilThread;
 
 public class ImageDisplay extends JPanel  {
 	private static final long serialVersionUID = 1L;
@@ -14,7 +16,19 @@ public class ImageDisplay extends JPanel  {
 	private RenderedImage image;
 	
 	public ImageDisplay(String path) {
-		image = UtilImage.readImg(path);
+		UtilThread.run(()->{
+			image = UtilImage.readImg(path);
+		});
+	}
+	
+	public ImageDisplay(File file) {
+		UtilThread.run(()->{
+			image = UtilImage.readImg(file);
+		});
+	}
+	
+	public ImageDisplay(RenderedImage image) {
+		this.image = image;
 	}
 
 	protected void paintComponent(Graphics g) {

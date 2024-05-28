@@ -1,4 +1,4 @@
-package gus.game5.main.game.antirivus;
+package gus.game5.main.game.antivirus;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;

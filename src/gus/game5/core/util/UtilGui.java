@@ -1,6 +1,7 @@
 package gus.game5.core.util;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.Action;
@@ -208,6 +209,16 @@ public class UtilGui {
 	}
 	
 	/*
+	 * PANEL
+	 */
+	
+	public static JPanel panel(Color c) {
+		JPanel p = new JPanel();
+		p.setBackground(c);
+		return p;
+	}
+	
+	/*
 	 * BORDER
 	 */
 	
@@ -224,5 +235,14 @@ public class UtilGui {
 	public static JComponent empty(JComponent comp, int gap) {
 		comp.setBorder(BorderFactory.createEmptyBorder(gap, gap, gap, gap));
 		return comp;
+	}
+	
+	/*
+	 * FONT
+	 */
+	
+	public static JComponent fontSize(JComponent c, int size) {
+		c.setFont(c.getFont().deriveFont((float) size));
+		return c;
 	}
 }

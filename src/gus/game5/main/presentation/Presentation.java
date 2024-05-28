@@ -24,7 +24,7 @@ import gus.game5.main.anim1.AnimGameOfLife;
 import gus.game5.main.anim1.AnimLandscape;
 import gus.game5.main.anim1.AnimLangtonAnt;
 import gus.game5.main.anim1.AnimMaze;
-import gus.game5.main.game.antirivus.GameAntivirus;
+import gus.game5.main.game.antivirus.GameAntivirus;
 import gus.game5.main.game.board2.chess1.GameChess1;
 import gus.game5.main.game.board2.hex1.GameHex1;
 import gus.game5.main.game.board2.ragus1.GameRagus1;
@@ -52,7 +52,6 @@ import gus.game5.main.test2.MainImg2;
 import static gus.game5.core.util.UtilGui.*;
 
 public class Presentation extends Game {
-	public static final String BASE_IMG = "/gus/game5/main/presentation/";
 
 	public static void main(String[] args) {
 		Presentation main = new Presentation();
@@ -67,7 +66,7 @@ public class Presentation extends Game {
 		s.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
 	}
 	
-	private IconLoader iconLoader = new IconLoader(BASE_IMG);
+	private IconLoader iconLoader = new IconLoader(this);
 	
 	protected void initialize() {}
 	protected void turn() {}

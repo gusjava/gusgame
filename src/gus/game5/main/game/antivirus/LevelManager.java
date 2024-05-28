@@ -1,4 +1,4 @@
-package gus.game5.main.game.antirivus;
+package gus.game5.main.game.antivirus;
 
 import java.awt.Color;
 import java.util.ArrayList;

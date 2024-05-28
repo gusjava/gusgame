@@ -5,12 +5,22 @@ import java.util.Map;
 
 import javax.swing.Icon;
 
+import gus.game5.core.game.Game;
 import gus.game5.core.util.UtilImage;
+import gus.game5.core.util.UtilResource;
 
 public class IconLoader {
 
 	private String base;
 	private Map<String, Icon> map;
+	
+	public IconLoader(Game game) {
+		this(game.getClass());
+	}
+	
+	public IconLoader(Class<?> clss) {
+		this(UtilResource.resourceAt(clss, ""));
+	}
 	
 	public IconLoader(String base) {
 		this.base = base;
