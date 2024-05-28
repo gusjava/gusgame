@@ -1,32 +1,21 @@
 package gus.game5.core.game;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.border.BevelBorder;
 import javax.swing.plaf.FontUIResource;
 
 import gus.game5.core.angle.Angle;
 import gus.game5.core.draw.Draw;
-import gus.game5.core.game.gui.Action1;
-import gus.game5.core.game.gui.JMenu1;
 import gus.game5.core.game.gui.JMenuBar1;
 import gus.game5.core.game.gui.JPanel1;
-import gus.game5.core.game.gui.JRadioButtonMenuItem1;
-import gus.game5.core.game.gui.JToolBar1;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.mouse.Mouse;
 import gus.game5.core.point.point0.Point0;
@@ -291,145 +280,7 @@ public abstract class Game {
 			UIManager.put("RadioButtonMenuItem.font", fontUI);
 		}
 	}
-	
-	/*
-	 * ACTION
-	 */
-	
-	public Action action(String name, Runnable r) {
-		return new Action1(name, r);
-	}
-	
-	public Action action(Icon icon) {
-		return new Action1(icon);
-	}
-	
-	/*
-	 * MENU ITEM
-	 */
-	
-	public JRadioButtonMenuItem1 radioMenuItem(String name, Runnable r) {
-		return new JRadioButtonMenuItem1(name, r);
-	}
-	
-	/*
-	 * MENU
-	 */
-	
-	public JMenu1 menu(String title, JMenuItem... items) {
-		return new JMenu1(title, items);
-	}
-	
-	public JMenu1 menu(String title, int index, JMenuItem... items) {
-		return new JMenu1(title , index, items);
-	}
-	
-	/*
-	 * BAR
-	 */
-	
-	public JToolBar1 bar(Action... actions) {
-		JToolBar1 bar = new JToolBar1();
-		for(Action action : actions) bar.add(action);
-		return bar;
-	}
-	
-	public JToolBar1 bar(Icon... icons) {
-		JToolBar1 bar = new JToolBar1();
-		for(Icon icon : icons) bar.add(action(icon));
-		return bar;
-	}
-	
-	/*
-	 * PANEL
-	 */
-	
-	public JPanel panel(JComponent c, JComponent n, JComponent s, JComponent w, JComponent e) {
-		JPanel p = new JPanel(new BorderLayout());
-		if(c!=null) p.add(c, BorderLayout.CENTER);
-		if(n!=null) p.add(n, BorderLayout.NORTH);
-		if(s!=null) p.add(s, BorderLayout.SOUTH);
-		if(w!=null) p.add(w, BorderLayout.WEST);
-		if(e!=null) p.add(e, BorderLayout.EAST);
-		return p;
-	}
-	
-	/*
-	 * PANEL : N S W E
-	 */
-	
-	public JPanel panelN(JComponent n) {
-		return panel(null, n, null, null, null);
-	}
-	
-	public JPanel panelS(JComponent s) {
-		return panel(null, null, s, null, null);
-	}
-	
-	public JPanel panelW(JComponent w) {
-		return panel(null, null, null, w, null);
-	}
-	
-	public JPanel panelE(JComponent e) {
-		return panel(null, null, null, null, e);
-	}
-	
-	/*
-	 * PANEL : CN CS CW CE
-	 */
-	
-	public JPanel panelCN(JComponent c, JComponent n) {
-		return panel(c, n, null, null, null);
-	}
-	
-	public JPanel panelCS(JComponent c, JComponent s) {
-		return panel(c, null, s, null, null);
-	}
-	
-	public JPanel panelCW(JComponent c, JComponent w) {
-		return panel(c, null, null, w, null);
-	}
-	
-	public JPanel panelCE(JComponent c, JComponent e) {
-		return panel(c, null, null, null, e);
-	}
-	
-	/*
-	 * PANEL CNS, CWE
-	 */
-	
-	public JPanel panelCNS(JComponent c, JComponent n, JComponent s) {
-		return panel(c, n, s, null, null);
-	}
-	
-	public JPanel panelCWE(JComponent c, JComponent w, JComponent e) {
-		return panel(c, null, null, w, e);
-	}
-	
-	/*
-	 * PANEL NS, WE
-	 */
-	
-	public JPanel panelNS(JComponent n, JComponent s) {
-		return panel(null, n, s, null, null);
-	}
-	
-	public JPanel panelWE(JComponent w, JComponent e) {
-		return panel(null, null, null, w, e);
-	}
-	
-	/*
-	 * BORDER
-	 */
-	
-	public JComponent raised(JComponent comp) {
-		comp.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-		return comp;
-	}
-	
-	
-	
-	
+
 	/*
 	 * ABSTRACTS
 	 */

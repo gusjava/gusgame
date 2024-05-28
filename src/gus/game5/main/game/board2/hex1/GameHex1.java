@@ -23,6 +23,8 @@ import gus.game5.core.point.point2.Point2;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
 
+import static gus.game5.core.util.UtilGui.*;
+
 public class GameHex1 extends Play1 {
 	
 	public static final String TITLE = "Hex";

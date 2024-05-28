@@ -9,61 +9,57 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import gus.game5.core.game.gui.JDialog2;
+import static gus.game5.core.util.UtilGui.*;
 
-public class JPanelLevel extends JPanel {
+import gus.game5.core.game.gui.JPanelDialog2;
+
+public class JPanelLevel extends JPanelDialog2 {
 	private static final long serialVersionUID = 1L;
 
 	private LevelManager levelManager;
 	private int currentLevel;
 	private int lastLevel;
 	
-	private JDialog2 dialog = new JDialog2();
-	
-	private JPanel panelCenter;
 	private JPanelCategory panelCategory1;
 	private JPanelCategory panelCategory2;
 	private JPanelCategory panelCategory3;
 	private JPanelCategory panelCategory4;
 	private JPanelCategory panelCategory5;
-	
-	private JButton buttonOk;
-	private JButton buttonCancel;
 
 	public JPanelLevel(LevelManager levelManager) {
-		super(new BorderLayout());
+		super();
 		this.levelManager = levelManager;
-		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		setBackground(Color.WHITE);
-		
+	}
+	
+	protected void beforeDisplay() {
+		lastLevel = levelManager.getLastLevel();
+		currentLevel = levelManager.getLevel();
+		rebuildPanel();
+	}
+	
+	protected void beforeOk() {
+		levelManager.changeLevel(currentLevel);
+	}
+	
+	protected JComponent buildCenter() {
 		panelCategory1 = new JPanelCategory(12);
 		panelCategory2 = new JPanelCategory(24);
 		panelCategory3 = new JPanelCategory(36);
 		panelCategory4 = new JPanelCategory(48);
 		panelCategory5 = new JPanelCategory(60);
 		
-		buttonOk = new JButton("Ok");
-		buttonOk.addActionListener(e->ok());
-		
-		buttonCancel = new JButton("Cancel");
-		buttonCancel.addActionListener(e->cancel());
-		
 		JLabel labelTitle = new JLabel("LEVEL CHOOSER");
 		labelTitle.setHorizontalAlignment(JLabel.CENTER);
 		labelTitle.setForeground(Color.LIGHT_GRAY);
 		labelTitle.setFont(labelTitle.getFont().deriveFont((float) 25).deriveFont(Font.BOLD));
 		
-		JPanel panelButtons = new JPanel(new GridLayout(1,2,10,10));
-		panelButtons.setOpaque(false);
-		panelButtons.add(buttonOk);
-		panelButtons.add(buttonCancel);
 		
-		panelCenter = new JPanel(new GridLayout(0, 5, 20, 20));
+		JPanel panelCenter = new JPanel(new GridLayout(0, 5, 20, 20));
 		panelCenter.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 		panelCenter.setOpaque(false);
 		
@@ -73,25 +69,7 @@ public class JPanelLevel extends JPanel {
 		panelCenter.add(panelCategory4);
 		panelCenter.add(panelCategory5);
 		
-		add(labelTitle, BorderLayout.NORTH);
-		add(panelCenter, BorderLayout.CENTER);
-		add(panelButtons, BorderLayout.SOUTH);
-	}
-	
-	public void display() {
-		lastLevel = levelManager.getLastLevel();
-		currentLevel = levelManager.getLevel();
-		rebuildPanel();
-		dialog.showContent(this, 1000, 500);
-	}
-	
-	private void ok() {
-		levelManager.changeLevel(currentLevel);
-		dialog.hideContent();
-	}
-	
-	private void cancel() {
-		dialog.hideContent();
+		return panelCN(panelCenter, labelTitle);
 	}
 	
 	private void rebuildPanel() {
@@ -170,7 +148,6 @@ public class JPanelLevel extends JPanel {
 			repaint();
 		}
 	}
-	
 	
 	private class JRadioButton1 extends JRadioButton implements ActionListener {
 		private static final long serialVersionUID = 1L;

@@ -11,6 +11,8 @@ import gus.game5.core.game.Settings;
 import gus.game5.core.game.gui.JMenuBar1;
 import gus.game5.core.keyboard.Keyboard;
 
+import static gus.game5.core.util.UtilGui.*;
+
 public class Canevas1a extends Game1 {
 	
 	public static final String TITLE = "title";

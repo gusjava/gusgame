@@ -16,6 +16,8 @@ import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point0.Point0;
 import gus.game5.core.shape.ShapeSquare;
 
+import static gus.game5.core.util.UtilGui.*;
+
 public class GameReversi1 extends Game1 {
 	
 	public static final String TITLE = "Reversi";

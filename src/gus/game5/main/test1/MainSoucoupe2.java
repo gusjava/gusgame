@@ -21,6 +21,8 @@ import gus.game5.core.point.control.PointControl2Mouse;
 import gus.game5.core.point.point1.Point1;
 import gus.game5.core.point.point2.Point2;
 
+import static gus.game5.core.util.UtilGui.*;
+
 public class MainSoucoupe2 extends Game {
 	
 	public static final double SPEED = 1;

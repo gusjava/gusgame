@@ -21,6 +21,8 @@ import gus.game5.core.shape.board.ShapeCell;
 import gus.game5.core.util.UtilArray;
 import gus.game5.core.util.UtilList;
 
+import static gus.game5.core.util.UtilGui.*;
+
 public class GameAntivirus extends Game1 {
 
 	public static final String TITLE = "Antivirus";

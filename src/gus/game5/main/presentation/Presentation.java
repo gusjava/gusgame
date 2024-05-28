@@ -49,6 +49,8 @@ import gus.game5.main.test2.MainDraws;
 import gus.game5.main.test2.MainImg1;
 import gus.game5.main.test2.MainImg2;
 
+import static gus.game5.core.util.UtilGui.*;
+
 public class Presentation extends Game {
 	public static final String BASE_IMG = "/gus/game5/main/presentation/";
 

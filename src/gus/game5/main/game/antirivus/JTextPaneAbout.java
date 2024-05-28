@@ -12,7 +12,6 @@ public class JTextPaneAbout extends JTextPane1 {
 		super();
 		setMargin(50);
 		appendBoldLine(25, "Game Rules");
-
 		appendLine(20, "");
 		appendLine(20, "For each level from 1 to 60");
 		appendLine(20, "Move the game pieces around, so you can maneuver the virus (the red game piece) to the exit :");
@@ -22,6 +21,11 @@ public class JTextPaneAbout extends JTextPane1 {
 		appendLine(20, "to make space to move other game pieces around during your challenge");
 		appendLine(20, "\u26ac You can move all the game pieces except the small white ones.");
 		appendLine(20, "You should consider them part of the game board during that specific challenge");
+		appendLine(20, "");
+		appendBoldLine(25, "About Antivirus game");
+		appendLine(20, "");
+		appendLine(20, "Antivirus game is edited by SmartGames");
+		appendLine(20, "https://www.smartgames.eu/fr/jeux-pour-1-joueur/anti-virus");
 	}
 	
 	public void display() {

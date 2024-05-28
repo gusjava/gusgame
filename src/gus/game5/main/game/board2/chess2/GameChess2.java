@@ -26,6 +26,8 @@ import gus.game5.core.point.point1.Point1D0;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
 
+import static gus.game5.core.util.UtilGui.*;
+
 public class GameChess2 extends Play1 {
 
 	public static final String TITLE = "Chess";

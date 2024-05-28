@@ -14,6 +14,8 @@ import gus.game5.core.util.maze.MazeSolver;
 import gus.game5.core.util.maze.MazeSolverBFS;
 import gus.game5.core.util.maze.MazeSolverDFS;
 
+import static gus.game5.core.util.UtilGui.*;
+
 public class AnimMaze extends Game1 {
 	
 	public static final int NB = 51;

@@ -19,6 +19,8 @@ import gus.game5.main.l1.bloon.tower.Tower;
 import gus.game5.main.l1.bloon.tower.Tower1;
 import gus.game5.main.l1.bloon.type.Bloon;
 
+import static gus.game5.core.util.UtilGui.*;
+
 public class GameBloon extends Game1 {
 	
 	public static void main(String[] args) {
