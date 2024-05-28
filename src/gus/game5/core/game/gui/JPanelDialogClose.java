@@ -4,43 +4,35 @@ import static gus.game5.core.util.UtilGui.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridLayout;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-public class JPanelDialog2 extends JPanel {
+public class JPanelDialogClose extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private JDialog2 dialog = new JDialog2();
 	
-	private JButton buttonOk;
-	private JButton buttonCancel;
+	private JButton buttonClose;
 	
 	private int width = 1000;
 	private int height = 500;
 
-	public JPanelDialog2() {
+	public JPanelDialogClose() {
 		super(new BorderLayout());
-		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		empty(this, 20);
 		setBackground(Color.WHITE);
 		
-		buttonOk = new JButton("Ok");
-		buttonOk.addActionListener(e->ok());
-		
-		buttonCancel = new JButton("Cancel");
-		buttonCancel.addActionListener(e->cancel());
-		
+		buttonClose = button("Close", this::close);
 		
 		JComponent top = buildTop();
 		JComponent center = buildCenter();
 		JComponent bottom = buildBottom();
 		
-		if(top!=null) add(top, BorderLayout.NORTH);
-		if(center!=null) add(center, BorderLayout.CENTER);
-		if(bottom!=null) add(bottom, BorderLayout.SOUTH);
+		addN(this, top);
+		addC(this, center);
+		addS(this, bottom);
 	}
 	
 	public void setWidth(int width) {
@@ -65,27 +57,17 @@ public class JPanelDialog2 extends JPanel {
 		afterDisplay();
 	}
 	
-	private void ok() {
-		beforeOk();
+	private void close() {
+		beforeClose();
 		dialog.hideContent();
-		afterOk();
-	}
-	
-	private void cancel() {
-		beforeCancel();
-		dialog.hideContent();
-		afterCancel();
+		afterClose();
 	}
 	
 	protected void beforeDisplay() {}
-	protected void beforeOk() {}
-	protected void beforeCancel() {}
+	protected void beforeClose() {}
 	
 	protected void afterDisplay() {}
-	protected void afterOk() {}
-	protected void afterCancel() {}
-	
-	
+	protected void afterClose() {}
 	
 	protected JComponent buildTop() {
 		return null;
@@ -96,14 +78,6 @@ public class JPanelDialog2 extends JPanel {
 	}
 	
 	protected JComponent buildBottom() {
-		JPanel panelButtons = new JPanel(new GridLayout(1,2,10,10));
-		panelButtons.setOpaque(false);
-		panelButtons.add(buttonCancel);
-		panelButtons.add(buttonOk);
-		
-		return panelE(panelButtons);
+		return panelE(buttonClose);
 	}
-	
-	
-	
 }

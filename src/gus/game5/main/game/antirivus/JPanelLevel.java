@@ -16,9 +16,9 @@ import javax.swing.JRadioButton;
 
 import static gus.game5.core.util.UtilGui.*;
 
-import gus.game5.core.game.gui.JPanelDialog2;
+import gus.game5.core.game.gui.JPanelDialogOkCancel;
 
-public class JPanelLevel extends JPanelDialog2 {
+public class JPanelLevel extends JPanelDialogOkCancel {
 	private static final long serialVersionUID = 1L;
 
 	private LevelManager levelManager;

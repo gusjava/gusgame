@@ -1,10 +1,12 @@
 package gus.game5.core.util;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -16,6 +18,16 @@ import gus.game5.core.game.gui.JRadioButtonMenuItem1;
 import gus.game5.core.game.gui.JToolBar1;
 
 public class UtilGui {
+	
+	/*
+	 * BUTTON
+	 */
+	
+	public static JButton button(String text, Runnable r) {
+		JButton button = new JButton(text);
+		button.addActionListener(e->r.run());
+		return button;
+	}
 	
 	/*
 	 * ACTION
@@ -66,17 +78,46 @@ public class UtilGui {
 	}
 	
 	/*
+	 * ADD
+	 */
+	
+	public static JPanel addC(JPanel p, JComponent c) {
+		if(c!=null) p.add(c, BorderLayout.CENTER);
+		return p;
+	}
+	
+	public static JPanel addN(JPanel p, JComponent n) {
+		if(n!=null) p.add(n, BorderLayout.NORTH);
+		return p;
+	}
+	
+	public static JPanel addS(JPanel p, JComponent s) {
+		if(s!=null) p.add(s, BorderLayout.SOUTH);
+		return p;
+	}
+	
+	public static JPanel addW(JPanel p, JComponent w) {
+		if(w!=null) p.add(w, BorderLayout.WEST);
+		return p;
+	}
+	
+	public static JPanel addE(JPanel p, JComponent e) {
+		if(e!=null) p.add(e, BorderLayout.EAST);
+		return p;
+	}
+	
+	/*
 	 * PANEL
 	 */
 	
 	public static JPanel panel(JComponent c, JComponent n, JComponent s, JComponent w, JComponent e) {
 		JPanel p = new JPanel(new BorderLayout());
 		p.setOpaque(false);
-		if(c!=null) p.add(c, BorderLayout.CENTER);
-		if(n!=null) p.add(n, BorderLayout.NORTH);
-		if(s!=null) p.add(s, BorderLayout.SOUTH);
-		if(w!=null) p.add(w, BorderLayout.WEST);
-		if(e!=null) p.add(e, BorderLayout.EAST);
+		addC(p, c);
+		addN(p, n);
+		addS(p, s);
+		addW(p, w);
+		addE(p, e);
 		return p;
 	}
 	
@@ -145,11 +186,38 @@ public class UtilGui {
 	}
 	
 	/*
+	 * PANEL GRID
+	 */
+	
+	public static JPanel panelGrid(int x, int y) {
+		JPanel panel = new JPanel(new GridLayout(x, y));
+		panel.setOpaque(false);
+		return panel;
+	}
+	
+	public static JPanel panelGrid(int x, int y, int gap) {
+		JPanel panel = new JPanel(new GridLayout(x, y, gap, gap));
+		panel.setOpaque(false);
+		return panel;
+	}
+	
+	public static JPanel panelGrid(int x, int y, int hgap, int vgap) {
+		JPanel panel = new JPanel(new GridLayout(x, y, hgap, vgap));
+		panel.setOpaque(false);
+		return panel;
+	}
+	
+	/*
 	 * BORDER
 	 */
 	
 	public static JComponent raised(JComponent comp) {
 		comp.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+		return comp;
+	}
+	
+	public static JComponent empty(JComponent comp, int top, int left, int bottom, int right) {
+		comp.setBorder(BorderFactory.createEmptyBorder(top, left, bottom, right));
 		return comp;
 	}
 	
