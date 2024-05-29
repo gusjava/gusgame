@@ -273,6 +273,7 @@ public abstract class Game {
 		if(font!=null) {
 			FontUIResource fontUI = new FontUIResource(font);
 			UIManager.put("Frame.font", fontUI);
+			UIManager.put("Button.font", fontUI);
 			UIManager.put("Menu.font", fontUI);
 			UIManager.put("MenuItem.font", fontUI);
 			UIManager.put("Label.font", fontUI);

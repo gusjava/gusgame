@@ -78,7 +78,8 @@ public class GameRagus1 extends Play1 {
 	protected void initMenuBar(JMenuBar1 menuBar) {
 		menuBar.add("Game", 
 			action("New game (F1)", this::restart),
-			action("Exit (F2)", this::exit)
+			action("Exit (F2)", this::exit),
+			action("About (F3)", this::displayAbout)
 		);
 		menuBar.add("Players", 
 			menu("Player 1 (Dino)",
@@ -109,6 +110,16 @@ public class GameRagus1 extends Play1 {
 	}
 	
 	/*
+	 * ABOUT
+	 */
+	
+	private JTextPaneAbout paneAbout;
+	
+	private void displayAbout() {
+		paneAbout.display();
+	}
+	
+	/*
 	 * DATA
 	 */
 
@@ -127,6 +138,7 @@ public class GameRagus1 extends Play1 {
 	
 	protected void initialize2() {
 		imgLoader = new ImageLoader1(this);
+		paneAbout = new JTextPaneAbout();
 		
 		player1 = buildPlayer(mode1, PLAYER_DINO);
 		player2 = buildPlayer(mode2, PLAYER_ANUBIS);
@@ -156,6 +168,7 @@ public class GameRagus1 extends Play1 {
 		Keyboard k = keyboard();
 		if(k.F1())	restart();
 		if(k.F2())	exit();
+		if(k.in().F3())	displayAbout();
 	}
 	
 	protected void played() throws Exception {

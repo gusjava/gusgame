@@ -2,6 +2,7 @@ package gus.game5.core.game.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Insets;
 
 import javax.swing.JTextPane;
@@ -14,15 +15,29 @@ public class JTextPane1 extends JTextPane {
 	private static final long serialVersionUID = 1L;
 
 	private StyledDocument doc;
-	private SimpleAttributeSet attr;
+	private SimpleAttributeSet attr = new SimpleAttributeSet();
 
 	public JTextPane1() {
 		super();
 		doc = getStyledDocument();
 		attr = new SimpleAttributeSet();
-
+		StyleConstants.setFontFamily(attr, getFont().getFamily());
+		StyleConstants.setFontSize(attr, getFont().getSize());
+		
 		setEditable(false);
 		setMargin(new Insets(10, 10, 10, 10));
+	}
+	
+	/*
+	 * FONT
+	 */
+	
+	public void setFont(Font font) {
+		super.setFont(font);
+		if(attr!=null) {
+			StyleConstants.setFontFamily(attr, font.getFamily());
+			StyleConstants.setFontSize(attr, font.getSize());
+		}
 	}
 	
 	/*

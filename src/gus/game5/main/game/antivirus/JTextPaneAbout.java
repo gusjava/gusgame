@@ -4,6 +4,7 @@ import static gus.game5.core.util.UtilGui.*;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.JComponent;
 
@@ -24,25 +25,29 @@ public class JTextPaneAbout extends JPanelDialogClose {
 	
 	protected JComponent buildCenter() {
 		JTextPane1 p1 = new JTextPane1();
+		p1.setFont(new Font("Calibri", Font.PLAIN, 20));
+		
 		p1.appendBoldLine(25, "About Antivirus game");
-		p1.appendLine(20, "");
-		p1.appendLine(20, "Antivirus game is edited by SmartGames");
+		p1.appendLine("");
+		p1.appendLine("Antivirus game is edited by SmartGames");
 		
 		JLabelLink link = new JLabelLink(LINK);
 		fontSize(link, 20);
 		empty(link, 0, 10, 0, 10);
 
 		JTextPane1 p2 = new JTextPane1();
+		p2.setFont(new Font("Calibri", Font.PLAIN, 20));
+		
 		p2.appendBoldLine(25, "Game Rules");
-		p2.appendLine(20, "");
-		p2.appendLine(20, "For each level from 1 to 60");
-		p2.appendLine(20, "Move the game pieces around, so you can maneuver the virus (the red game piece) to the exit :");
-		p2.appendLine(20, "\u26ac Game pieces can only slide diagonally, in 4 directions.");
-		p2.appendLine(20, "\u26ac Sometimes you need to move pieces together as a group.");
-		p2.appendLine(20, "\u26ac You are allowed to push part of a game piece through the opening,");
-		p2.appendLine(20, "to make space to move other game pieces around during your challenge");
-		p2.appendLine(20, "\u26ac You can move all the game pieces except the small white ones.");
-		p2.appendLine(20, "You should consider them part of the game board during that specific challenge");
+		p2.appendLine("");
+		p2.appendLine("For each level from 1 to 60");
+		p2.appendLine("Move the game pieces around, so you can maneuver the virus (the red game piece) to the exit :");
+		p2.appendLine("\u26ac Game pieces can only slide diagonally, in 4 directions.");
+		p2.appendLine("\u26ac Sometimes you need to move pieces together as a group.");
+		p2.appendLine("\u26ac You are allowed to push part of a game piece through the opening,");
+		p2.appendLine("to make space to move other game pieces around during your challenge");
+		p2.appendLine("\u26ac You can move all the game pieces except the small white ones.");
+		p2.appendLine("You should consider them part of the game board during that specific challenge");
 
 		ImageDisplay image = new ImageDisplay("/gus/game5/main/game/antivirus/illustration.jpg");
 		image.setPreferredSize(new Dimension(200,0));

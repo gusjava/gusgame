@@ -28,8 +28,6 @@ public class JToolBar1 extends JToolBar {
 		buttonSize = new Dimension(x, x);
 		setMinimumSize(buttonSize);
 		setMaximumSize(buttonSize);
-
-		setFocusable(true);
 		setBorder(EMPTY);
 
 		addMouseListener(new MouseAdapter() {
