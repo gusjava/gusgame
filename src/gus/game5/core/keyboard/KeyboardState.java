@@ -92,6 +92,13 @@ public class KeyboardState {
 		return state.contains(KeyEvent.VK_F12);
 	}
 	
+	public boolean plus() {
+		return state.contains(KeyEvent.VK_PLUS); //TODO not working ?
+	}
+	
+	public boolean minus() {
+		return state.contains(KeyEvent.VK_MINUS); //TODO not working ?
+	}
 	
 	public boolean num0() {
 		return state.contains(KeyEvent.VK_NUMPAD0);
