@@ -32,9 +32,9 @@ public class GameTowerOfHanoi extends Game1 {
 	public static final int X2 = 300;
 	public static final int X3 = 500;
 	
-	public static final int Y_BOTTOM = 550;
+	public static final int Y_BOTTOM = 530;
 	public static final int Y_TOP = 100;
-	public static final int DISK_MAX_HEIGHT = 80;
+	public static final int DISK_MAX_HEIGHT = 70;
 	public static final int DISK_MIN_WIDTH = 30;
 	public static final int DISK_MAX_WIDTH = 180;
 	
@@ -55,8 +55,10 @@ public class GameTowerOfHanoi extends Game1 {
 		menuBar.add("Game", 
 			action("New game (F1)", this::restart),
 			action("Exit (F2)", this::exit),
-			action("Next level (F3)", this::nextLevel),
-			action("Previous level (F4)", this::previousLevel)
+			action("About (F3)", this::displayAbout),
+			null,
+			action("Next level (\u2192)", this::nextLevel),
+			action("Previous level (\u2190)", this::previousLevel)
 		);
 	}
 	
@@ -66,7 +68,17 @@ public class GameTowerOfHanoi extends Game1 {
 		s.setHeight(GAME_HEIGHT);
 		s.setSleep(10);
 		s.setBackground(new Color(204,255,255));
-		s.setFont(FONT);
+		s.setFont(new Font("Calibri", Font.PLAIN, 12));
+	}
+	
+	/*
+	 * ABOUT
+	 */
+	
+	private JTextPaneAbout paneAbout;
+	
+	private void displayAbout() {
+		paneAbout.display();
 	}
 	
 	/*
@@ -92,6 +104,8 @@ public class GameTowerOfHanoi extends Game1 {
 	
 	
 	protected void initialize1() {
+		paneAbout = new JTextPaneAbout();
+		
 		cloud(50,35);
 		cloud(70,35);
 		cloud(90,35);
@@ -131,10 +145,10 @@ public class GameTowerOfHanoi extends Game1 {
 		moveNumber = 0;
 		initTowers();
 		
-		addDraw(new MainDraw());
+		addDraw(new GroundDraw());
 		addDraw(new Drag());
 		
-		completeDisplay = newDrawingTextC(Color.BLUE, p1(gameCenter().getX(), 30), "Level Complete");
+		completeDisplay = newDrawingTextC(Color.BLUE, p1(gameCenter().getX(), 50), "Level Complete");
 		completeDisplay.setDrawable(completeTimer);
 		completeDisplay.setFont(FONT);
 		completeDisplay.setFontBold(25);
@@ -147,7 +161,7 @@ public class GameTowerOfHanoi extends Game1 {
 		moveNbDisplay.setFont(FONT);
 		moveNbDisplay.setFont(18);
 		
-		diskNbDisplay = newDrawingTextC(Color.WHITE, p1(gameCenter().getX(), Y_BOTTOM+20), ()->"Tower with "+diskNumber+" disks");
+		diskNbDisplay = newDrawingTextC(Color.WHITE, p1(gameCenter().getX(), Y_BOTTOM+30), ()->"Tower with "+diskNumber+" disks");
 		diskNbDisplay.setFont(FONT);
 		diskNbDisplay.setFont(18);
 	}
@@ -157,11 +171,13 @@ public class GameTowerOfHanoi extends Game1 {
 		Keyboard k = keyboard();
 		if(k.in().F1()) restart();
 		if(k.in().F2()) exit();
-		if(k.in().F3()) nextLevel();
-		if(k.in().F4()) previousLevel();
+		if(k.in().F3())	displayAbout();
 		
 		goNext();
 		if(completeTimer.gBool()) return;
+		
+		if(k.in().right()) nextLevel();
+		if(k.in().left()) previousLevel();
 		
 		if(mouse().button1().justPressed()) {
 			Disk selected = disks.findCo(mouse().pointCurrent());
@@ -203,7 +219,7 @@ public class GameTowerOfHanoi extends Game1 {
 	}
 	
 	private void previousLevel() {
-		if(diskNumber==0) return;
+		if(diskNumber<=1) return;
 		diskNumber--;
 		moveNumber = 0;
 		initTowers();
@@ -298,13 +314,16 @@ public class GameTowerOfHanoi extends Game1 {
 		}
 	}
 	
-	private class MainDraw extends Drawing1 {
+	private class GroundDraw extends Drawing1 {
 		
-		public MainDraw() {
+		public GroundDraw() {
 			
 		}
 		protected void draw() {
-			fillRect(p1(0, Y_BOTTOM),  gameWidth(), gameHeight() - Y_BOTTOM);
+			fillRect(p1(0, Y_BOTTOM + 10),  gameWidth(), gameHeight() - Y_BOTTOM - 10);
+			fillRect(p1(X1 - DISK_MAX_WIDTH*0.5 - 1, Y_BOTTOM),  DISK_MAX_WIDTH + 2, 12);
+			fillRect(p1(X2 - DISK_MAX_WIDTH*0.5 - 1, Y_BOTTOM),  DISK_MAX_WIDTH + 2, 12);
+			fillRect(p1(X3 - DISK_MAX_WIDTH*0.5 - 1, Y_BOTTOM),  DISK_MAX_WIDTH + 2, 12);
 		}
 	}
 	
