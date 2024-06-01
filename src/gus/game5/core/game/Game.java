@@ -14,8 +14,8 @@ import javax.swing.plaf.FontUIResource;
 
 import gus.game5.core.angle.Angle;
 import gus.game5.core.draw.Draw;
-import gus.game5.core.game.gui.JMenuBar1;
-import gus.game5.core.game.gui.JPanel1;
+import gus.game5.core.gui.JMenuBar1;
+import gus.game5.core.gui.JPanel1;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.mouse.Mouse;
 import gus.game5.core.point.point0.Point0;

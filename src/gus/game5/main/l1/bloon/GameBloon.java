@@ -9,7 +9,7 @@ import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.drawing.text.DrawingText;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
-import gus.game5.core.game.gui.JMenuBar1;
+import gus.game5.core.gui.JMenuBar1;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point1.Point1;
 import gus.game5.core.shape.ShapeList;

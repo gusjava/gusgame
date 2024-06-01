@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
-import gus.game5.core.game.gui.JMenuBar1;
+import gus.game5.core.gui.JMenuBar1;
 import gus.game5.core.keyboard.Keyboard;
 
 import static gus.game5.core.util.UtilGui.*;

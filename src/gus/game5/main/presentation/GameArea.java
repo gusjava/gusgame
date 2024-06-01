@@ -14,7 +14,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.BevelBorder;
 
 import gus.game5.core.game.Game;
-import gus.game5.core.game.gui.ImageDisplay;
+import gus.game5.core.gui.ImageDisplay;
 import gus.game5.core.util.UtilCapture;
 import gus.game5.core.util.launch.GameLaunch;
 

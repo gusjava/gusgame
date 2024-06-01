@@ -13,10 +13,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
-import gus.game5.core.game.gui.Action1;
-import gus.game5.core.game.gui.JMenu1;
-import gus.game5.core.game.gui.JRadioButtonMenuItem1;
-import gus.game5.core.game.gui.JToolBar1;
+import gus.game5.core.gui.Action1;
+import gus.game5.core.gui.JMenu1;
+import gus.game5.core.gui.JRadioButtonMenuItem1;
+import gus.game5.core.gui.JToolBar1;
 
 public class UtilGui {
 	
