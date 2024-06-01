@@ -35,6 +35,10 @@ public class G2Holder {
 		alterList.add(alter);
 	}
 	
+	public void removeAlter(Alter alter) {
+		alterList.remove(alter);
+	}
+	
 	protected Point0 alterPoint(Point0 p) {
 		return alterList.alterPoint(p);
 	}

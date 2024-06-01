@@ -30,6 +30,7 @@ public interface Shape extends Draw, Dyn {
 	public boolean isOver();
 	
 	public void addAlter(Alter alter);
+	public void removeAlter(Alter alter);
 	public void debugFrame(Color c);
 	public void debugOrigin(Color c);
 	public void debugAnchor(Color c);

@@ -37,6 +37,7 @@ public class ShapeList<U extends Shape> extends ArrayList<U> implements Draw, Dy
 	 */
 	
 	private Alter alter;
+	private AlterD alterD = new AlterD(this::getAlter);
 	
 	public void setAlter(Alter alter) {
 		this.alter = alter;
@@ -44,6 +45,14 @@ public class ShapeList<U extends Shape> extends ArrayList<U> implements Draw, Dy
 	
 	public Alter getAlter() {
 		return alter;
+	}
+	
+	private void initAlter(U shape) {
+		shape.addAlter(alterD);
+	}
+	
+	private void resetAlter(U shape) {
+		shape.removeAlter(alterD);
 	}
 	
 	/*
@@ -56,7 +65,16 @@ public class ShapeList<U extends Shape> extends ArrayList<U> implements Draw, Dy
 	}
 	
 	/*
-	 * ADD
+	 * REMOVE
+	 */
+	
+	public boolean remove(U shape) {
+		resetAlter(shape);
+		return super.remove(shape);
+	}
+	
+	/*
+	 * ADD ALL
 	 */
 	
 	public boolean addAll(List<U> shapes) {
@@ -65,11 +83,21 @@ public class ShapeList<U extends Shape> extends ArrayList<U> implements Draw, Dy
 	}
 	
 	/*
-	 * INIT ALTER
+	 * REMOVE ALL
 	 */
 	
-	private void initAlter(U shape) {
-		shape.addAlter(new AlterD(this::getAlter));
+	public boolean removeAll(List<U> shapes) {
+		shapes.forEach(this::resetAlter);
+		return super.removeAll(shapes);
+	}
+	
+	/*
+	 * CLEAR
+	 */
+	
+	public void clear() {
+		forEach(this::resetAlter);
+		super.clear();
 	}
 	
 	/*

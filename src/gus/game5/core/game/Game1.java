@@ -35,6 +35,7 @@ import gus.game5.core.shape.ShapeRound;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
 import gus.game5.core.shape.board.ShapeCellBuilder;
+import gus.game5.core.shape.board.ShapeCellIntBuilder;
 import gus.game5.core.shape.graph.ShapeGraph;
 import gus.game5.core.util.UtilImage;
 import gus.game5.core.util.UtilResource;
@@ -70,6 +71,12 @@ public abstract class Game1 extends Game {
 		cleanList.add(clean);
 	}
 	
+	protected void clearAll() {
+		drawList.clear();
+		dynList.clear();
+		cleanList.clear();
+	}
+	
 	protected void goNext() {
 		dynList.goNext();
 	}
@@ -87,6 +94,18 @@ public abstract class Game1 extends Game {
 	/*
 	 * NEW SHAPE BOARD
 	 */
+
+	protected <E extends ShapeCell> ShapeBoard<E> newShapeBoard(double cellSize, int[][] data, ShapeCellIntBuilder<E> builder) {
+		return newShapeBoard(cellSize, data, (i,j)->builder.build(i, j, data[i][j]));
+	}
+
+	protected <E extends ShapeCell> ShapeBoard<E> newShapeBoard(double cellSize, int[][] data, ShapeCellBuilder<E> builder) {
+		int x = data.length;
+		if(x==0) throw new RuntimeException("Invalid data size for ShapeBoard");
+		int y = data[0].length;
+		if(y==0) throw new RuntimeException("Invalid data size for ShapeBoard");
+		return newShapeBoard(cellSize, x, y, builder);
+	}
 
 	protected <E extends ShapeCell> ShapeBoard<E> newShapeBoard(double cellSize, int x, int y, ShapeCellBuilder<E> builder) {
 		ShapeBoard<E> shapeBoard = new ShapeBoard<>(cellSize, x, y, builder);

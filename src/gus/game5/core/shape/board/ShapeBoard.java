@@ -1,5 +1,6 @@
 package gus.game5.core.shape.board;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,6 +34,7 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 		this.y = y;
 		this.cellSize = cellSize;
 		data = new ArrayList<>();
+		
 		for(int i=0;i<x;i++) for(int j=0;j<y;j++) {
 			U cell = builder.build(i, j);
 			cell.initCell(cellSize, x, y);
@@ -238,6 +240,22 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 		for(int j=0;j<y;j++) {
 			p.p(get(i, j), data[i][j]);
 		}
+	}
+	
+	/*
+	 * DEBUG
+	 */
+	
+	public void debugCellFrame(Color c) {
+		for(U cell : data) cell.debugFrame(c);
+	}
+	
+	public void debugCellOrigin(Color c) {
+		for(U cell : data) cell.debugOrigin(c);
+	}
+	
+	public void debugCellAnchor(Color c) {
+		for(U cell : data) cell.debugAnchor(c);
 	}
 	
 	/*

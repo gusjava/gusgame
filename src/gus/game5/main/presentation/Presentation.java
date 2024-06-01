@@ -1,5 +1,7 @@
 package gus.game5.main.presentation;
 
+import static gus.game5.core.util.UtilGui.action;
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -31,6 +33,7 @@ import gus.game5.main.game.board2.ragus1.GameRagus1;
 import gus.game5.main.game.board2.reversi3.GameReversi3;
 import gus.game5.main.game.board2.tictactoe3.GameTicTacToe3;
 import gus.game5.main.game.bomb.GameBomb;
+import gus.game5.main.game.madvirus.GameMadVirus;
 import gus.game5.main.game.minesweeper.GameMinesweeper;
 import gus.game5.main.game.missile.GameMissile;
 import gus.game5.main.game.snake.GameSnake;
@@ -49,8 +52,6 @@ import gus.game5.main.test1.MainSoucoupe2;
 import gus.game5.main.test2.MainDraws;
 import gus.game5.main.test2.MainImg1;
 import gus.game5.main.test2.MainImg2;
-
-import static gus.game5.core.util.UtilGui.*;
 
 public class Presentation extends Game {
 
@@ -85,6 +86,7 @@ public class Presentation extends Game {
 		Container panel1 = buildPanel(
 				new GameMinesweeper(),
 				new GameAntivirus(),
+				new GameMadVirus(),
 				new GameSnake(),
 				new GameTowerOfHanoi(),
 				new GameMissile(),
@@ -138,12 +140,12 @@ public class Presentation extends Game {
 	}
 	
 	private Container buildPanel(Game... games) {
-		JPanel p = new JPanel(new GridLayout(0,2,10,10));
+		JPanel p = new JPanel(new GridLayout(0,3,10,10));
 		p.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		for(Game game : games) p.add(buildArea(game));
 		
 		JScrollPane scroll = new JScrollPane(p);
-		scroll.setPreferredSize(new Dimension(900,600));
+		scroll.setPreferredSize(new Dimension(1200,600));
 		return scroll;
 	}
 	

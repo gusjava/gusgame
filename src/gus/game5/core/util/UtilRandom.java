@@ -95,4 +95,10 @@ public class UtilRandom {
 		int index = randomInt(list.size());
 		return list.get(index);
 	}
+	
+	public static <U> U pickRandomElement(List<U> list) {
+		if(list==null || list.isEmpty()) return null;
+		int index = randomInt(list.size());
+		return list.remove(index);
+	}
 }
