@@ -7,7 +7,7 @@ public class ShapeCell extends ShapeRound {
 	protected int i;
 	protected int j;
 	
-	protected double cellSize;
+	protected int index;
 	protected int x;
 	protected int y;
 	
@@ -17,22 +17,20 @@ public class ShapeCell extends ShapeRound {
 		this.j = j;
 	}
 	
-	public void initCell(double cellSize, int x, int y) {
-		this.cellSize = cellSize;
+	public void initCell(double width, double height, int index, int x, int y) {
+		setWidth(width);
+		setHeight(height);
+		
+		this.index = index;
 		this.x = x;
 		this.y = y;
 		
-		initRadius();
 		initAnchor();
 		setOriginFromAnchor();
 	}
 	
-	protected void initRadius() {
-		setRadius(cellSize*0.5);
-	}
-	
 	protected void initAnchor() {
-		setAnchor(new Point2(cellSize*(j+0.5), cellSize*(i+0.5)));
+		setAnchor(new Point2(getWidth()*(j+0.5), getHeight()*(i+0.5)));
 	}
 	
 	public int getI() {
@@ -59,8 +57,12 @@ public class ShapeCell extends ShapeRound {
 		return this.i==i && this.j==j;
 	}
 	
+	public int getIndex() {
+		return index;
+	}
+	
 	public String toString() {
-		return "["+i+","+j+"]";
+		return index+":["+i+","+j+"]";
 	}
 
 }

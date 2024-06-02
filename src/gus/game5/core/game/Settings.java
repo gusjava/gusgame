@@ -11,6 +11,7 @@ public class Settings {
 
 	private ImageIcon icon;
 	private String title = "Jeu";
+	private String description = "";
 	private int width = 900;
 	private int height = 700;
 	private long sleep = 10;
@@ -40,6 +41,17 @@ public class Settings {
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	/*
+	 * DESCRIPTION
+	 */
+
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	/*

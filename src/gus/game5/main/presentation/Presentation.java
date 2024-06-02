@@ -26,20 +26,21 @@ import gus.game5.main.anim1.AnimGameOfLife;
 import gus.game5.main.anim1.AnimLandscape;
 import gus.game5.main.anim1.AnimLangtonAnt;
 import gus.game5.main.anim1.AnimMaze;
-import gus.game5.main.game.p1.antivirus.GameAntivirus;
 import gus.game5.main.game.p1.bomb.GameBomb;
-import gus.game5.main.game.p1.madvirus.GameMadVirus;
-import gus.game5.main.game.p1.minesweeper.GameMinesweeper;
-import gus.game5.main.game.p1.missile.GameMissile;
-import gus.game5.main.game.p1.snake.GameSnake;
-import gus.game5.main.game.p1.space.GameSpace;
-import gus.game5.main.game.p1.towerofhanoi.GameTowerOfHanoi;
-import gus.game5.main.game.p1.warrior.GameWarrior;
-import gus.game5.main.game.p2.board.chess1.GameChess1;
-import gus.game5.main.game.p2.board.hex1.GameHex1;
-import gus.game5.main.game.p2.board.ragus1.GameRagus1;
-import gus.game5.main.game.p2.board.tictactoe3.GameTicTacToe3;
-import gus.game5.main.game.p2board.reversi3.GameReversi3;
+import gus.game5.main.game.p1.c.antivirus.GameAntivirus;
+import gus.game5.main.game.p1.c.madvirus.GameMadVirus;
+import gus.game5.main.game.p1.c.minesweeper.GameMinesweeper;
+import gus.game5.main.game.p1.c.puzzle1.GamePuzzle1;
+import gus.game5.main.game.p1.c.snake.GameSnake;
+import gus.game5.main.game.p1.c1.towerofhanoi.GameTowerOfHanoi;
+import gus.game5.main.game.p1.o.missile.GameMissile;
+import gus.game5.main.game.p1.o.space.GameSpace;
+import gus.game5.main.game.p1.o.warrior.GameWarrior;
+import gus.game5.main.game.p2.c.board.chess.v1.GameChess1;
+import gus.game5.main.game.p2.c.board.hex.v1.GameHex1;
+import gus.game5.main.game.p2.c.board.reversi.v3.GameReversi3;
+import gus.game5.main.game.p2.c.board.tictactoe.v3.GameTicTacToe3;
+import gus.game5.main.game.p2.o.board.ragus1.GameRagus1;
 import gus.game5.main.l1.bloon.GameBloon;
 import gus.game5.main.test1.MainBall1;
 import gus.game5.main.test1.MainBall1m;
@@ -85,6 +86,7 @@ public class Presentation extends Game {
 	protected Container buildContentPane() {
 		Container panel1 = buildPanel(
 				new GameMinesweeper(),
+				new GamePuzzle1(),
 				new GameAntivirus(),
 				new GameMadVirus(),
 				new GameSnake(),

@@ -21,23 +21,33 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 	
 	private int x;
 	private int y;
-	private double cellSize;
+	private double cellWidth;
+	private double cellHeight;
 	private List<U> data;
 	private int nb;
 	
 	public ShapeBoard(double cellSize, int x, ShapeCellBuilder<U> builder) {
-		this(cellSize, x, x, builder);
+		this(cellSize, cellSize, x, x, builder);
+	}
+	
+	public ShapeBoard(double cellWidth, double cellHeight, int x, ShapeCellBuilder<U> builder) {
+		this(cellWidth, cellHeight, x, x, builder);
 	}
 	
 	public ShapeBoard(double cellSize, int x, int y, ShapeCellBuilder<U> builder) {
+		this(cellSize, cellSize, x, y, builder);
+	}
+	
+	public ShapeBoard(double cellWidth, double cellHeight, int x, int y, ShapeCellBuilder<U> builder) {
 		this.x = x;
 		this.y = y;
-		this.cellSize = cellSize;
+		this.cellWidth = cellWidth;
+		this.cellHeight = cellHeight;
 		data = new ArrayList<>();
 		
 		for(int i=0;i<x;i++) for(int j=0;j<y;j++) {
 			U cell = builder.build(i, j);
-			cell.initCell(cellSize, x, y);
+			cell.initCell(cellWidth, cellHeight, data.size(), x, y);
 			data.add(cell);
 		}
 		nb = data.size();
@@ -55,16 +65,20 @@ public class ShapeBoard<U extends ShapeCell> implements Draw, Dyn {
 		return nb;
 	}
 	
-	public double getCellSize() {
-		return cellSize;
+	public double getCellWidth() {
+		return cellWidth;
+	}
+	
+	public double getCellHeight() {
+		return cellHeight;
 	}
 	
 	public double getWidth() {
-		return x * cellSize;
+		return x * cellWidth;
 	}
 	
 	public double getHeight() {
-		return y * cellSize;
+		return y * cellHeight;
 	}
 	
 	public Iterator<U> iterator() {

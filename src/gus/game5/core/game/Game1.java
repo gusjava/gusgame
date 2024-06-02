@@ -113,9 +113,23 @@ public abstract class Game1 extends Game {
 		addDyn(shapeBoard);
 		return shapeBoard;
 	}
+
+	protected <E extends ShapeCell> ShapeBoard<E> newShapeBoard(double cellWidth, double cellHeight, int x, int y, ShapeCellBuilder<E> builder) {
+		ShapeBoard<E> shapeBoard = new ShapeBoard<>(cellWidth, cellHeight, x, y, builder);
+		addDraw(shapeBoard);
+		addDyn(shapeBoard);
+		return shapeBoard;
+	}
 	
 	protected <E extends ShapeCell> ShapeBoard<E> newShapeBoard(double cellSize, int x, ShapeCellBuilder<E> builder) {
 		ShapeBoard<E> shapeBoard = new ShapeBoard<>(cellSize, x, builder);
+		addDraw(shapeBoard);
+		addDyn(shapeBoard);
+		return shapeBoard;
+	}
+	
+	protected <E extends ShapeCell> ShapeBoard<E> newShapeBoard(double cellWidth, double cellHeight, int x, ShapeCellBuilder<E> builder) {
+		ShapeBoard<E> shapeBoard = new ShapeBoard<>(cellWidth, cellHeight, x, builder);
 		addDraw(shapeBoard);
 		addDyn(shapeBoard);
 		return shapeBoard;
