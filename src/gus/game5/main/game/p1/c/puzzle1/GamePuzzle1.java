@@ -175,7 +175,7 @@ public class GamePuzzle1 extends Game1 {
 		}
 		else if(mouse().button1().justReleased()) {
 			Cell released = board.cellAt(mouse().pointCurrent());
-			if(dragged!=null) {
+			if(released!=null && dragged!=null) {
 				int value1 = dragged.getValue();
 				int value2 = released.getValue();
 				

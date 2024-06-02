@@ -26,6 +26,7 @@ import gus.game5.main.anim1.AnimGameOfLife;
 import gus.game5.main.anim1.AnimLandscape;
 import gus.game5.main.anim1.AnimLangtonAnt;
 import gus.game5.main.anim1.AnimMaze;
+import gus.game5.main.anim1.AnimVacheQuiRit;
 import gus.game5.main.game.p1.bomb.GameBomb;
 import gus.game5.main.game.p1.c.antivirus.GameAntivirus;
 import gus.game5.main.game.p1.c.madvirus.GameMadVirus;
@@ -104,6 +105,7 @@ public class Presentation extends Game {
 		Container panel3 = buildPanel(
 				new AnimClock(),
 				new AnimLandscape(),
+				new AnimVacheQuiRit(),
 				new AnimMaze(),
 				new AnimLangtonAnt(),
 				new AnimGameOfLife(),

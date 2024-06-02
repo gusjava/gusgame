@@ -6,6 +6,7 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Font;
+import java.math.BigInteger;
 
 import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.drawing.text.DrawingText;
@@ -212,7 +213,7 @@ public class GameTowerOfHanoi extends Game1 {
 	}
 	
 	private void nextLevel() {
-		if(diskNumber>100) return;
+		if(diskNumber>=100) return;
 		diskNumber++;
 		moveNumber = 0;
 		initTowers();
@@ -260,8 +261,13 @@ public class GameTowerOfHanoi extends Game1 {
 	}
 	
 	private String estimatedTime() {
-		long duration = ((long) Math.pow(2, diskNumber)) - 1;
-		return UtilDurationS.getDisplay(duration);
+		BigInteger d1 = new BigInteger("1");
+		BigInteger d2 = new BigInteger("2");
+
+		BigInteger d = new BigInteger("1");
+		for(int i=0;i<diskNumber;i++) d = d.multiply(d2);
+		d = d.subtract(d1);
+		return UtilDurationS.getDisplay(d);
 	}
 	
 	
