@@ -33,6 +33,7 @@ import gus.game5.main.game.p1.c.minesweeper.GameMinesweeper;
 import gus.game5.main.game.p1.c.puzzle1.GamePuzzle1;
 import gus.game5.main.game.p1.c.snake.GameSnake;
 import gus.game5.main.game.p1.c.towerofhanoi.GameTowerOfHanoi;
+import gus.game5.main.game.p1.o.blockrun.GameBlockRun;
 import gus.game5.main.game.p1.o.bomb.GameBomb;
 import gus.game5.main.game.p1.o.missile.GameMissile;
 import gus.game5.main.game.p1.o.space.GameSpace;
@@ -91,6 +92,7 @@ public class Presentation extends Game {
 				new GameAntivirus(),
 				new GameMadVirus(),
 				new GameSnake(),
+				new GameBlockRun(),
 				new GameTowerOfHanoi(),
 				new GameMissile(),
 				new GameBomb());
