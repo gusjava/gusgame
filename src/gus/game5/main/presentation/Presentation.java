@@ -27,6 +27,7 @@ import gus.game5.main.anim1.AnimLandscape;
 import gus.game5.main.anim1.AnimLangtonAnt;
 import gus.game5.main.anim1.AnimMaze;
 import gus.game5.main.anim1.AnimVacheQuiRit;
+import gus.game5.main.edu.prog.modulo1.EduModulo1;
 import gus.game5.main.game.p1.c.antivirus.GameAntivirus;
 import gus.game5.main.game.p1.c.madvirus.GameMadVirus;
 import gus.game5.main.game.p1.c.minesweeper.GameMinesweeper;
@@ -137,6 +138,7 @@ public class Presentation extends Game {
 				);
 
 		Container panel6 = buildPanel(
+				new EduModulo1()
 				);	
 		
 		JTabbedPane tabbedPane = new JTabbedPane();

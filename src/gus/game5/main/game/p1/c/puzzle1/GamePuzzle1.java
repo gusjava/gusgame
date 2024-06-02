@@ -190,6 +190,9 @@ public class GamePuzzle1 extends Game1 {
 		}
 	}
 	
+	/*
+	 * CELL
+	 */
 	
 	public class Cell extends ShapeCell {
 		private int value;
