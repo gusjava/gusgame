@@ -1,4 +1,4 @@
-package gus.game5.main.game.p1.bomb;
+package gus.game5.main.game.p1.o.bomb;
 
 import java.awt.Color;
 

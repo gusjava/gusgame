@@ -54,6 +54,26 @@ public class UtilRandom {
 		return randomInt(nb)==0;
 	}
 	
+	public static boolean chance(double nb) {
+		if(nb<0) return false;
+		return randomDouble(nb+1)<1;
+	}
+	
+	/*
+	 * CHANCES
+	 */
+	
+	public static int chances(int... nn) {
+		int sum = UtilInteger.sum(nn);
+		int val = randomInt(sum);
+		
+		for(int i=0;i<nn.length;i++) {
+			if(val<nn[i]) return i;
+			val -= nn[i];
+		}
+		return -1;
+	}
+	
 	/*
 	 * RANDOM COLOR
 	 */
@@ -94,6 +114,13 @@ public class UtilRandom {
 		if(list==null || list.isEmpty()) return null;
 		int index = randomInt(list.size());
 		return list.get(index);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <U> U randomElement(U... uu) {
+		if(uu.length==0) return null;
+		int index = randomInt(uu.length);
+		return uu[index];
 	}
 	
 	public static <U> U pickRandomElement(List<U> list) {

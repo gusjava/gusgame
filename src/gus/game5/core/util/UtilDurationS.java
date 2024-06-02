@@ -17,7 +17,7 @@ public class UtilDurationS {
 	
 	
 	/*
-	 * DISPLAY (MS)
+	 * DISPLAY (S)
 	 */
 	
 	public static String getDisplay(long duration) {
@@ -80,41 +80,5 @@ public class UtilDurationS {
 		
 		b.deleteCharAt(b.length()-1);
 		return b.toString();
-	}
-	
-	/*
-	 * DURATION (MS)
-	 */
-	
-	public static long now() {
-		return System.currentTimeMillis();
-	}
-	
-	public static long toNow(long t) {
-		return System.currentTimeMillis()-t;
-	}
-	
-	/*
-	 * DURATION (NS)
-	 */
-	
-	public static long nowNS() {
-		return System.nanoTime();
-	}
-	
-	public static long toNowNS(long t) {
-		return System.nanoTime()-t;
-	}
-	
-	/*
-	 * DURATION LEFT
-	 */
-	
-	public static String getDisplayLeft(long startTime, int current, int total) {
-		if(current==0) return "?";
-		if(current>=total) return "0";
-		long dt = System.currentTimeMillis() - startTime;
-		double factor = (double) (total-current) / (double) current;
-		return getDisplay((long) (dt * factor));
 	}
 }

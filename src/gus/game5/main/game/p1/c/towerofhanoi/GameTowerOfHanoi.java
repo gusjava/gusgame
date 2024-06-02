@@ -1,4 +1,4 @@
-package gus.game5.main.game.p1.c1.towerofhanoi;
+package gus.game5.main.game.p1.c.towerofhanoi;
 
 import static gus.game5.core.util.UtilGui.action;
 

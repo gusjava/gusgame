@@ -27,13 +27,13 @@ import gus.game5.main.anim1.AnimLandscape;
 import gus.game5.main.anim1.AnimLangtonAnt;
 import gus.game5.main.anim1.AnimMaze;
 import gus.game5.main.anim1.AnimVacheQuiRit;
-import gus.game5.main.game.p1.bomb.GameBomb;
 import gus.game5.main.game.p1.c.antivirus.GameAntivirus;
 import gus.game5.main.game.p1.c.madvirus.GameMadVirus;
 import gus.game5.main.game.p1.c.minesweeper.GameMinesweeper;
 import gus.game5.main.game.p1.c.puzzle1.GamePuzzle1;
 import gus.game5.main.game.p1.c.snake.GameSnake;
-import gus.game5.main.game.p1.c1.towerofhanoi.GameTowerOfHanoi;
+import gus.game5.main.game.p1.c.towerofhanoi.GameTowerOfHanoi;
+import gus.game5.main.game.p1.o.bomb.GameBomb;
 import gus.game5.main.game.p1.o.missile.GameMissile;
 import gus.game5.main.game.p1.o.space.GameSpace;
 import gus.game5.main.game.p1.o.warrior.GameWarrior;
@@ -132,6 +132,9 @@ public class Presentation extends Game {
 				new GameWarrior(),
 				new GameSpace(),
 				new GameBloon()
+				);
+
+		Container panel6 = buildPanel(
 				);	
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
@@ -140,6 +143,7 @@ public class Presentation extends Game {
 		tabbedPane.addTab("Animations", panel3);
 		tabbedPane.addTab("Petits tests", panel4);
 		tabbedPane.addTab("Experimental", panel5);
+		tabbedPane.addTab("Educatif", panel6);
 		return tabbedPane;
 	}
 	
