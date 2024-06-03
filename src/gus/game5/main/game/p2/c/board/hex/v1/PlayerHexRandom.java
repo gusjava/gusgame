@@ -3,6 +3,7 @@ package gus.game5.main.game.p2.c.board.hex.v1;
 import static gus.game5.main.game.p2.c.board.hex.v1.UtilHex.BLUE;
 import static gus.game5.main.game.p2.c.board.hex.v1.UtilHex.RED;
 
+import gus.game5.core.exception.TechnicalException;
 import gus.game5.core.play1.Player1;
 
 public class PlayerHexRandom extends Player1 {
@@ -16,7 +17,7 @@ public class PlayerHexRandom extends Player1 {
 	public boolean play() {
 		if(game.getCount() < game.getLastPlayCount() + 50) return false;
 		int[] play = UtilHex.randomPlay(game.boardData());
-		if(play==null) throw new RuntimeException("PlayerComputerRandom found no play");
+		if(play==null) throw new TechnicalException("PlayerComputerRandom found no play");
 		
 		game.setValueAt(play, getValue());
 		return true;

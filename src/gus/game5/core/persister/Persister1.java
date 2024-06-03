@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import gus.game5.core.exception.TechnicalException;
 import gus.game5.core.features.f.F;
 import gus.game5.core.game.Game;
 import gus.game5.core.util.UtilFile;
 import gus.game5.core.util.UtilList;
-import gus.game5.core.util.UtilMap;
 
 public class Persister1 {
 	
@@ -253,7 +253,7 @@ public class Persister1 {
 		try {
 			return UtilFile.readPropFile(file);
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new TechnicalException(e);
 		}
 	}
 	
@@ -265,7 +265,7 @@ public class Persister1 {
 		try {
 			UtilFile.write(file, p);
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new TechnicalException(e);
 		}
 	}
 	

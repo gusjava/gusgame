@@ -12,7 +12,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import gus.game5.core.exception.TechnicalException;
 import gus.game5.core.features.g.G;
+import gus.game5.core.features.o.O2;
 import gus.game5.core.features.p.P;
 import gus.game5.core.features.t.T;
 import gus.game5.core.util.map.Map1;
@@ -44,7 +46,7 @@ public class UtilMap {
 	 */
 	
 	public static <K,V> V getStrict(Map<K,V> map, K key) {
-		if(!has(map,key)) throw new RuntimeException("Key not found inside map: "+key);
+		if(!has(map,key)) throw new TechnicalException("Key not found inside map: "+key);
 		return map.get(key);
 	}
 	
@@ -381,6 +383,15 @@ public class UtilMap {
 		return map;
 	}
 	
+	@SafeVarargs
+	public static <K,V> Map1<K,V> asMap(O2<K,V>... oo) {
+		Map1<K,V> map = new Map1<>();
+		for(O2<K,V> o : oo) {
+			map.put(o.u1, o.u2);
+		}
+		return map;
+	}
+	
 	public static <K,V> Map1<K,V> asMap(K key, V value) {
 		Map1<K,V> map = new Map1<>();
 		map.put(key,value);
@@ -457,7 +468,7 @@ public class UtilMap {
 			K key = it.next();
 			V value = map.get(key);
 			if(m.containsKey(value))
-				throw new RuntimeException("Value found many times inside map: "+value);
+				throw new TechnicalException("Value found many times inside map: "+value);
 			m.put(value, key);
 		}
 		return m;

@@ -14,6 +14,7 @@ import javax.swing.plaf.FontUIResource;
 
 import gus.game5.core.angle.Angle;
 import gus.game5.core.draw.Draw;
+import gus.game5.core.exception.TechnicalException;
 import gus.game5.core.gui.JMenuBar1;
 import gus.game5.core.gui.JPanel1;
 import gus.game5.core.keyboard.Keyboard;
@@ -101,7 +102,7 @@ public abstract class Game {
 	}
 	
 	public void start() {
-		if(isRunning()) throw new RuntimeException("Game already started");
+		if(isRunning()) throw new TechnicalException("Game already started");
 		
 		initialize();
 		thread = new Thread1();
@@ -109,17 +110,17 @@ public abstract class Game {
 	}
 	
 	public void stop() {
-		if(!isRunning()) throw new RuntimeException("Game not started yet");
+		if(!isRunning()) throw new TechnicalException("Game not started yet");
 		
 		thread.running = false;
 		try {thread.join(1000);} 
 		catch (InterruptedException e)
-		{throw new RuntimeException("Game stop take too long", e);}
+		{throw new TechnicalException("Game stop take too long", e);}
 		thread = null;
 	}
 	
 	public void restart() {
-		if(!isRunning()) throw new RuntimeException("Game not started yet");
+		if(!isRunning()) throw new TechnicalException("Game not started yet");
 		
 		initialize();
 		reset();

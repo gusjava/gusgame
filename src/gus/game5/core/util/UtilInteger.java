@@ -2,6 +2,7 @@ package gus.game5.core.util;
 
 import java.util.List;
 
+import gus.game5.core.exception.TechnicalException;
 import gus.game5.core.features.f.F;
 import gus.game5.core.features.t.Tint;
 
@@ -14,7 +15,7 @@ public class UtilInteger {
 	public static Integer check(Object obj) {
 		if(obj==null) return null;
 		if(obj instanceof Integer) return (Integer) obj;
-		throw new RuntimeException("Invalid data type: "+obj.getClass().getName());
+		throw new TechnicalException("Invalid data type: "+obj.getClass().getName());
 	}
 	
 	/*
@@ -50,7 +51,7 @@ public class UtilInteger {
 		if(obj instanceof Number) return ((Number) obj).intValue();
 		if(obj instanceof String) return stringToInteger((String) obj);
 		
-		throw new RuntimeException("Failed to convert data into Integer (Unsupported type: "+obj.getClass().getName()+")");
+		throw new TechnicalException("Failed to convert data into Integer (Unsupported type: "+obj.getClass().getName()+")");
 	}
 	
 	public static Integer stringToInteger(String s) {
@@ -63,7 +64,7 @@ public class UtilInteger {
 		if(s.equals("")) return defaultValue;
 		try{return Integer.parseInt(s);}
 		catch(NumberFormatException e) {}
-		throw new RuntimeException("Failed to convert string data into integer");
+		throw new TechnicalException("Failed to convert string data into integer");
 	}
 	
 	/*

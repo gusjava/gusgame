@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import gus.game5.core.exception.TechnicalException;
 import gus.game5.core.function.Function;
 import gus.game5.core.function.FunctionPolynom;
 import gus.game5.core.line.Line;
@@ -26,7 +27,7 @@ public abstract class GraphLine0 extends GraphFunction implements Line {
 		
 		FunctionPolynom polynom = getPolynom();
 		double[] aa = polynom.getCoef();
-		if(aa.length!=2) throw new RuntimeException("Invalid polynom degree for straight line: "+aa.length);
+		if(aa.length!=2) throw new TechnicalException("Invalid polynom degree for straight line: "+aa.length);
 		double a1 = aa[1];
 		double a0 = aa[0];
 		

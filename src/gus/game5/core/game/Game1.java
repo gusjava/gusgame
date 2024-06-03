@@ -21,6 +21,7 @@ import gus.game5.core.dyn.DynGInt;
 import gus.game5.core.dyn.DynGLong;
 import gus.game5.core.dyn.DynList;
 import gus.game5.core.dyn.DynTimer;
+import gus.game5.core.exception.TechnicalException;
 import gus.game5.core.features.g.G;
 import gus.game5.core.map.GameMap;
 import gus.game5.core.point.point0.Point0;
@@ -101,9 +102,9 @@ public abstract class Game1 extends Game {
 
 	protected <E extends ShapeCell> ShapeBoard<E> newShapeBoard(double cellSize, int[][] data, ShapeCellBuilder<E> builder) {
 		int x = data.length;
-		if(x==0) throw new RuntimeException("Invalid data size for ShapeBoard");
+		if(x==0) throw new TechnicalException("Invalid data size for ShapeBoard");
 		int y = data[0].length;
-		if(y==0) throw new RuntimeException("Invalid data size for ShapeBoard");
+		if(y==0) throw new TechnicalException("Invalid data size for ShapeBoard");
 		return newShapeBoard(cellSize, x, y, builder);
 	}
 

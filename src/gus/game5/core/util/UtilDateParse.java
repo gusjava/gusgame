@@ -3,6 +3,8 @@ package gus.game5.core.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import gus.game5.core.exception.TechnicalException;
+
 public class UtilDateParse {
 	
 	
@@ -54,13 +56,13 @@ public class UtilDateParse {
 	public static Date parseStrict(String s) {
 		Date date = parseLenient(s);
 		if(date!=null) return date;
-		throw new RuntimeException("Unknown date syntax: "+s);
+		throw new TechnicalException("Unknown date syntax: "+s);
 	}
 
 	public static Date parseStrict(String s, SimpleDateFormat sdf) {
 		try{return sdf.parse(s);}
 		catch(Exception e) {
-			throw new RuntimeException("Failed to parse date: "+s,e);
+			throw new TechnicalException("Failed to parse date: "+s,e);
 		}
 	}
 	

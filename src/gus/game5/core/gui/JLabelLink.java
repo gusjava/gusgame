@@ -3,7 +3,6 @@ package gus.game5.core.gui;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Desktop;
-import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -11,6 +10,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.swing.JLabel;
+
+import gus.game5.core.exception.TechnicalException;
 
 public class JLabelLink extends JLabel implements MouseListener {
 	private static final long serialVersionUID = 1L;
@@ -53,7 +54,7 @@ public class JLabelLink extends JLabel implements MouseListener {
 			URI uri = new URI(getText());
 			Desktop.getDesktop().browse(uri);
 		} catch (URISyntaxException | IOException e) {
-			throw new RuntimeException(e);
+			throw new TechnicalException(e);
 		}
 	}
 }

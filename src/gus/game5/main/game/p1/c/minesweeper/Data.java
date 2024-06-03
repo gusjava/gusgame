@@ -1,5 +1,7 @@
 package gus.game5.main.game.p1.c.minesweeper;
 
+import gus.game5.core.exception.TechnicalException;
+
 public class Data {
 	
 	private int x;
@@ -23,7 +25,7 @@ public class Data {
 		
 		revealedNb = 0;
 		safeNb = x*y - nb;
-		if(safeNb<1) throw new RuntimeException("Invalid params: x="+x+" y="+y+" nb="+nb);
+		if(safeNb<1) throw new TechnicalException("Invalid params: x="+x+" y="+y+" nb="+nb);
 		
 		iDead = -1;
 		jDead = -1;

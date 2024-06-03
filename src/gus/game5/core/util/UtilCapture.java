@@ -8,6 +8,8 @@ import java.util.Date;
 
 import javax.swing.JFrame;
 
+import gus.game5.core.exception.TechnicalException;
+
 public class UtilCapture {
 
 	public static void captureFrame(JFrame frame) {
@@ -24,7 +26,7 @@ public class UtilCapture {
 		try {
 			return new File(UtilCapture.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
 		} catch (URISyntaxException e) {
-			throw new RuntimeException(e);
+			throw new TechnicalException(e);
 		}
 	}
 	

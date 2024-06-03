@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import gus.game5.core.exception.TechnicalException;
 import gus.game5.core.features.f.F;
 import gus.game5.core.features.t.T;
 
@@ -20,7 +21,7 @@ public class UtilDate {
 	public static Date check(Object obj) {
 		if(obj==null) return null;
 		if(obj instanceof Date) return (Date) obj;
-		throw new RuntimeException("Invalid data type: "+obj.getClass().getName());
+		throw new TechnicalException("Invalid data type: "+obj.getClass().getName());
 	}
 	
 	
@@ -32,7 +33,7 @@ public class UtilDate {
 		if(obj instanceof Calendar) 		return ((Calendar) obj).getTime();
 		if(obj instanceof String) 			return UtilDateParse.parseStrict((String) obj);
 		
-		throw new RuntimeException("Failed to convert data into Date (Unsupported type: "+obj.getClass().getName()+")");
+		throw new TechnicalException("Failed to convert data into Date (Unsupported type: "+obj.getClass().getName()+")");
 	}
 	
 	/*

@@ -13,6 +13,8 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+import gus.game5.core.exception.TechnicalException;
+
 public class UtilImage {
 	
 	/*
@@ -23,7 +25,7 @@ public class UtilImage {
 		try {
 			return ImageIO.read(file);
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new TechnicalException(e);
 		}
 	}
 	
@@ -33,7 +35,7 @@ public class UtilImage {
 			if(is==null) return null;
 			return ImageIO.read(is);
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new TechnicalException(e);
 		}
 	}
 	
@@ -50,7 +52,7 @@ public class UtilImage {
 		try {
 			ImageIO.write(image,"jpg",file);
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new TechnicalException(e);
 		}
 	}
 	

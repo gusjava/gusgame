@@ -8,6 +8,8 @@ import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
 
+import gus.game5.core.exception.TechnicalException;
+
 public class UtilScreen {
 
 	public static Rectangle getScreenRect() {
@@ -26,7 +28,7 @@ public class UtilScreen {
 			Robot robot = new Robot();
 			return robot.createScreenCapture(rect);
 		} catch (AWTException e) {
-			throw new RuntimeException(e);
+			throw new TechnicalException(e);
 		}
 	}
 }

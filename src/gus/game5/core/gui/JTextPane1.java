@@ -11,6 +11,8 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import gus.game5.core.exception.TechnicalException;
+
 public class JTextPane1 extends JTextPane {
 	private static final long serialVersionUID = 1L;
 
@@ -132,7 +134,7 @@ public class JTextPane1 extends JTextPane {
 		try {
 			doc.insertString(doc.getLength(), text, attr);
 		} catch (BadLocationException e) {
-			throw new RuntimeException(e);
+			throw new TechnicalException(e);
 		}
 	}
 
