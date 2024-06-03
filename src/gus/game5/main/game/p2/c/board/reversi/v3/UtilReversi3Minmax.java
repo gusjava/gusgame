@@ -1,10 +1,14 @@
 package gus.game5.main.game.p2.c.board.reversi.v3;
 
-import static gus.game5.main.game.p2.c.board.reversi.v3.UtilReversi3.*;
+import static gus.game5.main.game.p2.c.board.reversi.v3.UtilReversi3.EMPTY;
+import static gus.game5.main.game.p2.c.board.reversi.v3.UtilReversi3.findPossiblePlays;
+import static gus.game5.main.game.p2.c.board.reversi.v3.UtilReversi3.oppositeValue;
+import static gus.game5.main.game.p2.c.board.reversi.v3.UtilReversi3.randomPlay;
+import static gus.game5.main.game.p2.c.board.reversi.v3.UtilReversi3.searchWinner;
 
 import java.util.List;
 
-import gus.game5.core.util.UtilArray;
+import gus.game5.core.util.UtilArrayInt;
 
 public class UtilReversi3Minmax {
 	
@@ -32,7 +36,7 @@ public class UtilReversi3Minmax {
         for(int i=0; i<plays.size(); i++) {
         	List<int[]> play = plays.get(i);
         	
-        	int[][] newData = UtilArray.clone(data);
+        	int[][] newData = UtilArrayInt.clone(data);
         	for(int[] p : play) newData[p[0]][p[1]] = player;
         	
         	State nextState = alphaBeta(oppositePlayer, depth+1, newData, -bestState.fitness, -alpha);

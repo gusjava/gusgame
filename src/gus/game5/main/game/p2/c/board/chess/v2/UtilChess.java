@@ -3,7 +3,7 @@ package gus.game5.main.game.p2.c.board.chess.v2;
 import java.util.ArrayList;
 import java.util.List;
 
-import gus.game5.core.util.UtilArray;
+import gus.game5.core.util.UtilArrayInt;
 import gus.game5.core.util.UtilRandom;
 
 public class UtilChess {
@@ -277,25 +277,25 @@ public class UtilChess {
 	 */
 	
 	public static boolean whiteIsChecked(int[][] data) {
-		int[] king = UtilArray.find(data, WKI);
+		int[] king = UtilArrayInt.find(data, WKI);
 		return blackCanAttack(data, king);
 	}
 	
 	public static boolean blackIsChecked(int[][] data) {
-		int[] king = UtilArray.find(data, BKI);
+		int[] king = UtilArrayInt.find(data, BKI);
 		return whiteCanAttack(data, king);
 	}
 	
 	
 	
 	public static boolean whiteIsCheckedDebug(int[][] data) throws Exception {
-		int[] king = UtilArray.find(data, WKI);
+		int[] king = UtilArrayInt.find(data, WKI);
 		if(king==null) throw new Exception("White king has been eaten !!!");
 		return blackCanAttack(data, king);
 	}
 	
 	public static boolean blackIsCheckedDebug(int[][] data) throws Exception {
-		int[] king = UtilArray.find(data, BKI);
+		int[] king = UtilArrayInt.find(data, BKI);
 		if(king==null) throw new Exception("Black king has been eaten !!!");
 		return whiteCanAttack(data, king);
 	}
@@ -712,7 +712,7 @@ public class UtilChess {
 		int i2 = play[2];
 		int j2 = play[3];
 		int val = data[i1][j1];
-		int[][] newData = UtilArray.clone(data);
+		int[][] newData = UtilArrayInt.clone(data);
 		newData[i1][j1] = 0;
 		newData[i2][j2] = val;
 		return newData;

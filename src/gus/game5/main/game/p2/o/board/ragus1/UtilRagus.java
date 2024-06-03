@@ -3,7 +3,7 @@ package gus.game5.main.game.p2.o.board.ragus1;
 import java.util.ArrayList;
 import java.util.List;
 
-import gus.game5.core.util.UtilArray;
+import gus.game5.core.util.UtilArrayInt;
 import gus.game5.core.util.UtilRandom;
 
 public class UtilRagus {
@@ -85,7 +85,7 @@ public class UtilRagus {
 	
 	public static int[][] attemptToPlay(int player, int[][] data, int[] start, int[] end) {
 		//il faut que les cases start et end soient proches voisines
-		if(UtilArray.distance(start, end)!=1) return null;
+		if(UtilArrayInt.distance(start, end)!=1) return null;
 		
 		int startX = start[0];
 		int startY = start[1];
@@ -111,7 +111,7 @@ public class UtilRagus {
 		//il faut que la case start ne soit pas bloquée
 		if(blocked1) return null;
 		
-		int[][] newData = UtilArray.clone(data);
+		int[][] newData = UtilArrayInt.clone(data);
 		
 		if(strength1==1 && strength2==0) {
 			//duplication
@@ -147,7 +147,7 @@ public class UtilRagus {
 	}
 	
 	public static boolean isBlocked(int[][] data, int[] pos, int value, int strength) {
-		List<int[]> neighbors = UtilArray.neighbor8Pos(data, pos);
+		List<int[]> neighbors = UtilArrayInt.neighbor8Pos(data, pos);
 		for(int[] neighbor : neighbors) {
 			int value1 = data[neighbor[0]][neighbor[1]];
 			if(value1*value<0) {
@@ -192,7 +192,7 @@ public class UtilRagus {
 	}
 	
 	private static boolean possiblePlay(int player, int[][] data, int i1, int j1, int i2, int j2) {
-		if(!UtilArray.has(data, i2,j2)) return false;
+		if(!UtilArrayInt.has(data, i2,j2)) return false;
 		if(i2==homeIndex(player)) return false;
 		return data[i1][j1]!=data[i2][j2] || !isBlocked(data, new int[] {i2,j2});
 	}

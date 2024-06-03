@@ -21,7 +21,7 @@ import gus.game5.core.point.point1.Point1D0;
 import gus.game5.core.point.point2.Point2;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
-import gus.game5.core.util.UtilArray;
+import gus.game5.core.util.UtilArrayInt;
 import gus.game5.core.util.UtilList;
 
 public class GameAntivirus extends Game1 {
@@ -228,11 +228,11 @@ public class GameAntivirus extends Game1 {
 				List<Cell[]> moves = findMoves(0, dj0);
 				if(moves==null) return;
 				
-				int[][] data1 = UtilArray.clone(data);
+				int[][] data1 = UtilArrayInt.clone(data);
 				for(Cell[] move : moves)
-					UtilArray.set(data1, move[0].getIJ(), UtilAntivirus.EMPTY);
+					UtilArrayInt.set(data1, move[0].getIJ(), UtilAntivirus.EMPTY);
 				for(Cell[] move : moves)
-					UtilArray.set(data1, move[1].getIJ(), move[0].getValue());
+					UtilArrayInt.set(data1, move[1].getIJ(), move[0].getValue());
 				data = data1;
 			}
 		}
@@ -244,11 +244,11 @@ public class GameAntivirus extends Game1 {
 				List<Cell[]> moves = findMoves(di0, 0);
 				if(moves==null) return;
 				
-				int[][] data1 = UtilArray.clone(data);
+				int[][] data1 = UtilArrayInt.clone(data);
 				for(Cell[] move : moves)
-					UtilArray.set(data1, move[0].getIJ(), UtilAntivirus.EMPTY);
+					UtilArrayInt.set(data1, move[0].getIJ(), UtilAntivirus.EMPTY);
 				for(Cell[] move : moves)
-					UtilArray.set(data1, move[1].getIJ(), move[0].getValue());
+					UtilArrayInt.set(data1, move[1].getIJ(), move[0].getValue());
 				data = data1;
 			}
 		}

@@ -1,8 +1,21 @@
 package gus.game5.main.game.p2.c.board.chess.v2;
 
-import static gus.game5.main.game.p2.c.board.chess.v1.UtilChess.*;
+import static gus.game5.main.game.p2.c.board.chess.v1.UtilChess.BP;
+import static gus.game5.main.game.p2.c.board.chess.v1.UtilChess.WB;
+import static gus.game5.main.game.p2.c.board.chess.v1.UtilChess.WK;
+import static gus.game5.main.game.p2.c.board.chess.v1.UtilChess.WKI;
+import static gus.game5.main.game.p2.c.board.chess.v1.UtilChess.WP;
+import static gus.game5.main.game.p2.c.board.chess.v1.UtilChess.WQ;
+import static gus.game5.main.game.p2.c.board.chess.v1.UtilChess.WR;
+import static gus.game5.main.game.p2.c.board.chess.v1.UtilChess.blackCanAttack;
+import static gus.game5.main.game.p2.c.board.chess.v1.UtilChess.is;
+import static gus.game5.main.game.p2.c.board.chess.v1.UtilChess.isBlack;
+import static gus.game5.main.game.p2.c.board.chess.v1.UtilChess.isEmpty;
+import static gus.game5.main.game.p2.c.board.chess.v1.UtilChess.isEmptyOrBlack;
+import static gus.game5.main.game.p2.c.board.chess.v1.UtilChess.isValid;
+import static gus.game5.main.game.p2.c.board.chess.v1.UtilChess.isWhite;
 
-import gus.game5.core.util.UtilArray;
+import gus.game5.core.util.UtilArrayInt;
 
 public class CheckerW {
 	
@@ -15,7 +28,7 @@ public class CheckerW {
 	}
 	
 	public EState check() {
-		int[] king = UtilArray.find(data, WKI);
+		int[] king = UtilArrayInt.find(data, WKI);
 		if(!blackCanAttack(data, king)) return EState.SAFE;
 		
 		for(int i=0;i<8;i++) for(int j=0;j<8;j++) {

@@ -1,7 +1,8 @@
 package gus.game5.main.game.p2.c.board.tictactoe.v3;
 
 import java.util.List;
-import gus.game5.core.util.UtilArray;
+
+import gus.game5.core.util.UtilArrayInt;
 import gus.game5.core.util.UtilRandom;
 
 public class UtilTTT3 {
@@ -16,7 +17,7 @@ public class UtilTTT3 {
 	}
 	
 	public static List<int[]> findPossiblePlays(int[] data) {
-		return UtilArray.findAll(data, EMPTY);
+		return UtilArrayInt.findAll(data, EMPTY);
 	}
 	
 	public static boolean isPlayable(int cellValue) {
@@ -35,7 +36,7 @@ public class UtilTTT3 {
 		if(same(data,0,4,8)) return data[0];
 		if(same(data,2,4,6)) return data[2];
 		
-		if(UtilArray.none(data, EMPTY)) return EMPTY;
+		if(UtilArrayInt.none(data, EMPTY)) return EMPTY;
 		return -1;
 	}
 	

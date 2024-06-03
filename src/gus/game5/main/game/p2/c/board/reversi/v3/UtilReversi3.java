@@ -3,7 +3,7 @@ package gus.game5.main.game.p2.c.board.reversi.v3;
 import java.util.ArrayList;
 import java.util.List;
 
-import gus.game5.core.util.UtilArray;
+import gus.game5.core.util.UtilArrayInt;
 import gus.game5.core.util.UtilRandom;
 
 public class UtilReversi3 {
@@ -81,11 +81,11 @@ public class UtilReversi3 {
 	
 	private static List<int[]> scan(int player, int[][] data, int[] p, int di, int dj) {
 		int oppositePlayer = oppositeValue(player);
-		int[] pn = UtilArray.neighborPos(data, p, di, dj);
+		int[] pn = UtilArrayInt.neighborPos(data, p, di, dj);
 		List<int[]> list = new ArrayList<>();
 		while(pn!=null && data[pn[0]][pn[1]]==oppositePlayer) {
 			list.add(pn);
-			pn = UtilArray.neighborPos(data, pn, di, dj);
+			pn = UtilArrayInt.neighborPos(data, pn, di, dj);
 		}
 		if(pn==null || data[pn[0]][pn[1]]!=player) list.clear();
 		return list;

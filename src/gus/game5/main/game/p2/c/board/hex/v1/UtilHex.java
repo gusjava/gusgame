@@ -2,7 +2,8 @@ package gus.game5.main.game.p2.c.board.hex.v1;
 
 import java.util.List;
 
-import gus.game5.core.util.UtilArray;
+import gus.game5.core.util.UtilArrayBoolean;
+import gus.game5.core.util.UtilArrayInt;
 import gus.game5.core.util.UtilRandom;
 
 public class UtilHex {
@@ -16,7 +17,7 @@ public class UtilHex {
 	}
 	
 	public static List<int[]> findPossiblePlays(int[][] data) {
-		return UtilArray.findAll(data, EMPTY);
+		return UtilArrayInt.findAll(data, EMPTY);
 	}
 	
 	public static int[] findPlay(int[][] data, int[] p) {
@@ -27,15 +28,15 @@ public class UtilHex {
 		int x = data.length;
 		int y = data[0].length;
 		
-		boolean[][] b = UtilArray.boolArray2(x, y, false);
+		boolean[][] b = UtilArrayBoolean.boolArray2(x, y, false);
 		for(int i=0;i<x;i++) {
 			if(isConnectedToLeftRed(x, y, data, b, i, y-1)) return RED;
 		}
-		b = UtilArray.boolArray2(x, y, false);
+		b = UtilArrayBoolean.boolArray2(x, y, false);
 		for(int j=0;j<y;j++) {
 			if(isConnectedToTopBlue(x, y, data, b, x-1, j)) return BLUE;
 		}
-		if(UtilArray.any(data, EMPTY)) return -1;
+		if(UtilArrayInt.any(data, EMPTY)) return -1;
 		return EMPTY;
 	}
 	

@@ -8,7 +8,7 @@ import static gus.game5.main.game.p2.c.board.tictactoe.v3.UtilTTT3.searchWinner;
 
 import java.util.List;
 
-import gus.game5.core.util.UtilArray;
+import gus.game5.core.util.UtilArrayInt;
 
 public class UtilTTT3Minmax {
 
@@ -33,7 +33,7 @@ public class UtilTTT3Minmax {
         for(int i=0; i<plays.size(); i++) {
         	int[] play = plays.get(i);
         	
-        	int[] newData = UtilArray.clone(data);
+        	int[] newData = UtilArrayInt.clone(data);
         	newData[play[0]] = player;
         	
         	State nextState = alphaBeta(oppositePlayer, newData, -bestState.fitness, -alpha);

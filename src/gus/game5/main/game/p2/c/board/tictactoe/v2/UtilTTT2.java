@@ -2,7 +2,7 @@ package gus.game5.main.game.p2.c.board.tictactoe.v2;
 
 import java.util.List;
 
-import gus.game5.core.util.UtilArray;
+import gus.game5.core.util.UtilArrayInt;
 import gus.game5.core.util.UtilRandom;
 
 public class UtilTTT2 {
@@ -12,7 +12,7 @@ public class UtilTTT2 {
 	}
 	
 	public static List<int[]> findPossiblePlays(int[][] data) {
-		return UtilArray.findAll(data, 0);
+		return UtilArrayInt.findAll(data, 0);
 	}
 	
 	public static int searchWinner(int[][] data) {
@@ -33,7 +33,7 @@ public class UtilTTT2 {
 			if(data[2][0]==side22 && data[2][1]==side22) return side22;
 			if(data[0][2]==side22 && data[1][2]==side22) return side22;
 		}
-		if(UtilArray.none(data, 0)) return 0;
+		if(UtilArrayInt.none(data, 0)) return 0;
 		return -1;
 	}
 }

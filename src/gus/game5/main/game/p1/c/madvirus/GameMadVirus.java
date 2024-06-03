@@ -15,7 +15,8 @@ import gus.game5.core.point.point0.Point0;
 import gus.game5.core.point.point2.Point2;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
-import gus.game5.core.util.UtilArray;
+import gus.game5.core.util.UtilArrayBoolean;
+import gus.game5.core.util.UtilArrayInt;
 
 public class GameMadVirus extends Game1 {
 	
@@ -97,7 +98,7 @@ public class GameMadVirus extends Game1 {
 		turnLeft = UtilMadVirus.TURN_LEFT[level-1];
 		data = UtilMadVirus.generateForLevel(level);
 		
-		infected = UtilArray.boolArray2(data.length, data[0].length, false);
+		infected = UtilArrayBoolean.boolArray2(data.length, data[0].length, false);
 		int[] startPos = UtilMadVirus.findRandomStart(data);
 		infected[startPos[0]][startPos[1]] = true;
 		
@@ -132,8 +133,8 @@ public class GameMadVirus extends Game1 {
 		if(mouse().button1().justPressed()) {
 			Cell selected = board.cellAt(mouse().pointCurrent());
 			if(selected!=null) {
-				data0 = UtilArray.clone(data);
-				infected0 = UtilArray.clone(infected);
+				data0 = UtilArrayInt.clone(data);
+				infected0 = UtilArrayBoolean.clone(infected);
 				
 				int value = selected.getValue();
 				boolean done = UtilMadVirus.attempToInfect(data, infected, value);

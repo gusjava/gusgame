@@ -1,6 +1,6 @@
 package gus.game5.main.game.p2.c.board.chess.v1;
 
-import gus.game5.core.util.UtilArray;
+import gus.game5.core.util.UtilArrayInt;
 
 public class UtilChess {
 	
@@ -268,12 +268,12 @@ public class UtilChess {
 	 */
 	
 	public static boolean whiteIsChecked(int[][] data) {
-		int[] king = UtilArray.find(data, WKI);
+		int[] king = UtilArrayInt.find(data, WKI);
 		return blackCanAttack(data, king);
 	}
 	
 	public static boolean blackIsChecked(int[][] data) {
-		int[] king = UtilArray.find(data, BKI);
+		int[] king = UtilArrayInt.find(data, BKI);
 		return whiteCanAttack(data, king);
 	}
 	

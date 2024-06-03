@@ -80,7 +80,7 @@ public class UtilPolynom {
 					set.add(-r2);
 				}
 			}
-			return UtilArray.collectDouble2(set);
+			return UtilArrayDouble.collectDouble2(set);
 		}
 		
 		return null;

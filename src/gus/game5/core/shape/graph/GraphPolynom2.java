@@ -5,7 +5,7 @@ import java.awt.Color;
 import gus.game5.core.features.g.G;
 import gus.game5.core.features.g.GDouble;
 import gus.game5.core.function.FunctionPolynom;
-import gus.game5.core.util.UtilArray;
+import gus.game5.core.util.UtilArrayDouble;
 
 public class GraphPolynom2 extends GraphPolynom0 {
 	
@@ -18,7 +18,7 @@ public class GraphPolynom2 extends GraphPolynom0 {
 	
 	public GraphPolynom2(Color color, GDouble... gA) {
 		super(color);
-		gPolynom = ()->new FunctionPolynom(UtilArray.collectDouble2(gA));
+		gPolynom = ()->new FunctionPolynom(UtilArrayDouble.collectDouble2(gA));
 	}
 
 	public FunctionPolynom getPolynom() {

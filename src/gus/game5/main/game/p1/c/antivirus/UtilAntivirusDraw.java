@@ -4,7 +4,7 @@ import gus.game5.core.angle.Angle;
 
 import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.point.point1.Point1;
-import static gus.game5.core.util.UtilArray.*;
+import static gus.game5.core.util.UtilArrayInt.*;
 import static gus.game5.main.game.p1.c.antivirus.UtilAntivirusColor.*;
 
 public class UtilAntivirusDraw {

@@ -1,11 +1,15 @@
 package gus.game5.main.game.p2.c.board.chess.v2;
 
-import static gus.game5.main.game.p2.c.board.chess.v2.UtilChess.*;
+import static gus.game5.main.game.p2.c.board.chess.v2.UtilChess.INIT_STATE;
+import static gus.game5.main.game.p2.c.board.chess.v2.UtilChess.WHITE;
+import static gus.game5.main.game.p2.c.board.chess.v2.UtilChess.blackIsChecked;
+import static gus.game5.main.game.p2.c.board.chess.v2.UtilChess.whiteIsChecked;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import gus.game5.core.util.UtilArray;
+import gus.game5.core.util.UtilArrayBoolean;
+import gus.game5.core.util.UtilArrayInt;
 
 
 public class Engine {
@@ -22,11 +26,11 @@ public class Engine {
 	public Engine() {
 		winner = -1;
 		
-		data = UtilArray.clone(INIT_STATE);
+		data = UtilArrayInt.clone(INIT_STATE);
 		history = new ArrayList<>();
-		history.add(UtilArray.clone(data));
+		history.add(UtilArrayInt.clone(data));
 		
-		changed = UtilArray.boolArray2(8, false);
+		changed = UtilArrayBoolean.boolArray2(8, false);
 		whiteState = EState.SAFE;
 		blackState = EState.SAFE;
 	}
@@ -76,7 +80,7 @@ public class Engine {
 
 		if(player==WHITE) {
 			if(whiteIsChecked(data)) {
-				data = UtilArray.clone(data0);
+				data = UtilArrayInt.clone(data0);
 				return false;
 			}
 			whiteState = EState.SAFE;
@@ -85,7 +89,7 @@ public class Engine {
 		}
 		else {
 			if(blackIsChecked(data)) {
-				data = UtilArray.clone(data0);
+				data = UtilArrayInt.clone(data0);
 				return false;
 			}
 			blackState = EState.SAFE;
@@ -93,13 +97,13 @@ public class Engine {
 			if(whiteState.isMate()) winner = player;
 		}
 		
-		if(UtilArray.count(data, 0)==62) {
+		if(UtilArrayInt.count(data, 0)==62) {
 			//only 2 kings left
 			winner = 0;
 		}
 
 		updateChanged(data0);
-		history.add(UtilArray.clone(data));
+		history.add(UtilArrayInt.clone(data));
 		return true;
 	}
 	
