@@ -26,11 +26,11 @@ public class Engine {
 		gameOver = null;
 		player = EPlayer.WHITE;
 		
-		data = UtilArrayInt.clone(INIT_STATE);
+		data = UtilArrayInt.clone2(INIT_STATE);
 		history = new ArrayList<>();
-		history.add(UtilArrayInt.clone(data));
+		history.add(UtilArrayInt.clone2(data));
 		
-		changed = UtilArrayBoolean.boolArray2(8, false);
+		changed = UtilArrayBoolean.build2(8, false);
 		whiteState = EState.SAFE;
 		blackState = EState.SAFE;
 	}
@@ -86,7 +86,7 @@ public class Engine {
 
 		if(player.isWhite()) {
 			if(whiteIsChecked(data)) {
-				data = UtilArrayInt.clone(data0);
+				data = UtilArrayInt.clone2(data0);
 				return false;
 			}
 			whiteState = EState.SAFE;
@@ -95,7 +95,7 @@ public class Engine {
 		}
 		else {
 			if(blackIsChecked(data)) {
-				data = UtilArrayInt.clone(data0);
+				data = UtilArrayInt.clone2(data0);
 				return false;
 			}
 			blackState = EState.SAFE;
@@ -109,7 +109,7 @@ public class Engine {
 		}
 
 		updateChanged(data0);
-		history.add(UtilArrayInt.clone(data));
+		history.add(UtilArrayInt.clone2(data));
 		return true;
 	}
 	

@@ -21,37 +21,37 @@ public class UtilArrayBoolean {
 	}
 	
 	/*
-	 * GENERATE BOOL ARRAY
+	 * BUILD
 	 */
 
-	public static boolean[] boolArray(int x, boolean value) {
+	public static boolean[] build1(int x, boolean value) {
 		boolean[] data = new boolean[x];
 		for(int i=0;i<x;i++) data[i] = value;
 		return data;
 	}
 
-	public static boolean[][] boolArray2(int x, int y, boolean value) {
+	public static boolean[][] build2(int x, int y, boolean value) {
 		boolean[][] data = new boolean[x][y];
 		for(int i=0;i<x;i++) for(int j=0;j<y;j++) data[i][j] = value;
 		return data;
 	}
 	
-	public static boolean[][] boolArray2(int x, boolean value) {
-		return boolArray2(x,x,value);
+	public static boolean[][] build2(int x, boolean value) {
+		return build2(x,x,value);
 	}
 
-	public static boolean[][][] boolArray3(int x, int y, int z, boolean value) {
+	public static boolean[][][] build3(int x, int y, int z, boolean value) {
 		boolean[][][] data = new boolean[x][y][z];
 		for(int i=0;i<x;i++) for(int j=0;j<y;j++) for(int k=0;k<z;k++) data[i][j][k] = value;
 		return data;
 	}
 	
-	public static boolean[][][] boolArray3(int x, boolean value) {
-		return boolArray3(x,x,x,value);
+	public static boolean[][][] build3(int x, boolean value) {
+		return build3(x,x,x,value);
 	}
 	
 	/*
-	 * CLONE BOOLEAN ARRAY
+	 * CLONE
 	 */
 	
 	public static boolean[] clone(boolean[] data) {
@@ -91,7 +91,7 @@ public class UtilArrayBoolean {
 	}
 	
 	/*
-	 * ANY : BOOLEAN[], BOOLEAN[][], BOOLEAN[][][]
+	 * ANY
 	 */
 	
 	public static boolean any(boolean[] data, boolean value) {
@@ -128,7 +128,7 @@ public class UtilArrayBoolean {
 	}
 	
 	/*
-	 * ALL : BOOLEAN[],BOOLEAN[][], BOOLEAN[][][]
+	 * ALL
 	 */
 	
 	public static boolean all(boolean[] data, boolean value) {
@@ -162,7 +162,7 @@ public class UtilArrayBoolean {
 	}
 	
 	/*
-	 * NONE : BOOLEAN[],BOOLEAN[][], BOOLEAN[][][]
+	 * NONE
 	 */
 	
 	public static boolean none(boolean[] data, boolean value) {

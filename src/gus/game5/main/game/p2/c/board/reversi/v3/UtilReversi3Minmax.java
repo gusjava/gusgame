@@ -36,7 +36,7 @@ public class UtilReversi3Minmax {
         for(int i=0; i<plays.size(); i++) {
         	List<int[]> play = plays.get(i);
         	
-        	int[][] newData = UtilArrayInt.clone(data);
+        	int[][] newData = UtilArrayInt.clone2(data);
         	for(int[] p : play) newData[p[0]][p[1]] = player;
         	
         	State nextState = alphaBeta(oppositePlayer, depth+1, newData, -bestState.fitness, -alpha);

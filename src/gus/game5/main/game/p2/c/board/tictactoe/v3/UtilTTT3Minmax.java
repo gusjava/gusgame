@@ -33,7 +33,7 @@ public class UtilTTT3Minmax {
         for(int i=0; i<plays.size(); i++) {
         	int[] play = plays.get(i);
         	
-        	int[] newData = UtilArrayInt.clone(data);
+        	int[] newData = UtilArrayInt.clone1(data);
         	newData[play[0]] = player;
         	
         	State nextState = alphaBeta(oppositePlayer, newData, -bestState.fitness, -alpha);

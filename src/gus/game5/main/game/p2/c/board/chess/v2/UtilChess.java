@@ -712,7 +712,7 @@ public class UtilChess {
 		int i2 = play[2];
 		int j2 = play[3];
 		int val = data[i1][j1];
-		int[][] newData = UtilArrayInt.clone(data);
+		int[][] newData = UtilArrayInt.clone2(data);
 		newData[i1][j1] = 0;
 		newData[i2][j2] = val;
 		return newData;

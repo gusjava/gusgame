@@ -28,11 +28,11 @@ public class UtilHex {
 		int x = data.length;
 		int y = data[0].length;
 		
-		boolean[][] b = UtilArrayBoolean.boolArray2(x, y, false);
+		boolean[][] b = UtilArrayBoolean.build2(x, y, false);
 		for(int i=0;i<x;i++) {
 			if(isConnectedToLeftRed(x, y, data, b, i, y-1)) return RED;
 		}
-		b = UtilArrayBoolean.boolArray2(x, y, false);
+		b = UtilArrayBoolean.build2(x, y, false);
 		for(int j=0;j<y;j++) {
 			if(isConnectedToTopBlue(x, y, data, b, x-1, j)) return BLUE;
 		}

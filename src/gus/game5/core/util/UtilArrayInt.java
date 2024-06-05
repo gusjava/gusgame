@@ -7,6 +7,19 @@ import gus.game5.core.exception.TechnicalException;
 import gus.game5.core.features.f.F;
 
 public class UtilArrayInt {
+	
+	/*
+	 * RETURN BOOLEAN
+	 */
+	
+	/*
+	 * has : boolean (2)
+	 * is : boolean (2)
+	 * eq : boolean (4)
+	 * any : boolean (3)
+	 * all : boolean (3)
+	 * none : boolean (3)
+	 */
 
 	/*
 	 * HAS
@@ -57,6 +70,121 @@ public class UtilArrayInt {
 	public static boolean eq(int[] data, int i, int j, int k) {
 		return data.length==3 && data[0]==i && data[1]==j && data[2]==k;
 	}
+	
+	public static boolean eq(int[] data, int i, int j, int k, int l) {
+		return data.length==4 && data[0]==i && data[1]==j && data[2]==k && data[3]==l;
+	}
+	
+	/*
+	 * ANY
+	 */
+	
+	public static boolean any(int[] data, int value) {
+		int x = data.length;
+		if(x==0) return false;
+		
+		for(int i=0;i<x;i++)
+			if(data[i] == value) return true;
+		return false;
+	}
+	
+	public static boolean any(int[][] data, int value) {
+		int x = data.length;
+		if(x==0) return false;
+		int y = data[0].length;
+		if(y==0) return false;
+		
+		for(int i=0;i<x;i++) for(int j=0;j<y;j++) 
+			if(data[i][j] == value) return true;
+		return false;
+	}
+	
+	public static boolean any(int[][][] data, int value) {
+		int x = data.length;
+		if(x==0) return false;
+		int y = data[0].length;
+		if(y==0) return false;
+		int z = data[0][0].length;
+		if(z==0) return false;
+
+		for(int i=0;i<x;i++) for(int j=0;j<y;j++) for(int k=0;k<z;k++)
+			if(data[i][j][k] == value) return true;
+		return false;
+	}
+	
+	/*
+	 * ALL
+	 */
+	
+	public static boolean all(int[] data, int value) {
+		if(data.length==0) return true;
+		int x = data.length;
+		for(int i=0;i<x;i++)
+			if(data[i] != value) return false;
+		return true;
+	}
+	
+	public static boolean all(int[][] data, int value) {
+		if(data.length==0) return true;
+		int x = data.length;
+		int y = data[0].length;
+		for(int i=0;i<x;i++) for(int j=0;j<y;j++) 
+			if(data[i][j] != value) return false;
+		return true;
+	}
+	
+	public static boolean all(int[][][] data, int value) {
+		int x = data.length;
+		if(x==0) return true;
+		int y = data[0].length;
+		if(y==0) return true;
+		int z = data[0][0].length;
+		if(z==0) return true;
+
+		for(int i=0;i<x;i++) for(int j=0;j<y;j++) for(int k=0;k<z;k++)
+			if(data[i][j][k] != value) return false;
+		return true;
+	}
+	
+	/*
+	 * NONE
+	 */
+	
+	public static boolean none(int[] data, int value) {
+		return !any(data, value);
+	}
+	
+	public static boolean none(int[][] data, int value) {
+		return !any(data, value);
+	}
+	
+	public static boolean none(int[][][] data, int value) {
+		return !any(data, value);
+	}
+	
+	/*
+	 * get : Integer (2)
+	 * set (2)
+	 * neighborValue : Integer (2)
+	 * neighbor4Value : List<Integer> (2)
+	 * neighbor8Value : List<Integer> (2)
+	 * neighborPos : int[] (2)
+	 * neighbor4Pos : List<int[]> (2)
+	 * neighbor8Pos : List<int[]> (2)
+	 * distance : int (à migrer dans UtilMath)
+	 * build1 : int[]
+	 * build2 : int[][] (2)
+	 * build3 : int[][][] (2)
+	 * random2 : int[][]
+	 * clone1 : int[]
+	 * clone2 : int[][]
+	 * clone3 : int[][][]
+	 * find : int[] (3)
+	 * findAll : List<int[]> (6)
+	 * count : int (2)
+	 * lenToXY : int[]
+	 * perimeter : int
+	 */
 	
 	/*
 	 * GET
@@ -225,48 +353,40 @@ public class UtilArrayInt {
 	}
 	
 	/*
-	 * DISTANCE
-	 */
-	
-	public static int distance(int[] p1, int[] p2) {
-		return Math.abs(p1[0]-p2[0]) + Math.abs(p1[1]-p2[1]);
-	}
-	
-	/*
-	 * GENERATE INT ARRAY
+	 * BUILD
 	 */
 
-	public static int[] intArray(int x, int value) {
+	public static int[] build1(int x, int value) {
 		int[] data = new int[x];
 		for(int i=0;i<x;i++) data[i] = value;
 		return data;
 	}
 
-	public static int[][] intArray2(int x, int y, int value) {
+	public static int[][] build2(int x, int y, int value) {
 		int[][] data = new int[x][y];
 		for(int i=0;i<x;i++) for(int j=0;j<y;j++) data[i][j] = value;
 		return data;
 	}
 	
-	public static int[][] intArray2(int x, int value) {
-		return intArray2(x,x,value);
+	public static int[][] build2(int x, int value) {
+		return build2(x,x,value);
 	}
 
-	public static int[][][] intArray3(int x, int y, int z, int value) {
+	public static int[][][] build3(int x, int y, int z, int value) {
 		int[][][] data = new int[x][y][z];
 		for(int i=0;i<x;i++) for(int j=0;j<y;j++) for(int k=0;k<z;k++) data[i][j][k] = value;
 		return data;
 	}
 	
-	public static int[][][] intArray3(int x, int value) {
-		return intArray3(x,x,x,value);
+	public static int[][][] build3(int x, int value) {
+		return build3(x,x,x,value);
 	}
 	
 	/*
-	 * GENERATE RANDOM INT ARRAY
+	 * RANDOM
 	 */
 
-	public static int[][] randomIntArray2(int x, int y, int[][] distribution) {
+	public static int[][] random2(int x, int y, int[][] distribution) {
 		int[][] data = new int[x][y];
 		int total = x*y;
 		
@@ -293,10 +413,10 @@ public class UtilArrayInt {
 	}
 	
 	/*
-	 * CLONE INT ARRAY
+	 * CLONE
 	 */
 	
-	public static int[] clone(int[] data) {
+	public static int[] clone1(int[] data) {
 		int x = data.length;
 		if(x==0) return new int[0];
 		
@@ -306,7 +426,7 @@ public class UtilArrayInt {
 		return newData;
 	}
 	
-	public static int[][] clone(int[][] data) {
+	public static int[][] clone2(int[][] data) {
 		int x = data.length;
 		if(x==0) return new int[0][0];
 		int y = data[0].length;
@@ -318,7 +438,7 @@ public class UtilArrayInt {
 		return newData;
 	}
 	
-	public static int[][][] clone(int[][][] data) {
+	public static int[][][] clone3(int[][][] data) {
 		int x = data.length;
 		if(x==0) return new int[0][0][0];
 		int y = data[0].length;
@@ -370,7 +490,7 @@ public class UtilArrayInt {
 	}
 	
 	/*
-	 * FIND ALL : INT[]
+	 * FIND ALL
 	 */
 	
 	public static List<int[]> findAll(int[] data, int value) {
@@ -394,10 +514,6 @@ public class UtilArrayInt {
 		}
 		return found;
 	}
-	
-	/*
-	 * FIND ALL : INT[][]
-	 */
 	
 	public static List<int[]> findAll(int[][] data, int value) {
 		int x = data.length;
@@ -424,10 +540,6 @@ public class UtilArrayInt {
 		}
 		return found;
 	}
-	
-	/*
-	 * FIND ALL : INT[][][]
-	 */
 	
 	public static List<int[]> findAll(int[][][] data, int value) {
 		int x = data.length;
@@ -460,7 +572,7 @@ public class UtilArrayInt {
 	}
 	
 	/*
-	 * COUNT : INT[][]
+	 * COUNT
 	 */
 	
 	public static int count(int[][] data, int value) {
@@ -517,93 +629,6 @@ public class UtilArrayInt {
 		if(y==1) return x;
 		
 		return (x+y)*2-4;
-	}
-	
-	/*
-	 * ANY : INT[], INT[][], INT[][][]
-	 */
-	
-	public static boolean any(int[] data, int value) {
-		int x = data.length;
-		if(x==0) return false;
-		
-		for(int i=0;i<x;i++)
-			if(data[i] == value) return true;
-		return false;
-	}
-	
-	public static boolean any(int[][] data, int value) {
-		int x = data.length;
-		if(x==0) return false;
-		int y = data[0].length;
-		if(y==0) return false;
-		
-		for(int i=0;i<x;i++) for(int j=0;j<y;j++) 
-			if(data[i][j] == value) return true;
-		return false;
-	}
-	
-	public static boolean any(int[][][] data, int value) {
-		int x = data.length;
-		if(x==0) return false;
-		int y = data[0].length;
-		if(y==0) return false;
-		int z = data[0][0].length;
-		if(z==0) return false;
-
-		for(int i=0;i<x;i++) for(int j=0;j<y;j++) for(int k=0;k<z;k++)
-			if(data[i][j][k] == value) return true;
-		return false;
-	}
-	
-	/*
-	 * ALL : INT[],INT[][], INT[][][]
-	 */
-	
-	public static boolean all(int[] data, int value) {
-		if(data.length==0) return true;
-		int x = data.length;
-		for(int i=0;i<x;i++)
-			if(data[i] != value) return false;
-		return true;
-	}
-	
-	public static boolean all(int[][] data, int value) {
-		if(data.length==0) return true;
-		int x = data.length;
-		int y = data[0].length;
-		for(int i=0;i<x;i++) for(int j=0;j<y;j++) 
-			if(data[i][j] != value) return false;
-		return true;
-	}
-	
-	public static boolean all(int[][][] data, int value) {
-		int x = data.length;
-		if(x==0) return true;
-		int y = data[0].length;
-		if(y==0) return true;
-		int z = data[0][0].length;
-		if(z==0) return true;
-
-		for(int i=0;i<x;i++) for(int j=0;j<y;j++) for(int k=0;k<z;k++)
-			if(data[i][j][k] != value) return false;
-		return true;
-	}
-	
-	/*
-	 * NONE : INT[],INT[][], INT[][][]
-	 */
-	
-	public static boolean none(int[] data, int value) {
-		return !any(data, value);
-	}
-	
-	public static boolean none(int[][] data, int value) {
-		return !any(data, value);
-	}
-	
-	public static boolean none(int[][][] data, int value) {
-		return !any(data, value);
 	}
 	
 	/*

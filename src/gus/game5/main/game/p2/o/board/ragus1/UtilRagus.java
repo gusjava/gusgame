@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gus.game5.core.util.UtilArrayInt;
+import gus.game5.core.util.UtilDistance;
 import gus.game5.core.util.UtilRandom;
 
 public class UtilRagus {
@@ -85,7 +86,7 @@ public class UtilRagus {
 	
 	public static int[][] attemptToPlay(int player, int[][] data, int[] start, int[] end) {
 		//il faut que les cases start et end soient proches voisines
-		if(UtilArrayInt.distance(start, end)!=1) return null;
+		if(UtilDistance.dist(start, end)!=1) return null;
 		
 		int startX = start[0];
 		int startY = start[1];
@@ -111,7 +112,7 @@ public class UtilRagus {
 		//il faut que la case start ne soit pas bloquée
 		if(blocked1) return null;
 		
-		int[][] newData = UtilArrayInt.clone(data);
+		int[][] newData = UtilArrayInt.clone2(data);
 		
 		if(strength1==1 && strength2==0) {
 			//duplication

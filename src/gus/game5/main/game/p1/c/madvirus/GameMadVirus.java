@@ -98,7 +98,7 @@ public class GameMadVirus extends Game1 {
 		turnLeft = UtilMadVirus.TURN_LEFT[level-1];
 		data = UtilMadVirus.generateForLevel(level);
 		
-		infected = UtilArrayBoolean.boolArray2(data.length, data[0].length, false);
+		infected = UtilArrayBoolean.build2(data.length, data[0].length, false);
 		int[] startPos = UtilMadVirus.findRandomStart(data);
 		infected[startPos[0]][startPos[1]] = true;
 		
@@ -133,7 +133,7 @@ public class GameMadVirus extends Game1 {
 		if(mouse().button1().justPressed()) {
 			Cell selected = board.cellAt(mouse().pointCurrent());
 			if(selected!=null) {
-				data0 = UtilArrayInt.clone(data);
+				data0 = UtilArrayInt.clone2(data);
 				infected0 = UtilArrayBoolean.clone(infected);
 				
 				int value = selected.getValue();

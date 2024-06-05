@@ -228,7 +228,7 @@ public class GameAntivirus extends Game1 {
 				List<Cell[]> moves = findMoves(0, dj0);
 				if(moves==null) return;
 				
-				int[][] data1 = UtilArrayInt.clone(data);
+				int[][] data1 = UtilArrayInt.clone2(data);
 				for(Cell[] move : moves)
 					UtilArrayInt.set(data1, move[0].getIJ(), UtilAntivirus.EMPTY);
 				for(Cell[] move : moves)
@@ -244,7 +244,7 @@ public class GameAntivirus extends Game1 {
 				List<Cell[]> moves = findMoves(di0, 0);
 				if(moves==null) return;
 				
-				int[][] data1 = UtilArrayInt.clone(data);
+				int[][] data1 = UtilArrayInt.clone2(data);
 				for(Cell[] move : moves)
 					UtilArrayInt.set(data1, move[0].getIJ(), UtilAntivirus.EMPTY);
 				for(Cell[] move : moves)
