@@ -88,6 +88,11 @@ public abstract class Play1 extends Game1 {
 		return playerAt(1);
 	}
 	
+	public Player1 otherPlayer(Player1 player) {
+		int index = player.getIndex();
+		return index==0 ? secondPlayer() : firstPlayer();
+	}
+	
 	public Player1 currentPlayer() {
 		return playerAt(playIndex);
 	}

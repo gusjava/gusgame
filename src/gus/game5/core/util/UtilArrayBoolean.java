@@ -1,17 +1,31 @@
 package gus.game5.core.util;
 
 public class UtilArrayBoolean {
-
 	
 	/*
-	 * IS
+	 * IS 1
 	 */
 	
-	public static boolean is(boolean[][] data, int[] pos, boolean val) {
-		return is(data, pos[0], pos[1], val);
+	public static boolean is1(boolean[] data, int[] pos, boolean val) {
+		return is1(data, pos[0], val);
 	}
 	
-	public static boolean is(boolean[][] data, int i, int j, boolean val) {
+	public static boolean is1(boolean[] data, int i, boolean val) {
+		int x = data.length;
+		if(x==0) return false;
+		
+		return i>=0 && i<x && data[i]==val;
+	}
+	
+	/*
+	 * IS 2
+	 */
+	
+	public static boolean is2(boolean[][] data, int[] pos, boolean val) {
+		return is2(data, pos[0], pos[1], val);
+	}
+	
+	public static boolean is2(boolean[][] data, int i, int j, boolean val) {
 		int x = data.length;
 		if(x==0) return false;
 		int y = data[0].length;
@@ -21,7 +35,26 @@ public class UtilArrayBoolean {
 	}
 	
 	/*
-	 * BUILD
+	 * IS 3
+	 */
+	
+	public static boolean is3(boolean[][][] data, int[] pos, boolean val) {
+		return is3(data, pos[0], pos[1], pos[2], val);
+	}
+	
+	public static boolean is3(boolean[][][] data, int i, int j, int k, boolean val) {
+		int x = data.length;
+		if(x==0) return false;
+		int y = data[0].length;
+		if(y==0) return false;
+		int z = data[0][0].length;
+		if(z==0) return false;
+		
+		return i>=0 && i<x && j>=0 && j<y && k>=0 && k<z && data[i][j][k]==val;
+	}
+	
+	/*
+	 * BUILD 1
 	 */
 
 	public static boolean[] build1(int x, boolean value) {
@@ -29,6 +62,10 @@ public class UtilArrayBoolean {
 		for(int i=0;i<x;i++) data[i] = value;
 		return data;
 	}
+	
+	/*
+	 * BUILD 2
+	 */
 
 	public static boolean[][] build2(int x, int y, boolean value) {
 		boolean[][] data = new boolean[x][y];
@@ -39,6 +76,10 @@ public class UtilArrayBoolean {
 	public static boolean[][] build2(int x, boolean value) {
 		return build2(x,x,value);
 	}
+	
+	/*
+	 * BUILD 3
+	 */
 
 	public static boolean[][][] build3(int x, int y, int z, boolean value) {
 		boolean[][][] data = new boolean[x][y][z];
@@ -51,10 +92,10 @@ public class UtilArrayBoolean {
 	}
 	
 	/*
-	 * CLONE
+	 * CLONE 1
 	 */
 	
-	public static boolean[] clone(boolean[] data) {
+	public static boolean[] clone1(boolean[] data) {
 		int x = data.length;
 		if(x==0) return new boolean[0];
 		
@@ -64,7 +105,11 @@ public class UtilArrayBoolean {
 		return newData;
 	}
 	
-	public static boolean[][] clone(boolean[][] data) {
+	/*
+	 * CLONE 2
+	 */
+	
+	public static boolean[][] clone2(boolean[][] data) {
 		int x = data.length;
 		if(x==0) return new boolean[0][0];
 		int y = data[0].length;
@@ -76,7 +121,11 @@ public class UtilArrayBoolean {
 		return newData;
 	}
 	
-	public static boolean[][][] clone(boolean[][][] data) {
+	/*
+	 * CLONE 3
+	 */
+	
+	public static boolean[][][] clone3(boolean[][][] data) {
 		int x = data.length;
 		if(x==0) return new boolean[0][0][0];
 		int y = data[0].length;
@@ -91,10 +140,10 @@ public class UtilArrayBoolean {
 	}
 	
 	/*
-	 * ANY
+	 * ANY 1
 	 */
 	
-	public static boolean any(boolean[] data, boolean value) {
+	public static boolean any1(boolean[] data, boolean value) {
 		int x = data.length;
 		if(x==0) return false;
 		
@@ -103,7 +152,11 @@ public class UtilArrayBoolean {
 		return false;
 	}
 	
-	public static boolean any(boolean[][] data, boolean value) {
+	/*
+	 * ANY 2
+	 */
+	
+	public static boolean any2(boolean[][] data, boolean value) {
 		int x = data.length;
 		if(x==0) return false;
 		int y = data[0].length;
@@ -114,7 +167,11 @@ public class UtilArrayBoolean {
 		return false;
 	}
 	
-	public static boolean any(boolean[][][] data, boolean value) {
+	/*
+	 * ANY 3
+	 */
+	
+	public static boolean any3(boolean[][][] data, boolean value) {
 		int x = data.length;
 		if(x==0) return false;
 		int y = data[0].length;
@@ -128,10 +185,10 @@ public class UtilArrayBoolean {
 	}
 	
 	/*
-	 * ALL
+	 * ALL 1
 	 */
 	
-	public static boolean all(boolean[] data, boolean value) {
+	public static boolean all1(boolean[] data, boolean value) {
 		if(data.length==0) return true;
 		int x = data.length;
 		for(int i=0;i<x;i++)
@@ -139,7 +196,11 @@ public class UtilArrayBoolean {
 		return true;
 	}
 	
-	public static boolean all(boolean[][] data, boolean value) {
+	/*
+	 * ALL 2
+	 */
+	
+	public static boolean all2(boolean[][] data, boolean value) {
 		if(data.length==0) return true;
 		int x = data.length;
 		int y = data[0].length;
@@ -148,7 +209,11 @@ public class UtilArrayBoolean {
 		return true;
 	}
 	
-	public static boolean all(boolean[][][] data, boolean value) {
+	/*
+	 * ALL 3
+	 */
+	
+	public static boolean all3(boolean[][][] data, boolean value) {
 		int x = data.length;
 		if(x==0) return true;
 		int y = data[0].length;
@@ -162,18 +227,26 @@ public class UtilArrayBoolean {
 	}
 	
 	/*
-	 * NONE
+	 * NONE 1
 	 */
 	
-	public static boolean none(boolean[] data, boolean value) {
-		return !any(data, value);
+	public static boolean none1(boolean[] data, boolean value) {
+		return !any1(data, value);
 	}
 	
-	public static boolean none(boolean[][] data, boolean value) {
-		return !any(data, value);
+	/*
+	 * NONE 2
+	 */
+	
+	public static boolean none2(boolean[][] data, boolean value) {
+		return !any2(data, value);
 	}
 	
-	public static boolean none(boolean[][][] data, boolean value) {
-		return !any(data, value);
+	/*
+	 * NONE 3
+	 */
+	
+	public static boolean none3(boolean[][][] data, boolean value) {
+		return !any3(data, value);
 	}
 }

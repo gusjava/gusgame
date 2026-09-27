@@ -19,12 +19,12 @@ import gus.game5.core.game.Settings;
 import gus.game5.core.gui.JMenuBar1;
 import gus.game5.core.util.image.IconLoader;
 import gus.game5.main.anim.fishtank.AnimFishTank2;
+import gus.game5.main.anim.gameoflife1.AnimGameOfLife;
+import gus.game5.main.anim.langtonant.AnimLangtonAnt;
 import gus.game5.main.anim.life1.LifeBacteria1;
 import gus.game5.main.anim1.AnimBallBattle;
 import gus.game5.main.anim1.AnimClock;
-import gus.game5.main.anim1.AnimGameOfLife;
 import gus.game5.main.anim1.AnimLandscape;
-import gus.game5.main.anim1.AnimLangtonAnt;
 import gus.game5.main.anim1.AnimMaze;
 import gus.game5.main.anim1.AnimVacheQuiRit;
 import gus.game5.main.edu.prog.modulo1.EduModulo1;
@@ -33,6 +33,7 @@ import gus.game5.main.game.p1.c.madvirus.GameMadVirus;
 import gus.game5.main.game.p1.c.minesweeper.GameMinesweeper;
 import gus.game5.main.game.p1.c.puzzle1.GamePuzzle1;
 import gus.game5.main.game.p1.c.snake.GameSnake;
+import gus.game5.main.game.p1.c.solitaire8.GameSolitaire8;
 import gus.game5.main.game.p1.c.towerofhanoi.GameTowerOfHanoi;
 import gus.game5.main.game.p1.o.blockrun.GameBlockRun;
 import gus.game5.main.game.p1.o.bomb.GameBomb;
@@ -41,6 +42,7 @@ import gus.game5.main.game.p1.o.space.GameSpace;
 import gus.game5.main.game.p1.o.warrior.GameWarrior;
 import gus.game5.main.game.p2.c.board.chess.v1.GameChess1;
 import gus.game5.main.game.p2.c.board.hex.v1.GameHex1;
+import gus.game5.main.game.p2.c.board.quoridor.v1.GameQuoridor1;
 import gus.game5.main.game.p2.c.board.reversi.v3.GameReversi3;
 import gus.game5.main.game.p2.c.board.tictactoe.v3.GameTicTacToe3;
 import gus.game5.main.game.p2.o.board.ragus1.GameRagus1;
@@ -92,6 +94,7 @@ public class Presentation extends Game {
 				new GamePuzzle1(),
 				new GameAntivirus(),
 				new GameMadVirus(),
+				new GameSolitaire8(),
 				new GameSnake(),
 				new GameBlockRun(),
 				new GameTowerOfHanoi(),
@@ -134,6 +137,7 @@ public class Presentation extends Game {
 		Container panel5 = buildPanel(
 				new GameWarrior(),
 				new GameSpace(),
+				new GameQuoridor1(),
 				new GameBloon()
 				);
 

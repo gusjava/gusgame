@@ -99,6 +99,10 @@ public abstract class Point0 implements HasSlope {
 		return isX(p.getX()) && isY(p.getY());
 	}
 	
+	public boolean isNull() {
+		return is(0, 0);
+	}
+	
 	/*
 	 * BETWEEN
 	 */
@@ -348,5 +352,14 @@ public abstract class Point0 implements HasSlope {
 	public Point1 pDilate(Point0 origin, Point0 factor) {
 		if(origin==null) return pDilate(factor);
 		return pSub(origin).pDilate(factor).pAdd(origin);
+	}
+	
+	/*
+	 * SCALAR PRODUCT
+	 *  ||u|| * ||v|| * cos(u,v)
+	 */
+	
+	public double scalarProduct(Point0 p) {
+		return getX()*p.getX() + getY()+p.getY();
 	}
 }

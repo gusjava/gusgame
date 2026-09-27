@@ -193,7 +193,7 @@ public class UtilRagus {
 	}
 	
 	private static boolean possiblePlay(int player, int[][] data, int i1, int j1, int i2, int j2) {
-		if(!UtilArrayInt.has(data, i2,j2)) return false;
+		if(!UtilArrayInt.has2(data, i2,j2)) return false;
 		if(i2==homeIndex(player)) return false;
 		return data[i1][j1]!=data[i2][j2] || !isBlocked(data, new int[] {i2,j2});
 	}

@@ -254,10 +254,10 @@ public abstract class Game {
 		initMenuBar(menuBar);
 		frame.setJMenuBar(menuBar);
 		
-		frame.setVisible(true);
 		frame.pack();
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
 		
 		return frame;
 	}

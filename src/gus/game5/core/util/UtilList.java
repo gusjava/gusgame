@@ -257,6 +257,17 @@ public class UtilList {
 	}
 	
 	/*
+	 * COLLECT T
+	 */
+
+	public static <U,V> List<V> collectT(List<T<U,V>> list, U u) {
+		if(list==null) return null;
+		List<V> list1 = new ArrayList<>();
+		for(T<U,V> t : list) list1.add(t.t(u));
+		return list1;
+	}
+	
+	/*
 	 * COLLECT DOUBLE
 	 */
 	
@@ -724,8 +735,6 @@ public class UtilList {
 		Collections.sort(list1, Collections.reverseOrder());
 		return list1;
 	}
-	
-
 	
 	public static <U> List<U> sortInv(List<U> list, Comparator<? super U> comparator) {
 		if(list==null) return null;

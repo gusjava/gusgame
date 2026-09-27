@@ -230,9 +230,9 @@ public class GameAntivirus extends Game1 {
 				
 				int[][] data1 = UtilArrayInt.clone2(data);
 				for(Cell[] move : moves)
-					UtilArrayInt.set(data1, move[0].getIJ(), UtilAntivirus.EMPTY);
+					UtilArrayInt.set2(data1, move[0].getIJ(), UtilAntivirus.EMPTY);
 				for(Cell[] move : moves)
-					UtilArrayInt.set(data1, move[1].getIJ(), move[0].getValue());
+					UtilArrayInt.set2(data1, move[1].getIJ(), move[0].getValue());
 				data = data1;
 			}
 		}
@@ -246,9 +246,9 @@ public class GameAntivirus extends Game1 {
 				
 				int[][] data1 = UtilArrayInt.clone2(data);
 				for(Cell[] move : moves)
-					UtilArrayInt.set(data1, move[0].getIJ(), UtilAntivirus.EMPTY);
+					UtilArrayInt.set2(data1, move[0].getIJ(), UtilAntivirus.EMPTY);
 				for(Cell[] move : moves)
-					UtilArrayInt.set(data1, move[1].getIJ(), move[0].getValue());
+					UtilArrayInt.set2(data1, move[1].getIJ(), move[0].getValue());
 				data = data1;
 			}
 		}

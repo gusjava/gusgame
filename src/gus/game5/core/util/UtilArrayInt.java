@@ -13,23 +13,45 @@ public class UtilArrayInt {
 	 */
 	
 	/*
-	 * has : boolean (2)
-	 * is : boolean (2)
-	 * eq : boolean (4)
+	 * has1 : boolean (2)
+	 * has2 : boolean (2)
+	 * has3 : boolean (2)
+	 * 
+	 * is1 : boolean (2)
+	 * is2 : boolean (2)
+	 * is3 : boolean (2)
+	 * 
+	 * eq1 : boolean (4)
+	 * 
 	 * any : boolean (3)
 	 * all : boolean (3)
 	 * none : boolean (3)
 	 */
 
 	/*
-	 * HAS
+	 * HAS 1
 	 */
 	
-	public static boolean has(int[][] data, int[] pos) {
-		return has(data, pos[0], pos[1]);
+	public static boolean has1(int[] data, int[] pos) {
+		return has1(data, pos[0]);
 	}
 	
-	public static boolean has(int[][] data, int i, int j) {
+	public static boolean has1(int[] data, int i) {
+		int x = data.length;
+		if(x==0) return false;
+		
+		return i>=0 && i<x;
+	}
+
+	/*
+	 * HAS 2
+	 */
+	
+	public static boolean has2(int[][] data, int[] pos) {
+		return has2(data, pos[0], pos[1]);
+	}
+	
+	public static boolean has2(int[][] data, int i, int j) {
 		int x = data.length;
 		if(x==0) return false;
 		int y = data[0].length;
@@ -37,16 +59,50 @@ public class UtilArrayInt {
 		
 		return i>=0 && i<x && j>=0 && j<y;
 	}
-	
+
 	/*
-	 * IS
+	 * HAS 3
 	 */
 	
-	public static boolean is(int[][] data, int[] pos, int val) {
-		return is(data, pos[0], pos[1], val);
+	public static boolean has3(int[][][] data, int[] pos) {
+		return has3(data, pos[0], pos[1], pos[2]);
 	}
 	
-	public static boolean is(int[][] data, int i, int j, int val) {
+	public static boolean has3(int[][][] data, int i, int j, int k) {
+		int x = data.length;
+		if(x==0) return false;
+		int y = data[0].length;
+		if(y==0) return false;
+		int z = data[0][0].length;
+		if(z==0) return false;
+		
+		return i>=0 && i<x && j>=0 && j<y && k>=0 && k<z;
+	}
+	
+	/*
+	 * IS 1
+	 */
+	
+	public static boolean is1(int[] data, int[] pos, int val) {
+		return is1(data, pos[0], val);
+	}
+	
+	public static boolean is1(int[] data, int i, int val) {
+		int x = data.length;
+		if(x==0) return false;
+		
+		return i>=0 && i<x && data[i]==val;
+	}
+	
+	/*
+	 * IS 2
+	 */
+	
+	public static boolean is2(int[][] data, int[] pos, int val) {
+		return is2(data, pos[0], pos[1], val);
+	}
+	
+	public static boolean is2(int[][] data, int i, int j, int val) {
 		int x = data.length;
 		if(x==0) return false;
 		int y = data[0].length;
@@ -56,30 +112,111 @@ public class UtilArrayInt {
 	}
 	
 	/*
-	 * EQ
+	 * IS 3
 	 */
 	
-	public static boolean eq(int[] data, int i) {
-		return data.length==1 && data[0]==i;
+	public static boolean is3(int[][][] data, int[] pos, int val) {
+		return is3(data, pos[0], pos[1], pos[2], val);
 	}
 	
-	public static boolean eq(int[] data, int i, int j) {
-		return data.length==2 && data[0]==i && data[1]==j;
-	}
-	
-	public static boolean eq(int[] data, int i, int j, int k) {
-		return data.length==3 && data[0]==i && data[1]==j && data[2]==k;
-	}
-	
-	public static boolean eq(int[] data, int i, int j, int k, int l) {
-		return data.length==4 && data[0]==i && data[1]==j && data[2]==k && data[3]==l;
+	public static boolean is3(int[][][] data, int i, int j, int k, int val) {
+		int x = data.length;
+		if(x==0) return false;
+		int y = data[0].length;
+		if(y==0) return false;
+		int z = data[0][0].length;
+		if(z==0) return false;
+		
+		return i>=0 && i<x && j>=0 && j<y && k>=0 && k<z && data[i][j][k]==val;
 	}
 	
 	/*
-	 * ANY
+	 * EQ 1
 	 */
 	
-	public static boolean any(int[] data, int value) {
+	public static boolean eq1(int[] data, int i) {
+		return data.length==1 && data[0]==i;
+	}
+	
+	public static boolean eq1(int[] data, int i, int j) {
+		return data.length==2 && data[0]==i && data[1]==j;
+	}
+	
+	public static boolean eq1(int[] data, int i, int j, int k) {
+		return data.length==3 && data[0]==i && data[1]==j && data[2]==k;
+	}
+	
+	public static boolean eq1(int[] data, int i, int j, int k, int l) {
+		return data.length==4 && data[0]==i && data[1]==j && data[2]==k && data[3]==l;
+	}
+	
+	public static boolean eq1(int[] data1, int[] data2) {
+		int x1 = data1.length;
+		int x2 = data2.length;
+		if(x1!=x2) return false;
+		if(x1==0) return true;
+		
+		for(int i=0;i<x1;i++) {
+			if(data1[i]!=data2[i]) return false;
+		}
+		return true;
+	}
+	
+	/*
+	 * EQ 2
+	 */
+	
+	public static boolean eq2(int[][] data1, int[][] data2) {
+		int x1 = data1.length;
+		int x2 = data2.length;
+		if(x1!=x2) return false;
+		if(x1==0) return true;
+		
+		int y1 = data1[0].length;
+		int y2 = data2[0].length;
+		if(y1!=y2) return false;
+		if(y1==0) return true;
+		
+		for(int i=0;i<x1;i++)
+		for(int j=0;j<y1;j++) {
+			if(data1[i][j]!=data2[i][j]) return false;
+		}
+		return true;
+	}
+	
+	/*
+	 * EQ 3
+	 */
+	
+	public static boolean eq3(int[][][] data1, int[][][] data2) {
+		int x1 = data1.length;
+		int x2 = data2.length;
+		if(x1!=x2) return false;
+		if(x1==0) return true;
+		
+		int y1 = data1[0].length;
+		int y2 = data2[0].length;
+		if(y1!=y2) return false;
+		if(y1==0) return true;
+		
+		int z1 = data1[0][0].length;
+		int z2 = data2[0][0].length;
+		if(z1!=z2) return false;
+		if(z1==0) return true;
+		
+		for(int i=0;i<x1;i++)
+		for(int j=0;j<y1;j++)
+		for(int k=0;k<y1;k++) {
+			if(data1[i][j][k]!=data2[i][j][k]) return false;
+		}
+		return true;
+	}
+	
+	/*
+	 * ANY 1
+	 */
+	
+	public static boolean any1(int[] data, int value) {
 		int x = data.length;
 		if(x==0) return false;
 		
@@ -88,7 +225,11 @@ public class UtilArrayInt {
 		return false;
 	}
 	
-	public static boolean any(int[][] data, int value) {
+	/*
+	 * ANY 2
+	 */
+	
+	public static boolean any2(int[][] data, int value) {
 		int x = data.length;
 		if(x==0) return false;
 		int y = data[0].length;
@@ -99,7 +240,11 @@ public class UtilArrayInt {
 		return false;
 	}
 	
-	public static boolean any(int[][][] data, int value) {
+	/*
+	 * ANY 3
+	 */
+	
+	public static boolean any3(int[][][] data, int value) {
 		int x = data.length;
 		if(x==0) return false;
 		int y = data[0].length;
@@ -113,10 +258,10 @@ public class UtilArrayInt {
 	}
 	
 	/*
-	 * ALL
+	 * ALL 1
 	 */
 	
-	public static boolean all(int[] data, int value) {
+	public static boolean all1(int[] data, int value) {
 		if(data.length==0) return true;
 		int x = data.length;
 		for(int i=0;i<x;i++)
@@ -124,7 +269,11 @@ public class UtilArrayInt {
 		return true;
 	}
 	
-	public static boolean all(int[][] data, int value) {
+	/*
+	 * ALL 2
+	 */
+	
+	public static boolean all2(int[][] data, int value) {
 		if(data.length==0) return true;
 		int x = data.length;
 		int y = data[0].length;
@@ -133,7 +282,11 @@ public class UtilArrayInt {
 		return true;
 	}
 	
-	public static boolean all(int[][][] data, int value) {
+	/*
+	 * ALL 3
+	 */
+	
+	public static boolean all3(int[][][] data, int value) {
 		int x = data.length;
 		if(x==0) return true;
 		int y = data[0].length;
@@ -147,19 +300,27 @@ public class UtilArrayInt {
 	}
 	
 	/*
-	 * NONE
+	 * NONE 1
 	 */
 	
-	public static boolean none(int[] data, int value) {
-		return !any(data, value);
+	public static boolean none1(int[] data, int value) {
+		return !any1(data, value);
 	}
 	
-	public static boolean none(int[][] data, int value) {
-		return !any(data, value);
+	/*
+	 * NONE 2
+	 */
+	
+	public static boolean none2(int[][] data, int value) {
+		return !any2(data, value);
 	}
 	
-	public static boolean none(int[][][] data, int value) {
-		return !any(data, value);
+	/*
+	 * NONE 3
+	 */
+	
+	public static boolean none3(int[][][] data, int value) {
+		return !any3(data, value);
 	}
 	
 	/*
@@ -187,14 +348,30 @@ public class UtilArrayInt {
 	 */
 	
 	/*
-	 * GET
+	 * GET 1
 	 */
 	
-	public static Integer get(int[][] data, int[] pos) {
-		return get(data, pos[0], pos[1]);
+	public static Integer get1(int[] data, int[] pos) {
+		return get1(data, pos[0]);
 	}
 	
-	public static Integer get(int[][] data, int i, int j) {
+	public static Integer get1(int[] data, int i) {
+		int x = data.length;
+		if(x==0) return null;
+		
+		if(i<0 || i>=x) return null;
+		return data[i];
+	}
+	
+	/*
+	 * GET 2
+	 */
+	
+	public static Integer get2(int[][] data, int[] pos) {
+		return get2(data, pos[0], pos[1]);
+	}
+	
+	public static Integer get2(int[][] data, int i, int j) {
 		int x = data.length;
 		if(x==0) return null;
 		int y = data[0].length;
@@ -206,14 +383,54 @@ public class UtilArrayInt {
 	}
 	
 	/*
-	 * SET
+	 * GET 3
 	 */
 	
-	public static boolean set(int[][] data, int[] pos, int value) {
-		return set(data, pos[0], pos[1], value);
+	public static Integer get3(int[][][] data, int[] pos) {
+		return get3(data, pos[0], pos[1], pos[2]);
 	}
 	
-	public static boolean set(int[][] data, int i, int j, int value) {
+	public static Integer get3(int[][][] data, int i, int j, int k) {
+		int x = data.length;
+		if(x==0) return null;
+		int y = data[0].length;
+		if(y==0) return null;
+		int z = data[0][0].length;
+		if(z==0) return null;
+		
+		if(i<0 || i>=x) return null;
+		if(j<0 || j>=y) return null;
+		if(k<0 || k>=z) return null;
+		return data[i][j][k];
+	}
+	
+	/*
+	 * SET 1
+	 */
+	
+	public static boolean set1(int[] data, int[] pos, int value) {
+		return set1(data, pos[0], value);
+	}
+	
+	public static boolean set1(int[] data, int i, int value) {
+		int x = data.length;
+		if(x==0) return false;
+		
+		if(i<0 || i>=x) return false;
+		
+		data[i] = value;
+		return true;
+	}
+	
+	/*
+	 * SET 2
+	 */
+	
+	public static boolean set2(int[][] data, int[] pos, int value) {
+		return set2(data, pos[0], pos[1], value);
+	}
+	
+	public static boolean set2(int[][] data, int i, int j, int value) {
 		int x = data.length;
 		if(x==0) return false;
 		int y = data[0].length;
@@ -223,6 +440,30 @@ public class UtilArrayInt {
 		if(j<0 || j>=y) return false;
 		
 		data[i][j] = value;
+		return true;
+	}
+	
+	/*
+	 * SET 3
+	 */
+	
+	public static boolean set3(int[][][] data, int[] pos, int value) {
+		return set3(data, pos[0], pos[1], pos[2], value);
+	}
+	
+	public static boolean set3(int[][][] data, int i, int j, int k, int value) {
+		int x = data.length;
+		if(x==0) return false;
+		int y = data[0].length;
+		if(y==0) return false;
+		int z = data[0][0].length;
+		if(z==0) return false;
+		
+		if(i<0 || i>=x) return false;
+		if(j<0 || j>=y) return false;
+		if(k<0 || k>=z) return false;
+		
+		data[i][j][k] = value;
 		return true;
 	}
 	
@@ -406,7 +647,7 @@ public class UtilArrayInt {
 			for(int j=0;j<nb;j++) {
 				int index = UtilRandom.pickRandomElement(l);
 				int[] pos = lenToXY(data, index);
-				set(data, pos, val);
+				set2(data, pos, val);
 			}
 		}
 		return data;
@@ -642,5 +883,55 @@ public class UtilArrayInt {
 			if(i<data.length-1) b.append(",");
 		}
 		return b.toString();
+	}
+	
+	/*
+	 * SUB 1
+	 */
+	
+	public static int[] sub1(int[] data1, int[] data2) {
+		int x1 = data1.length;
+		int x2 = data2.length;
+		if(x1!=x2) return null;
+		
+		int[] r = new int[x1];
+		for(int i=0;i<x1;i++) r[i] = data1[i] - data2[i];
+		return r;
+	}
+	
+	/*
+	 * SWAP 1
+	 */
+	
+	public static void swap1(int[] data, int[] p1, int[] p2) {
+		 int v1 = get1(data, p1);
+		 int v2 = get1(data, p2);
+		 
+		 set1(data, p1, v2);
+		 set1(data, p2, v1);
+	}
+	
+	/*
+	 * SWAP 2
+	 */
+	
+	public static void swap2(int[][] data, int[] p1, int[] p2) {
+		 int v1 = get2(data, p1);
+		 int v2 = get2(data, p2);
+		 
+		 set2(data, p1, v2);
+		 set2(data, p2, v1);
+	}
+	
+	/*
+	 * SWAP 3
+	 */
+	
+	public static void swap13(int[][][] data, int[] p1, int[] p2) {
+		 int v1 = get3(data, p1);
+		 int v2 = get3(data, p2);
+		 
+		 set3(data, p1, v2);
+		 set3(data, p2, v1);
 	}
 }

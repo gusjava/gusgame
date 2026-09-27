@@ -1,5 +1,7 @@
 package gus.game5.core.util;
 
+import java.util.List;
+
 import gus.game5.core.exception.TechnicalException;
 
 public class UtilBoolean {
@@ -107,18 +109,34 @@ public class UtilBoolean {
 	
 	
 	/*
-	 * COUNT
+	 * COUNT TRUE
 	 */
 	
-	public static int countT(boolean... bb) {
+	public static int countTrue(boolean... bb) {
 		int count = 0;
 		for(boolean b : bb) if(b) count++;
 		return count;
 	}
 	
-	public static int countF(boolean... bb) {
+	public static int countTrue(List<Boolean> list) {
+		int count = 0;
+		for(Boolean b : list) if(b!=null && b) count++;
+		return count;
+	}
+	
+	/*
+	 * COUNT FALSE
+	 */
+	
+	public static int countFalse(boolean... bb) {
 		int count = 0;
 		for(boolean b : bb) if(!b) count++;
+		return count;
+	}
+	
+	public static int countFalse(List<Boolean> list) {
+		int count = 0;
+		for(Boolean b : list) if(b!=null && !b) count++;
 		return count;
 	}
 	
@@ -165,6 +183,62 @@ public class UtilBoolean {
 	}
 	public static boolean isFalse(Boolean value) {
 		return value!=null && !value.booleanValue();
+	}
+	
+	/*
+	 * ALL TRUE
+	 */
+	
+	public static boolean allTrue(boolean... bb) {
+		for(boolean b : bb) if(!b) return false;
+		return true;
+	}
+	
+	public static boolean allTrue(List<Boolean> list) {
+		for(Boolean b : list) if(b==null || !b) return false;
+		return true;
+	}
+	
+	/*
+	 * ALL FALSE
+	 */
+	
+	public static boolean allFalse(boolean... bb) {
+		for(boolean b : bb) if(b) return false;
+		return true;
+	}
+	
+	public static boolean allFalse(List<Boolean> list) {
+		for(Boolean b : list) if(b==null || b) return false;
+		return true;
+	}
+	
+	/*
+	 * ANY TRUE
+	 */
+	
+	public static boolean anyTrue(boolean... bb) {
+		for(boolean b : bb) if(b) return true;
+		return false;
+	}
+	
+	public static boolean anyTrue(List<Boolean> list) {
+		for(Boolean b : list) if(b!=null && b) return true;
+		return false;
+	}
+	
+	/*
+	 * ANY FALSE
+	 */
+	
+	public static boolean anyFalse(boolean... bb) {
+		for(boolean b : bb) if(!b) return true;
+		return false;
+	}
+	
+	public static boolean anyFalse(List<Boolean> list) {
+		for(Boolean b : list) if(b!=null && !b) return true;
+		return false;
 	}
 	
 	

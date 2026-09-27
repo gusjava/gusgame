@@ -36,7 +36,7 @@ public class UtilTTT3 {
 		if(same(data,0,4,8)) return data[0];
 		if(same(data,2,4,6)) return data[2];
 		
-		if(UtilArrayInt.none(data, EMPTY)) return EMPTY;
+		if(UtilArrayInt.none1(data, EMPTY)) return EMPTY;
 		return -1;
 	}
 	

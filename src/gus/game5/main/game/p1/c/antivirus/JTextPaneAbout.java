@@ -49,7 +49,7 @@ public class JTextPaneAbout extends JPanelDialogClose {
 		p2.appendLine("\u26ac You can move all the game pieces except the small white ones.");
 		p2.appendLine("You should consider them part of the game board during that specific challenge");
 
-		ImageDisplay image = new ImageDisplay("/gus/game5/main/game/antivirus/illustration.jpg");
+		ImageDisplay image = new ImageDisplay("/gus/game5/main/game/p1/c/antivirus/illustration.jpg");
 		image.setPreferredSize(new Dimension(200,0));
 		image.setBackground(Color.WHITE);
 		

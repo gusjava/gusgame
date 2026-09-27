@@ -120,20 +120,20 @@ public class UtilMadVirus {
 	
 	private static boolean nextToInfected(boolean[][] infected, int i, int j) {
 		if(j%2==0) return 
-				UtilArrayBoolean.is(infected, i, j-1, true) || 
-				UtilArrayBoolean.is(infected, i, j+1, true) || 
-				UtilArrayBoolean.is(infected, i+1, j, true) || 
-				UtilArrayBoolean.is(infected, i-1, j-1, true) || 
-				UtilArrayBoolean.is(infected, i-1, j, true) || 
-				UtilArrayBoolean.is(infected, i-1, j+1, true);
+				UtilArrayBoolean.is2(infected, i, j-1, true) || 
+				UtilArrayBoolean.is2(infected, i, j+1, true) || 
+				UtilArrayBoolean.is2(infected, i+1, j, true) || 
+				UtilArrayBoolean.is2(infected, i-1, j-1, true) || 
+				UtilArrayBoolean.is2(infected, i-1, j, true) || 
+				UtilArrayBoolean.is2(infected, i-1, j+1, true);
 
 		return 
-				UtilArrayBoolean.is(infected, i, j-1, true) || 
-				UtilArrayBoolean.is(infected, i, j+1, true) || 
-				UtilArrayBoolean.is(infected, i-1, j, true) || 
-				UtilArrayBoolean.is(infected, i+1, j-1, true) || 
-				UtilArrayBoolean.is(infected, i+1, j, true) || 
-				UtilArrayBoolean.is(infected, i+1, j+1, true);
+				UtilArrayBoolean.is2(infected, i, j-1, true) || 
+				UtilArrayBoolean.is2(infected, i, j+1, true) || 
+				UtilArrayBoolean.is2(infected, i-1, j, true) || 
+				UtilArrayBoolean.is2(infected, i+1, j-1, true) || 
+				UtilArrayBoolean.is2(infected, i+1, j, true) || 
+				UtilArrayBoolean.is2(infected, i+1, j+1, true);
 	}
 	
 	public static boolean isAllInfected(int[][] data, boolean[][] infected) {

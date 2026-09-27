@@ -36,7 +36,7 @@ public class UtilHex {
 		for(int j=0;j<y;j++) {
 			if(isConnectedToTopBlue(x, y, data, b, x-1, j)) return BLUE;
 		}
-		if(UtilArrayInt.any(data, EMPTY)) return -1;
+		if(UtilArrayInt.any2(data, EMPTY)) return -1;
 		return EMPTY;
 	}
 	

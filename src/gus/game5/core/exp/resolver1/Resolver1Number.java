@@ -11,6 +11,7 @@ import gus.game5.core.exp.resolver1.tl.Resolver1TLDiv;
 import gus.game5.core.exp.resolver1.tl.Resolver1TLEq;
 import gus.game5.core.exp.resolver1.tl.Resolver1TLInf;
 import gus.game5.core.exp.resolver1.tl.Resolver1TLInfEq;
+import gus.game5.core.exp.resolver1.tl.Resolver1TLMod;
 import gus.game5.core.exp.resolver1.tl.Resolver1TLNot;
 import gus.game5.core.exp.resolver1.tl.Resolver1TLOpp;
 import gus.game5.core.exp.resolver1.tl.Resolver1TLOr;
@@ -55,6 +56,8 @@ public class Resolver1Number extends ResolverMain {
 		addOpTL(getRevolverTLProduct());
 		// A / A
 		addOpTL(getRevolverTLDiv());
+		// A % A
+		addOpTL(getRevolverTLMod());
 		// A ^ A
 		addOpTL(getRevolverTLPower());
 		// - A
@@ -108,6 +111,9 @@ public class Resolver1Number extends ResolverMain {
 	}
 	protected ResolverTL getRevolverTLDiv() {
 		return new Resolver1TLDiv(this);
+	}
+	protected ResolverTL getRevolverTLMod() {
+		return new Resolver1TLMod(this);
 	}
 	protected ResolverTL getRevolverTLPower() {
 		return new Resolver1TLPower(this);

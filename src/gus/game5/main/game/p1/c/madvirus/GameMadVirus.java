@@ -134,7 +134,7 @@ public class GameMadVirus extends Game1 {
 			Cell selected = board.cellAt(mouse().pointCurrent());
 			if(selected!=null) {
 				data0 = UtilArrayInt.clone2(data);
-				infected0 = UtilArrayBoolean.clone(infected);
+				infected0 = UtilArrayBoolean.clone2(infected);
 				
 				int value = selected.getValue();
 				boolean done = UtilMadVirus.attempToInfect(data, infected, value);

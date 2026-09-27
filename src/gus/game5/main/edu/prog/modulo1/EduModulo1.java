@@ -7,16 +7,21 @@ import static gus.game5.core.util.UtilGui.raised;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JLabel;
 
+import gus.game5.core.exp.exception.ExpException;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
 import gus.game5.core.gui.JMenuBar1;
+import gus.game5.core.gui.JTextField1;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point2.Point2;
 import gus.game5.core.shape.board.ShapeBoard;
 import gus.game5.core.shape.board.ShapeCell;
+import gus.game5.core.util.UtilExp;
 
 public class EduModulo1 extends Game1 {
 	
@@ -30,6 +35,7 @@ public class EduModulo1 extends Game1 {
 	public static final int GAME_WIDTH = 1000;
 	
 	public static final Font FONT = new Font("Comic Sans MS", Font.PLAIN, 12);
+	public static final Color COLOR = new Color(240,240,240);
 	
 	public static void main(String[] args) {
 		EduModulo1 main = new EduModulo1();
@@ -41,15 +47,15 @@ public class EduModulo1 extends Game1 {
 	 * CONTENT PANE
 	 */
 
-	private JLabel labelInfo1;
+	private JTextField1 field;
 	private JLabel labelInfo2;
 	
 	protected Container buildContentPane() {
-		labelInfo1 = new JLabel(" ");
+		field = new JTextField1();
 		labelInfo2 = new JLabel(" ");
 		
 		return panelCNS(panel(), 
-				raised(labelInfo1), 
+				field, 
 				raised(labelInfo2));
 	}
 	
@@ -72,7 +78,7 @@ public class EduModulo1 extends Game1 {
 		s.setTitle(TITLE);
 		s.setWidth(GAME_WIDTH);
 		s.setHeight(GAME_HEIGHT);
-		s.setSleep(10);
+		s.setSleep(100);
 		s.setBackground(Color.LIGHT_GRAY);
 		s.setFont(FONT);
 	}
@@ -82,6 +88,8 @@ public class EduModulo1 extends Game1 {
 	 */
 
 	private ShapeBoard<Cell> board;
+	private Object[][] content;
+	private String expression = "";
 	
 	/*
 	 * INITIALIZE
@@ -89,6 +97,10 @@ public class EduModulo1 extends Game1 {
 	
 	protected void initialize1() {
 		board = newShapeBoard(CELL_SIZE, X, Y, Cell::new);
+		content = new Object[X][Y];
+		
+		field.setText("");
+		expression = "";
 	}
 	
 	/*
@@ -99,9 +111,35 @@ public class EduModulo1 extends Game1 {
 		Keyboard k = keyboard();
 		if(k.F1())	restart();
 		if(k.F2())	exit();
+		
+		String input = field.getText();
+		if(!input.equals(expression)) {
+			expression = input;
+			buildContent();
+		}
+	}
+	
+	
+	private void buildContent() {
+		for(int i=0;i<X;i++)
+		for(int j=0;j<Y;j++) {
+			content[i][j] = perform(i,j);
+		}
 	}
 	
 	private Object perform(int i, int j) {
+		Map<String,Object> dataMap = new HashMap<>();
+		dataMap.put("i", i);
+		dataMap.put("j", j);
+		dataMap.put("x", X);
+		dataMap.put("y", Y);
+		
+		String expression = field.getText();
+		try {
+			return UtilExp.estimate(expression, dataMap);
+		} catch (ExpException e) {
+			return null;
+		}
 //		return i+":"+j;
 		
 //		return i+j;
@@ -142,7 +180,7 @@ public class EduModulo1 extends Game1 {
 		
 //		return i==2 && j==5;
 //		return i==2 || j==5;
-		return i==2 ^ j==5;
+//		return i==2 ^ j==5;
 	}
 	
 	/*
@@ -156,21 +194,30 @@ public class EduModulo1 extends Game1 {
 		}
 		
 		protected void drawShape() {
-			Object result = perform(i,j);
-			fillSquareC(Color.WHITE, CELL_SIZE);
-			drawSquareC(CELL_SIZE);
-			if(result==null) return;
+			Object result = content[i][j];
+			if(result==null) {
+				fillSquareC(COLOR, CELL_SIZE);
+				drawSquareC(CELL_SIZE);
+				return;
+			}
 			
 			if(result instanceof Boolean) {
 				Boolean b = (Boolean) result;
-				if(b) fillSquareC(CELL_SIZE);
+				Color c = b ? Color.BLACK : Color.WHITE;
+				fillSquareC(c, CELL_SIZE);
+				drawSquareC(CELL_SIZE);
+				return;
 			}
 			else if(result instanceof String) {
 				String s = (String) result;
+				fillSquareC(Color.WHITE, CELL_SIZE);
+				drawSquareC(CELL_SIZE);
 				drawStringC(font(10), s);
 			}
 			else if(result instanceof Number) {
 				Number s = (Number) result;
+				fillSquareC(Color.WHITE, CELL_SIZE);
+				drawSquareC(CELL_SIZE);
 				drawStringC(font(10), ""+s);
 			}
 		}

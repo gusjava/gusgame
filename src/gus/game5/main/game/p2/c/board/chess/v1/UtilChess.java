@@ -21,24 +21,14 @@ public class UtilChess {
 	public static final int BKI = -6; //Black KIng
 	
 	public static int[][] INIT_STATE = {
-			{BR,BB,BK,BQ,BKI,BK,BB,BR},
+			{BR,BK,BB,BQ,BKI,BB,BK,BR},
 			{BP,BP,BP,BP,BP,BP,BP,BP},
 			{0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0},
 			{WP,WP,WP,WP,WP,WP,WP,WP},
-			{WR,WB,WK,WQ,WKI,WK,WB,WR}
-	};
-	public static int[][] INIT_STATE_1 = {
-			{BR,BB,BK,0,0,BK,BB,BR},
-			{BP,BP,BP,BP,BP,BP,BP,BP},
-			{0,0,0,0,0,0,0,0},
-			{0,BKI,0,0,0,0,0,0},
-			{0,0,0,WKI,0,0,0,0},
-			{0,0,0,0,0,0,0,0},
-			{WP,WP,WP,WP,WP,WP,WP,WP},
-			{WR,WB,WK,WQ,0,WK,WB,WR}
+			{WR,WK,WB,WQ,WKI,WB,WK,WR}
 	};
 	
 	/*

@@ -18,7 +18,6 @@ public class Resolver1TLPower extends ResolverTL2 {
 			double d2 = r2.asDouble();
 			return Math.pow (d1,d2);
 		}
-		
 		if(r1.isDataBoolean() && r2.isDataBoolean()) {
 			boolean b1 = r1.asBoolean();
 			boolean b2 = r2.asBoolean();

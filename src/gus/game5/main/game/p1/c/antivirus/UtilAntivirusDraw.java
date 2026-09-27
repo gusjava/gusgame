@@ -35,7 +35,7 @@ public class UtilAntivirusDraw {
 		d.fillRoundC(COLORS[value], m, r*0.7);
 		
 		if(value==UtilAntivirus.PIECE0) {
-			boolean hasSE = is(data, i+1, j, value);
+			boolean hasSE = is2(data, i+1, j, value);
 			Angle angle = hasSE ? SE : NW;
 			Point1 p1 = m.pAdd(angle.pointAt(r*0.6));
 			Point1 p2 = m.pAdd(angle.pointAt(r));
@@ -45,14 +45,14 @@ public class UtilAntivirusDraw {
 	
 	private static void drawPieceBorder(Drawing1 d, Point1 m, double r, int[][] data, int i, int j) {
 		int value = data[i][j];
-		boolean hasE = is(data, i+1, j+1, value);
-		boolean hasS = is(data, i+1, j-1, value);
-		boolean hasN = is(data, i-1, j+1, value);
-		boolean hasW = is(data, i-1, j-1, value);
-		boolean hasNE = is(data, i, j+1, value);
-		boolean hasSW = is(data, i, j-1, value);
-		boolean hasSE = is(data, i+1, j, value);
-		boolean hasNW = is(data, i-1, j, value);
+		boolean hasE = is2(data, i+1, j+1, value);
+		boolean hasS = is2(data, i+1, j-1, value);
+		boolean hasN = is2(data, i-1, j+1, value);
+		boolean hasW = is2(data, i-1, j-1, value);
+		boolean hasNE = is2(data, i, j+1, value);
+		boolean hasSW = is2(data, i, j-1, value);
+		boolean hasSE = is2(data, i+1, j, value);
+		boolean hasNW = is2(data, i-1, j, value);
 		
 		StringBuffer b = new StringBuffer();
 		if(hasN) b.append("N-");
@@ -348,50 +348,50 @@ public class UtilAntivirusDraw {
 	
 	public static void drawBoardEdges(Drawing1 d, double r, int[] pos) {
 		// West edge
-		if (eq(pos, 1, 2) || eq(pos, 2, 1) || eq(pos, 3, 0)) {
+		if (eq1(pos, 1, 2) || eq1(pos, 2, 1) || eq1(pos, 3, 0)) {
 			d.drawArcC(LIGHT_GRAY, r - 3, NE, S);
 		}
-		if (eq(pos, 2, 2) || eq(pos, 3, 1)) {
+		if (eq1(pos, 2, 2) || eq1(pos, 3, 1)) {
 			d.drawArcC(LIGHT_GRAY, r + 3, SW, S);
 		}
 		// North edge
-		if (eq(pos, 1, 4) || eq(pos, 2, 5) || eq(pos, 3, 6)) {
+		if (eq1(pos, 1, 4) || eq1(pos, 2, 5) || eq1(pos, 3, 6)) {
 			d.drawArcC(LIGHT_GRAY, r - 3, SE, S);
 		}
-		if (eq(pos, 2, 4) || eq(pos, 3, 5)) {
+		if (eq1(pos, 2, 4) || eq1(pos, 3, 5)) {
 			d.drawArcC(LIGHT_GRAY, r + 3, NW, S);
 		}
 		// East edge
-		if (eq(pos, 5, 6) || eq(pos, 6, 5) || eq(pos, 7, 4)) {
+		if (eq1(pos, 5, 6) || eq1(pos, 6, 5) || eq1(pos, 7, 4)) {
 			d.drawArcC(LIGHT_GRAY, r - 3, SW, S);
 		}
-		if (eq(pos, 5, 5) || eq(pos, 6, 4)) {
+		if (eq1(pos, 5, 5) || eq1(pos, 6, 4)) {
 			d.drawArcC(LIGHT_GRAY, r + 3, NE, S);
 		}
 		// South edge
-		if (eq(pos, 5, 0) || eq(pos, 6, 1) || eq(pos, 7, 2)) {
+		if (eq1(pos, 5, 0) || eq1(pos, 6, 1) || eq1(pos, 7, 2)) {
 			d.drawArcC(LIGHT_GRAY, r - 3, NW, S);
 		}
-		if (eq(pos, 5, 1) || eq(pos, 6, 2)) {
+		if (eq1(pos, 5, 1) || eq1(pos, 6, 2)) {
 			d.drawArcC(LIGHT_GRAY, r + 3, SE, S);
 		}
 
 		// North-East corner
-		if (eq(pos, 4, 6)) {
+		if (eq1(pos, 4, 6)) {
 			d.drawArcC(LIGHT_GRAY, r + 3, NW, W);
 		}
 		// South-East corner
-		if (eq(pos, 7, 3)) {
+		if (eq1(pos, 7, 3)) {
 			d.drawArcC(LIGHT_GRAY, r + 3, NE, W);
 		}
 
 		// South-West corner
-		if (eq(pos, 4, 0)) {
+		if (eq1(pos, 4, 0)) {
 			d.drawArcC(LIGHT_GRAY, r + 3, SE, W);
 		}
 
 		// North-West corner (output)
-		if (eq(pos, 1, 3)) {
+		if (eq1(pos, 1, 3)) {
 
 			Point1 p1 = SW.pointAt(r + 3);
 			Point1 p2 = p1.pAdd(r, NW);
@@ -401,7 +401,7 @@ public class UtilAntivirusDraw {
 			d.drawLine(LIGHT_GRAY, p1, p2);
 			d.drawLine(LIGHT_GRAY, p3, p4);
 		}
-		if (eq(pos, 0, 3)) {
+		if (eq1(pos, 0, 3)) {
 			Point1 p1 = SW.pointAt(r + 3);
 			Point1 p2 = NE.pointAt(r + 3);
 			Point1 pp = SE.pointAt(15.2 * r);

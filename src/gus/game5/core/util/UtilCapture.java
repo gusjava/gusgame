@@ -13,6 +13,8 @@ import gus.game5.core.exception.TechnicalException;
 public class UtilCapture {
 
 	public static void captureFrame(JFrame frame) {
+		if(frame==null) return;
+		
 		Rectangle rect = frame.getBounds();
 		rect.setLocation(frame.getLocationOnScreen());
 		

@@ -33,7 +33,7 @@ public class UtilTTT2 {
 			if(data[2][0]==side22 && data[2][1]==side22) return side22;
 			if(data[0][2]==side22 && data[1][2]==side22) return side22;
 		}
-		if(UtilArrayInt.none(data, 0)) return 0;
+		if(UtilArrayInt.none2(data, 0)) return 0;
 		return -1;
 	}
 }

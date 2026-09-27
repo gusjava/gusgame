@@ -19,9 +19,6 @@ public class Resolver2TLPower extends Resolver1TLPower {
 		if(r1.isTypeNumber() && r2.isTypeNumber()) 
 			return ResolverResult.Type.DOUBLE;
 		
-		if(r1.isTypeBoolean() && r2.isTypeBoolean()) 
-			return ResolverResult.Type.BOOLEAN;
-		
 		throw new ExpResolveException(r1.getSequence(), "Invalid data types: "+r1.getType()+" & "+r2.getType());
 	}
 }

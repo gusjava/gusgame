@@ -15,7 +15,6 @@ public class LifeBacteria1 extends LifeBacteria0 {
 		main.start();
 	}
 
-	@SuppressWarnings("unchecked")
 	protected List<P<BacteriaType>> typeCustList() {
 		return UtilList.asList(
 			this::cust1,

@@ -16,6 +16,7 @@ import javax.swing.border.BevelBorder;
 import gus.game5.core.game.Game;
 import gus.game5.core.gui.ImageDisplay;
 import gus.game5.core.util.UtilCapture;
+import gus.game5.core.util.UtilThread;
 import gus.game5.core.util.launch.GameLaunch;
 
 public class GameArea extends JPanel {
@@ -94,13 +95,8 @@ public class GameArea extends JPanel {
 	}
 	
 	private void captureFrame() {
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {}
-				UtilCapture.captureFrame(launch.getFrame());
-			}
-		}).start();
+		UtilThread.runAfter(2000, ()->{
+			UtilCapture.captureFrame(launch.getFrame());
+		});
 	}
 }
