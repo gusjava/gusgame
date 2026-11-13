@@ -34,7 +34,7 @@ public class Resolver1TElement implements ResolverT {
 		String name = (String) value;
 		
 		if(name.equals(TRUE)) return true;
-		if(name.equals(FALSE)) return true;
+		if(name.equals(FALSE)) return false;
 		if(name.equals(NULL)) return null;
 		
 		if(!dataMap.containsKey(name)) 
