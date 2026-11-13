@@ -360,6 +360,6 @@ public abstract class Point0 implements HasSlope {
 	 */
 	
 	public double scalarProduct(Point0 p) {
-		return getX()*p.getX() + getY()+p.getY();
+		return getX()*p.getX() + getY()*p.getY();
 	}
 }
