@@ -15,6 +15,6 @@ public class AbilityCreatureFlying extends AbilityCreature {
 
 	@Override
 	public F<IPermanentCreature> interruptForCanBeBlocked() {
-		return IPermanentCreature::hasCreatureAbilityFlying;
+		return blocker -> blocker.hasCreatureAbilityFlying() || blocker.hasCreatureAbilityReach();
 	}
 }

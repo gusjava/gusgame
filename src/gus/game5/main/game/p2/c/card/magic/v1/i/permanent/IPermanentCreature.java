@@ -116,7 +116,7 @@ public interface IPermanentCreature extends IPermanent {
 	public default boolean canBlock(IPermanentCreature card) {
 		List<Boolean> interrupts = new ArrayList<>();
 		for(AbilityCreature ability : getCreatureAbilities()) {
-			F<IPermanentCreature> f = ability.interruptForCanBeBlocked();
+			F<IPermanentCreature> f = ability.interruptForCanBlock();
 			if(f!=null) interrupts.add(f.f(card));
 		}
 		if(interrupts.size()>0) {
