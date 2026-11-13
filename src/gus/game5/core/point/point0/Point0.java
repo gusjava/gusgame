@@ -284,7 +284,7 @@ public abstract class Point0 implements HasSlope {
 	
 	public Point1 pDistSub(double value) {
 		double d = dist();
-		return pMult(d!=0 ? (d+value)/d : 0);
+		return pMult(d!=0 ? (d-value)/d : 0);
 	}
 	
 	public Point1 pDistSub(Point0 origin, double value) {
