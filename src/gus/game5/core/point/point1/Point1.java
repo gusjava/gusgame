@@ -138,7 +138,7 @@ public class Point1 extends Point0 {
 	
 	public void subXY(double dist, Angle angle) {
 		subX(dist*angle.cos());
-		subY(dist+angle.sin());
+		subY(dist*angle.sin());
 	}
 	
 	public void subXY(Point0 p) {

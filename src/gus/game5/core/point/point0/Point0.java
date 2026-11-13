@@ -183,7 +183,7 @@ public abstract class Point0 implements HasSlope {
 	}
 	
 	public Point1 pSub(double dist, Angle angle) {
-		return new Point1(getX()-dist*angle.cos(), getY()-dist+angle.sin());
+		return new Point1(getX()-dist*angle.cos(), getY()-dist*angle.sin());
 	}
 	
 	public Point1 pSub(Point0 p) {
