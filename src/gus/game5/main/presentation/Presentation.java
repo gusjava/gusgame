@@ -37,6 +37,7 @@ import gus.game5.main.game.p1.c.solitaire8.GameSolitaire8;
 import gus.game5.main.game.p1.c.towerofhanoi.GameTowerOfHanoi;
 import gus.game5.main.game.p1.o.blockrun.GameBlockRun;
 import gus.game5.main.game.p1.o.bomb.GameBomb;
+import gus.game5.main.game.p1.o.brickblast.GameBrickBlast;
 import gus.game5.main.game.p1.o.missile.GameMissile;
 import gus.game5.main.game.p1.o.space.GameSpace;
 import gus.game5.main.game.p1.o.warrior.GameWarrior;
@@ -99,7 +100,8 @@ public class Presentation extends Game {
 				new GameBlockRun(),
 				new GameTowerOfHanoi(),
 				new GameMissile(),
-				new GameBomb());
+				new GameBomb(),
+				new GameBrickBlast());
 		
 		Container panel2 = buildPanel(
 				new GameReversi3(),
