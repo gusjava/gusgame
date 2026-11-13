@@ -18,7 +18,7 @@ public class Card1L_island extends Card0LandBasic {
 
 	@Override
 	public String getName() {
-		return "Mountain";
+		return "Island";
 	}
 
 	@Override

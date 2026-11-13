@@ -47,6 +47,7 @@ import gus.game5.main.game.p2.c.card.magic.v1.card1.Card1IW_disenchant;
 import gus.game5.main.game.p2.c.card.magic.v1.card1.Card1L_forest;
 import gus.game5.main.game.p2.c.card.magic.v1.card1.Card1L_mountain;
 import gus.game5.main.game.p2.c.card.magic.v1.card1.Card1L_plains;
+import gus.game5.main.game.p2.c.card.magic.v1.card1.Card1L_island;
 import gus.game5.main.game.p2.c.card.magic.v1.card1.Card1L_swamp;
 import gus.game5.main.game.p2.c.card.magic.v1.card1.Card1SG_tranquility;
 import gus.game5.main.game.p2.c.card.magic.v1.card1.Card1SW_balance;
@@ -132,7 +133,7 @@ public abstract class Deck {
 	// LANDS
 
 	public final static CardT L_forest_E1 = owner->new Card1L_forest(owner, "L_forest_E1");
-	public final static CardT L_island_E1 = owner->new Card1L_swamp(owner, "L_island_E1");
+	public final static CardT L_island_E1 = owner->new Card1L_island(owner, "L_island_E1");
 	public final static CardT L_mountain_E1 = owner->new Card1L_mountain(owner, "L_mountain_E1");
 	public final static CardT L_plains_E1 = owner->new Card1L_plains(owner, "L_plains_E1");
 	public final static CardT L_swamp_E1 = owner->new Card1L_swamp(owner, "L_swamp_E1");

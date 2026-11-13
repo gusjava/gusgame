@@ -18,7 +18,7 @@ public class Card1L_swamp extends Card0LandBasic {
 
 	@Override
 	public String getName() {
-		return "Mountain";
+		return "Swamp";
 	}
 
 	@Override
