@@ -31,6 +31,7 @@ import gus.game5.main.edu.prog.modulo1.EduModulo1;
 import gus.game5.main.game.p1.c.antivirus.GameAntivirus;
 import gus.game5.main.game.p1.c.madvirus.GameMadVirus;
 import gus.game5.main.game.p1.c.minesweeper.GameMinesweeper;
+import gus.game5.main.game.p1.c.pacman.GamePacman;
 import gus.game5.main.game.p1.c.puzzle1.GamePuzzle1;
 import gus.game5.main.game.p1.c.snake.GameSnake;
 import gus.game5.main.game.p1.c.solitaire8.GameSolitaire8;
@@ -97,6 +98,7 @@ public class Presentation extends Game {
 				new GameMadVirus(),
 				new GameSolitaire8(),
 				new GameSnake(),
+				new GamePacman(),
 				new GameBlockRun(),
 				new GameTowerOfHanoi(),
 				new GameMissile(),
