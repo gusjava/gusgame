@@ -35,6 +35,7 @@ import gus.game5.main.game.p1.c.pacman.GamePacman;
 import gus.game5.main.game.p1.c.puzzle1.GamePuzzle1;
 import gus.game5.main.game.p1.c.snake.GameSnake;
 import gus.game5.main.game.p1.c.solitaire8.GameSolitaire8;
+import gus.game5.main.game.p1.c.tetris.GameTetris;
 import gus.game5.main.game.p1.c.towerofhanoi.GameTowerOfHanoi;
 import gus.game5.main.game.p1.o.blockrun.GameBlockRun;
 import gus.game5.main.game.p1.o.bomb.GameBomb;
@@ -99,6 +100,7 @@ public class Presentation extends Game {
 				new GameSolitaire8(),
 				new GameSnake(),
 				new GamePacman(),
+				new GameTetris(),
 				new GameBlockRun(),
 				new GameTowerOfHanoi(),
 				new GameMissile(),
