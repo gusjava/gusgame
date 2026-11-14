@@ -138,6 +138,7 @@ public class Presentation extends Game {
 				new GameChess2(),
 				new GameHex1(),
 				new GameRagus1(),
+				new GameQuoridor1(),
 				new GameTicTacToe3());
 
 		Container panel3 = buildPanel(
@@ -169,7 +170,6 @@ public class Presentation extends Game {
 		Container panel5 = buildPanel(
 				new GameWarrior(),
 				new GameSpace(),
-				new GameQuoridor1(),
 				new GameBloon()
 				);
 
