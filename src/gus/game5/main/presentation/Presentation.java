@@ -18,7 +18,7 @@ import gus.game5.core.game.Game;
 import gus.game5.core.game.Settings;
 import gus.game5.core.gui.JMenuBar1;
 import gus.game5.core.util.image.IconLoader;
-import gus.game5.main.anim.fishtank.AnimFishTank2;
+import gus.game5.main.anim.fishtank.AnimFishTank;
 import gus.game5.main.anim.gameoflife1.AnimGameOfLife;
 import gus.game5.main.anim.langtonant.AnimLangtonAnt;
 import gus.game5.main.anim.life1.LifeBacteria1;
@@ -149,7 +149,7 @@ public class Presentation extends Game {
 				new AnimGameOfLife(),
 				new AnimBallBattle(),
 				new LifeBacteria1(),
-				new AnimFishTank2()
+				new AnimFishTank()
 				);
 
 		Container panel4 = buildPanel(
