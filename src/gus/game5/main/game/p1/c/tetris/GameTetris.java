@@ -111,7 +111,7 @@ public class GameTetris extends Game1 {
 		}
 		if(k.F2()) exit();
 		if(k.in().g()) ghost = !ghost;
-		if(k.in().p()) paused = !paused;
+		if(!over && k.in().p()) paused = !paused;
 		if(paused || over) return;
 
 		shift(k);

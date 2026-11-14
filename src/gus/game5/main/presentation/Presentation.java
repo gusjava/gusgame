@@ -29,17 +29,30 @@ import gus.game5.main.anim1.AnimMaze;
 import gus.game5.main.anim1.AnimVacheQuiRit;
 import gus.game5.main.edu.prog.modulo1.EduModulo1;
 import gus.game5.main.game.p1.c.antivirus.GameAntivirus;
+import gus.game5.main.game.p1.c.columns.GameColumns;
+import gus.game5.main.game.p1.c.drmario.GameDrMario;
+import gus.game5.main.game.p1.c.game2048.Game2048;
+import gus.game5.main.game.p1.c.lightsout.GameLightsOut;
 import gus.game5.main.game.p1.c.madvirus.GameMadVirus;
+import gus.game5.main.game.p1.c.mastermind.GameMastermind;
+import gus.game5.main.game.p1.c.memory.GameMemory;
 import gus.game5.main.game.p1.c.minesweeper.GameMinesweeper;
 import gus.game5.main.game.p1.c.pacman.GamePacman;
+import gus.game5.main.game.p1.c.puyo.GamePuyo;
 import gus.game5.main.game.p1.c.puzzle1.GamePuzzle1;
 import gus.game5.main.game.p1.c.snake.GameSnake;
+import gus.game5.main.game.p1.c.sokoban.GameSokoban;
 import gus.game5.main.game.p1.c.solitaire8.GameSolitaire8;
+import gus.game5.main.game.p1.c.taquin.GameTaquin;
 import gus.game5.main.game.p1.c.tetris.GameTetris;
 import gus.game5.main.game.p1.c.towerofhanoi.GameTowerOfHanoi;
+import gus.game5.main.game.p1.c.tron.GameTron;
+import gus.game5.main.game.p1.o.asteroids.GameAsteroids;
 import gus.game5.main.game.p1.o.blockrun.GameBlockRun;
 import gus.game5.main.game.p1.o.bomb.GameBomb;
 import gus.game5.main.game.p1.o.brickblast.GameBrickBlast;
+import gus.game5.main.game.p1.o.flappy.GameFlappy;
+import gus.game5.main.game.p1.o.frogger.GameFrogger;
 import gus.game5.main.game.p1.o.missile.GameMissile;
 import gus.game5.main.game.p1.o.space.GameSpace;
 import gus.game5.main.game.p1.o.warrior.GameWarrior;
@@ -101,6 +114,19 @@ public class Presentation extends Game {
 				new GameSnake(),
 				new GamePacman(),
 				new GameTetris(),
+				new Game2048(),
+				new GameColumns(),
+				new GameDrMario(),
+				new GamePuyo(),
+				new GameLightsOut(),
+				new GameSokoban(),
+				new GameTaquin(),
+				new GameMastermind(),
+				new GameMemory(),
+				new GameTron(),
+				new GameAsteroids(),
+				new GameFrogger(),
+				new GameFlappy(),
 				new GameBlockRun(),
 				new GameTowerOfHanoi(),
 				new GameMissile(),
