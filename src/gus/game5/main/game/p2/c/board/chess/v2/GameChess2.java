@@ -66,16 +66,16 @@ public class GameChess2 extends Play1 {
 			action("New game (F1)", this::restart),
 			action("Exit (F2)", this::exit)
 		);
-		menuBar.add("Players", 
+		menuBar.add("Players",
 			menu("Player 1 (white)",
 				radioMenuItem("Human", ()->changeMode1(Mode.HUMAN)),
-				radioMenuItem("Computer (Random)", ()->changeMode1(Mode.RANDOM))
-//				radioMenuItem("Computer (Min-Max)", ()->changeMode1(Mode.MINMAX))
+				radioMenuItem("Computer (Random)", ()->changeMode1(Mode.RANDOM)),
+				radioMenuItem("Computer (Min-Max)", ()->changeMode1(Mode.MINMAX))
 			),
 			menu("Player 2 (black)",
 				radioMenuItem("Human", ()->changeMode2(Mode.HUMAN)),
-				radioMenuItem("Computer (Random)", ()->changeMode2(Mode.RANDOM))
-//				radioMenuItem("Computer (Min-Max)", ()->changeMode2(Mode.MINMAX))
+				radioMenuItem("Computer (Random)", ()->changeMode2(Mode.RANDOM)),
+				radioMenuItem("Computer (Min-Max)", ()->changeMode2(Mode.MINMAX))
 			)
 		);
 	}
@@ -152,8 +152,7 @@ public class GameChess2 extends Play1 {
 	 */
 	
 	private enum Mode {
-		HUMAN, RANDOM
-//		, MINMAX
+		HUMAN, RANDOM, MINMAX
 	}
 	
 	private void changeMode1(Mode mode) {
@@ -293,7 +292,7 @@ public class GameChess2 extends Play1 {
 		switch(mode) {
 		case HUMAN: return new PlayerChessHuman(this);
 		case RANDOM: return new PlayerChessRandom(this);
-//		case MINMAX: return new PlayerComputerMinmax(this);
+		case MINMAX: return new PlayerChessMinmax(this);
 		}
 		return null;
 	}

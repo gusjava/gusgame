@@ -16,12 +16,14 @@ public class PlayerReversiHuman extends Player1 {
 	}
 
 	public boolean play() {
+		if(!hasAnyLegalMove(getValue(), game.boardData())) return true;
+
 		Cell c = game.getPressedCell();
 		if(c==null) return false;
-		
+
 		List<int[]> play = findPlay(getValue(), game.boardData(), c.getIJ());
 		if(play==null) return false;
-		
+
 		game.setValues(play, getValue());
 		return true;
 	}

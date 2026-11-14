@@ -16,9 +16,11 @@ public class PlayerReversiRandom extends Player1 {
 
 	public boolean play() throws Exception {
 		if(game.getCount() < game.getLastPlayCount() + 50) return false;
+		if(!hasAnyLegalMove(getValue(), game.boardData())) return true;
+
 		List<int[]> play = UtilReversi3.randomPlay(getValue(), game.boardData());
 		if(play==null) throw new Exception("PlayerReversiRandom found no play");
-		
+
 		game.setValues(play, getValue());
 		return true;
 	}

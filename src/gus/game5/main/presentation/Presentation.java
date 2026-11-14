@@ -56,7 +56,7 @@ import gus.game5.main.game.p1.o.frogger.GameFrogger;
 import gus.game5.main.game.p1.o.missile.GameMissile;
 import gus.game5.main.game.p1.o.space.GameSpace;
 import gus.game5.main.game.p1.o.warrior.GameWarrior;
-import gus.game5.main.game.p2.c.board.chess.v1.GameChess1;
+import gus.game5.main.game.p2.c.board.chess.v2.GameChess2;
 import gus.game5.main.game.p2.c.board.hex.v1.GameHex1;
 import gus.game5.main.game.p2.c.board.quoridor.v1.GameQuoridor1;
 import gus.game5.main.game.p2.c.board.reversi.v3.GameReversi3;
@@ -135,7 +135,7 @@ public class Presentation extends Game {
 		
 		Container panel2 = buildPanel(
 				new GameReversi3(),
-				new GameChess1(),
+				new GameChess2(),
 				new GameHex1(),
 				new GameRagus1(),
 				new GameTicTacToe3());

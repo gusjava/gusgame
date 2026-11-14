@@ -196,7 +196,7 @@ public class GameReversi3 extends Play1 {
 	 */
 	
 	private void handleGameOver() throws Exception {
-		int value = searchWinner(oppositePlayerValue(), boardData());
+		int value = searchWinner(boardData());
 		if(value!=-1) setGameOver(playerForValue(value));
 	}
 	
@@ -222,10 +222,6 @@ public class GameReversi3 extends Play1 {
 		case MINMAX: return new PlayerReversiMinmax(this);
 		}
 		return null;
-	}
-	
-	private int oppositePlayerValue() {
-		return playIndex()==1 ? WHITE : BLACK;
 	}
 	
 	/*

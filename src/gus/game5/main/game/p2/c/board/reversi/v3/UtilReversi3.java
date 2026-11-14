@@ -35,6 +35,21 @@ public class UtilReversi3 {
 		}
 		return playList;
 	}
+
+	public static boolean hasAnyLegalMove(int player, int[][] data) {
+		return !findPossiblePlays(player, data).isEmpty();
+	}
+
+	public static List<List<int[]>> findPossiblePlaysOrPass(int player, int[][] data) {
+		List<List<int[]>> plays = findPossiblePlays(player, data);
+		if(!plays.isEmpty()) return plays;
+		if(hasAnyLegalMove(oppositeValue(player), data)) {
+			List<List<int[]>> pass = new ArrayList<>();
+			pass.add(new ArrayList<>());
+			return pass;
+		}
+		return plays;
+	}
 	
 	public static List<int[]> findPlay(int player, int[][] data, int[] p) {
 		List<int[]> list = scan(player, data, p);
@@ -43,17 +58,14 @@ public class UtilReversi3 {
 		return list;
 	}
 	
-	public static int searchWinner(int player, int[][] data) {
+	public static int searchWinner(int[][] data) {
 		int scoreWhite = 0;
 		int scoreBlack = 0;
-		boolean playFound = false;
 		for(int i=0;i<8;i++) for(int j=0;j<8;j++) {
 			if(data[i][j]==WHITE) scoreWhite++;
 			if(data[i][j]==BLACK) scoreBlack++;
-			List<int[]> play = findPlay(player, data, new int[] {i,j});
-			if(play!=null) playFound = true;
 		}
-		if(playFound) return -1;
+		if(hasAnyLegalMove(WHITE, data) || hasAnyLegalMove(BLACK, data)) return -1;
 		return scoreWhite > scoreBlack ? WHITE : scoreBlack > scoreWhite ? BLACK : EMPTY;
 	}
 	

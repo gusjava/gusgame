@@ -17,8 +17,8 @@ public class PlayerReversiMinmax extends Player1 {
 	public boolean play() throws Exception {
 //		if(game.getCount() < game.getLastPlayCount() + 50) return false;
 		List<int[]> play = UtilReversi3Minmax.computePlay(getValue(), game.boardData());
-		if(play==null) throw new Exception("PlayerReversiMinmax found no play");
-		
+		if(play==null || play.isEmpty()) return true;
+
 		game.setValues(play, getValue());
 		return true;
 	}
