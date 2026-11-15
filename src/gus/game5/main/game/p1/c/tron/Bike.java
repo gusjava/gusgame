@@ -1,5 +1,7 @@
 package gus.game5.main.game.p1.c.tron;
 
+import gus.game5.core.util.Dir;
+
 public class Bike {
 
 	private int col;

@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
-import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.map.GameMap;
 import gus.game5.core.point.point1.Point1;
 import gus.game5.core.shape.ShapeList;
@@ -44,9 +43,7 @@ public class GameSpace extends Game1 {
 	}
 
 	protected void turn() {
-		Keyboard k = keyboard();
-		if(k.in().F1())	restart();
-		if(k.in().F2())	exit();
+		handleRestartExit();
 		
 		if(mouse().button1().justPressed()) {
 			click1();

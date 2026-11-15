@@ -3,6 +3,8 @@ package gus.game5.main.game.p1.c.pacman;
 import static gus.game5.core.util.UtilRandom.randomInt;
 
 import java.awt.Color;
+
+import gus.game5.core.util.Dir;
 import java.util.ArrayList;
 import java.util.List;
 

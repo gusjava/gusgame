@@ -68,8 +68,7 @@ public class AnimMaze extends Game1 {
 	protected void turn() {
 		Keyboard k = keyboard();
 		
-		if(k.in().F1())		restart();
-		if(k.in().F2())		exit();
+		handleRestartExit();
 		if(k.in().F3())		solveBFS();
 		if(k.in().F4())		solveDFS();
 		

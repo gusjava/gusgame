@@ -11,8 +11,8 @@ import java.util.Set;
 import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
-import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point0.Point0;
+import gus.game5.core.util.LevelProgress;
 import gus.game5.core.util.UtilGrid;
 
 public class GameFlowFree extends Game1 {
@@ -32,9 +32,6 @@ public class GameFlowFree extends Game1 {
 	public static final Color COLOR_LABEL = new Color(150,150,180);
 	public static final Color COLOR_VEIL = new Color(0,0,0,180);
 
-	public enum State {PLAYING, CLEARED, FINISHED}
-
-
 	public static void main(String[] args) {
 		GameFlowFree main = new GameFlowFree();
 		main.displayInWindows();
@@ -53,7 +50,6 @@ public class GameFlowFree extends Game1 {
 	 * DATA
 	 */
 
-	private int levelIndex;
 	private int rows;
 	private int cols;
 	private char[][] board;
@@ -65,18 +61,18 @@ public class GameFlowFree extends Game1 {
 	private boolean dragging;
 	private char dragColor;
 
-	private State state;
-	private int stateTick;
+	private LevelProgress progress;
 
 	protected void initialize1() {
-		levelIndex = 0;
+		progress = new LevelProgress(UtilFlowFree.LEVELS.length, CLEAR_TICKS);
+		progress.reset();
 		loadLevel();
 	}
 
 	private void loadLevel() {
 		clearAll();
 
-		String[] data = UtilFlowFree.LEVELS[levelIndex];
+		String[] data = UtilFlowFree.LEVELS[progress.getLevelIndex()];
 		rows = data.length;
 		cols = data[0].length();
 
@@ -95,7 +91,7 @@ public class GameFlowFree extends Game1 {
 		}
 
 		dragging = false;
-		setState(State.PLAYING);
+		progress.setState(LevelProgress.State.PLAYING);
 		addDraw(new GameDrawing());
 	}
 
@@ -113,23 +109,17 @@ public class GameFlowFree extends Game1 {
 	 */
 
 	protected void turn() {
-		Keyboard k = keyboard();
-		if(k.in().F1()) {
-			restart();
-			return;
-		}
-		if(k.in().F2()) exit();
+		if(handleRestartExit()) return;
 
-		switch(state) {
-			case PLAYING: playing(); break;
-			case CLEARED: stateTick++; if(stateTick>CLEAR_TICKS) nextLevel(); break;
-			default: break;
+		if(progress.isPlaying()) playing();
+		else if(progress.isCleared()) {
+			if(progress.tickClearedAndCheckAdvance()) nextLevel();
 		}
 	}
 
 	private void playing() {
 		handleMouse();
-		if(completed.size()==endpoints.size()) setState(State.CLEARED);
+		if(completed.size()==endpoints.size()) progress.setState(LevelProgress.State.CLEARED);
 	}
 
 	private void handleMouse() {
@@ -206,18 +196,8 @@ public class GameFlowFree extends Game1 {
 		return d==1;
 	}
 
-	private void setState(State s) {
-		state = s;
-		stateTick = 0;
-	}
-
 	private void nextLevel() {
-		levelIndex++;
-		if(levelIndex>=UtilFlowFree.LEVELS.length) {
-			setState(State.FINISHED);
-			return;
-		}
-		loadLevel();
+		if(progress.nextLevel()) loadLevel();
 	}
 
 	/*
@@ -276,7 +256,7 @@ public class GameFlowFree extends Game1 {
 		}
 
 		private void drawHud() {
-			drawString(COLOR_TEXT, fontBold(16), p(2, -TOP+28), "NIVEAU  "+(levelIndex+1)+"/"+UtilFlowFree.LEVELS.length);
+			drawString(COLOR_TEXT, fontBold(16), p(2, -TOP+28), "NIVEAU  "+(progress.getLevelIndex()+1)+"/"+UtilFlowFree.LEVELS.length);
 			drawString(COLOR_TEXT, fontBold(16), p(2, -TOP+48), "CONNEXIONS  "+completed.size()+"/"+endpoints.size());
 
 			double y = rows*CELL + BOTTOM*0.55;
@@ -287,12 +267,12 @@ public class GameFlowFree extends Game1 {
 		private void drawMessage() {
 			double w = cols*CELL;
 			double h = rows*CELL;
-			if(state==State.CLEARED) {
+			if(progress.isCleared()) {
 				fillRect(COLOR_VEIL, p(0,0), w, h);
-				drawStringC(COLOR_TEXT, fontBold(24), p(w/2, h/2), "NIVEAU "+(levelIndex+1)+" TERMINE");
+				drawStringC(COLOR_TEXT, fontBold(24), p(w/2, h/2), "NIVEAU "+(progress.getLevelIndex()+1)+" TERMINE");
 				return;
 			}
-			if(state==State.FINISHED) {
+			if(progress.isFinished()) {
 				fillRect(COLOR_VEIL, p(0,0), w, h);
 				drawStringC(UtilFlowFree.colorOf('A'), fontBold(26), p(w/2, h/2-14), "BRAVO");
 				drawStringC(COLOR_TEXT, fontPlain(14), p(w/2, h/2+16), "Tous les niveaux resolus - F1 pour rejouer");

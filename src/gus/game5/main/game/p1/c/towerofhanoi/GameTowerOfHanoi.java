@@ -170,8 +170,7 @@ public class GameTowerOfHanoi extends Game1 {
 	
 	protected void turn() {
 		Keyboard k = keyboard();
-		if(k.in().F1()) restart();
-		if(k.in().F2()) exit();
+		handleRestartExit();
 		if(k.in().F3())	displayAbout();
 		
 		goNext();

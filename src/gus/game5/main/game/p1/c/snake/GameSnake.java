@@ -3,6 +3,8 @@ package gus.game5.main.game.p1.c.snake;
 
 import static gus.game5.core.util.UtilRandom.randomInt;
 
+import gus.game5.core.util.Dir;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,8 +72,7 @@ public class GameSnake extends Game1 {
 
 	protected void turn() {
 		Keyboard k = keyboard();
-		if(k.in().F1())	restart();
-		if(k.in().F2())	exit();
+		handleRestartExit();
 		
 		if(gameOver) return;
 		
@@ -126,16 +127,7 @@ public class GameSnake extends Game1 {
 		return (int) getCount()%RATIO;
 	}
 
-	
-	public enum Dir {
-		NORTH,WEST,SOUTH,EAST;
-		
-		public boolean isNorth() {return this==NORTH;}
-		public boolean isWest() {return this==WEST;}
-		public boolean isSouth() {return this==SOUTH;}
-		public boolean isEast() {return this==EAST;}
-	}
-	
+
 	private class Cell {
 		private int x;
 		private int y;

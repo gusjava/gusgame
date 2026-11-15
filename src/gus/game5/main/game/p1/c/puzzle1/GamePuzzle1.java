@@ -14,7 +14,6 @@ import gus.game5.core.dyn.DynTimer;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
 import gus.game5.core.gui.JMenuBar1;
-import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point0.Point0;
 import gus.game5.core.point.point1.Point1D0;
 import gus.game5.core.point.point2.Point2;
@@ -160,9 +159,7 @@ public class GamePuzzle1 extends Game1 {
 	}
 
 	protected void turn() {
-		Keyboard k = keyboard();
-		if(k.in().F1())	restart();
-		if(k.in().F2())	exit();
+		handleRestartExit();
 		
 		goNext();
 		if(completeTimer.gBool()) return;
@@ -221,7 +218,7 @@ public class GamePuzzle1 extends Game1 {
 //			if(atRightPosition()) drawStringC(fontBold(20), "OK"); 
 		}
 
-		//HACK pour remettre le comportement contains comme il faut (à revoir)
+		//HACK pour remettre le comportement contains comme il faut (ï¿½ revoir)
 		public boolean contains(Point0 p) {
 			if(p==null) return false;
 			

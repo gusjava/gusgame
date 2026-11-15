@@ -1,5 +1,7 @@
 package gus.game5.main.game.p1.c.pacman;
 
+import gus.game5.core.util.Dir;
+
 public class Pacman extends Mover {
 	
 	private Dir wanted;

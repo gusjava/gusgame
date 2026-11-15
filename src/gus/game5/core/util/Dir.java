@@ -1,7 +1,7 @@
-package gus.game5.main.game.p1.c.tron;
+package gus.game5.core.util;
 
 public enum Dir {
-	NORTH(0,-1), SOUTH(0,1), WEST(-1,0), EAST(1,0);
+	NORTH(0,-1), EAST(1,0), SOUTH(0,1), WEST(-1,0);
 
 	private final int dx;
 	private final int dy;
@@ -26,5 +26,21 @@ public enum Dir {
 			case WEST: return EAST;
 			default: return WEST;
 		}
+	}
+
+	public boolean isNorth() {
+		return this==NORTH;
+	}
+
+	public boolean isSouth() {
+		return this==SOUTH;
+	}
+
+	public boolean isEast() {
+		return this==EAST;
+	}
+
+	public boolean isWest() {
+		return this==WEST;
 	}
 }

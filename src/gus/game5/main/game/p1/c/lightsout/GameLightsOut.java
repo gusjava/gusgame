@@ -90,8 +90,7 @@ public class GameLightsOut extends Game1 {
 		Keyboard k = keyboard();
 		Mouse mse = mouse();
 
-		if(k.in().F1()) {restart(); return;}
-		if(k.in().F2()) exit();
+		if(handleRestartExit()) return;
 		if(k.in().r()) {restart(); return;}
 		if(won) return;
 

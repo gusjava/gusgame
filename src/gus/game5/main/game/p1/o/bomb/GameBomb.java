@@ -92,8 +92,7 @@ public class GameBomb extends Game1 {
 
 	protected void turn() {
 		Keyboard k = keyboard();
-		if(k.in().F1())	restart();
-		if(k.in().F2())	exit();
+		handleRestartExit();
 		
 		if(gameOver) return;
 		if(k.in().space()) freeze();

@@ -3,6 +3,8 @@ package gus.game5.main.game.p1.c.sokoban;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+import gus.game5.core.util.Dir;
+
 public class Level {
 
 	public static final char WALL = '#';

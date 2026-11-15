@@ -3,6 +3,7 @@ package gus.game5.main.game.p1.c.pacman;
 import java.awt.Color;
 
 import gus.game5.core.angle.Angle;
+import gus.game5.core.util.Dir;
 import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
@@ -128,11 +129,7 @@ public class GamePacman extends Game1 {
 
 	protected void turn() {
 		Keyboard k = keyboard();
-		if(k.in().F1()) {
-			restart();
-			return;
-		}
-		if(k.in().F2()) exit();
+		if(handleRestartExit()) return;
 		if(k.in().space()) paused = !paused;
 		if(paused) return;
 

@@ -228,8 +228,7 @@ public class GameBrickBlast extends Game1 {
 
 	protected void turn() {
 		Keyboard k = keyboard();
-		if(k.in().F1()) {restart(); return;}
-		if(k.in().F2()) {exit(); return;}
+		if(handleRestartExit()) return;
 
 		if(gameOver) {
 			goNext();

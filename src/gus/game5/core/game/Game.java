@@ -121,12 +121,18 @@ public abstract class Game {
 	
 	public void restart() {
 		if(!isRunning()) throw new TechnicalException("Game not started yet");
-		
+
 		initialize();
 		reset();
 	}
-	
-	
+
+	protected boolean handleRestartExit() {
+		if(keyboard().in().F1()) { restart(); return true; }
+		if(keyboard().in().F2()) { exit(); return true; }
+		return false;
+	}
+
+
 	public long getCount() {
 		return time.getCount();
 	}

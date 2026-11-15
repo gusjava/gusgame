@@ -9,8 +9,8 @@ import java.util.Set;
 import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
-import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point0.Point0;
+import gus.game5.core.util.Dir;
 import gus.game5.core.util.UtilGrid;
 import gus.game5.core.util.UtilRandom;
 
@@ -106,12 +106,7 @@ public class GamePipeMania extends Game1 {
 	 */
 
 	protected void turn() {
-		Keyboard k = keyboard();
-		if(k.in().F1()) {
-			restart();
-			return;
-		}
-		if(k.in().F2()) exit();
+		if(handleRestartExit()) return;
 
 		switch(state) {
 			case BUILDING: building(); break;
@@ -129,8 +124,8 @@ public class GamePipeMania extends Game1 {
 
 	private void startFlowing() {
 		setState(State.FLOWING);
-		flowCell = new int[] {START_CELL[0]+Dir.S.getDy(), START_CELL[1]+Dir.S.getDx()};
-		flowIncoming = Dir.N;
+		flowCell = new int[] {START_CELL[0]+Dir.SOUTH.getDy(), START_CELL[1]+Dir.SOUTH.getDx()};
+		flowIncoming = Dir.NORTH;
 		flowTimer = flowInterval;
 	}
 
@@ -251,7 +246,7 @@ public class GamePipeMania extends Game1 {
 		private void drawStartEnd() {
 			Point0 startCenter = cellCenter(START_CELL[0], START_CELL[1]);
 			fillRoundC(COLOR_SOURCE, startCenter, CELL*0.3);
-			drawPipeArm(startCenter, Dir.S, COLOR_SOURCE);
+			drawPipeArm(startCenter, Dir.SOUTH, COLOR_SOURCE);
 
 			Point0 endCenter = cellCenter(endCell[0], endCell[1]);
 			fillRoundC(COLOR_DRAIN, endCenter, CELL*0.3);

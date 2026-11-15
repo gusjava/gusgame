@@ -3,6 +3,8 @@ package gus.game5.main.game.p1.c.pacman;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+import gus.game5.core.util.Dir;
+
 public class Maze {
 	
 	public static final char WALL = '#';

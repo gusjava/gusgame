@@ -3,6 +3,7 @@ package gus.game5.main.game.p1.c.sokoban;
 import java.awt.Color;
 
 import gus.game5.core.drawing.Drawing1;
+import gus.game5.core.util.Dir;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
 import gus.game5.core.keyboard.Keyboard;
@@ -74,11 +75,7 @@ public class GameSokoban extends Game1 {
 
 	protected void turn() {
 		Keyboard k = keyboard();
-		if(k.in().F1()) {
-			restart();
-			return;
-		}
-		if(k.in().F2()) exit();
+		if(handleRestartExit()) return;
 		if(state==State.PLAYING && k.in().p()) paused = !paused;
 		if(paused) return;
 

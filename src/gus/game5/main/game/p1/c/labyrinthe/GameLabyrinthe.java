@@ -6,6 +6,7 @@ import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
 import gus.game5.core.keyboard.Keyboard;
+import gus.game5.core.util.LevelProgress;
 import gus.game5.core.util.UtilMaze;
 import gus.game5.core.util.maze.MazeSolver;
 import gus.game5.core.util.maze.MazeSolverBFS;
@@ -20,6 +21,7 @@ public class GameLabyrinthe extends Game1 {
 	public static final int BOTTOM = 40;
 
 	public static final int[] SIZES = {15,19,23,27,31,31};
+	public static final int CLEAR_TICKS = 60;
 
 	public static final Color COLOR_BG = new Color(10,10,16);
 	public static final Color COLOR_WALL = new Color(90,70,60);
@@ -31,9 +33,6 @@ public class GameLabyrinthe extends Game1 {
 	public static final Color COLOR_TEXT = new Color(235,235,245);
 	public static final Color COLOR_LABEL = new Color(150,150,180);
 	public static final Color COLOR_VEIL = new Color(0,0,0,180);
-
-	public enum State {PLAYING, CLEARED, FINISHED}
-
 
 	public static void main(String[] args) {
 		GameLabyrinthe main = new GameLabyrinthe();
@@ -54,7 +53,6 @@ public class GameLabyrinthe extends Game1 {
 	 * DATA
 	 */
 
-	private int levelIndex;
 	private int size;
 	private boolean[][] data;
 	private int[] start;
@@ -66,18 +64,18 @@ public class GameLabyrinthe extends Game1 {
 	private boolean hint;
 	private int[][] hintPath;
 
-	private State state;
-	private int stateTick;
+	private LevelProgress progress;
 
 	protected void initialize1() {
-		levelIndex = 0;
+		progress = new LevelProgress(SIZES.length, CLEAR_TICKS);
+		progress.reset();
 		loadLevel();
 	}
 
 	private void loadLevel() {
 		clearAll();
 
-		size = SIZES[levelIndex];
+		size = SIZES[progress.getLevelIndex()];
 		data = UtilMaze.generate(size);
 		start = UtilMaze.pickRandom(data);
 		end = pickFarEnd();
@@ -87,7 +85,7 @@ public class GameLabyrinthe extends Game1 {
 		hintPath = null;
 		optimalLength = solveLength(start, end);
 
-		setState(State.PLAYING);
+		progress.setState(LevelProgress.State.PLAYING);
 		addDraw(new GameDrawing());
 	}
 
@@ -127,17 +125,12 @@ public class GameLabyrinthe extends Game1 {
 
 	protected void turn() {
 		Keyboard k = keyboard();
-		if(k.in().F1()) {
-			restart();
-			return;
-		}
-		if(k.in().F2()) exit();
+		if(handleRestartExit()) return;
 		if(k.in().h()) toggleHint();
 
-		if(state==State.PLAYING) playing(k);
-		else if(state==State.CLEARED) {
-			stateTick++;
-			if(stateTick>60) nextLevel();
+		if(progress.isPlaying()) playing(k);
+		else if(progress.isCleared()) {
+			if(progress.tickClearedAndCheckAdvance()) nextLevel();
 		}
 	}
 
@@ -151,7 +144,7 @@ public class GameLabyrinthe extends Game1 {
 
 		if(di!=0 || dj!=0) tryMove(di, dj);
 
-		if(player[0]==end[0] && player[1]==end[1]) setState(State.CLEARED);
+		if(player[0]==end[0] && player[1]==end[1]) progress.setState(LevelProgress.State.CLEARED);
 	}
 
 	private void tryMove(int di, int dj) {
@@ -162,7 +155,7 @@ public class GameLabyrinthe extends Game1 {
 		player[0] = ni;
 		player[1] = nj;
 		moves++;
-		hintPath = null;
+		hintPath = hint ? solvePath(player, end) : null;
 	}
 
 	private void toggleHint() {
@@ -172,18 +165,8 @@ public class GameLabyrinthe extends Game1 {
 		}
 	}
 
-	private void setState(State s) {
-		state = s;
-		stateTick = 0;
-	}
-
 	private void nextLevel() {
-		levelIndex++;
-		if(levelIndex>=SIZES.length) {
-			setState(State.FINISHED);
-			return;
-		}
-		loadLevel();
+		if(progress.nextLevel()) loadLevel();
 	}
 
 	/*
@@ -231,7 +214,7 @@ public class GameLabyrinthe extends Game1 {
 		}
 
 		private void drawHud() {
-			drawString(COLOR_TEXT, fontBold(16), p(2, -TOP+28), "NIVEAU  "+(levelIndex+1)+"/"+SIZES.length);
+			drawString(COLOR_TEXT, fontBold(16), p(2, -TOP+28), "NIVEAU  "+(progress.getLevelIndex()+1)+"/"+SIZES.length);
 			String optimal = optimalLength>0 ? String.valueOf(optimalLength) : "?";
 			drawString(COLOR_TEXT, fontBold(16), p(2, -TOP+48), "DEPLACEMENTS  "+moves+"   OPTIMAL  "+optimal);
 
@@ -243,12 +226,12 @@ public class GameLabyrinthe extends Game1 {
 		private void drawMessage() {
 			double w = size*CELL;
 			double h = size*CELL;
-			if(state==State.CLEARED) {
+			if(progress.isCleared()) {
 				fillRect(COLOR_VEIL, p(0,0), w, h);
-				drawStringC(COLOR_TEXT, fontBold(24), p(w/2, h/2), "NIVEAU "+(levelIndex+1)+" TERMINE");
+				drawStringC(COLOR_TEXT, fontBold(24), p(w/2, h/2), "NIVEAU "+(progress.getLevelIndex()+1)+" TERMINE");
 				return;
 			}
-			if(state==State.FINISHED) {
+			if(progress.isFinished()) {
 				fillRect(COLOR_VEIL, p(0,0), w, h);
 				drawStringC(COLOR_END, fontBold(26), p(w/2, h/2-14), "BRAVO");
 				drawStringC(COLOR_TEXT, fontPlain(14), p(w/2, h/2+16), "Tous les niveaux resolus - F1 pour rejouer");

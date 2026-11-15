@@ -9,7 +9,6 @@ import gus.game5.core.angle.Angle;
 import gus.game5.core.drawing.Drawing1;
 import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
-import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point0.Point0;
 import gus.game5.core.point.point1.Point1;
 import gus.game5.core.point.point2.Point2;
@@ -96,9 +95,7 @@ public class GameMissile extends Game1 {
 
 	
 	protected void turn() {
-		Keyboard k = keyboard();
-		if(k.in().F1())	restart();
-		if(k.in().F2())	exit();
+		handleRestartExit();
 		
 		if(isGameOver()) return;
 		

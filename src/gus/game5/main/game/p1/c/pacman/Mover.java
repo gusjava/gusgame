@@ -1,5 +1,7 @@
 package gus.game5.main.game.p1.c.pacman;
 
+import gus.game5.core.util.Dir;
+
 public abstract class Mover {
 	
 	protected Maze maze;

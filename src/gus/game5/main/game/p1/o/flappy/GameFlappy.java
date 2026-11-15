@@ -133,11 +133,7 @@ public class GameFlappy extends Game1 {
 
 	protected void turn() {
 		Keyboard k = keyboard();
-		if(k.in().F1()) {
-			restart();
-			return;
-		}
-		if(k.in().F2()) exit();
+		if(handleRestartExit()) return;
 		if(started && !over && k.out().p()) paused = !paused;
 		if(paused || over) return;
 

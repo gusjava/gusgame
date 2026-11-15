@@ -98,11 +98,7 @@ public class GameMastermind extends Game1 {
 
 	protected void turn() {
 		Keyboard k = keyboard();
-		if(k.in().F1()) {
-			restart();
-			return;
-		}
-		if(k.in().F2()) exit();
+		if(handleRestartExit()) return;
 		if(won || over) return;
 
 		if(k.in().c()) {
