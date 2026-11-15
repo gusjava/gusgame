@@ -4,6 +4,7 @@ import static gus.game5.main.game.p2.o.board.ragus1.UtilRagus.PLAYER_DINO;
 import static gus.game5.main.game.p2.o.board.ragus1.UtilRagus.attemptToPlay;
 import static gus.game5.main.game.p2.o.board.ragus1.UtilRagus.findPossiblePlays;
 import static gus.game5.main.game.p2.o.board.ragus1.UtilRagus.isBlocked;
+import static gus.game5.main.game.p2.o.board.ragus1.UtilRagus.isPlayable;
 import static gus.game5.main.game.p2.o.board.ragus1.UtilRagus.randomPlay;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public class UtilRagusMinmax {
 
 	private static final float[] F1 = new float[] {0, 0, 0, 0, 0, 0, 0, 2, 3, 4, 5, 6, 10};
 	private static final float[] F2 = new float[] {10, 6, 5, 4, 3, 2, 0, 0, 0, 0, 0, 0, 0};
+
+	private static final float WIN_SCORE = 100000f;
 
 	private static final MinmaxGame<int[][],int[]> GAME = new RagusMinmaxGame();
 
@@ -43,6 +46,10 @@ public class UtilRagusMinmax {
 		}
 
 		public float evaluate(int[][] data, int player) {
+			int other = oppositePlayer(player);
+			if(!isPlayable(other, data)) return WIN_SCORE;
+			if(!isPlayable(player, data)) return -WIN_SCORE;
+
 			float[] fMe = player==PLAYER_DINO ? F1 : F2;
 			float[] fHim = player==PLAYER_DINO ? F2 : F1;
 

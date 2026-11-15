@@ -1,6 +1,5 @@
 package gus.game5.main.game.p2.c.board.hex.v1;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -70,13 +69,23 @@ public class UtilHex {
 			int j = current[1];
 			int d = current[2];
 			if(d>dist[i][j]) continue;
-			for(int[] n : neighbors6(x, y, i, j)) offer(queue, dist, data, opponent, n[0], n[1], d);
+			offerNeighbor(queue, dist, data, opponent, x, y, i-1, j, d);
+			offerNeighbor(queue, dist, data, opponent, x, y, i-1, j-1, d);
+			offerNeighbor(queue, dist, data, opponent, x, y, i, j-1, d);
+			offerNeighbor(queue, dist, data, opponent, x, y, i, j+1, d);
+			offerNeighbor(queue, dist, data, opponent, x, y, i+1, j, d);
+			offerNeighbor(queue, dist, data, opponent, x, y, i+1, j+1, d);
 		}
 
 		int best = Integer.MAX_VALUE;
 		if(player==RED) for(int i=0;i<x;i++) best = Math.min(best, dist[i][y-1]);
 		else for(int j=0;j<y;j++) best = Math.min(best, dist[x-1][j]);
 		return best;
+	}
+
+	private static void offerNeighbor(PriorityQueue<int[]> queue, int[][] dist, int[][] data, int opponent, int x, int y, int i, int j, int fromDist) {
+		if(i<0 || i>=x || j<0 || j>=y) return;
+		offer(queue, dist, data, opponent, i, j, fromDist);
 	}
 
 	private static void offer(PriorityQueue<int[]> queue, int[][] dist, int[][] data, int opponent, int i, int j, int fromDist) {
@@ -86,21 +95,6 @@ public class UtilHex {
 			dist[i][j] = cost;
 			queue.add(new int[] {i,j,cost});
 		}
-	}
-
-	private static List<int[]> neighbors6(int x, int y, int i, int j) {
-		List<int[]> list = new ArrayList<>();
-		addIfValid(list, x, y, i-1, j);
-		addIfValid(list, x, y, i-1, j-1);
-		addIfValid(list, x, y, i, j-1);
-		addIfValid(list, x, y, i, j+1);
-		addIfValid(list, x, y, i+1, j);
-		addIfValid(list, x, y, i+1, j+1);
-		return list;
-	}
-
-	private static void addIfValid(List<int[]> list, int x, int y, int i, int j) {
-		if(i>=0 && i<x && j>=0 && j<y) list.add(new int[] {i,j});
 	}
 
 	private static boolean isConnectedToLeftRed(int x, int y, int[][] data, boolean[][] b, int i, int j) {
