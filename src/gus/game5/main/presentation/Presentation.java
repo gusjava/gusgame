@@ -22,11 +22,34 @@ import gus.game5.main.anim.fishtank.AnimFishTank;
 import gus.game5.main.anim.gameoflife1.AnimGameOfLife;
 import gus.game5.main.anim.langtonant.AnimLangtonAnt;
 import gus.game5.main.anim.life1.LifeBacteria1;
+import gus.game5.main.anim1.AnimAntColony;
 import gus.game5.main.anim1.AnimBallBattle;
+import gus.game5.main.anim1.AnimChladni;
 import gus.game5.main.anim1.AnimClock;
+import gus.game5.main.anim1.AnimDoublePendulum;
+import gus.game5.main.anim1.AnimElementaryCA;
+import gus.game5.main.anim1.AnimFireworks;
+import gus.game5.main.anim1.AnimFlowField;
+import gus.game5.main.anim1.AnimFractalTree;
+import gus.game5.main.anim1.AnimHarmonograph;
+import gus.game5.main.anim1.AnimLSystem;
 import gus.game5.main.anim1.AnimLandscape;
+import gus.game5.main.anim1.AnimLorenzAttractor;
+import gus.game5.main.anim1.AnimMandala;
 import gus.game5.main.anim1.AnimMaze;
+import gus.game5.main.anim1.AnimNBody;
+import gus.game5.main.anim1.AnimParticleLife;
+import gus.game5.main.anim1.AnimPendulumWave;
+import gus.game5.main.anim1.AnimPlasma;
+import gus.game5.main.anim1.AnimReactionDiffusion;
+import gus.game5.main.anim1.AnimSlimeMold;
+import gus.game5.main.anim1.AnimSnowfall;
+import gus.game5.main.anim1.AnimSolarSystem;
+import gus.game5.main.anim1.AnimSpirograph;
+import gus.game5.main.anim1.AnimStarfield;
+import gus.game5.main.anim1.AnimTSP;
 import gus.game5.main.anim1.AnimVacheQuiRit;
+import gus.game5.main.anim1.AnimWaTor;
 import gus.game5.main.edu.prog.modulo1.EduModulo1;
 import gus.game5.main.game.p1.c.antivirus.GameAntivirus;
 import gus.game5.main.game.p1.c.columns.GameColumns;
@@ -160,7 +183,30 @@ public class Presentation extends Game {
 				new AnimGameOfLife(),
 				new AnimBallBattle(),
 				new LifeBacteria1(),
-				new AnimFishTank()
+				new AnimFishTank(),
+				new AnimFireworks(),
+				new AnimStarfield(),
+				new AnimSnowfall(),
+				new AnimPlasma(),
+				new AnimSpirograph(),
+				new AnimMandala(),
+				new AnimSolarSystem(),
+				new AnimPendulumWave(),
+				new AnimDoublePendulum(),
+				new AnimFractalTree(),
+				new AnimLorenzAttractor(),
+				new AnimReactionDiffusion(),
+				new AnimChladni(),
+				new AnimHarmonograph(),
+				new AnimElementaryCA(),
+				new AnimFlowField(),
+				new AnimNBody(),
+				new AnimParticleLife(),
+				new AnimSlimeMold(),
+				new AnimWaTor(),
+				new AnimAntColony(),
+				new AnimLSystem(),
+				new AnimTSP()
 				);
 
 		Container panel4 = buildPanel(
