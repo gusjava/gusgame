@@ -23,6 +23,7 @@ import gus.game5.main.anim.gameoflife1.AnimGameOfLife;
 import gus.game5.main.anim.langtonant.AnimLangtonAnt;
 import gus.game5.main.anim.life1.LifeBacteria1;
 import gus.game5.main.anim1.AnimAntColony;
+import gus.game5.main.anim1.AnimAutumn;
 import gus.game5.main.anim1.AnimBallBattle;
 import gus.game5.main.anim1.AnimBoids;
 import gus.game5.main.anim1.AnimBrianBrain;
@@ -236,7 +237,8 @@ public class Presentation extends Game {
 				new AnimBrianBrain(),
 				new AnimHighLife(),
 				new AnimSandpile(),
-				new AnimHodgepodge()
+				new AnimHodgepodge(),
+				new AnimAutumn()
 				);
 
 		Container panel4 = buildPanel(
@@ -265,7 +267,7 @@ public class Presentation extends Game {
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Jeux solo", panel1);
-		tabbedPane.addTab("Jeux ï¿½ 2", panel2);
+		tabbedPane.addTab("Jeux à 2", panel2);
 		tabbedPane.addTab("Animations", panel3);
 		tabbedPane.addTab("Petits tests", panel4);
 		tabbedPane.addTab("Experimental", panel5);
