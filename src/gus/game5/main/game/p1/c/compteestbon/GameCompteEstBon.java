@@ -84,6 +84,8 @@ public class GameCompteEstBon extends Game1 {
 	 */
 
 	protected Container buildContentPane() {
+		resetState();
+
 		labelTarget = new JLabel("", SwingConstants.CENTER);
 		fontSize(labelTarget, 26);
 		labelInfo = new JLabel("", SwingConstants.CENTER);
@@ -115,6 +117,8 @@ public class GameCompteEstBon extends Game1 {
 		JPanel south = new JPanel();
 		south.add(button("Valider", this::validate));
 		south.add(button("Nouvelle partie", this::restart));
+
+		refreshAll();
 
 		return panelCNS(empty(center, 10), empty(north, 12), south);
 	}
