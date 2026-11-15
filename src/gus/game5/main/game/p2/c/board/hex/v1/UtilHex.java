@@ -1,6 +1,9 @@
 package gus.game5.main.game.p2.c.board.hex.v1;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import gus.game5.core.util.UtilArrayBoolean;
 import gus.game5.core.util.UtilArrayInt;
@@ -43,7 +46,63 @@ public class UtilHex {
 	public static int oppositeValue(int value) {
 		return value==RED ? BLUE : value==BLUE ? RED : value;
 	}
-	
+
+	/*
+	 * SHORTEST CONNECTION (used by the Min-Max heuristic)
+	 */
+
+	public static int shortestConnectionLength(int[][] data, int player) {
+		int x = data.length;
+		int y = data[0].length;
+		int opponent = oppositeValue(player);
+
+		int[][] dist = new int[x][y];
+		for(int[] row : dist) Arrays.fill(row, Integer.MAX_VALUE);
+
+		PriorityQueue<int[]> queue = new PriorityQueue<>((a,b)->Integer.compare(a[2], b[2]));
+
+		if(player==RED) for(int i=0;i<x;i++) offer(queue, dist, data, opponent, i, 0, 0);
+		else for(int j=0;j<y;j++) offer(queue, dist, data, opponent, 0, j, 0);
+
+		while(!queue.isEmpty()) {
+			int[] current = queue.poll();
+			int i = current[0];
+			int j = current[1];
+			int d = current[2];
+			if(d>dist[i][j]) continue;
+			for(int[] n : neighbors6(x, y, i, j)) offer(queue, dist, data, opponent, n[0], n[1], d);
+		}
+
+		int best = Integer.MAX_VALUE;
+		if(player==RED) for(int i=0;i<x;i++) best = Math.min(best, dist[i][y-1]);
+		else for(int j=0;j<y;j++) best = Math.min(best, dist[x-1][j]);
+		return best;
+	}
+
+	private static void offer(PriorityQueue<int[]> queue, int[][] dist, int[][] data, int opponent, int i, int j, int fromDist) {
+		if(data[i][j]==opponent) return;
+		int cost = fromDist + (data[i][j]==EMPTY ? 1 : 0);
+		if(cost<dist[i][j]) {
+			dist[i][j] = cost;
+			queue.add(new int[] {i,j,cost});
+		}
+	}
+
+	private static List<int[]> neighbors6(int x, int y, int i, int j) {
+		List<int[]> list = new ArrayList<>();
+		addIfValid(list, x, y, i-1, j);
+		addIfValid(list, x, y, i-1, j-1);
+		addIfValid(list, x, y, i, j-1);
+		addIfValid(list, x, y, i, j+1);
+		addIfValid(list, x, y, i+1, j);
+		addIfValid(list, x, y, i+1, j+1);
+		return list;
+	}
+
+	private static void addIfValid(List<int[]> list, int x, int y, int i, int j) {
+		if(i>=0 && i<x && j>=0 && j<y) list.add(new int[] {i,j});
+	}
+
 	private static boolean isConnectedToLeftRed(int x, int y, int[][] data, boolean[][] b, int i, int j) {
 		if(i<0 || i>=x) return false;
 		if(j<0 || j>=y) return false;
