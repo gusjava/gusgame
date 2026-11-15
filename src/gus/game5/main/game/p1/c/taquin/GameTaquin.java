@@ -71,7 +71,7 @@ public class GameTaquin extends Game1 {
 			shuffle();
 			return;
 		}
-		handleMouse();
+		if(handleMouse()) return;
 		if(won) return;
 		int dir = direction(k);
 		if(dir>=0) move(dir);
@@ -89,17 +89,19 @@ public class GameTaquin extends Game1 {
 		if(board.moveBlank(dir)) checkWin();
 	}
 
-	private void handleMouse() {
-		if(won) return;
+	private boolean handleMouse() {
+		if(won) return false;
 		Mouse mouse = mouse();
-		if(!mouse.button1().justPressed()) return;
+		if(!mouse.button1().justPressed()) return false;
 
 		Point0 p = mouse.button1().justPressedPoint();
 		int col = (int) Math.floor((p.getX()-MARGIN-GAP)/(CELL+GAP));
 		int row = (int) Math.floor((p.getY()-TOP-GAP)/(CELL+GAP));
-		if(col<0 || col>=SIZE || row<0 || row>=SIZE) return;
+		if(col<0 || col>=SIZE || row<0 || row>=SIZE) return false;
 
-		if(board.slideTo(col, row)) checkWin();
+		if(!board.slideTo(col, row)) return false;
+		checkWin();
+		return true;
 	}
 
 	private void checkWin() {

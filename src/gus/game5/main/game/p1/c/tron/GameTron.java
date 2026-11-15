@@ -108,7 +108,7 @@ public class GameTron extends Game1 {
 			return;
 		}
 		if(k.F2()) exit();
-		if(k.in().p()) paused = !paused;
+		if(state!=State.OVER && k.in().p()) paused = !paused;
 		if(paused) return;
 
 		stateTick++;

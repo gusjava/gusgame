@@ -143,7 +143,7 @@ public class GameFlappy extends Game1 {
 
 		scrollDecor();
 
-		boolean flap = k.out().space() || k.out().up() || mouse().button1().justPressed();
+		boolean flap = k.in().space() || k.in().up() || mouse().button1().justPressed();
 		if(!started) {
 			bird.hover(getCount());
 			if(flap) {

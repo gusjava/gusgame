@@ -74,11 +74,11 @@ public class Game2048 extends Game1 {
 
 	protected void turn() {
 		Keyboard k = keyboard();
-		if(k.F1()) {
+		if(k.in().F1()) {
 			restart();
 			return;
 		}
-		if(k.F2()) exit();
+		if(k.in().F2()) exit();
 		if(!over && k.in().p()) paused = !paused;
 		if(paused) return;
 		if(isWinPending()) {

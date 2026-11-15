@@ -30,16 +30,21 @@ import gus.game5.main.anim1.AnimVacheQuiRit;
 import gus.game5.main.edu.prog.modulo1.EduModulo1;
 import gus.game5.main.game.p1.c.antivirus.GameAntivirus;
 import gus.game5.main.game.p1.c.columns.GameColumns;
+import gus.game5.main.game.p1.c.compteestbon.GameCompteEstBon;
 import gus.game5.main.game.p1.c.drmario.GameDrMario;
+import gus.game5.main.game.p1.c.flowfree.GameFlowFree;
 import gus.game5.main.game.p1.c.game2048.Game2048;
+import gus.game5.main.game.p1.c.labyrinthe.GameLabyrinthe;
 import gus.game5.main.game.p1.c.lightsout.GameLightsOut;
 import gus.game5.main.game.p1.c.madvirus.GameMadVirus;
 import gus.game5.main.game.p1.c.mastermind.GameMastermind;
 import gus.game5.main.game.p1.c.memory.GameMemory;
 import gus.game5.main.game.p1.c.minesweeper.GameMinesweeper;
 import gus.game5.main.game.p1.c.pacman.GamePacman;
+import gus.game5.main.game.p1.c.pipemania.GamePipeMania;
 import gus.game5.main.game.p1.c.puyo.GamePuyo;
 import gus.game5.main.game.p1.c.puzzle1.GamePuzzle1;
+import gus.game5.main.game.p1.c.simon.GameSimon;
 import gus.game5.main.game.p1.c.snake.GameSnake;
 import gus.game5.main.game.p1.c.sokoban.GameSokoban;
 import gus.game5.main.game.p1.c.solitaire8.GameSolitaire8;
@@ -123,6 +128,11 @@ public class Presentation extends Game {
 				new GameTaquin(),
 				new GameMastermind(),
 				new GameMemory(),
+				new GameFlowFree(),
+				new GamePipeMania(),
+				new GameLabyrinthe(),
+				new GameSimon(),
+				new GameCompteEstBon(),
 				new GameTron(),
 				new GameAsteroids(),
 				new GameFrogger(),
@@ -179,7 +189,7 @@ public class Presentation extends Game {
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Jeux solo", panel1);
-		tabbedPane.addTab("Jeux à 2", panel2);
+		tabbedPane.addTab("Jeux ï¿½ 2", panel2);
 		tabbedPane.addTab("Animations", panel3);
 		tabbedPane.addTab("Petits tests", panel4);
 		tabbedPane.addTab("Experimental", panel5);

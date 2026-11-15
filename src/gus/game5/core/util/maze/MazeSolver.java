@@ -60,9 +60,9 @@ public abstract class MazeSolver {
 		init();
 		if (!isFree(end)) return false;
 		while(!isComplete()) {
-			if(!handleStep()) return false;
+			if(!handleStep()) break;
 		}
-		return true;
+		return isComplete();
 	}
 	
 	/*
