@@ -42,6 +42,7 @@ public class GameSimon extends Game1 {
 
 	private JLabel labelInfo;
 	private JButton[] zoneButtons;
+	private Timer[] clickTimers;
 
 	private List<Integer> sequence;
 	private int round;
@@ -81,6 +82,7 @@ public class GameSimon extends Game1 {
 
 		JPanel grid = panelGrid(2, 2, 10);
 		zoneButtons = new JButton[ZONES];
+		clickTimers = new Timer[ZONES];
 		for(int i=0;i<ZONES;i++) {
 			int zone = i;
 			JButton b = button("", () -> onZoneClicked(zone));
@@ -189,10 +191,12 @@ public class GameSimon extends Game1 {
 	}
 
 	private void flashClick(int zone) {
+		if(clickTimers[zone]!=null) clickTimers[zone].stop();
 		setLit(zoneButtons[zone], zone, true);
 		Timer t = new Timer(CLICK_FLASH_MS, e -> setLit(zoneButtons[zone], zone, false));
 		t.setRepeats(false);
 		t.start();
+		clickTimers[zone] = t;
 	}
 
 

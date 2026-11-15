@@ -113,8 +113,8 @@ public class GameTicTacToe3 extends Play1 {
 
 	protected void turnStart() {
 		Keyboard k = keyboard();
-		if(k.F1())	restart();
-		if(k.F2())	exit();
+		if(k.in().F1())	restart();
+		if(k.in().F2())	exit();
 	}
 	
 	protected void played() throws Exception {

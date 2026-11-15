@@ -13,6 +13,7 @@ import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point0.Point0;
+import gus.game5.core.util.UtilGrid;
 
 public class GameFlowFree extends Game1 {
 
@@ -148,11 +149,7 @@ public class GameFlowFree extends Game1 {
 	}
 
 	private int[] cellAt(Point0 p) {
-		if(p==null) return null;
-		int c = (int) Math.floor((p.getX()-GAP)/CELL);
-		int r = (int) Math.floor((p.getY()-TOP)/CELL);
-		if(r<0 || r>=rows || c<0 || c>=cols) return null;
-		return new int[] {r,c};
+		return UtilGrid.cellAt(p, GAP, TOP, CELL, rows, cols);
 	}
 
 	private void startDrag(char color, int[] cell) {
@@ -201,7 +198,7 @@ public class GameFlowFree extends Game1 {
 	}
 
 	private boolean same(int[] a, int[] b) {
-		return a[0]==b[0] && a[1]==b[1];
+		return UtilGrid.same(a, b);
 	}
 
 	private boolean isAdjacent(int[] a, int[] b) {

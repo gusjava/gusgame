@@ -107,7 +107,7 @@ public class GameLabyrinthe extends Game1 {
 
 	private int solveLength(int[] from, int[] to) {
 		int[][] path = solvePath(from, to);
-		return path!=null ? path.length : -1;
+		return path!=null ? path.length-1 : -1;
 	}
 
 	private int[][] solvePath(int[] from, int[] to) {

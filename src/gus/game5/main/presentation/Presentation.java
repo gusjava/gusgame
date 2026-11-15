@@ -189,7 +189,7 @@ public class Presentation extends Game {
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Jeux solo", panel1);
-		tabbedPane.addTab("Jeux ï¿½ 2", panel2);
+		tabbedPane.addTab("Jeux à 2", panel2);
 		tabbedPane.addTab("Animations", panel3);
 		tabbedPane.addTab("Petits tests", panel4);
 		tabbedPane.addTab("Experimental", panel5);

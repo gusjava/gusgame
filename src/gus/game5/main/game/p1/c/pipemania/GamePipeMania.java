@@ -11,6 +11,7 @@ import gus.game5.core.game.Game1;
 import gus.game5.core.game.Settings;
 import gus.game5.core.keyboard.Keyboard;
 import gus.game5.core.point.point0.Point0;
+import gus.game5.core.util.UtilGrid;
 import gus.game5.core.util.UtilRandom;
 
 public class GamePipeMania extends Game1 {
@@ -179,15 +180,11 @@ public class GamePipeMania extends Game1 {
 	}
 
 	private int[] cellAt(Point0 p) {
-		if(p==null) return null;
-		int c = (int) Math.floor((p.getX()-GAP)/CELL);
-		int r = (int) Math.floor((p.getY()-TOP)/CELL);
-		if(r<0 || r>=ROWS || c<0 || c>=COLS) return null;
-		return new int[] {r,c};
+		return UtilGrid.cellAt(p, GAP, TOP, CELL, ROWS, COLS);
 	}
 
 	private boolean same(int[] a, int[] b) {
-		return a[0]==b[0] && a[1]==b[1];
+		return UtilGrid.same(a, b);
 	}
 
 	private long key(int[] cell) {
