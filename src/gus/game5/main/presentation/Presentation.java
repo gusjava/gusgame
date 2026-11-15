@@ -24,16 +24,27 @@ import gus.game5.main.anim.langtonant.AnimLangtonAnt;
 import gus.game5.main.anim.life1.LifeBacteria1;
 import gus.game5.main.anim1.AnimAntColony;
 import gus.game5.main.anim1.AnimBallBattle;
+import gus.game5.main.anim1.AnimBoids;
+import gus.game5.main.anim1.AnimBrianBrain;
 import gus.game5.main.anim1.AnimChladni;
 import gus.game5.main.anim1.AnimClock;
+import gus.game5.main.anim1.AnimCyclicCA;
+import gus.game5.main.anim1.AnimDaisyworld;
 import gus.game5.main.anim1.AnimDoublePendulum;
 import gus.game5.main.anim1.AnimElementaryCA;
+import gus.game5.main.anim1.AnimEpidemic;
+import gus.game5.main.anim1.AnimEvolvingCreatures;
 import gus.game5.main.anim1.AnimFireworks;
 import gus.game5.main.anim1.AnimFlowField;
+import gus.game5.main.anim1.AnimForestFire;
 import gus.game5.main.anim1.AnimFractalTree;
 import gus.game5.main.anim1.AnimHarmonograph;
+import gus.game5.main.anim1.AnimHighLife;
+import gus.game5.main.anim1.AnimHodgepodge;
 import gus.game5.main.anim1.AnimLSystem;
 import gus.game5.main.anim1.AnimLandscape;
+import gus.game5.main.anim1.AnimLangtonLoops;
+import gus.game5.main.anim1.AnimLenia;
 import gus.game5.main.anim1.AnimLorenzAttractor;
 import gus.game5.main.anim1.AnimMandala;
 import gus.game5.main.anim1.AnimMaze;
@@ -42,14 +53,18 @@ import gus.game5.main.anim1.AnimParticleLife;
 import gus.game5.main.anim1.AnimPendulumWave;
 import gus.game5.main.anim1.AnimPlasma;
 import gus.game5.main.anim1.AnimReactionDiffusion;
+import gus.game5.main.anim1.AnimSandpile;
+import gus.game5.main.anim1.AnimSchelling;
 import gus.game5.main.anim1.AnimSlimeMold;
 import gus.game5.main.anim1.AnimSnowfall;
 import gus.game5.main.anim1.AnimSolarSystem;
 import gus.game5.main.anim1.AnimSpirograph;
 import gus.game5.main.anim1.AnimStarfield;
 import gus.game5.main.anim1.AnimTSP;
+import gus.game5.main.anim1.AnimTermites;
 import gus.game5.main.anim1.AnimVacheQuiRit;
 import gus.game5.main.anim1.AnimWaTor;
+import gus.game5.main.anim1.AnimWireworld;
 import gus.game5.main.edu.prog.modulo1.EduModulo1;
 import gus.game5.main.game.p1.c.antivirus.GameAntivirus;
 import gus.game5.main.game.p1.c.columns.GameColumns;
@@ -206,7 +221,22 @@ public class Presentation extends Game {
 				new AnimWaTor(),
 				new AnimAntColony(),
 				new AnimLSystem(),
-				new AnimTSP()
+				new AnimTSP(),
+				new AnimBoids(),
+				new AnimTermites(),
+				new AnimDaisyworld(),
+				new AnimEpidemic(),
+				new AnimEvolvingCreatures(),
+				new AnimLenia(),
+				new AnimCyclicCA(),
+				new AnimForestFire(),
+				new AnimSchelling(),
+				new AnimLangtonLoops(),
+				new AnimWireworld(),
+				new AnimBrianBrain(),
+				new AnimHighLife(),
+				new AnimSandpile(),
+				new AnimHodgepodge()
 				);
 
 		Container panel4 = buildPanel(
@@ -235,7 +265,7 @@ public class Presentation extends Game {
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Jeux solo", panel1);
-		tabbedPane.addTab("Jeux à 2", panel2);
+		tabbedPane.addTab("Jeux ï¿½ 2", panel2);
 		tabbedPane.addTab("Animations", panel3);
 		tabbedPane.addTab("Petits tests", panel4);
 		tabbedPane.addTab("Experimental", panel5);

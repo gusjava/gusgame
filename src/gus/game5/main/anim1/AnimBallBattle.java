@@ -64,27 +64,42 @@ public class AnimBallBattle extends Game2 {
 			drawRoundC(Color.BLACK, RADIUS);
 		}
 		
-		public void faceTeam(int teamOut) {
-			if(teamOut==0 || teamOut==team) return;
-			this.team = team==0 ? teamOut : 0;
-		}
 		public int getTeam() {
 			return team;
 		}
+		public void setTeam(int team) {
+			this.team = team;
+		}
 	}
-	
+
 
 	protected void after() {
 		balls.control(control);
-		
+
 		for(Ball ball1 : balls) for(Ball ball2 : balls) {
 			if(ball1!=ball2 && ball1.intersects(ball2)) {
-				int team1 = ball1.getTeam();
-				int team2 = ball2.getTeam();
-				
-				ball1.faceTeam(team2);
-				ball2.faceTeam(team1);
+				resolveCollision(ball1, ball2);
 			}
+		}
+	}
+
+	private void resolveCollision(Ball ball1, Ball ball2) {
+		int team1 = ball1.getTeam();
+		int team2 = ball2.getTeam();
+		if(team1==team2) return;
+
+		if(team1!=0 && team2!=0) {
+			ball1.setTeam(0);
+			ball2.setTeam(0);
+			return;
+		}
+
+		Ball neutral = team1==0 ? ball1 : ball2;
+		Ball colored = team1==0 ? ball2 : ball1;
+		if(UtilRandom.chance(2)) {
+			neutral.setTeam(colored.getTeam());
+		} else {
+			colored.setTeam(0);
 		}
 	}
 }
