@@ -332,7 +332,7 @@ public class UtilArrayInt {
 	 * neighborPos : int[] (2)
 	 * neighbor4Pos : List<int[]> (2)
 	 * neighbor8Pos : List<int[]> (2)
-	 * distance : int (à migrer dans UtilMath)
+	 * distance : int (Ã  migrer dans UtilMath)
 	 * build1 : int[]
 	 * build2 : int[][] (2)
 	 * build3 : int[][][] (2)

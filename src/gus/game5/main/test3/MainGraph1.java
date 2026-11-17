@@ -46,7 +46,7 @@ public class MainGraph1 extends Game2 {
 		ShapeGraph graph = newShapeGraph(gameCenter(), GRAPH_WIDTH, GRAPH_HEIGHT);
 		graph.setStep(30);
 		
-		// initialisation des éléments dynamiques
+		// initialisation des Ã©lÃ©ments dynamiques
 		
 		DynGDouble x1 = newDynGDouble(-3, 0.01);
 		DynGDouble x2 = newDynGDouble(-5, 0.005);

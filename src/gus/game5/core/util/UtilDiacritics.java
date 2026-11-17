@@ -120,7 +120,7 @@ public class UtilDiacritics {
 //			case 'å':
 //				b.append('a');
 //				break;// å rond en chef
-//			case '�?':
+//			case 'Ä?':
 //				b.append('a');
 //				break;// a macron (accent plat)
 //			case 'ă':
@@ -171,7 +171,7 @@ public class UtilDiacritics {
 //			case 'ċ':
 //				b.append('c');
 //				break;// c point suscrit
-//			case '�?':
+//			case 'Ä?':
 //				b.append('c');
 //				break;// c hatchek
 //			case 'ƈ':
@@ -181,7 +181,7 @@ public class UtilDiacritics {
 //				b.append('c');
 //				break;// ð barre
 //
-//			case '�?':
+//			case 'Ä?':
 //				b.append('d');
 //				break;// d hatchek
 //			case 'ɗ':
@@ -190,7 +190,7 @@ public class UtilDiacritics {
 //			case 'ḋ':
 //				b.append('d');
 //				break;// d point suscrit
-//			case '�?':
+//			case 'á¸?':
 //				b.append('d');
 //				break;// d point souscrit
 //			case 'ḑ':
@@ -238,7 +238,7 @@ public class UtilDiacritics {
 //				b.append('f');
 //				break;// f point suscrit
 //
-//			case '�?':
+//			case 'Ä?':
 //				b.append('g');
 //				break;// g accent circonflexe
 //			case 'ğ':
@@ -300,7 +300,7 @@ public class UtilDiacritics {
 //			case 'ï':
 //				b.append('i');
 //				break;// ï tréma
-//			case '�?':
+//			case 'Ç?':
 //				b.append('i');
 //				break;// i hatchek
 //			case 'ĩ':
@@ -361,7 +361,7 @@ public class UtilDiacritics {
 //			case 'ḿ':
 //				b.append('m');
 //				break;// m accent aigu
-//			case '�?':
+//			case 'á¹?':
 //				b.append('m');
 //				break;// m point suscrit
 //			case 'ṃ':
@@ -408,10 +408,10 @@ public class UtilDiacritics {
 //			case 'ø':
 //				b.append('o');
 //				break;// ø barre
-//			case '�?':
+//			case 'Å?':
 //				b.append('o');
 //				break;// o macron
-//			case '�?':
+//			case 'Å?':
 //				b.append('o');
 //				break;// o brève
 //			case 'ő':
@@ -429,7 +429,7 @@ public class UtilDiacritics {
 //			case 'ȯ':
 //				b.append('o');
 //				break;// o point suscrit
-//			case '�?':
+//			case 'á»?':
 //				b.append('o');
 //				break;// o point souscrit
 //
@@ -472,7 +472,7 @@ public class UtilDiacritics {
 //			case 'ś':
 //				b.append('s');
 //				break;// session_ accent aigu
-//			case '�?':
+//			case 'Å?':
 //				b.append('s');
 //				break;// session_ accent circonflexe
 //			case 'ş':
@@ -560,7 +560,7 @@ public class UtilDiacritics {
 //			case 'ŵ':
 //				b.append('w');
 //				break;// w accent circonflexe
-//			case '�?':
+//			case 'áº?':
 //				b.append('w');
 //				break;// w accent grave
 //			case 'ẃ':
@@ -582,7 +582,7 @@ public class UtilDiacritics {
 //			case 'ẋ':
 //				b.append('x');
 //				break;// x point suscrit
-//			case '�?':
+//			case 'áº?':
 //				b.append('x');
 //				break;// x tréma
 //
@@ -595,7 +595,7 @@ public class UtilDiacritics {
 //			case 'ý':
 //				b.append('y');
 //				break;// ý accent aigu
-//			case '�?':
+//			case 'áº?':
 //				b.append('y');
 //				break;// y point suscrit
 //			case 'ƴ':
@@ -641,9 +641,9 @@ public class UtilDiacritics {
 //			case 'À':
 //				b.append('a');
 //				break;// À accent grave
-//			case '�?':
+//			case 'Ã?':
 //				b.append('a');
-//				break;// �? accent aigu
+//				break;// Ã? accent aigu
 //			case 'Â':
 //				b.append('a');
 //				break;// Â accent circonflexe
@@ -668,7 +668,7 @@ public class UtilDiacritics {
 //			case 'Ạ':
 //				b.append('a');
 //				break;// A point souscrit
-//			case '�?':
+//			case 'Ç?':
 //				b.append('a');
 //				break;// A hatchek
 //			case 'Ȧ':
@@ -694,7 +694,7 @@ public class UtilDiacritics {
 //			case 'Ḅ':
 //				b.append('b');
 //				break;// B point souscrit
-//			case '�?':
+//			case 'Æ?':
 //				b.append('b');
 //				break;// B crochet
 //
@@ -717,7 +717,7 @@ public class UtilDiacritics {
 //				b.append('c');
 //				break;// C crochet
 //
-//			case '�?':
+//			case 'Ã?':
 //				b.append('d');
 //				break;// D barre
 //			case 'Ď':
@@ -732,7 +732,7 @@ public class UtilDiacritics {
 //			case 'Ḍ':
 //				b.append('d');
 //				break;// D point souscrit
-//			case '�?':
+//			case 'á¸?':
 //				b.append('d');
 //				break;// D cédille
 //
@@ -830,16 +830,16 @@ public class UtilDiacritics {
 //			case 'Ì':
 //				b.append('i');
 //				break;// Ì accent grave
-//			case '�?':
+//			case 'Ã?':
 //				b.append('i');
-//				break;// �? accent aigu
+//				break;// Ã? accent aigu
 //			case 'Î':
 //				b.append('i');
 //				break;// Î accent circonflexe
-//			case '�?':
+//			case 'Ã?':
 //				b.append('i');
-//				break;// �? tréma
-//			case '�?':
+//				break;// Ã? tréma
+//			case 'Ç?':
 //				b.append('i');
 //				break;// I hatchek
 //			case 'Ĩ':
@@ -893,7 +893,7 @@ public class UtilDiacritics {
 //			case 'Ľ':
 //				b.append('l');
 //				break;// L hatchek
-//			case '�?':
+//			case 'Å?':
 //				b.append('l');
 //				break;// L barre
 //
@@ -953,7 +953,7 @@ public class UtilDiacritics {
 //			case 'Ŏ':
 //				b.append('o');
 //				break;// O brève
-//			case '�?':
+//			case 'Å?':
 //				b.append('o');
 //				break;// O double accent aigu
 //			case 'Ơ':
@@ -1125,9 +1125,9 @@ public class UtilDiacritics {
 //			case 'Ÿ':
 //				b.append('y');
 //				break;// Ÿ tréma
-//			case '�?':
+//			case 'Ã?':
 //				b.append('y');
-//				break;// �? accent aigu
+//				break;// Ã? accent aigu
 //			case 'Ẏ':
 //				b.append('y');
 //				break;// Y point suscrit
@@ -1159,7 +1159,7 @@ public class UtilDiacritics {
 //			case 'Ƶ':
 //				b.append('z');
 //				break;// Z barre
-//			case '�?':
+//			case 'áº?':
 //				b.append('z');
 //				break;// Z accent circonflexe
 //			case 'Ẓ':

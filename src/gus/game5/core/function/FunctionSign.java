@@ -10,7 +10,7 @@ public class FunctionSign implements Function {
 	}
 
 	public Function getDerived() {
-		return new FunctionConst(0); //TODO revoir... non dérivable en 0 ?
+		return new FunctionConst(0); //TODO revoir... non dÃ©rivable en 0 ?
 	}
 
 	public Boolean isEven() {

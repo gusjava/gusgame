@@ -816,7 +816,7 @@ public abstract class Drawing1 extends Drawing0 {
 	
 	/*
 	 * DRAW THICK LINE
-	 * TODO mieux gérer l'épaisseur du trait avec les arrondis
+	 * TODO mieux gÃ©rer l'Ã©paisseur du trait avec les arrondis
 	 */
 	
 	public void drawThickLine(Color color, Point0 p1, Point0 p2, double thickness) {

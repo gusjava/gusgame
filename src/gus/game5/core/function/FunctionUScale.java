@@ -22,7 +22,7 @@ public class FunctionUScale implements Function {
 	}
 
 	public Function getDerived() {
-		//TODO check with xFactor ... (dérivé de la composition de fonctions)
+		//TODO check with xFactor ... (dÃ©rivÃ© de la composition de fonctions)
 		return new FunctionUMultN(function.getDerived(), fFactor);
 	}
 

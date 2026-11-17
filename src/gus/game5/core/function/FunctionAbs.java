@@ -10,7 +10,7 @@ public class FunctionAbs implements Function {
 	}
 
 	public Function getDerived() {
-		return new FunctionSign(); //TODO revoir... non dérivable en 0 ?
+		return new FunctionSign(); //TODO revoir... non dÃ©rivable en 0 ?
 	}
 
 	public Boolean isEven() {

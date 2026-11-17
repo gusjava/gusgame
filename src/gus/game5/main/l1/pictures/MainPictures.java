@@ -122,7 +122,7 @@ public class MainPictures extends Game1 {
 
 			fillRect(new Color(165, 42, 42), p1(400, 700), 15, 80);
 
-			// dessin du deuxième poteau
+			// dessin du deuxiÃ¨me poteau
 
 			fillRect(new Color(165, 42, 42), p1(315, 700), 15, 80);
 			
@@ -130,7 +130,7 @@ public class MainPictures extends Game1 {
 
 			fillRect(new Color(165, 42, 42), p1(275, 625), 180, 75);
 			
-			// écriture
+			// Ã©criture
 
 			drawStringC(Color.WHITE, fontPlain(30), p1(365, 660), "Bienvenue !");
 			

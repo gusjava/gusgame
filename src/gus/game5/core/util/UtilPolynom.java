@@ -17,19 +17,19 @@ public class UtilPolynom {
 		return null;
 	}
 	
-	// résolution de a = 0 ...
+	// rÃ©solution de a = 0 ...
 	public static double[] findRoots0(double[] coef) {
-		if(coef[0]==0) return null; //infinité de racines
+		if(coef[0]==0) return null; //infinitÃ© de racines
 		return new double[] {};
 	}
 	
-	// résolution de ax+b = 0
+	// rÃ©solution de ax+b = 0
 	public static double[] findRoots1(double[] coef) {
 		if(coef[1]==0) return findRoots0(coef);
 		return new double[] {-coef[0]/coef[1]};
 	}
 	
-	// résolution de ax2 + bx + c = 0
+	// rÃ©solution de ax2 + bx + c = 0
 	public static double[] findRoots2(double[] coef) {
 		if(coef[2]==0) return findRoots1(coef);
 		
@@ -49,7 +49,7 @@ public class UtilPolynom {
 		return new double[] {x1,x2};
 	}
 
-	// résolution de ax3 + bx2 + cx + d = 0 (dans certains cas)
+	// rÃ©solution de ax3 + bx2 + cx + d = 0 (dans certains cas)
 	public static double[] findRoots3(double[] coef) {
 		if(coef[3]==0) return findRoots2(coef);
 		
@@ -63,13 +63,13 @@ public class UtilPolynom {
 		return null;
 	}
 	
-	// résolution de ax4 + bx3 + cx2 + dx + e = 0 (dans certains cas)
+	// rÃ©solution de ax4 + bx3 + cx2 + dx + e = 0 (dans certains cas)
 	public static double[] findRoots4(double[] coef) {
 		if(coef[4]==0) return findRoots3(coef);
 
 		if(coef[1]==0 && coef[3]==0) {
 			//cas : ax4 + cx2 + e = 0
-			//on résout aX2 + cX + e = 0 puis x2 = racine
+			//on rÃ©sout aX2 + cX + e = 0 puis x2 = racine
 			double[] rr = findRoots2(new double[] {coef[0], coef[2], coef[4]});
 			Set<Double> set = new HashSet<>();
 			for(double r : rr) {

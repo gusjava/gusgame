@@ -109,7 +109,7 @@ public class UtilRagus {
 		boolean blocked1 = isBlocked(data, start, value1, strength1);
 		boolean blocked2 = isBlocked(data, end, value2, strength2);
 		
-		//il faut que la case start ne soit pas bloquée
+		//il faut que la case start ne soit pas bloquÃ©e
 		if(blocked1) return null;
 		
 		int[][] newData = UtilArrayInt.clone2(data);
@@ -117,7 +117,7 @@ public class UtilRagus {
 		if(strength1==1 && strength2==0) {
 			//duplication
 			newData[endX][endY] = value1;
-			//si on est à 2 lignes de la fin, déplacement simple
+			//si on est Ã  2 lignes de la fin, dÃ©placement simple
 			if(player==PLAYER_DINO && (endX>9 || startX>9))
 				newData[startX][startY] = 0;
 			else if(player==PLAYER_ANUBIS && (endX<3 || startX<3))

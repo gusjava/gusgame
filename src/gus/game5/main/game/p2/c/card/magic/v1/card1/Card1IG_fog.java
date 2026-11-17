@@ -14,7 +14,7 @@ public class Card1IG_fog extends Card0Instant {
 	public Card1IG_fog(MagicPlayer owner, String imgKey) {
 		super(owner, imgKey);
 		
-		//cette carte devra s'enregistrer au près du gameEngine comme un intercepteur de phase COMBAT_RESOLUTON
+		//cette carte devra s'enregistrer au prÃ¨s du gameEngine comme un intercepteur de phase COMBAT_RESOLUTON
 	}
 
 	@Override
