@@ -53,6 +53,7 @@ import gus.game5.main.anim1.AnimMaze;
 import gus.game5.main.anim1.AnimNBody;
 import gus.game5.main.anim1.AnimPackingAnnealing;
 import gus.game5.main.anim1.AnimParticleLife2;
+import gus.game5.main.anim1.AnimPathfinding;
 import gus.game5.main.anim1.AnimPendulumWave;
 import gus.game5.main.anim1.AnimPlasma;
 import gus.game5.main.anim1.AnimReactionDiffusion;
@@ -227,6 +228,7 @@ public class Presentation extends Game {
 				new AnimLSystem(),
 				new AnimTSP(),
 				new AnimAntColonyTsp(),
+				new AnimPathfinding(),
 				new AnimBoids(),
 				new AnimTermites(),
 				new AnimDaisyworld(),
