@@ -1,5 +1,6 @@
 package gus.game5.core.gui;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -35,7 +36,10 @@ public class JPanel1 extends JPanel {
 		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,		RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 		g2.setRenderingHint(RenderingHints.KEY_RENDERING,			RenderingHints.VALUE_RENDER_QUALITY);
 		g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,		RenderingHints.VALUE_STROKE_PURE);
-		
+
+		Dimension design = getPreferredSize();
+		g2.scale(getWidth()/(double) design.width, getHeight()/(double) design.height);
+
 		if(draw!=null) draw.draw(g2);
 	}
 }

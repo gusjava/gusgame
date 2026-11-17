@@ -50,7 +50,7 @@ import gus.game5.main.anim1.AnimLorenzAttractor;
 import gus.game5.main.anim1.AnimMandala;
 import gus.game5.main.anim1.AnimMaze;
 import gus.game5.main.anim1.AnimNBody;
-import gus.game5.main.anim1.AnimParticleLife;
+import gus.game5.main.anim1.AnimParticleLife2;
 import gus.game5.main.anim1.AnimPendulumWave;
 import gus.game5.main.anim1.AnimPlasma;
 import gus.game5.main.anim1.AnimReactionDiffusion;
@@ -217,7 +217,7 @@ public class Presentation extends Game {
 				new AnimElementaryCA(),
 				new AnimFlowField(),
 				new AnimNBody(),
-				new AnimParticleLife(),
+				new AnimParticleLife2(),
 				new AnimSlimeMold(),
 				new AnimWaTor(),
 				new AnimAntColony(),
@@ -267,7 +267,7 @@ public class Presentation extends Game {
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.addTab("Jeux solo", panel1);
-		tabbedPane.addTab("Jeux à 2", panel2);
+		tabbedPane.addTab("Jeux ï¿½ 2", panel2);
 		tabbedPane.addTab("Animations", panel3);
 		tabbedPane.addTab("Petits tests", panel4);
 		tabbedPane.addTab("Experimental", panel5);

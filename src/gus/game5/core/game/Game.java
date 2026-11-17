@@ -31,6 +31,8 @@ public abstract class Game {
 	private Mouse mouse;
 	private Time time;
 	private Thread1 thread;
+	private JFrame frame;
+	private boolean fullScreen;
 	
 	public Game() {
 		settings = new Settings();
@@ -247,25 +249,47 @@ public abstract class Game {
 	
 	public JFrame displayInWindows(boolean exitOnClose) {
 		initLookAndFeel();
-		
+
 		ImageIcon icon = getIcon();
-		
-		JFrame frame = new JFrame();
+
+		frame = new JFrame();
 		frame.setDefaultCloseOperation(exitOnClose ? JFrame.EXIT_ON_CLOSE : JFrame.HIDE_ON_CLOSE);
 		frame.setContentPane(buildContentPane());
 		frame.setTitle(settings.getTitle());
 		if(icon!=null) frame.setIconImage(icon.getImage());
-		
+
 		JMenuBar1 menuBar = new JMenuBar1();
 		initMenuBar(menuBar);
 		frame.setJMenuBar(menuBar);
-		
+
 		frame.pack();
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		
+
 		return frame;
+	}
+
+	/*
+	 * FULL SCREEN
+	 */
+
+	public boolean isFullScreen() {
+		return fullScreen;
+	}
+
+	public void setFullScreen(boolean value) {
+		if(value==fullScreen) return;
+		fullScreen = value;
+
+		frame.dispose();
+		frame.setUndecorated(value);
+		if(value) frame.setBounds(frame.getGraphicsConfiguration().getBounds());
+		else {
+			frame.pack();
+			frame.setLocationRelativeTo(null);
+		}
+		frame.setVisible(true);
 	}
 	
 	protected Container buildContentPane() {
