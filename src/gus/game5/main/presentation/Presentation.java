@@ -70,6 +70,7 @@ import gus.game5.main.anim1.AnimTermites;
 import gus.game5.main.anim1.AnimVacheQuiRit;
 import gus.game5.main.anim1.AnimWaTor;
 import gus.game5.main.anim1.AnimWireworld;
+import gus.game5.main.creature.GameCreatureSociety;
 import gus.game5.main.edu.prog.modulo1.EduModulo1;
 import gus.game5.main.game.p1.c.antivirus.GameAntivirus;
 import gus.game5.main.game.p1.c.columns.GameColumns;
@@ -248,7 +249,8 @@ public class Presentation extends Game {
 				new AnimHodgepodge(),
 				new AnimAutumn(),
 				new GameImageEvolution(),
-				new AnimPackingAnnealing()
+				new AnimPackingAnnealing(),
+				new GameCreatureSociety()
 				);
 
 		Container panel4 = buildPanel(
