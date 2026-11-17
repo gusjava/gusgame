@@ -57,6 +57,7 @@ import gus.game5.main.anim1.AnimParticleSwarm;
 import gus.game5.main.anim1.AnimPathfinding;
 import gus.game5.main.anim1.AnimPendulumWave;
 import gus.game5.main.anim1.AnimPlasma;
+import gus.game5.main.anim1.AnimQueensGA;
 import gus.game5.main.anim1.AnimReactionDiffusion;
 import gus.game5.main.anim1.AnimSandpile;
 import gus.game5.main.anim1.AnimSchelling;
@@ -250,7 +251,8 @@ public class Presentation extends Game {
 				new AnimAutumn(),
 				new GameImageEvolution(),
 				new AnimPackingAnnealing(),
-				new GameCreatureSociety()
+				new GameCreatureSociety(),
+				new AnimQueensGA()
 				);
 
 		Container panel4 = buildPanel(
