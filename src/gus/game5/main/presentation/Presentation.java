@@ -23,6 +23,7 @@ import gus.game5.main.anim.gameoflife1.AnimGameOfLife;
 import gus.game5.main.anim.langtonant.AnimLangtonAnt;
 import gus.game5.main.anim.life1.LifeBacteria1;
 import gus.game5.main.anim1.AnimAntColony;
+import gus.game5.main.anim1.AnimAntColonyTsp;
 import gus.game5.main.anim1.AnimAutumn;
 import gus.game5.main.anim1.AnimBallBattle;
 import gus.game5.main.anim1.AnimBoids;
@@ -224,6 +225,7 @@ public class Presentation extends Game {
 				new AnimAntColony(),
 				new AnimLSystem(),
 				new AnimTSP(),
+				new AnimAntColonyTsp(),
 				new AnimBoids(),
 				new AnimTermites(),
 				new AnimDaisyworld(),
