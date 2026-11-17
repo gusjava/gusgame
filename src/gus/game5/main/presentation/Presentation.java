@@ -106,6 +106,7 @@ import gus.game5.main.game.p2.c.board.quoridor.v1.GameQuoridor1;
 import gus.game5.main.game.p2.c.board.reversi.v3.GameReversi3;
 import gus.game5.main.game.p2.c.board.tictactoe.v3.GameTicTacToe3;
 import gus.game5.main.game.p2.o.board.ragus1.GameRagus1;
+import gus.game5.main.genetic.GameImageEvolution;
 import gus.game5.main.l1.bloon.GameBloon;
 import gus.game5.main.test1.MainBall1;
 import gus.game5.main.test1.MainBall1m;
@@ -238,7 +239,8 @@ public class Presentation extends Game {
 				new AnimHighLife(),
 				new AnimSandpile(),
 				new AnimHodgepodge(),
-				new AnimAutumn()
+				new AnimAutumn(),
+				new GameImageEvolution()
 				);
 
 		Container panel4 = buildPanel(
