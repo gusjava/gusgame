@@ -51,6 +51,7 @@ import gus.game5.main.anim1.AnimLorenzAttractor;
 import gus.game5.main.anim1.AnimMandala;
 import gus.game5.main.anim1.AnimMaze;
 import gus.game5.main.anim1.AnimNBody;
+import gus.game5.main.anim1.AnimPackingAnnealing;
 import gus.game5.main.anim1.AnimParticleLife2;
 import gus.game5.main.anim1.AnimPendulumWave;
 import gus.game5.main.anim1.AnimPlasma;
@@ -242,7 +243,8 @@ public class Presentation extends Game {
 				new AnimSandpile(),
 				new AnimHodgepodge(),
 				new AnimAutumn(),
-				new GameImageEvolution()
+				new GameImageEvolution(),
+				new AnimPackingAnnealing()
 				);
 
 		Container panel4 = buildPanel(
