@@ -51,6 +51,7 @@ import gus.game5.main.anim1.AnimLorenzAttractor;
 import gus.game5.main.anim1.AnimMandala;
 import gus.game5.main.anim1.AnimMaze;
 import gus.game5.main.anim1.AnimNBody;
+import gus.game5.main.anim1.AnimNeuralClassifier;
 import gus.game5.main.anim1.AnimPackingAnnealing;
 import gus.game5.main.anim1.AnimParticleLife2;
 import gus.game5.main.anim1.AnimParticleSwarm;
@@ -252,7 +253,8 @@ public class Presentation extends Game {
 				new GameImageEvolution(),
 				new AnimPackingAnnealing(),
 				new GameCreatureSociety(),
-				new AnimQueensGA()
+				new AnimQueensGA(),
+				new AnimNeuralClassifier()
 				);
 
 		Container panel4 = buildPanel(
